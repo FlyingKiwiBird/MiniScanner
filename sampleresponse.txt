@@ -1,0 +1,1941 @@
+﻿
+<script>
+  document.title = "Evepraisal - Result #7132543 [Cargo Scan]";
+</script>
+
+
+<div id="raw-result-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="raw-result-modal" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>Raw Pasted Text</h3>
+  </div>
+  <div class="modal-body">
+    <textarea class="input-block-level" rows="10">1 Nanofiber Internal Structure II
+1 Typhoon
+1 Tornado
+1 Gila
+1 Heron
+1 Breacher
+1 Abaddon
+1 Ship Maintenance Array
+6 Kestrel
+2 Sensor Dampening Battery
+2 Tyrfing
+4 Vagabond
+1 Primae
+2 Heat Dissipation Array
+2 Tyrfing
+1 Medium Artillery Battery
+1 Caracal
+1 Thrasher
+1 Tyrfing
+1 Burst
+1 Zephyr
+1 Reinforced Bulkheads II
+2 Huginn
+5 Hoarder
+1 Nanofiber Internal Structure II
+1 Miasmos
+1 Reinforced Bulkheads II
+2 Tayra
+3 Crucifier
+1 Medium Artillery Battery
+1 Cheetah
+3 Rupture
+1 Vargur
+1 Reinforced Bulkheads II
+1 Megathron
+2 Scimitar
+1 Nanofiber Internal Structure II
+1 Scythe
+1 Tyrfing
+1 Ship Maintenance Array
+1 Bellicose
+2 Tyrfing
+1 Inertial Stabilizers II
+1 Apocalypse
+5 Sabre
+2 Tyrfing
+3 Echelon
+8 Broadsword
+1 Prowler
+1 Maelstrom
+1 Tempest
+1 Inertial Stabilizers II
+1 Inertial Stabilizers II
+1 Wreathe
+1 Claymore
+2 Tyrfing
+6 Covetor
+1 Talwar
+3 Guardian
+5 Vigil</textarea>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+
+<div>
+  <p style="float:left">Result <strong>#7132543</strong>  (Cargo Scan) created just now.
+ <a href="#raw-result-modal" data-toggle="modal">View Raw</a>&nbsp;&nbsp;</p>
+  <p style="float:right">  <strong>Permalink</strong>: <a href="/e/7132543">http://evepraisal.com/e/7132543</a> </p>
+  <div class="clearfix visible-xs"></div>
+</div>
+
+
+
+
+
+
+
+
+<div>
+  <h4>
+    <span class="nowrap">
+      7.20 Billion ISK <small>estimated <strong>sell</strong> value  in Jita</small>
+    </span>
+    &nbsp;&nbsp;
+    <span class="nowrap">
+      6.58 Billion ISK <small>estimated <strong>buy</strong> value  in Jita</small>
+    </span>
+  </h4>
+
+<table id="results" class="table table-striped table-condensed tablesorter">
+  <thead>
+    <tr>
+      <th class="header">Qty</th>
+      <th class="header" style="width: 60%">Item</th>
+      <th class="header">Vol (m3)</th>
+      <th class="header" style="text-align:right">Single&nbsp;(sell)<br />Single&nbsp;(buy)</th>
+      <th class="header" style="text-align:right">Total&nbsp;(sell)<br />Total&nbsp;(buy)</th>
+      <th class="header" style="text-align:right">ISK/m3&nbsp;(sell)<br />ISK/m3&nbsp;(buy)</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=24692" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/24692_32.png" alt="Abaddon"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=24692" target="_blank">Abaddon</a>
+          </div>
+      </td>
+      <td style="text-align:right">495,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-199999990.01">
+          
+    <span class="nowrap">199,999,990.01</span>
+  <br />
+    <span class="nowrap">180,910,080.36</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-199999990.01">
+          
+    <span class="nowrap">199,999,990.01</span>
+  <br />
+    <span class="nowrap">180,910,080.36</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-404.040383859">
+          
+    <span class="nowrap">404.04</span>
+  <br />
+    <span class="nowrap">365.47</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=642" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/642_32.png" alt="Apocalypse"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=642" target="_blank">Apocalypse</a>
+          </div>
+      </td>
+      <td style="text-align:right">495,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-181487997.53">
+          
+    <span class="nowrap">181,487,997.53</span>
+  <br />
+    <span class="nowrap">172,285,000.29</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-181487997.53">
+          
+    <span class="nowrap">181,487,997.53</span>
+  <br />
+    <span class="nowrap">172,285,000.29</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-366.642419253">
+          
+    <span class="nowrap">366.64</span>
+  <br />
+    <span class="nowrap">348.05</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=630" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/630_32.png" alt="Bellicose"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=630" target="_blank">Bellicose</a>
+          </div>
+      </td>
+      <td style="text-align:right">85,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-9500000.0">
+          
+    <span class="nowrap">9,500,000.00</span>
+  <br />
+    <span class="nowrap">8,809,999.99</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-9500000.0">
+          
+    <span class="nowrap">9,500,000.00</span>
+  <br />
+    <span class="nowrap">8,809,999.99</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-111.764705882">
+          
+    <span class="nowrap">111.76</span>
+  <br />
+    <span class="nowrap">103.65</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=598" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/598_32.png" alt="Breacher"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=598" target="_blank">Breacher</a>
+          </div>
+      </td>
+      <td style="text-align:right">20,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-499999.65">
+          
+    <span class="nowrap">499,999.65</span>
+  <br />
+    <span class="nowrap">360,017.00</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-499999.65">
+          
+    <span class="nowrap">499,999.65</span>
+  <br />
+    <span class="nowrap">360,017.00</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-24.9999825">
+          
+    <span class="nowrap">25.00</span>
+  <br />
+    <span class="nowrap">18.00</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">8</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=12013" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/12013_32.png" alt="Broadsword"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=12013" target="_blank">Broadsword</a>
+          </div>
+      </td>
+      <td style="text-align:right">96,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-208999987.99">
+          
+    <span class="nowrap">208,999,987.99</span>
+  <br />
+    <span class="nowrap">190,006,003.71</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-1671999903.92">
+          
+    <span class="nowrap">1,671,999,903.92</span>
+  <br />
+    <span class="nowrap">1,520,048,029.68</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-2177.08320823">
+          
+    <span class="nowrap">2,177.08</span>
+  <br />
+    <span class="nowrap">1,979.23</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=599" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/599_32.png" alt="Burst"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=599" target="_blank">Burst</a>
+          </div>
+      </td>
+      <td style="text-align:right">17,100.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-328999.99">
+          
+    <span class="nowrap">328,999.99</span>
+  <br />
+    <span class="nowrap">310,000.07</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-328999.99">
+          
+    <span class="nowrap">328,999.99</span>
+  <br />
+    <span class="nowrap">310,000.07</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-19.2397654971">
+          
+    <span class="nowrap">19.24</span>
+  <br />
+    <span class="nowrap">18.13</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=621" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/621_32.png" alt="Caracal"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=621" target="_blank">Caracal</a>
+          </div>
+      </td>
+      <td style="text-align:right">92,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-11154999.93">
+          
+    <span class="nowrap">11,154,999.93</span>
+  <br />
+    <span class="nowrap">10,605,003.00</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-11154999.93">
+          
+    <span class="nowrap">11,154,999.93</span>
+  <br />
+    <span class="nowrap">10,605,003.00</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-121.249999239">
+          
+    <span class="nowrap">121.25</span>
+  <br />
+    <span class="nowrap">115.27</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=11182" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/11182_32.png" alt="Cheetah"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=11182" target="_blank">Cheetah</a>
+          </div>
+      </td>
+      <td style="text-align:right">17,400.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-17344997.48">
+          
+    <span class="nowrap">17,344,997.48</span>
+  <br />
+    <span class="nowrap">16,840,000.01</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-17344997.48">
+          
+    <span class="nowrap">17,344,997.48</span>
+  <br />
+    <span class="nowrap">16,840,000.01</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-996.838935632">
+          
+    <span class="nowrap">996.84</span>
+  <br />
+    <span class="nowrap">967.82</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=22468" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/22468_32.png" alt="Claymore"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=22468" target="_blank">Claymore</a>
+          </div>
+      </td>
+      <td style="text-align:right">216,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-283876984.7">
+          
+    <span class="nowrap">283,876,984.70</span>
+  <br />
+    <span class="nowrap">261,200,000.26</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-283876984.7">
+          
+    <span class="nowrap">283,876,984.70</span>
+  <br />
+    <span class="nowrap">261,200,000.26</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-1314.24529954">
+          
+    <span class="nowrap">1,314.25</span>
+  <br />
+    <span class="nowrap">1,209.26</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">6</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=17476" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/17476_32.png" alt="Covetor"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=17476" target="_blank">Covetor</a>
+          </div>
+      </td>
+      <td style="text-align:right">200,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-31396982.98">
+          
+    <span class="nowrap">31,396,982.98</span>
+  <br />
+    <span class="nowrap">29,750,008.03</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-188381897.88">
+          
+    <span class="nowrap">188,381,897.88</span>
+  <br />
+    <span class="nowrap">178,500,048.18</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-156.9849149">
+          
+    <span class="nowrap">156.98</span>
+  <br />
+    <span class="nowrap">148.75</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">3</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=2161" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/2161_32.png" alt="Crucifier"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=2161" target="_blank">Crucifier</a>
+          </div>
+      </td>
+      <td style="text-align:right">28,100.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-399995.72">
+          
+    <span class="nowrap">399,995.72</span>
+  <br />
+    <span class="nowrap">336,318.35</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-1199987.16">
+          
+    <span class="nowrap">1,199,987.16</span>
+  <br />
+    <span class="nowrap">1,008,955.05</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-14.2347231317">
+          
+    <span class="nowrap">14.23</span>
+  <br />
+    <span class="nowrap">11.97</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">3</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=3532" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/3532_32.png" alt="Echelon"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=3532" target="_blank">Echelon</a>
+          </div>
+      </td>
+      <td style="text-align:right">28,100.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-16999998.0">
+          
+    <span class="nowrap">16,999,998.00</span>
+  <br />
+    <span class="nowrap">14,000,001.07</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-50999994.0">
+          
+    <span class="nowrap">50,999,994.00</span>
+  <br />
+    <span class="nowrap">42,000,003.21</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-604.982135231">
+          
+    <span class="nowrap">604.98</span>
+  <br />
+    <span class="nowrap">498.22</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=17715" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/17715_32.png" alt="Gila"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=17715" target="_blank">Gila</a>
+          </div>
+      </td>
+      <td style="text-align:right">101,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-261600000.0">
+          
+    <span class="nowrap">261,600,000.00</span>
+  <br />
+    <span class="nowrap">255,033,050.00</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-261600000.0">
+          
+    <span class="nowrap">261,600,000.00</span>
+  <br />
+    <span class="nowrap">255,033,050.00</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-2590.0990099">
+          
+    <span class="nowrap">2,590.10</span>
+  <br />
+    <span class="nowrap">2,525.08</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">3</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=11987" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/11987_32.png" alt="Guardian"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=11987" target="_blank">Guardian</a>
+          </div>
+      </td>
+      <td style="text-align:right">115,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-144876875.0">
+          
+    <span class="nowrap">144,876,875.00</span>
+  <br />
+    <span class="nowrap">127,500,099.75</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-434630625.0">
+          
+    <span class="nowrap">434,630,625.00</span>
+  <br />
+    <span class="nowrap">382,500,299.25</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-1259.79891304">
+          
+    <span class="nowrap">1,259.80</span>
+  <br />
+    <span class="nowrap">1,108.70</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">2</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=17186" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/17186_32.png" alt="Heat Dissipation Array"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=17186" target="_blank">Heat Dissipation Array</a>
+          </div>
+      </td>
+      <td style="text-align:right">4,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-4800000.0">
+          
+    <span class="nowrap">4,800,000.00</span>
+  <br />
+    <span class="nowrap">4,200,002.08</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-9600000.0">
+          
+    <span class="nowrap">9,600,000.00</span>
+  <br />
+    <span class="nowrap">8,400,004.16</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-1200.0">
+          
+    <span class="nowrap">1,200.00</span>
+  <br />
+    <span class="nowrap">1,050.00</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=605" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/605_32.png" alt="Heron"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=605" target="_blank">Heron</a>
+          </div>
+      </td>
+      <td style="text-align:right">18,900.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-387109.25">
+          
+    <span class="nowrap">387,109.25</span>
+  <br />
+    <span class="nowrap">357,109.36</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-387109.25">
+          
+    <span class="nowrap">387,109.25</span>
+  <br />
+    <span class="nowrap">357,109.36</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-20.4819708995">
+          
+    <span class="nowrap">20.48</span>
+  <br />
+    <span class="nowrap">18.89</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">5</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=651" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/651_32.png" alt="Hoarder"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=651" target="_blank">Hoarder</a>
+          </div>
+      </td>
+      <td style="text-align:right">400,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-939999.99">
+          
+    <span class="nowrap">939,999.99</span>
+  <br />
+    <span class="nowrap">726,007.20</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-4699999.95">
+          
+    <span class="nowrap">4,699,999.95</span>
+  <br />
+    <span class="nowrap">3,630,036.00</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-2.349999975">
+          
+    <span class="nowrap">2.35</span>
+  <br />
+    <span class="nowrap">1.82</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">2</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=11961" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/11961_32.png" alt="Huginn"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=11961" target="_blank">Huginn</a>
+          </div>
+      </td>
+      <td style="text-align:right">85,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-145344443.96">
+          
+    <span class="nowrap">145,344,443.96</span>
+  <br />
+    <span class="nowrap">138,008,002.15</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-290688887.92">
+          
+    <span class="nowrap">290,688,887.92</span>
+  <br />
+    <span class="nowrap">276,016,004.30</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-1709.93463482">
+          
+    <span class="nowrap">1,709.93</span>
+  <br />
+    <span class="nowrap">1,623.62</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">3</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=1405" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/1405_32.png" alt="Inertial Stabilizers II"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=1405" target="_blank">Inertial Stabilizers II</a>
+          </div>
+      </td>
+      <td style="text-align:right">5.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-405999.31">
+          
+    <span class="nowrap">405,999.31</span>
+  <br />
+    <span class="nowrap">320,000.53</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-1217997.93">
+          
+    <span class="nowrap">1,217,997.93</span>
+  <br />
+    <span class="nowrap">960,001.59</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-81199.862">
+          
+    <span class="nowrap">81,199.86</span>
+  <br />
+    <span class="nowrap">64,000.11</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">6</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=602" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/602_32.png" alt="Kestrel"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=602" target="_blank">Kestrel</a>
+          </div>
+      </td>
+      <td style="text-align:right">19,700.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-515995.91">
+          
+    <span class="nowrap">515,995.91</span>
+  <br />
+    <span class="nowrap">493,105.00</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-3095975.46">
+          
+    <span class="nowrap">3,095,975.46</span>
+  <br />
+    <span class="nowrap">2,958,630.00</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-26.1926857868">
+          
+    <span class="nowrap">26.19</span>
+  <br />
+    <span class="nowrap">25.03</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=24694" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/24694_32.png" alt="Maelstrom"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=24694" target="_blank">Maelstrom</a>
+          </div>
+      </td>
+      <td style="text-align:right">472,500.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-190698999.89">
+          
+    <span class="nowrap">190,698,999.89</span>
+  <br />
+    <span class="nowrap">182,800,083.17</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-190698999.89">
+          
+    <span class="nowrap">190,698,999.89</span>
+  <br />
+    <span class="nowrap">182,800,083.17</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-403.595766963">
+          
+    <span class="nowrap">403.60</span>
+  <br />
+    <span class="nowrap">386.88</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">2</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=16688" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/16688_32.png" alt="Medium Artillery Battery"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=16688" target="_blank">Medium Artillery Battery</a>
+          </div>
+      </td>
+      <td style="text-align:right">1,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-3598998.0">
+          
+    <span class="nowrap">3,598,998.00</span>
+  <br />
+    <span class="nowrap">3,100,001.15</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-7197996.0">
+          
+    <span class="nowrap">7,197,996.00</span>
+  <br />
+    <span class="nowrap">6,200,002.30</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-3598.998">
+          
+    <span class="nowrap">3,599.00</span>
+  <br />
+    <span class="nowrap">3,100.00</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=641" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/641_32.png" alt="Megathron"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=641" target="_blank">Megathron</a>
+          </div>
+      </td>
+      <td style="text-align:right">486,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-172709998.91">
+          
+    <span class="nowrap">172,709,998.91</span>
+  <br />
+    <span class="nowrap">166,120,001.20</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-172709998.91">
+          
+    <span class="nowrap">172,709,998.91</span>
+  <br />
+    <span class="nowrap">166,120,001.20</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-355.370368128">
+          
+    <span class="nowrap">355.37</span>
+  <br />
+    <span class="nowrap">341.81</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=656" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/656_32.png" alt="Miasmos"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=656" target="_blank">Miasmos</a>
+          </div>
+      </td>
+      <td style="text-align:right">265,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-1195998.94">
+          
+    <span class="nowrap">1,195,998.94</span>
+  <br />
+    <span class="nowrap">1,111,964.65</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-1195998.94">
+          
+    <span class="nowrap">1,195,998.94</span>
+  <br />
+    <span class="nowrap">1,111,964.65</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-4.51320354717">
+          
+    <span class="nowrap">4.51</span>
+  <br />
+    <span class="nowrap">4.20</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">3</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=2605" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/2605_32.png" alt="Nanofiber Internal Structure II"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=2605" target="_blank">Nanofiber Internal Structure II</a>
+          </div>
+      </td>
+      <td style="text-align:right">5.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-199997.98">
+          
+    <span class="nowrap">199,997.98</span>
+  <br />
+    <span class="nowrap">182,051.74</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-599993.94">
+          
+    <span class="nowrap">599,993.94</span>
+  <br />
+    <span class="nowrap">546,155.22</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-39999.596">
+          
+    <span class="nowrap">39,999.60</span>
+  <br />
+    <span class="nowrap">36,410.35</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=2863" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/2863_32.png" alt="Primae"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=2863" target="_blank">Primae</a>
+          </div>
+      </td>
+      <td style="text-align:right">270,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-30999998.95">
+          
+    <span class="nowrap">30,999,998.95</span>
+  <br />
+    <span class="nowrap">20,000,010.04</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-30999998.95">
+          
+    <span class="nowrap">30,999,998.95</span>
+  <br />
+    <span class="nowrap">20,000,010.04</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-114.814810926">
+          
+    <span class="nowrap">114.81</span>
+  <br />
+    <span class="nowrap">74.07</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=12735" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/12735_32.png" alt="Prowler"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=12735" target="_blank">Prowler</a>
+          </div>
+      </td>
+      <td style="text-align:right">180,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-103919998.82">
+          
+    <span class="nowrap">103,919,998.82</span>
+  <br />
+    <span class="nowrap">95,001,204.05</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-103919998.82">
+          
+    <span class="nowrap">103,919,998.82</span>
+  <br />
+    <span class="nowrap">95,001,204.05</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-577.333326778">
+          
+    <span class="nowrap">577.33</span>
+  <br />
+    <span class="nowrap">527.78</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">3</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=1335" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/1335_32.png" alt="Reinforced Bulkheads II"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=1335" target="_blank">Reinforced Bulkheads II</a>
+          </div>
+      </td>
+      <td style="text-align:right">5.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-299998.68">
+          
+    <span class="nowrap">299,998.68</span>
+  <br />
+    <span class="nowrap">280,000.00</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-899996.04">
+          
+    <span class="nowrap">899,996.04</span>
+  <br />
+    <span class="nowrap">840,000.00</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-59999.736">
+          
+    <span class="nowrap">59,999.74</span>
+  <br />
+    <span class="nowrap">56,000.00</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">3</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=629" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/629_32.png" alt="Rupture"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=629" target="_blank">Rupture</a>
+          </div>
+      </td>
+      <td style="text-align:right">96,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-10999998.95">
+          
+    <span class="nowrap">10,999,998.95</span>
+  <br />
+    <span class="nowrap">10,510,006.45</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-32999996.85">
+          
+    <span class="nowrap">32,999,996.85</span>
+  <br />
+    <span class="nowrap">31,530,019.35</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-114.583322396">
+          
+    <span class="nowrap">114.58</span>
+  <br />
+    <span class="nowrap">109.48</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">5</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=22456" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/22456_32.png" alt="Sabre"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=22456" target="_blank">Sabre</a>
+          </div>
+      </td>
+      <td style="text-align:right">43,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-40800000.65">
+          
+    <span class="nowrap">40,800,000.65</span>
+  <br />
+    <span class="nowrap">38,120,015.04</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-204000003.25">
+          
+    <span class="nowrap">204,000,003.25</span>
+  <br />
+    <span class="nowrap">190,600,075.20</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-948.837224419">
+          
+    <span class="nowrap">948.84</span>
+  <br />
+    <span class="nowrap">886.51</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">2</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=11978" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/11978_32.png" alt="Scimitar"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=11978" target="_blank">Scimitar</a>
+          </div>
+      </td>
+      <td style="text-align:right">89,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-133688999.99">
+          
+    <span class="nowrap">133,688,999.99</span>
+  <br />
+    <span class="nowrap">123,200,000.00</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-267377999.98">
+          
+    <span class="nowrap">267,377,999.98</span>
+  <br />
+    <span class="nowrap">246,400,000.00</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-1502.12359539">
+          
+    <span class="nowrap">1,502.12</span>
+  <br />
+    <span class="nowrap">1,384.27</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=631" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/631_32.png" alt="Scythe"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=631" target="_blank">Scythe</a>
+          </div>
+      </td>
+      <td style="text-align:right">89,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-9097770.0">
+          
+    <span class="nowrap">9,097,770.00</span>
+  <br />
+    <span class="nowrap">8,015,000.25</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-9097770.0">
+          
+    <span class="nowrap">9,097,770.00</span>
+  <br />
+    <span class="nowrap">8,015,000.25</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-102.222134831">
+          
+    <span class="nowrap">102.22</span>
+  <br />
+    <span class="nowrap">90.06</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">2</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=17180" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/17180_32.png" alt="Sensor Dampening Battery"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=17180" target="_blank">Sensor Dampening Battery</a>
+          </div>
+      </td>
+      <td style="text-align:right">4,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-3893999.98">
+          
+    <span class="nowrap">3,893,999.98</span>
+  <br />
+    <span class="nowrap">3,160,076.14</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-7787999.96">
+          
+    <span class="nowrap">7,787,999.96</span>
+  <br />
+    <span class="nowrap">6,320,152.28</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-973.499995">
+          
+    <span class="nowrap">973.50</span>
+  <br />
+    <span class="nowrap">790.02</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">2</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=12237" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/12237_32.png" alt="Ship Maintenance Array"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=12237" target="_blank">Ship Maintenance Array</a>
+          </div>
+      </td>
+      <td style="text-align:right">8,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-18697999.23">
+          
+    <span class="nowrap">18,697,999.23</span>
+  <br />
+    <span class="nowrap">17,101,000.67</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-37395998.46">
+          
+    <span class="nowrap">37,395,998.46</span>
+  <br />
+    <span class="nowrap">34,202,001.34</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-2337.24990375">
+          
+    <span class="nowrap">2,337.25</span>
+  <br />
+    <span class="nowrap">2,137.63</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=32878" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/32878_32.png" alt="Talwar"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=32878" target="_blank">Talwar</a>
+          </div>
+      </td>
+      <td style="text-align:right">43,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-1199999.91">
+          
+    <span class="nowrap">1,199,999.91</span>
+  <br />
+    <span class="nowrap">1,050,002.02</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-1199999.91">
+          
+    <span class="nowrap">1,199,999.91</span>
+  <br />
+    <span class="nowrap">1,050,002.02</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-27.9069746512">
+          
+    <span class="nowrap">27.91</span>
+  <br />
+    <span class="nowrap">24.42</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">2</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=649" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/649_32.png" alt="Tayra"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=649" target="_blank">Tayra</a>
+          </div>
+      </td>
+      <td style="text-align:right">270,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-1215920.34">
+          
+    <span class="nowrap">1,215,920.34</span>
+  <br />
+    <span class="nowrap">1,120,000.48</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-2431840.68">
+          
+    <span class="nowrap">2,431,840.68</span>
+  <br />
+    <span class="nowrap">2,240,000.96</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-4.50340866667">
+          
+    <span class="nowrap">4.50</span>
+  <br />
+    <span class="nowrap">4.15</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=639" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/639_32.png" alt="Tempest"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=639" target="_blank">Tempest</a>
+          </div>
+      </td>
+      <td style="text-align:right">450,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-173999995.99">
+          
+    <span class="nowrap">173,999,995.99</span>
+  <br />
+    <span class="nowrap">166,700,146.71</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-173999995.99">
+          
+    <span class="nowrap">173,999,995.99</span>
+  <br />
+    <span class="nowrap">166,700,146.71</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-386.666657756">
+          
+    <span class="nowrap">386.67</span>
+  <br />
+    <span class="nowrap">370.44</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=16242" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/16242_32.png" alt="Thrasher"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=16242" target="_blank">Thrasher</a>
+          </div>
+      </td>
+      <td style="text-align:right">43,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-1599998.44">
+          
+    <span class="nowrap">1,599,998.44</span>
+  <br />
+    <span class="nowrap">1,200,224.22</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-1599998.44">
+          
+    <span class="nowrap">1,599,998.44</span>
+  <br />
+    <span class="nowrap">1,200,224.22</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-37.2092660465">
+          
+    <span class="nowrap">37.21</span>
+  <br />
+    <span class="nowrap">27.91</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=4310" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/4310_32.png" alt="Tornado"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=4310" target="_blank">Tornado</a>
+          </div>
+      </td>
+      <td style="text-align:right">216,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-72399998.92">
+          
+    <span class="nowrap">72,399,998.92</span>
+  <br />
+    <span class="nowrap">69,000,000.15</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-72399998.92">
+          
+    <span class="nowrap">72,399,998.92</span>
+  <br />
+    <span class="nowrap">69,000,000.15</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-335.185180185">
+          
+    <span class="nowrap">335.19</span>
+  <br />
+    <span class="nowrap">319.44</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=644" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/644_32.png" alt="Typhoon"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=644" target="_blank">Typhoon</a>
+          </div>
+      </td>
+      <td style="text-align:right">414,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-181989999.48">
+          
+    <span class="nowrap">181,989,999.48</span>
+  <br />
+    <span class="nowrap">169,074,788.50</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-181989999.48">
+          
+    <span class="nowrap">181,989,999.48</span>
+  <br />
+    <span class="nowrap">169,074,788.50</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-439.589370725">
+          
+    <span class="nowrap">439.59</span>
+  <br />
+    <span class="nowrap">408.39</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">12</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=32342" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/32342_32.png" alt="Tyrfing"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=32342" target="_blank">Tyrfing</a>
+          </div>
+      </td>
+      <td style="text-align:right">10,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-23499997.26">
+          
+    <span class="nowrap">23,499,997.26</span>
+  <br />
+    <span class="nowrap">22,450,000.00</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-281999967.12">
+          
+    <span class="nowrap">281,999,967.12</span>
+  <br />
+    <span class="nowrap">269,400,000.00</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-2349.999726">
+          
+    <span class="nowrap">2,350.00</span>
+  <br />
+    <span class="nowrap">2,245.00</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">4</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=11999" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/11999_32.png" alt="Vagabond"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=11999" target="_blank">Vagabond</a>
+          </div>
+      </td>
+      <td style="text-align:right">80,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-188000000.01">
+          
+    <span class="nowrap">188,000,000.01</span>
+  <br />
+    <span class="nowrap">146,000,000.01</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-752000000.04">
+          
+    <span class="nowrap">752,000,000.04</span>
+  <br />
+    <span class="nowrap">584,000,000.04</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-2350.00000013">
+          
+    <span class="nowrap">2,350.00</span>
+  <br />
+    <span class="nowrap">1,825.00</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=28665" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/28665_32.png" alt="Vargur"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=28665" target="_blank">Vargur</a>
+          </div>
+      </td>
+      <td style="text-align:right">450,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-993244444.0">
+          
+    <span class="nowrap">993,244,444.00</span>
+  <br />
+    <span class="nowrap">954,125,318.93</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-993244444.0">
+          
+    <span class="nowrap">993,244,444.00</span>
+  <br />
+    <span class="nowrap">954,125,318.93</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-2207.20987556">
+          
+    <span class="nowrap">2,207.21</span>
+  <br />
+    <span class="nowrap">2,120.28</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">5</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=3766" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/3766_32.png" alt="Vigil"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=3766" target="_blank">Vigil</a>
+          </div>
+      </td>
+      <td style="text-align:right">17,400.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-750000.0">
+          
+    <span class="nowrap">750,000.00</span>
+  <br />
+    <span class="nowrap">400,025.11</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-3750000.0">
+          
+    <span class="nowrap">3,750,000.00</span>
+  <br />
+    <span class="nowrap">2,000,125.55</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-43.1034482759">
+          
+    <span class="nowrap">43.10</span>
+  <br />
+    <span class="nowrap">22.99</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=653" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/653_32.png" alt="Wreathe"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=653" target="_blank">Wreathe</a>
+          </div>
+      </td>
+      <td style="text-align:right">225,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-1174999.85">
+          
+    <span class="nowrap">1,174,999.85</span>
+  <br />
+    <span class="nowrap">816,602.11</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-1174999.85">
+          
+    <span class="nowrap">1,174,999.85</span>
+  <br />
+    <span class="nowrap">816,602.11</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-5.22222155556">
+          
+    <span class="nowrap">5.22</span>
+  <br />
+    <span class="nowrap">3.63</span>
+  
+        </td>
+      
+    </tr>
+  
+    
+    
+    
+
+    <tr class="line-item-row ">
+      <td style="text-align:right">1</td>
+      <td>
+          <div class="media">
+            
+            <a href="http://eve-central.com/home/quicklook.html?typeid=2078" target="_blank"><img class="pull-left media-object" src="https://image.eveonline.com/Type/2078_32.png" alt="Zephyr"></a> &nbsp;<a href="http://eve-central.com/home/quicklook.html?typeid=2078" target="_blank">Zephyr</a>
+          </div>
+      </td>
+      <td style="text-align:right">5,000.00</td>
+      
+        
+        <td style="text-align:right" data-sort="-48888749.9">
+          
+    <span class="nowrap">48,888,749.90</span>
+  <br />
+    <span class="nowrap">46,500,001.01</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-48888749.9">
+          
+    <span class="nowrap">48,888,749.90</span>
+  <br />
+    <span class="nowrap">46,500,001.01</span>
+  
+        </td>
+        <td style="text-align:right" data-sort="-9777.74998">
+          
+    <span class="nowrap">9,777.75</span>
+  <br />
+    <span class="nowrap">9,300.00</span>
+  
+        </td>
+      
+    </tr>
+  
+
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="3" style="text-align: right"><span class="nowrap">Total Sell Value</span><br />
+        <span class="nowrap">Total Buy Value</span><br />
+        <span class="nowrap">Total Volume</span></td>
+      <th colspan="2" style="text-align:right">
+        <span class="nowrap">7,204,259,092.08</span><br />
+        <span class="nowrap">6,578,526,151.01</span><br />
+        <span class="nowrap">11,717,745.00m<sup>3</sup></span>
+      </th>
+      <td></td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+
+<script>
+$(document).ready(function() {
+  $("#results").tablesorter({ sortList: [[4,0]] });
+});
+</script>
+
+<script>
+$(document).ready(function() {
+  
+      window.history.replaceState('Object', 'Title', '/e/7132543');
+  
+});
+</script>

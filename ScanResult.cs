@@ -23,6 +23,10 @@ namespace EveScanner
 
         public int? ImageIndex { get; private set; }
 
+        public string ShipType { get; set; }
+
+        public string Location { get; set; }
+
         public ScanResult(string evepraisalResponse)
         {
             this.ParseResponse(evepraisalResponse);
@@ -89,12 +93,23 @@ namespace EveScanner
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
+            if (!string.IsNullOrEmpty(this.ShipType))
+            {
+                sb.AppendFormat("{0} | ", this.ShipType);
+            }
+
             sb.AppendFormat("{0} | {1} | {2} stacks |", ScanResult.GetIskString(this.SellValue), string.Format("{0:n}", this.Volume) + " m3", this.Stacks);
             if (this.ImageIndex != null)
             {
-                sb.AppendFormat("{0} |", EveScannerConfig.Instance.ImageNames[this.ImageIndex.ToString()]);
+                sb.AppendFormat(" {0} |", EveScannerConfig.Instance.ImageNames[this.ImageIndex.ToString()]);
             }
+
             sb.AppendFormat(" {0}", this.EvepraisalUrl);
+            if (!string.IsNullOrEmpty(this.Location))
+            {
+                sb.AppendFormat(" | {0}", this.Location);
+            }
+
             return sb.ToString();
         }
 

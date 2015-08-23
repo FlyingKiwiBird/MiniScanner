@@ -10,6 +10,7 @@ namespace EveScanner
     using System.Drawing;
     using System.Globalization;
     using System.IO;
+    using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Text;
     using System.Text.RegularExpressions;
@@ -178,9 +179,9 @@ namespace EveScanner
             this.Width = EveScannerConfig.Instance.AppWidth;
             this.Height = EveScannerConfig.Instance.AppHeight;
 
-            for (int i = 0; i < loggingToolStripMenuItem.DropDownItems.Count; i++)
+            for (int i = 0; i < this.loggingToolStripMenuItem.DropDownItems.Count; i++)
             {
-                ToolStripItem c = loggingToolStripMenuItem.DropDownItems[i];
+                ToolStripItem c = this.loggingToolStripMenuItem.DropDownItems[i];
                 if ((string)c.Tag == EveScannerConfig.Instance.DebugLevel)
                 {
                     this.DebugLevelStripMenu_Click(c, EventArgs.Empty);
@@ -245,6 +246,13 @@ namespace EveScanner
                 this.scanText.Text = this.result.RawScan;
                 this.AddResultToList(this.result);
                 this.ParseCurrentResult();
+
+                // Clear the ship and location buttons.
+                this.otherShipRadioButton.Checked = true;
+                this.otherShipRadioButton.Checked = false;
+
+                this.location1Radio.Checked = true;
+                this.location1Radio.Checked = false;
             }
             catch (Exception ex)
             {
@@ -274,19 +282,7 @@ namespace EveScanner
 
             StringBuilder sb = new StringBuilder();
 
-            string shipname = string.Empty;
-            if ((shipname = this.GetShipName()) != string.Empty)
-            {
-                sb.Append(shipname + " | ");
-            }
-
             sb.Append(this.result.ToString());
-
-            string location = string.Empty;
-            if ((location = this.GetLocation()) != string.Empty)
-            {
-                sb.Append(" | " + location);
-            }
 
             Clipboard.SetText(sb.ToString());
         }
@@ -313,7 +309,95 @@ namespace EveScanner
 
             this.result = this.scans[scanIndex];
 
+            if (!string.IsNullOrEmpty(this.result.ShipType))
+            {
+                bool shipTypeFound = false;
+                foreach (Control cc in shipContainer.Controls)
+                {
+                    RadioButton rb = cc as RadioButton;
+                    if (rb != null)
+                    {
+                        if (rb.Text == this.result.ShipType)
+                        {
+                            rb.Checked = true;
+                            shipTypeFound = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!shipTypeFound)
+                {
+                    otherShipRadioButton.Checked = true;
+                    otherShipText.Text = this.result.ShipType;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(this.result.Location))
+            {
+                if (this.result.Location == location1Text.Text)
+                {
+                    location1Radio.Checked = true;
+                }
+                else
+                {
+                    location1Radio.Checked = false;
+                }
+
+                if (this.result.Location == location2Text.Text)
+                {
+                    location2Radio.Checked = true;
+                }
+                else
+                {
+                    location2Radio.Checked = false;
+                }
+
+                if (this.result.Location == location3Text.Text)
+                {
+                    location3Radio.Checked = true;
+                }
+                else
+                {
+                    location3Radio.Checked = false;
+                }
+            }
+
             this.ParseCurrentResult();
+        }
+
+        /// <summary>
+        /// This calls the click routine and updates locations on the result object.
+        /// </summary>
+        /// <param name="sender">Location Panel Radio Buttons</param>
+        /// <param name="e">None provided</param>
+        private void LocationButton_Click(object sender, EventArgs e)
+        {
+            this.RadioButton_Click(sender, e);
+
+            if (this.result != null)
+            {
+                this.result.Location = this.GetLocation();
+            }
+
+            this.UpdateDropdown();
+        }
+
+        /// <summary>
+        /// This calls the click routine and updates ship type on the result object.
+        /// </summary>
+        /// <param name="sender">Ship Panel Radio Buttons</param>
+        /// <param name="e">None provided</param>
+        private void ShipButton_Click(object sender, EventArgs e)
+        {
+            this.RadioButton_Click(sender, e);
+
+            if (this.result != null)
+            {
+                this.result.ShipType = this.GetShipName();
+            }
+
+            this.UpdateDropdown();
         }
 
         /// <summary>
@@ -323,7 +407,7 @@ namespace EveScanner
         /// <param name="e">Not provided</param>
         private void RadioButton_Click(object sender, EventArgs e)
         {
-            if ((Control.ModifierKeys & (Keys.Control | Keys.Shift)) > 0)
+            if ((Control.ModifierKeys & (Keys.Control | Keys.Shift)) != Keys.None)
             {
                 RadioButton btn = sender as RadioButton;
                 if (btn != null)
@@ -588,6 +672,17 @@ namespace EveScanner
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Updates the dropdown text with the current result data (updated if you changed shiptype/location)
+        /// </summary>
+        private void UpdateDropdown()
+        {
+            int selectedIndex = historyDropdown.SelectedIndex;
+            historyDropdown.Items.RemoveAt(selectedIndex);
+            historyDropdown.Items.Insert(selectedIndex, this.result.ToString());
+            historyDropdown.SelectedIndex = selectedIndex;
         }
         #endregion Helper Functions
     }

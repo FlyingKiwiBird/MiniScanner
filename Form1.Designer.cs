@@ -138,7 +138,7 @@ namespace EveScanner
             this.radioButton1.TabIndex = 2;
             this.radioButton1.Text = "Providence";
             this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.Click += new System.EventHandler(this.RadioButton_Click);
+            this.radioButton1.Click += new System.EventHandler(this.ShipButton_Click);
             // 
             // radioButton2
             // 
@@ -149,7 +149,7 @@ namespace EveScanner
             this.radioButton2.TabIndex = 3;
             this.radioButton2.Text = "Charon";
             this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.Click += new System.EventHandler(this.RadioButton_Click);
+            this.radioButton2.Click += new System.EventHandler(this.ShipButton_Click);
             // 
             // radioButton3
             // 
@@ -160,7 +160,7 @@ namespace EveScanner
             this.radioButton3.TabIndex = 4;
             this.radioButton3.Text = "Obelisk";
             this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.Click += new System.EventHandler(this.RadioButton_Click);
+            this.radioButton3.Click += new System.EventHandler(this.ShipButton_Click);
             // 
             // radioButton4
             // 
@@ -171,7 +171,7 @@ namespace EveScanner
             this.radioButton4.TabIndex = 5;
             this.radioButton4.Text = "Fenrir";
             this.radioButton4.UseVisualStyleBackColor = true;
-            this.radioButton4.Click += new System.EventHandler(this.RadioButton_Click);
+            this.radioButton4.Click += new System.EventHandler(this.ShipButton_Click);
             // 
             // radioButton5
             // 
@@ -182,7 +182,7 @@ namespace EveScanner
             this.radioButton5.TabIndex = 6;
             this.radioButton5.Text = "Ark";
             this.radioButton5.UseVisualStyleBackColor = true;
-            this.radioButton5.Click += new System.EventHandler(this.RadioButton_Click);
+            this.radioButton5.Click += new System.EventHandler(this.ShipButton_Click);
             // 
             // radioButton6
             // 
@@ -193,7 +193,7 @@ namespace EveScanner
             this.radioButton6.TabIndex = 7;
             this.radioButton6.Text = "Rhea";
             this.radioButton6.UseVisualStyleBackColor = true;
-            this.radioButton6.Click += new System.EventHandler(this.RadioButton_Click);
+            this.radioButton6.Click += new System.EventHandler(this.ShipButton_Click);
             // 
             // radioButton7
             // 
@@ -204,7 +204,7 @@ namespace EveScanner
             this.radioButton7.TabIndex = 8;
             this.radioButton7.Text = "Anshar";
             this.radioButton7.UseVisualStyleBackColor = true;
-            this.radioButton7.Click += new System.EventHandler(this.RadioButton_Click);
+            this.radioButton7.Click += new System.EventHandler(this.ShipButton_Click);
             // 
             // radioButton8
             // 
@@ -215,7 +215,7 @@ namespace EveScanner
             this.radioButton8.TabIndex = 9;
             this.radioButton8.Text = "Nomad";
             this.radioButton8.UseVisualStyleBackColor = true;
-            this.radioButton8.Click += new System.EventHandler(this.RadioButton_Click);
+            this.radioButton8.Click += new System.EventHandler(this.ShipButton_Click);
             // 
             // radioButton9
             // 
@@ -226,7 +226,7 @@ namespace EveScanner
             this.radioButton9.TabIndex = 10;
             this.radioButton9.Text = "Orca";
             this.radioButton9.UseVisualStyleBackColor = true;
-            this.radioButton9.Click += new System.EventHandler(this.RadioButton_Click);
+            this.radioButton9.Click += new System.EventHandler(this.ShipButton_Click);
             // 
             // radioButton10
             // 
@@ -237,7 +237,7 @@ namespace EveScanner
             this.radioButton10.TabIndex = 11;
             this.radioButton10.Text = "Bowhead";
             this.radioButton10.UseVisualStyleBackColor = true;
-            this.radioButton10.Click += new System.EventHandler(this.RadioButton_Click);
+            this.radioButton10.Click += new System.EventHandler(this.ShipButton_Click);
             // 
             // otherShipText
             // 
@@ -249,15 +249,13 @@ namespace EveScanner
             // otherShipRadioButton
             // 
             this.otherShipRadioButton.AutoSize = true;
-            this.otherShipRadioButton.Checked = true;
             this.otherShipRadioButton.Location = new System.Drawing.Point(188, 65);
             this.otherShipRadioButton.Name = "otherShipRadioButton";
             this.otherShipRadioButton.Size = new System.Drawing.Size(51, 17);
             this.otherShipRadioButton.TabIndex = 0;
-            this.otherShipRadioButton.TabStop = true;
             this.otherShipRadioButton.Text = "Other";
             this.otherShipRadioButton.UseVisualStyleBackColor = true;
-            this.otherShipRadioButton.Click += new System.EventHandler(this.RadioButton_Click);
+            this.otherShipRadioButton.Click += new System.EventHandler(this.ShipButton_Click);
             // 
             // location1Text
             // 
@@ -277,7 +275,7 @@ namespace EveScanner
             this.location1Radio.TabStop = true;
             this.location1Radio.Text = "Location 1";
             this.location1Radio.UseVisualStyleBackColor = true;
-            this.location1Radio.Click += new System.EventHandler(this.RadioButton_Click);
+            this.location1Radio.Click += new System.EventHandler(this.LocationButton_Click);
             // 
             // location2Radio
             // 
@@ -289,7 +287,7 @@ namespace EveScanner
             this.location2Radio.TabStop = true;
             this.location2Radio.Text = "Location 2";
             this.location2Radio.UseVisualStyleBackColor = true;
-            this.location2Radio.Click += new System.EventHandler(this.RadioButton_Click);
+            this.location2Radio.Click += new System.EventHandler(this.LocationButton_Click);
             // 
             // location3Radio
             // 
@@ -301,7 +299,7 @@ namespace EveScanner
             this.location3Radio.TabStop = true;
             this.location3Radio.Text = "Location 3";
             this.location3Radio.UseVisualStyleBackColor = true;
-            this.location3Radio.Click += new System.EventHandler(this.RadioButton_Click);
+            this.location3Radio.Click += new System.EventHandler(this.LocationButton_Click);
             // 
             // location2Text
             // 

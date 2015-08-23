@@ -20,6 +20,7 @@ namespace EveScanner
     /// </summary>
     public partial class Form1 : Form
     {
+        #region Private Fields
         /// <summary>
         /// Constant for the WM_DRAWCLIPBOARD message.
         /// </summary>
@@ -49,7 +50,9 @@ namespace EveScanner
         /// Holds a value indicating if the clipboard event has fired yet.
         /// </summary>
         private bool firstFire = true;
+        #endregion Private Fields
 
+        #region Constructors
         /// <summary>
         /// Initializes a new instance of the <see cref="Form1"/> class. This method
         /// initializes the component, and moves it to the last saved location.
@@ -68,7 +71,9 @@ namespace EveScanner
                 this.Location = new Point(EveScannerConfig.Instance.WindowPosX, EveScannerConfig.Instance.WindowPosY);
             }
         }
+        #endregion Constructors
 
+        #region P/Invoked Methods
         /// <summary>
         /// Adds a clipboard viewer to the current chain of clipboard registrees.
         /// </summary>
@@ -85,6 +90,7 @@ namespace EveScanner
         /// <returns>True if successful, false otherwise.</returns>
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         public static extern bool ChangeClipboardChain(IntPtr hWndRemove, IntPtr hWndNewNext);
+        #endregion P/Invoked Methods
 
         #region Form Events
         /// <summary>
@@ -236,6 +242,7 @@ namespace EveScanner
                 Evepraisal ep = new Evepraisal();
                 string appraisal = ep.GetAppraisal(this.scanText.Text);
                 this.result = new ScanResult(appraisal);
+                this.scanText.Text = this.result.RawScan;
                 this.AddResultToList(this.result);
                 this.ParseCurrentResult();
             }

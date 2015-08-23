@@ -35,6 +35,10 @@ namespace EveScanner
             int dataIx = responseString.IndexOf(textArea);
             int dataIe = responseString.IndexOf("</textarea>");
             this.RawScan = responseString.Substring(dataIx + textArea.Length, dataIe - dataIx - textArea.Length);
+            if (this.RawScan.IndexOf("\r\n") == -1)
+            {
+                this.RawScan = this.RawScan.Replace("\n", "\r\n");
+            }
 
             // Find the /e/ link
             int scanIx = responseString.IndexOf("<a href=\"/e/");
@@ -71,14 +75,13 @@ namespace EveScanner
             string volume = footer.Substring(span3s, span3e - span3s);
             this.Volume = decimal.Parse(volume);
 
-            // Find "Stacks"
-            this.Stacks = Regex.Matches(responseString, "<tr class=\"line-item-row").Count;
-
-            string[] items = this.RawScan.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+            // Find "Stacks", and fix items for comparison in images.
+            string[] items = this.RawScan.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < items.Length; i++)
             {
                 items[i] = items[i].Substring(items[i].IndexOf(' ') + 1);
             }
+            this.Stacks = items.Length;
 
             this.ImageIndex = EveScannerConfig.Instance.FindImageToDisplay(items);
         }
@@ -99,6 +102,10 @@ namespace EveScanner
         {
             string output = string.Empty;
 
+            if (value > 1000000000000000)
+            {
+                output = (value / 1000000000000000).ToString("#.00Q");
+            }
             if (value > 1000000000000)
             {
                 output = (value / 1000000000000).ToString("#.00T");

@@ -1,39 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
-
+﻿//-----------------------------------------------------------------------
+// <copyright company="Viktorie Lucilla" file="Form1.cs">
+// Copyright © Viktorie Lucilla 2015. All Rights Reserved
+// </copyright>
+//-----------------------------------------------------------------------
 namespace EveScanner
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Drawing;
+    using System.Globalization;
+    using System.IO;
+    using System.Runtime.InteropServices;
+    using System.Text;
+    using System.Text.RegularExpressions;
+    using System.Windows.Forms;
+
+    /// <summary>
+    /// Main Form for the Application
+    /// </summary>
     public partial class Form1 : Form
     {
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr SetClipboardViewer(IntPtr hWndNewViewer);
-
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern bool ChangeClipboardChain(IntPtr hWndRemove, IntPtr hWndNewNext);
-
+        /// <summary>
+        /// Constant for the WM_DRAWCLIPBOARD message.
+        /// </summary>
         private const int WM_DRAWCLIPBOARD = 0x0308;        // WM_DRAWCLIPBOARD message
-        private IntPtr _clipboardViewerNext;                // Our variable that will hold the value to identify the next window in the clipboard viewer chain
 
-        private ScanResult result = null;
+        /// <summary>
+        /// Holds the Handle to the next clipboard viewer in the chain.
+        /// </summary>
+        private IntPtr clipboardViewerNext;                // Our variable that will hold the value to identify the next window in the clipboard viewer chain
+
+        /// <summary>
+        /// Holds a list of all results which have been parsed.
+        /// </summary>
         private List<ScanResult> scans = new List<ScanResult>();
+        
+        /// <summary>
+        /// Holds the current result being parsed.
+        /// </summary>
+        private ScanResult result = null;
+        
+        /// <summary>
+        /// Holds a value indicating if we're running on windows, which is necessary for clipboard setup/teardown.
+        /// </summary>
         private bool runningOnWindows = true;
+
+        /// <summary>
+        /// Holds a value indicating if the clipboard event has fired yet.
+        /// </summary>
         private bool firstFire = true;
 
-        #region Form Events
         /// <summary>
         /// Initializes a new instance of the <see cref="Form1"/> class. This method
         /// initializes the component, and moves it to the last saved location.
         /// </summary>
         public Form1()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             if (EveScannerConfig.Instance.WindowPosX == -1 && EveScannerConfig.Instance.WindowPosY == -1)
             {
@@ -47,46 +70,23 @@ namespace EveScanner
         }
 
         /// <summary>
-        /// Called when the form loads, sets up clipboard, always on top, etc.
+        /// Adds a clipboard viewer to the current chain of clipboard registrees.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            var pl = Environment.OSVersion.Platform;
-            this.runningOnWindows = (pl == PlatformID.Win32NT);
+        /// <param name="hWndNewViewer">Handle to current process</param>
+        /// <returns>Handle of next process in chain</returns>
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SetClipboardViewer(IntPtr hWndNewViewer);
 
-            if (this.runningOnWindows)
-            {
-                Logger.Debug("Attaching Clipboard Handler");
-                _clipboardViewerNext = SetClipboardViewer(this.Handle);      // Adds our form to the chain of clipboard viewers.
-            }
+        /// <summary>
+        /// Removes a clipboard viewer from the chain of clipboard registrees, adding one back in its place.
+        /// </summary>
+        /// <param name="hWndRemove">Handle to remove from chain.</param>
+        /// <param name="hWndNewNext">Handle to replace with in chain.</param>
+        /// <returns>True if successful, false otherwise.</returns>
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern bool ChangeClipboardChain(IntPtr hWndRemove, IntPtr hWndNewNext);
 
-            this.captureClipboardOnToolStripMenuItem.Checked = EveScannerConfig.Instance.CaptureClipboard;
-            this.toggleAlwaysOnTopToolStripMenuItem.Checked = EveScannerConfig.Instance.AlwaysOnTop;
-            if (EveScannerConfig.Instance.AlwaysOnTop)
-            {
-                this.TopMost = true;
-            }
-
-            if (!EveScannerConfig.Instance.ShowExtra)
-            {
-                showHideExtraOptionsToolStripMenuItem_Click(null, EventArgs.Empty);
-            }
-
-            this.Width = EveScannerConfig.Instance.AppWidth;
-            this.Height = EveScannerConfig.Instance.AppHeight;
-
-            for (int i = 0; i < loggingToolStripMenuItem.DropDownItems.Count; i++)
-            {
-                ToolStripItem c = loggingToolStripMenuItem.DropDownItems[i];
-                if ((string)c.Tag == EveScannerConfig.Instance.DebugLevel)
-                {
-                    debugLevelStripMenu_Click(c, EventArgs.Empty);
-                }
-            }
-        }
-
+        #region Form Events
         /// <summary>
         /// This processes window messages such as clipboard events.
         /// </summary>
@@ -102,10 +102,10 @@ namespace EveScanner
 
             if (m.Msg == WM_DRAWCLIPBOARD)
             {
-                if (firstFire)
+                if (this.firstFire)
                 {
                     Logger.Debug("First clipboard event captured, skipping.");
-                    firstFire = false;
+                    this.firstFire = false;
                     return;
                 }
 
@@ -116,10 +116,12 @@ namespace EveScanner
                 {
                     format = DataFormats.OemText;
                 }
+
                 if (obj.GetDataPresent(DataFormats.Text))
                 {
                     format = DataFormats.Text;
                 }
+
                 if (obj.GetDataPresent(DataFormats.UnicodeText))
                 {
                     format = DataFormats.UnicodeText;
@@ -133,8 +135,49 @@ namespace EveScanner
                     {
                         Logger.Scan("Captured scan {0}", data);
                         this.scanText.Text = data;
-                        this.submitRequestButton_Click(this.submitRequestButton, EventArgs.Empty);
+                        this.SubmitRequestButton_Click(this.submitRequestButton, EventArgs.Empty);
                     }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Called when the form loads, sets up clipboard, always on top, etc.
+        /// </summary>
+        /// <param name="sender">Not used.</param>
+        /// <param name="e">Not provided.</param>
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            var pl = Environment.OSVersion.Platform;
+            this.runningOnWindows = pl == PlatformID.Win32NT;
+
+            if (this.runningOnWindows)
+            {
+                Logger.Debug("Attaching Clipboard Handler");
+                this.clipboardViewerNext = SetClipboardViewer(this.Handle);      // Adds our form to the chain of clipboard viewers.
+            }
+
+            this.captureClipboardOnToolStripMenuItem.Checked = EveScannerConfig.Instance.CaptureClipboard;
+            this.toggleAlwaysOnTopToolStripMenuItem.Checked = EveScannerConfig.Instance.AlwaysOnTop;
+            if (EveScannerConfig.Instance.AlwaysOnTop)
+            {
+                this.TopMost = true;
+            }
+
+            if (!EveScannerConfig.Instance.ShowExtra)
+            {
+                this.ShowHideExtraOptionsToolStripMenuItem_Click(null, EventArgs.Empty);
+            }
+
+            this.Width = EveScannerConfig.Instance.AppWidth;
+            this.Height = EveScannerConfig.Instance.AppHeight;
+
+            for (int i = 0; i < loggingToolStripMenuItem.DropDownItems.Count; i++)
+            {
+                ToolStripItem c = loggingToolStripMenuItem.DropDownItems[i];
+                if ((string)c.Tag == EveScannerConfig.Instance.DebugLevel)
+                {
+                    this.DebugLevelStripMenu_Click(c, EventArgs.Empty);
                 }
             }
         }
@@ -149,7 +192,7 @@ namespace EveScanner
             if (this.runningOnWindows)
             {
                 Logger.Debug("Detaching Clipboard Handler");
-                ChangeClipboardChain(this.Handle, _clipboardViewerNext);        // Removes our from the chain of clipboard viewers when the form closes.
+                ChangeClipboardChain(this.Handle, this.clipboardViewerNext);        // Removes our from the chain of clipboard viewers when the form closes.
             }
 
             Logger.Debug("Saving Config");
@@ -164,7 +207,7 @@ namespace EveScanner
         /// </summary>
         /// <param name="sender">File -> Exit</param>
         /// <param name="e">Not provided.</param>
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Logger.Debug("Exiting application");
             Application.Exit();
@@ -176,7 +219,7 @@ namespace EveScanner
         /// </summary>
         /// <param name="sender">Raw Scan Data -> Manually Submit</param>
         /// <param name="e">Not provided.</param>
-        private void submitRequestButton_Click(object sender, EventArgs e)
+        private void SubmitRequestButton_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(scanText.Text))
             {
@@ -215,7 +258,7 @@ namespace EveScanner
         /// </summary>
         /// <param name="sender">Results Pane -> Copy Summary to Clipboard</param>
         /// <param name="e">Not provided</param>
-        private void copySummaryButton_Click(object sender, EventArgs e)
+        private void CopySummaryButton_Click(object sender, EventArgs e)
         {
             if (this.result == null)
             {
@@ -246,7 +289,7 @@ namespace EveScanner
         /// </summary>
         /// <param name="sender">Results Pane -> Dropdown</param>
         /// <param name="e">Not provided</param>
-        private void historyDropdown_SelectedIndexChanged(object sender, EventArgs e)
+        private void HistoryDropdown_SelectedIndexChanged(object sender, EventArgs e)
         {
             ComboBox cb = sender as ComboBox;
             if (cb == null)
@@ -271,9 +314,9 @@ namespace EveScanner
         /// </summary>
         /// <param name="sender">Many radio button controls</param>
         /// <param name="e">Not provided</param>
-        private void radioButton_Click(object sender, EventArgs e)
+        private void RadioButton_Click(object sender, EventArgs e)
         {
-            if ((ModifierKeys & ( Keys.Control | Keys.Shift)) > 0)
+            if ((Control.ModifierKeys & (Keys.Control | Keys.Shift)) > 0)
             {
                 RadioButton btn = sender as RadioButton;
                 if (btn != null)
@@ -281,6 +324,34 @@ namespace EveScanner
                     btn.Checked = false;
                 }
             }
+        }
+
+        /// <summary>
+        /// This sets up the checkmarks properly when clicking an item on the debug menu.
+        /// </summary>
+        /// <param name="sender">Options -> Debug</param>
+        /// <param name="e">Not provided.</param>
+        private void DebugLevelStripMenu_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
+            if (tsmi == null)
+            {
+                return;
+            }
+
+            foreach (ToolStripMenuItem tsmx in tsmi.GetCurrentParent().Items)
+            {
+                if (tsmx == tsmi)
+                {
+                    tsmx.Checked = true;
+                }
+                else
+                {
+                    tsmx.Checked = false;
+                }
+            }
+
+            EveScannerConfig.Instance.DebugLevel = (string)tsmi.Tag;
         }
         #endregion Form Controls
 
@@ -291,7 +362,7 @@ namespace EveScanner
         /// </summary>
         /// <param name="sender">Show/Hide Extra Buttons</param>
         /// <param name="e">Not provided</param>
-        private void showHideExtraOptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ShowHideExtraOptionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.SuspendLayout();
 
@@ -313,7 +384,7 @@ namespace EveScanner
                 scanContainer.Visible = true;
 
                 int containerBottomToContainerTop = locationContainer.Top - (shipContainer.Location.Y + shipContainer.Size.Height);
-                newHeight = shipContainer.Location.Y + shipContainer.Height + locationContainer.Height + 2 * containerBottomToContainerTop + resultsContainer.Height + containerBottomToFormBottom;
+                newHeight = shipContainer.Location.Y + shipContainer.Height + locationContainer.Height + (2 * containerBottomToContainerTop) + resultsContainer.Height + containerBottomToFormBottom;
             }
 
             EveScannerConfig.Instance.ShowExtra = shipContainer.Visible;
@@ -331,7 +402,7 @@ namespace EveScanner
         /// </summary>
         /// <param name="sender">Options -> Capture Clipboard</param>
         /// <param name="e">Not provided</param>
-        private void captureClipboardOnToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CaptureClipboardOnToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EveScannerConfig.Instance.CaptureClipboard = !EveScannerConfig.Instance.CaptureClipboard;
             captureClipboardOnToolStripMenuItem.Checked = EveScannerConfig.Instance.CaptureClipboard;
@@ -342,7 +413,7 @@ namespace EveScanner
         /// </summary>
         /// <param name="sender">Options -> Toggle Always on Top</param>
         /// <param name="e">Not provided</param>
-        private void toggleAlwaysOnTopToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ToggleAlwaysOnTopToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.TopMost = !this.TopMost;
             this.toggleAlwaysOnTopToolStripMenuItem.Checked = this.TopMost;
@@ -354,7 +425,7 @@ namespace EveScanner
         /// </summary>
         /// <param name="sender">File -> Reset Data</param>
         /// <param name="e">Not provided</param>
-        private void clearToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Logger.Debug("Clearing application values!");
 
@@ -372,8 +443,8 @@ namespace EveScanner
             location2Text.Text = "Ashab -> Madirmilire";
             location3Text.Text = "Hatakani -> Sivala";
 
-            resultUrlTextBox.Text = "";
-            scanText.Text = "";
+            resultUrlTextBox.Text = string.Empty;
+            scanText.Text = string.Empty;
 
             historyDropdown.Items.Clear();
             this.scans.Clear();
@@ -435,19 +506,19 @@ namespace EveScanner
         {
             string output = string.Empty;
 
-            if (location1Radio.Checked)
+            if (this.location1Radio.Checked)
             {
-                return location1Text.Text;
+                return this.location1Text.Text;
             }
 
-            if (location2Radio.Checked)
+            if (this.location2Radio.Checked)
             {
-                return location2Text.Text;
+                return this.location2Text.Text;
             }
 
-            if (location3Radio.Checked)
+            if (this.location3Radio.Checked)
             {
-                return location3Text.Text;
+                return this.location3Text.Text;
             }
 
             return output;
@@ -503,7 +574,7 @@ namespace EveScanner
         private bool CheckTextFormat(string inputText)
         {
             string strRegex = @"^(?<line>\d+ [A-Za-z0-9,()'/\-]+( +[A-Za-z0-9,()'/\-]+)*)$";
-            string output = Regex.Replace(inputText, strRegex, string.Empty, RegexOptions.Multiline | RegexOptions.ExplicitCapture).Replace("\n", "");
+            string output = Regex.Replace(inputText, strRegex, string.Empty, RegexOptions.Multiline | RegexOptions.ExplicitCapture).Replace("\n", string.Empty);
             if (string.IsNullOrEmpty(output))
             {
                 return true;
@@ -512,25 +583,5 @@ namespace EveScanner
             return false;
         }
         #endregion Helper Functions
-
-        private void debugLevelStripMenu_Click(object sender, EventArgs e)
-        {
-            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
-            if (tsmi == null) return;
-
-            foreach (ToolStripMenuItem tsmx in tsmi.GetCurrentParent().Items)
-            {
-                if (tsmx == tsmi)
-                {
-                    tsmx.Checked = true;
-                }
-                else
-                {
-                    tsmx.Checked = false;
-                }
-            }
-
-            EveScannerConfig.Instance.DebugLevel = (string)tsmi.Tag;
-        }
     }
 }

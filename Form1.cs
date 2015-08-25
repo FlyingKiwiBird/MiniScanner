@@ -16,6 +16,8 @@ namespace EveScanner
     using System.Text.RegularExpressions;
     using System.Windows.Forms;
 
+    using EveScanner.Interfaces;
+
     /// <summary>
     /// Main Form for the Application
     /// </summary>
@@ -35,12 +37,12 @@ namespace EveScanner
         /// <summary>
         /// Holds a list of all results which have been parsed.
         /// </summary>
-        private List<ScanResult> scans = new List<ScanResult>();
+        private List<IScanResult> scans = new List<IScanResult>();
         
         /// <summary>
         /// Holds the current result being parsed.
         /// </summary>
-        private ScanResult result = null;
+        private IScanResult result = null;
         
         /// <summary>
         /// Holds a value indicating if we're running on windows, which is necessary for clipboard setup/teardown.
@@ -241,8 +243,9 @@ namespace EveScanner
             try
             {
                 Evepraisal ep = new Evepraisal();
-                string appraisal = ep.GetAppraisal(this.scanText.Text);
-                this.result = new ScanResult(appraisal);
+                IScanResult iresult = ep.GetAppraisalFromScan(this.scanText.Text);
+
+                this.result = iresult;
                 this.scanText.Text = this.result.RawScan;
                 this.AddResultToList(this.result);
                 this.ParseCurrentResult();
@@ -619,7 +622,7 @@ namespace EveScanner
         /// Adds a provided result to the list and makes it the top entry in the dropdown
         /// </summary>
         /// <param name="result">Result to add</param>
-        private void AddResultToList(ScanResult result)
+        private void AddResultToList(IScanResult result)
         {
             this.scans.Add(result);
             this.historyDropdown.Items.Insert(0, result.ToString());
@@ -638,7 +641,7 @@ namespace EveScanner
             this.stacksValueText.Text = this.result.Stacks.ToString();
             this.volumeValueLabel.Text = string.Format("{0:n}", this.result.Volume) + " m3";
 
-            this.resultUrlTextBox.Text = this.result.EvepraisalUrl;
+            this.resultUrlTextBox.Text = this.result.AppraisalUrl;
 
             this.scanText.Text = this.result.RawScan;
 

@@ -4,10 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using EveScanner.Interfaces;
 
 namespace EveScanner
 {
-    public class Evepraisal
+    public class Evepraisal : IAppraisalService
     {
         private string uri = string.Empty;
 
@@ -20,7 +21,54 @@ namespace EveScanner
             this.uri = (https ? "https" : "http") + "://" + domain + "/";
         }
 
-        public string GetAppraisal(string data)
+        public IScanResult GetAppraisalFromScan(string data)
+        {
+            string appraisal = this.GetAppraisalFromScanData(data);
+            ScanResult rs = ScanResult.GetResultFromResponse(appraisal);
+            return rs;
+        }
+
+        public IScanResult GetAppraisalFromUrl(string url)
+        {
+            string appraisal = this.GetPreviousAppraisal(url);
+            ScanResult rs = ScanResult.GetResultFromResponse(appraisal);
+            return rs;
+        }
+
+        private string GetPreviousAppraisal(string url)
+        {
+            WebRequest req = WebRequest.Create(url);
+            req.Method = WebRequestMethods.Http.Get;
+
+            string responseFromServer = string.Empty;
+
+            using (HttpWebResponse rsp = (HttpWebResponse)req.GetResponse())
+            {
+                Logger.Debug("Status {0}({1}), Length: {2}", rsp.StatusCode.ToString(), rsp.StatusDescription, rsp.ContentLength.ToString());
+                Stream ds = null;
+                try
+                {
+                    ds = rsp.GetResponseStream();
+                    using (StreamReader rdr = new StreamReader(ds))
+                    {
+                        responseFromServer = rdr.ReadToEnd();
+                        Logger.Debug("Response Html: {0}", responseFromServer);
+                    }
+                }
+                finally
+                {
+                    if (ds != null)
+                    {
+                        ds.Close();
+                        ds = null;
+                    }
+                }
+            }
+
+            return responseFromServer;
+        }
+
+        private string GetAppraisalFromScanData(string data)
         {
             try
             {

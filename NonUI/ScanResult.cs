@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using EveScanner.Interfaces;
 
 namespace EveScanner
 {
-    public class ScanResult
+    public class ScanResult : IScanResult
     {
         public string RawScan { get; set; }
 
@@ -19,7 +20,7 @@ namespace EveScanner
 
         public decimal Volume { get; private set; }
 
-        public string EvepraisalUrl { get; private set; }
+        public string AppraisalUrl { get; private set; }
 
         public int? ImageIndex { get; private set; }
 
@@ -27,9 +28,18 @@ namespace EveScanner
 
         public string Location { get; set; }
 
-        public ScanResult(string evepraisalResponse)
+        public string CharacterName { get; set; }
+
+        private ScanResult()
         {
-            this.ParseResponse(evepraisalResponse);
+
+        }
+
+        public static ScanResult GetResultFromResponse(string evepraisalResponse)
+        {
+            ScanResult output = new ScanResult();
+            output.ParseResponse(evepraisalResponse);
+            return output;
         }
 
         private void ParseResponse(string responseString)
@@ -48,7 +58,7 @@ namespace EveScanner
             int scanIx = responseString.IndexOf("<a href=\"/e/");
             int scanIe = responseString.IndexOf("\"", scanIx + 7);
             string url = "http://evepraisal.com" + responseString.Substring(scanIx + 9, scanIe - scanIx + 2);
-            this.EvepraisalUrl = url;
+            this.AppraisalUrl = url;
 
             // Find the footer with values...
             int footerIx = responseString.IndexOf("<th colspan=\"2\" style=\"text-align:right\">");
@@ -104,7 +114,7 @@ namespace EveScanner
                 sb.AppendFormat(" {0} |", EveScannerConfig.Instance.ImageNames[this.ImageIndex.ToString()]);
             }
 
-            sb.AppendFormat(" {0}", this.EvepraisalUrl);
+            sb.AppendFormat(" {0}", this.AppraisalUrl);
             if (!string.IsNullOrEmpty(this.Location))
             {
                 sb.AppendFormat(" | {0}", this.Location);

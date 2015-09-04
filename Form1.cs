@@ -30,17 +30,17 @@ namespace EveScanner
         /// Holds the Handle to the next clipboard viewer in the chain.
         /// </summary>
         private IntPtr clipboardViewerNext;                // Our variable that will hold the value to identify the next window in the clipboard viewer chain
-        
+
         /// <summary>
         /// Holds a list of all results which have been parsed.
         /// </summary>
         private List<IScanResult> scans = new List<IScanResult>();
-        
+
         /// <summary>
         /// Holds the current result being parsed.
         /// </summary>
         private IScanResult result = null;
-        
+
         /// <summary>
         /// Holds a value indicating if we're running on windows, which is necessary for clipboard setup/teardown.
         /// </summary>
@@ -639,20 +639,36 @@ namespace EveScanner
         }
 
         /// <summary>
-        /// This method checks that the input text is in the form of a cargo scan.
+        /// This method checks that the input text is in the form of a scan we recognize.
         /// </summary>
         /// <param name="inputText">Supposed cargo scan.</param>
         /// <returns>True if the text is determined to be a cargo scan, false otherwise.</returns>
         private bool CheckTextFormat(string inputText)
         {
-            string strRegex = @"^(?<line>\d+ [A-Za-z0-9,()'/\-]+( +[A-Za-z0-9,()'/\-]+)*)$";
-            string output = Regex.Replace(inputText, strRegex, string.Empty, RegexOptions.Multiline | RegexOptions.ExplicitCapture).Replace("\r\n", string.Empty).Replace("\n", string.Empty);
-            if (string.IsNullOrEmpty(output))
+            if (this.CheckForCargoScan(inputText))
             {
                 return true;
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Check every line. If one doesn't match the Cargo Scan criteria, return false.
+        /// </summary>
+        /// <param name="inputText">Scan data</param>
+        /// <returns>True if we think this is a cargo scan, false otherwise.</returns>
+        private bool CheckForCargoScan(string inputText)
+        {
+            foreach (string line in inputText.Split(new string[] { "\r", "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                if (!Regex.IsMatch(line, @"(?<line>\d+ [A-Za-z0-9,()'/\-\.]+( +[A-Za-z0-9,()'/\-\.]+)*)"))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>

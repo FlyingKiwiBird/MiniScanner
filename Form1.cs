@@ -660,6 +660,11 @@ namespace EveScanner
         /// </summary>
         private void UpdateDropdown()
         {
+            if (this.result == null)
+            {
+                return;
+            }
+
             int selectedIndex = this.historyDropdown.SelectedIndex;
             this.historyDropdown.Items.RemoveAt(selectedIndex);
             this.historyDropdown.Items.Insert(selectedIndex, this.result.ToString());

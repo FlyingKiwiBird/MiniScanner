@@ -6,6 +6,7 @@
 namespace EveScanner
 {
     using System;
+    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Configuration;
 
@@ -147,27 +148,30 @@ namespace EveScanner
         /// </summary>
         /// <param name="items">Array of item names</param>
         /// <returns>Index to image or null if no matching image found</returns>
-        public int? FindImageToDisplay(string[] items)
+        public IEnumerable<int> FindImagesToDisplay(string[] items)
         {
+            List<int> imagesSeen = new List<int>();
+
             if (items == null || items.Length == 0)
             {
-                return null;
+                yield break;
             }
 
-            int? minImageIndex = int.MaxValue;
             foreach (string item in items)
             {
                 if (!string.IsNullOrEmpty(this.ImageItems[item]))
                 {
-                    int curImageIndex = ConfigHelper.ConvertToInt(this.ImageItems[item], 99);
-                    if (curImageIndex < minImageIndex)
+                    int curImageIndex = ConfigHelper.ConvertToInt(this.ImageItems[item], int.MaxValue);
+
+                    if (!imagesSeen.Contains(curImageIndex))
                     {
-                        minImageIndex = curImageIndex;
+                        imagesSeen.Add(curImageIndex);
+                        yield return curImageIndex;
                     }
                 }
             }
 
-            return minImageIndex < int.MaxValue ? minImageIndex : null;
+            yield break;
         }
 
         /// <summary>

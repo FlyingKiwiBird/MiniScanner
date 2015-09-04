@@ -8,6 +8,7 @@ namespace EveScanner
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text;
     using System.Text.RegularExpressions;
@@ -634,7 +635,30 @@ namespace EveScanner
             }
             else
             {
-                this.pictureBox.Image = Bitmap.FromFile(ConfigHelper.Instance.ImageGroups[this.result.ImageIndex.ToString()]);
+                this.ConstructAndDisplayImages(this.result.ImageIndex);
+            }
+        }
+
+        /// <summary>
+        /// Constructs a composite image and loads it into the image box.
+        /// </summary>
+        /// <param name="imageList">List of image index</param>
+        private void ConstructAndDisplayImages(IEnumerable<int> imageList)
+        {
+            if (imageList.Count() == 0)
+            {
+                return;
+            }
+
+            try
+            {
+                string[] imageNames = imageList.OrderBy(x => x).Select(x => ConfigHelper.Instance.ImageGroups[x - 1]).ToArray();
+
+                this.pictureBox.Image = ImageCombiner.CombineImages(this.pictureBox.Width, this.pictureBox.Height, imageNames);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.ToString());
             }
         }
 

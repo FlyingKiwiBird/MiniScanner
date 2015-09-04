@@ -6,6 +6,7 @@
 namespace EveScanner
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Net;
     using System.Text;
@@ -124,7 +125,7 @@ namespace EveScanner
 
             int stacks = items.Length;
 
-            int? imageIndex = ConfigHelper.Instance.FindImageToDisplay(items);
+            IEnumerable<int> imageIndex = ConfigHelper.Instance.FindImagesToDisplay(items);
 
             return new ScanResult(rawScan, buyValue, sellValue, stacks, volume, appraisalUrl, imageIndex, string.Empty, string.Empty, string.Empty);
         }

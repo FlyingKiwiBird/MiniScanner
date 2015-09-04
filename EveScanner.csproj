@@ -64,6 +64,7 @@
     <Compile Include="Interfaces\IScanResult.cs" />
     <Compile Include="NonUI\ConfigHelper.cs" />
     <Compile Include="NonUI\Evepraisal.cs" />
+    <Compile Include="NonUI\ImageCombiner.cs" />
     <Compile Include="NonUI\Logger.cs" />
     <Compile Include="NonUI\NativeMethods.cs" />
     <Compile Include="NonUI\ScanResult.cs" />
@@ -97,11 +98,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="images\containers.png" />
-    <Content Include="images\fedo.png" />
-    <Content Include="images\isotope.png" />
-    <Content Include="images\t2.png" />
-    <Content Include="images\wrap.png" />
+    <Content Include="images\containers.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\fedo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\isotope.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\t2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\wrap.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

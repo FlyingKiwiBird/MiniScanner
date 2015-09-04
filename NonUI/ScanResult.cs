@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace EveScanner
 {
+    using System.Collections.Generic;
     using System.Text;
     using EveScanner.Interfaces;
 
@@ -26,7 +27,7 @@ namespace EveScanner
         /// <param name="shipType">Ship type scanned</param>
         /// <param name="location">Location of the scan.</param>
         /// <param name="characterName">Character name scanned.</param>
-        public ScanResult(string rawScan, decimal buyValue, decimal sellValue, int stacks, decimal volume, string appraisalUrl, int? imageIndex, string shipType, string location, string characterName)
+        public ScanResult(string rawScan, decimal buyValue, decimal sellValue, int stacks, decimal volume, string appraisalUrl, IEnumerable<int> imageIndex, string shipType, string location, string characterName)
         {
             this.RawScan = rawScan;
             this.BuyValue = buyValue;
@@ -73,7 +74,7 @@ namespace EveScanner
         /// <summary>
         /// Gets the Image Index for the Appraisal
         /// </summary>
-        public int? ImageIndex { get; private set; }
+        public IEnumerable<int> ImageIndex { get; private set; }
 
         /// <summary>
         /// Gets or sets the ship type scanned

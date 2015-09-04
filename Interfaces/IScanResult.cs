@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------
 namespace EveScanner.Interfaces
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Interface representing the properties required by the application from a scan result.
     /// </summary>
@@ -43,7 +45,7 @@ namespace EveScanner.Interfaces
         /// <summary>
         /// Gets the Image Index for the Appraisal
         /// </summary>
-        int? ImageIndex { get; }
+        IEnumerable<int> ImageIndex { get; }
 
         /// <summary>
         /// Gets or sets the ship type scanned

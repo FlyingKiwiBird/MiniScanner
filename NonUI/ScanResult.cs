@@ -1,129 +1,101 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using EveScanner.Interfaces;
-
+﻿//-----------------------------------------------------------------------
+// <copyright company="Viktorie Lucilla" file="ScanResult.cs">
+// Copyright © Viktorie Lucilla 2015. All Rights Reserved
+// </copyright>
+//-----------------------------------------------------------------------
 namespace EveScanner
 {
+    using System.Text;
+    using EveScanner.Interfaces;
+
+    /// <summary>
+    /// Provides a Scan Result implementation.
+    /// </summary>
     public class ScanResult : IScanResult
     {
-        public string RawScan { get; set; }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScanResult"/> class.
+        /// </summary>
+        /// <param name="rawScan">Raw scan submitted to the engine.</param>
+        /// <param name="buyValue">Value of the scan from a "Buy" perspective.</param>
+        /// <param name="sellValue">Value of the scan from a "Sell" perspective.</param>
+        /// <param name="stacks">Number of stacks in the scan.</param>
+        /// <param name="volume">Volume of items in the scan.</param>
+        /// <param name="appraisalUrl">URL to the Appraisal</param>
+        /// <param name="imageIndex">Image Index for the Appraisal</param>
+        /// <param name="shipType">Ship type scanned</param>
+        /// <param name="location">Location of the scan.</param>
+        /// <param name="characterName">Character name scanned.</param>
+        public ScanResult(string rawScan, decimal buyValue, decimal sellValue, int stacks, decimal volume, string appraisalUrl, int? imageIndex, string shipType, string location, string characterName)
+        {
+            this.RawScan = rawScan;
+            this.BuyValue = buyValue;
+            this.SellValue = sellValue;
+            this.Stacks = stacks;
+            this.Volume = volume;
+            this.AppraisalUrl = appraisalUrl;
+            this.ImageIndex = imageIndex;
+            this.ShipType = shipType;
+            this.Location = location;
+            this.CharacterName = characterName;
+        }
 
+        /// <summary>
+        /// Gets the Raw Scan submitted to the engine.
+        /// </summary>
+        public string RawScan { get; private set; }
+
+        /// <summary>
+        /// Gets the value of the scan from a "Buy" perspective.
+        /// </summary>
         public decimal BuyValue { get; private set; }
 
+        /// <summary>
+        /// Gets the value of the scan from a "Sell" perspective.
+        /// </summary>
         public decimal SellValue { get; private set; }
 
+        /// <summary>
+        /// Gets the number of stacks in the scan.
+        /// </summary>
         public int Stacks { get; private set; }
 
+        /// <summary>
+        /// Gets the volume of items in the scan.
+        /// </summary>
         public decimal Volume { get; private set; }
 
+        /// <summary>
+        /// Gets the URL to the Appraisal
+        /// </summary>
         public string AppraisalUrl { get; private set; }
 
+        /// <summary>
+        /// Gets the Image Index for the Appraisal
+        /// </summary>
         public int? ImageIndex { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the ship type scanned
+        /// </summary>
         public string ShipType { get; set; }
 
+        /// <summary>
+        /// Gets or sets the location of the scan.
+        /// </summary>
         public string Location { get; set; }
 
+        /// <summary>
+        /// Gets or sets the character name scanned.
+        /// </summary>
         public string CharacterName { get; set; }
 
-        private ScanResult()
-        {
-
-        }
-
-        public static ScanResult GetResultFromResponse(string evepraisalResponse)
-        {
-            ScanResult output = new ScanResult();
-            output.ParseResponse(evepraisalResponse);
-            return output;
-        }
-
-        private void ParseResponse(string responseString)
-        {
-            // Find the scan data
-            string textArea = "<textarea class=\"input-block-level\" rows=\"10\">";
-            int dataIx = responseString.IndexOf(textArea);
-            int dataIe = responseString.IndexOf("</textarea>");
-            this.RawScan = responseString.Substring(dataIx + textArea.Length, dataIe - dataIx - textArea.Length);
-            if (this.RawScan.IndexOf("\r\n") == -1)
-            {
-                this.RawScan = this.RawScan.Replace("\n", "\r\n");
-            }
-
-            // Find the /e/ link
-            int scanIx = responseString.IndexOf("<a href=\"/e/");
-            int scanIe = responseString.IndexOf("\"", scanIx + 7);
-            string url = "http://evepraisal.com" + responseString.Substring(scanIx + 9, scanIe - scanIx + 2);
-            this.AppraisalUrl = url;
-
-            // Find the footer with values...
-            int footerIx = responseString.IndexOf("<th colspan=\"2\" style=\"text-align:right\">");
-            int footerEnd = responseString.IndexOf("</th>", footerIx);
-            string footer = responseString.Substring(footerIx, footerEnd - footerIx).Replace("\r", "").Replace("\n", "");
-
-            // Find "Sell"
-            string spanStart = "<span class=\"nowrap\">";
-            string spanEnd = "</span>";
-
-            int span1s = footer.IndexOf(spanStart) + spanStart.Length;
-            int span1e = footer.IndexOf(spanEnd, span1s);
-
-            string sellValue = footer.Substring(span1s, span1e - span1s);
-            this.SellValue = decimal.Parse(sellValue);
-
-            // Find "Buy"
-            int span2s = footer.IndexOf(spanStart, span1e) + spanStart.Length;
-            int span2e = footer.IndexOf(spanEnd, span2s);
-
-            string buyValue = footer.Substring(span2s, span2e - span2s);
-            this.BuyValue = decimal.Parse(buyValue);
-
-            // Find "Volume"
-            int span3s = footer.IndexOf(spanStart, span2e) + spanStart.Length;
-            int span3e = footer.IndexOf("m", span2s);
-
-            string volume = footer.Substring(span3s, span3e - span3s);
-            this.Volume = decimal.Parse(volume);
-
-            // Find "Stacks", and fix items for comparison in images.
-            string[] items = this.RawScan.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < items.Length; i++)
-            {
-                items[i] = items[i].Substring(items[i].IndexOf(' ') + 1);
-            }
-            this.Stacks = items.Length;
-
-            this.ImageIndex = EveScannerConfig.Instance.FindImageToDisplay(items);
-        }
-
-        public override string ToString()
-        {
-            StringBuilder sb = new StringBuilder();
-            if (!string.IsNullOrEmpty(this.ShipType))
-            {
-                sb.AppendFormat("{0} | ", this.ShipType);
-            }
-
-            sb.AppendFormat("{0} | {1} | {2} stacks |", ScanResult.GetIskString(this.SellValue), string.Format("{0:n}", this.Volume) + " m3", this.Stacks);
-            if (this.ImageIndex != null)
-            {
-                sb.AppendFormat(" {0} |", EveScannerConfig.Instance.ImageNames[this.ImageIndex.ToString()]);
-            }
-
-            sb.AppendFormat(" {0}", this.AppraisalUrl);
-            if (!string.IsNullOrEmpty(this.Location))
-            {
-                sb.AppendFormat(" | {0}", this.Location);
-            }
-
-            return sb.ToString();
-        }
-
-        public static string GetIskString(decimal value)
+        /// <summary>
+        /// Formats an ISK value as a string. Does not double the ISK. Returns up to 2 decimal places with an amount identifier.
+        /// </summary>
+        /// <param name="value">ISK value</param>
+        /// <returns>Formatted string.</returns>
+        public static string GetISKString(decimal value)
         {
             string output = string.Empty;
 
@@ -131,7 +103,7 @@ namespace EveScanner
             {
                 output = (value / 1000000000000000).ToString("#.00Q");
             }
-            if (value > 1000000000000)
+            else if (value > 1000000000000)
             {
                 output = (value / 1000000000000).ToString("#.00T");
             }
@@ -151,7 +123,35 @@ namespace EveScanner
             {
                 output = value.ToString();
             }
+
             return output;
+        }
+
+        /// <summary>
+        /// Returns an interpreted version of the object as a string in a format convenient for pasting elsewhere.
+        /// </summary>
+        /// <returns>Formatted string</returns>
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            if (!string.IsNullOrEmpty(this.ShipType))
+            {
+                sb.AppendFormat("{0} | ", this.ShipType);
+            }
+
+            sb.AppendFormat("{0} | {1} | {2} stacks |", ScanResult.GetISKString(this.SellValue), string.Format("{0:n}", this.Volume) + " m3", this.Stacks);
+            if (this.ImageIndex != null)
+            {
+                sb.AppendFormat(" {0} |", ConfigHelper.Instance.ImageNames[this.ImageIndex.ToString()]);
+            }
+
+            sb.AppendFormat(" {0}", this.AppraisalUrl);
+            if (!string.IsNullOrEmpty(this.Location))
+            {
+                sb.AppendFormat(" | {0}", this.Location);
+            }
+
+            return sb.ToString();
         }
     }
 }

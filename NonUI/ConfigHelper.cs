@@ -1,100 +1,165 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-
+﻿//-----------------------------------------------------------------------
+// <copyright company="Viktorie Lucilla" file="ConfigHelper.cs">
+// Copyright © Viktorie Lucilla 2015. All Rights Reserved
+// </copyright>
+//-----------------------------------------------------------------------
 namespace EveScanner
 {
-    public class EveScannerConfig
+    using System;
+    using System.Collections.Specialized;
+    using System.Configuration;
+
+    /// <summary>
+    /// Holds the application configuration and provides helper methods for
+    /// accessing items stored in the application configuration.
+    /// </summary>
+    public class ConfigHelper
     {
-        private static EveScannerConfig instance = null;
+        /// <summary>
+        /// Holds the instance of the EveScannerConfig so we don't parse the config all the time.
+        /// </summary>
+        private static ConfigHelper instance = null;
 
-        public int AppWidth { get; set; }
-        public int AppHeight { get; set; }
-        public int WindowPosX { get; set; }
-        public int WindowPosY { get; set; }
-        public bool ShowExtra { get; set; }
-        public bool CaptureClipboard { get; set; }
-        public bool AlwaysOnTop { get; set; }
-        public string DebugLevel { get; set; }
-        public string LogFile { get; set; }
-        public string Location1 { get; set; }
-        public string Location3 { get; set; }
-        public string Location2 { get; set; }
+        /// <summary>
+        /// Prevents a default instance of the <see cref="ConfigHelper"/> class from being created.
+        /// </summary>
+        private ConfigHelper()
+        {
+        }
 
-        public NameValueCollection ImageGroups { get; private set; }
-        public NameValueCollection ImageItems { get; private set; }
-        public NameValueCollection ImageNames { get; private set; }
-
-        public static EveScannerConfig Instance
+        /// <summary>
+        /// Gets the instance of the Scanner Configuration class.
+        /// </summary>
+        public static ConfigHelper Instance
         {
             get
             {
-                if (EveScannerConfig.instance == null)
+                if (ConfigHelper.instance == null)
                 {
-                    EveScannerConfig.instance = new EveScannerConfig();
-                    EveScannerConfig.instance.Load();
+                    ConfigHelper.instance = new ConfigHelper();
+                    ConfigHelper.instance.Load();
                 }
 
-                return EveScannerConfig.instance;
+                return ConfigHelper.instance;
             }
         }
 
-        private EveScannerConfig()
-        {
-        }
+        /// <summary>
+        /// Gets or sets the Width of the application window.
+        /// </summary>
+        public int AppWidth { get; set; }
 
-        private void Load()
-        {
-            Configuration cfg = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            this.AppWidth = EveScannerConfig.ConvertToInt(EveScannerConfig.GetAppConfigValue(cfg, "AppWidth"), 680);
-            this.AppHeight = EveScannerConfig.ConvertToInt(EveScannerConfig.GetAppConfigValue(cfg, "AppHeight"), 520);
-            this.WindowPosX = EveScannerConfig.ConvertToInt(EveScannerConfig.GetAppConfigValue(cfg, "WindowPosX"), -1);
-            this.WindowPosY = EveScannerConfig.ConvertToInt(EveScannerConfig.GetAppConfigValue(cfg, "WindowPosY"), -1);
-            this.ShowExtra = EveScannerConfig.GetAppConfigValue(cfg, "ShowExtra") != "false";
-            this.CaptureClipboard = EveScannerConfig.GetAppConfigValue(cfg, "CaptureClipboard") != "false";
-            this.AlwaysOnTop = EveScannerConfig.GetAppConfigValue(cfg, "AlwaysOnTop") == "true";
-            this.DebugLevel = EveScannerConfig.GetAppConfigValue(cfg, "DebugLevel", "none");
-            this.LogFile = EveScannerConfig.GetAppConfigValue(cfg, "LogFile", "evescanner.log");
-            this.Location1 = EveScannerConfig.GetAppConfigValue(cfg, "Location1", "Perimeter -> Urlen");
-            this.Location2 = EveScannerConfig.GetAppConfigValue(cfg, "Location2", "Ashab -> Madirmilire");
-            this.Location3 = EveScannerConfig.GetAppConfigValue(cfg, "Location3", "Hatakani -> Sivala");
+        /// <summary>
+        /// Gets or sets the Height of the application window.
+        /// </summary>
+        public int AppHeight { get; set; }
 
-            this.ImageGroups = ConfigurationManager.GetSection("imageGroups") as NameValueCollection;
-            this.ImageItems = ConfigurationManager.GetSection("imageItems") as NameValueCollection;
-            this.ImageNames = ConfigurationManager.GetSection("imageNames") as NameValueCollection;
-        }
+        /// <summary>
+        /// Gets or sets the horizontal portion of the coordinate of the top left of the application window.
+        /// </summary>
+        public int WindowPositionX { get; set; }
 
+        /// <summary>
+        /// Gets or sets the vertical portion of the coordinate of the top left of the application window.
+        /// </summary>
+        public int WindowPositionY { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether extra form controls are shown.
+        /// </summary>
+        public bool ShowExtra { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the application should care about clipboard content changes.
+        /// </summary>
+        public bool CaptureClipboard { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the application should stay "Always on Top"
+        /// </summary>
+        public bool AlwaysOnTop { get; set; }
+
+        /// <summary>
+        /// Gets or sets the logging level for the application.
+        /// </summary>
+        public string DebugLevel { get; set; }
+
+        /// <summary>
+        /// Gets or sets the path to the log file.
+        /// </summary>
+        public string LogFile { get; set; }
+
+        /// <summary>
+        /// Gets or sets the first user enterable location.
+        /// </summary>
+        public string Location1 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the second user enterable location.
+        /// </summary>
+        public string Location2 { get; set; }
+
+        /// <summary>
+        /// Gets or sets the third user enterable location.
+        /// </summary>
+        public string Location3 { get; set; }
+
+        /// <summary>
+        /// Gets the name value collection containing Image Group Id -> Physical Image Location
+        /// </summary>
+        public NameValueCollection ImageGroups { get; private set; }
+
+        /// <summary>
+        /// Gets the name value collection containing Item Name -> Image Group Id
+        /// </summary>
+        public NameValueCollection ImageItems { get; private set; }
+
+        /// <summary>
+        /// Gets the name value collection containing Image Group Id -> Group Name
+        /// </summary>
+        public NameValueCollection ImageNames { get; private set; }
+
+        /// <summary>
+        /// Saves the current state of the application to the configuration file.
+        /// </summary>
         public void Save()
         {
             Configuration cfg = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-            EveScannerConfig.SetAppConfigValue(cfg, "AppWidth", this.AppWidth.ToString());
-            EveScannerConfig.SetAppConfigValue(cfg, "AppHeight", this.AppHeight.ToString());
-            EveScannerConfig.SetAppConfigValue(cfg, "WindowPosX", this.WindowPosX.ToString());
-            EveScannerConfig.SetAppConfigValue(cfg, "WindowPosY", this.WindowPosY.ToString());
-            EveScannerConfig.SetAppConfigValue(cfg, "ShowExtra", this.ShowExtra ? "true" : "false");
-            EveScannerConfig.SetAppConfigValue(cfg, "CaptureClipboard", this.CaptureClipboard ? "true" : "false");
-            EveScannerConfig.SetAppConfigValue(cfg, "AlwaysOnTop", this.AlwaysOnTop ? "true" : "false");
-            EveScannerConfig.SetAppConfigValue(cfg, "DebugLevel", this.DebugLevel);
-            EveScannerConfig.SetAppConfigValue(cfg, "LogFile", this.LogFile);
-            EveScannerConfig.SetAppConfigValue(cfg, "Location1", this.Location1);
-            EveScannerConfig.SetAppConfigValue(cfg, "Location2", this.Location2);
-            EveScannerConfig.SetAppConfigValue(cfg, "Location3", this.Location3);
+            ConfigHelper.SetAppConfigValue(cfg, "AppWidth", this.AppWidth.ToString());
+            ConfigHelper.SetAppConfigValue(cfg, "AppHeight", this.AppHeight.ToString());
+            ConfigHelper.SetAppConfigValue(cfg, "WindowPosX", this.WindowPositionX.ToString());
+            ConfigHelper.SetAppConfigValue(cfg, "WindowPosY", this.WindowPositionY.ToString());
+            ConfigHelper.SetAppConfigValue(cfg, "ShowExtra", this.ShowExtra ? "true" : "false");
+            ConfigHelper.SetAppConfigValue(cfg, "CaptureClipboard", this.CaptureClipboard ? "true" : "false");
+            ConfigHelper.SetAppConfigValue(cfg, "AlwaysOnTop", this.AlwaysOnTop ? "true" : "false");
+            ConfigHelper.SetAppConfigValue(cfg, "DebugLevel", this.DebugLevel);
+            ConfigHelper.SetAppConfigValue(cfg, "LogFile", this.LogFile);
+            ConfigHelper.SetAppConfigValue(cfg, "Location1", this.Location1);
+            ConfigHelper.SetAppConfigValue(cfg, "Location2", this.Location2);
+            ConfigHelper.SetAppConfigValue(cfg, "Location3", this.Location3);
 
             cfg.Save(ConfigurationSaveMode.Modified);
         }
 
+        /// <summary>
+        /// Finds the index of the image which should be displayed given a list of items to search.
+        /// </summary>
+        /// <param name="items">Array of item names</param>
+        /// <returns>Index to image or null if no matching image found</returns>
         public int? FindImageToDisplay(string[] items)
         {
-            int? minImageIndex = Int32.MaxValue;
+            if (items == null || items.Length == 0)
+            {
+                return null;
+            }
+
+            int? minImageIndex = int.MaxValue;
             foreach (string item in items)
             {
                 if (!string.IsNullOrEmpty(this.ImageItems[item]))
                 {
-                    int curImageIndex = EveScannerConfig.ConvertToInt(this.ImageItems[item], 99);
+                    int curImageIndex = ConfigHelper.ConvertToInt(this.ImageItems[item], 99);
                     if (curImageIndex < minImageIndex)
                     {
                         minImageIndex = curImageIndex;
@@ -102,9 +167,17 @@ namespace EveScanner
                 }
             }
 
-            return minImageIndex < Int32.MaxValue ? minImageIndex : null;
+            return minImageIndex < int.MaxValue ? minImageIndex : null;
         }
 
+        /// <summary>
+        /// Gets the Application Configuration Value for the Specified Key
+        /// </summary>
+        /// <param name="cfg">Configuration object</param>
+        /// <param name="key">Key to requested configuration element</param>
+        /// <param name="defaultValue">Default value if the element is missing or empty</param>
+        /// <param name="throwExceptionIfMissing">A value indicating whether an exception should be thrown if the key isn't present</param>
+        /// <returns>Configured Value</returns>
         private static string GetAppConfigValue(Configuration cfg, string key, string defaultValue = null, bool throwExceptionIfMissing = false)
         {
             var v = cfg.AppSettings.Settings[key];
@@ -117,6 +190,12 @@ namespace EveScanner
             return v != null ? v.Value : defaultValue;
         }
 
+        /// <summary>
+        /// Sets a key-value pair in the configuration file.
+        /// </summary>
+        /// <param name="cfg">Configuration object</param>
+        /// <param name="key">Configuration key</param>
+        /// <param name="value">Configuration value</param>
         private static void SetAppConfigValue(Configuration cfg, string key, string value)
         {
             if (cfg.AppSettings.Settings[key] != null)
@@ -127,6 +206,12 @@ namespace EveScanner
             cfg.AppSettings.Settings.Add(key, value);
         }
 
+        /// <summary>
+        /// Converts a string to an integer
+        /// </summary>
+        /// <param name="input">Value to convert</param>
+        /// <param name="defaultValue">Default value if conversion fails</param>
+        /// <returns>Integer version of input if conversion succeeds, defaultValue otherwise</returns>
         private static int ConvertToInt(string input, int defaultValue)
         {
             int output;
@@ -137,6 +222,30 @@ namespace EveScanner
             }
 
             return output;
+        }
+
+        /// <summary>
+        /// Loads configuration data from the config file into this instance.
+        /// </summary>
+        private void Load()
+        {
+            Configuration cfg = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            this.AppWidth = ConfigHelper.ConvertToInt(ConfigHelper.GetAppConfigValue(cfg, "AppWidth"), 680);
+            this.AppHeight = ConfigHelper.ConvertToInt(ConfigHelper.GetAppConfigValue(cfg, "AppHeight"), 520);
+            this.WindowPositionX = ConfigHelper.ConvertToInt(ConfigHelper.GetAppConfigValue(cfg, "WindowPosX"), -1);
+            this.WindowPositionY = ConfigHelper.ConvertToInt(ConfigHelper.GetAppConfigValue(cfg, "WindowPosY"), -1);
+            this.ShowExtra = ConfigHelper.GetAppConfigValue(cfg, "ShowExtra") != "false";
+            this.CaptureClipboard = ConfigHelper.GetAppConfigValue(cfg, "CaptureClipboard") != "false";
+            this.AlwaysOnTop = ConfigHelper.GetAppConfigValue(cfg, "AlwaysOnTop") == "true";
+            this.DebugLevel = ConfigHelper.GetAppConfigValue(cfg, "DebugLevel", "none");
+            this.LogFile = ConfigHelper.GetAppConfigValue(cfg, "LogFile", "evescanner.log");
+            this.Location1 = ConfigHelper.GetAppConfigValue(cfg, "Location1", "Perimeter -> Urlen");
+            this.Location2 = ConfigHelper.GetAppConfigValue(cfg, "Location2", "Ashab -> Madirmilire");
+            this.Location3 = ConfigHelper.GetAppConfigValue(cfg, "Location3", "Hatakani -> Sivala");
+
+            this.ImageGroups = ConfigurationManager.GetSection("imageGroups") as NameValueCollection;
+            this.ImageItems = ConfigurationManager.GetSection("imageItems") as NameValueCollection;
+            this.ImageNames = ConfigurationManager.GetSection("imageNames") as NameValueCollection;
         }
     }
 }

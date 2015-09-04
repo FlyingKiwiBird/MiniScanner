@@ -1,5 +1,11 @@
-﻿using System.Reflection;
-using System.Runtime.CompilerServices;
+﻿//-----------------------------------------------------------------------
+// <copyright company="Viktorie Lucilla" file="AssemblyInfo.cs">
+// Copyright © Viktorie Lucilla 2015. All Rights Reserved
+// </copyright>
+//-----------------------------------------------------------------------
+using System;
+using System.Reflection;
+using System.Resources;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -19,6 +25,7 @@ using System.Security;
 // to COM components.  If you need to access a type in this assembly from 
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
+[assembly: CLSCompliant(true)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("303042a1-3501-40b3-97b0-3d9629b4192b")]
@@ -35,3 +42,4 @@ using System.Security;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.*")]
 [assembly: SecurityRules(SecurityRuleSet.Level2)]
+[assembly: NeutralResourcesLanguageAttribute("en-US")]

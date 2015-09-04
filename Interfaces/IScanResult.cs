@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright company="Viktorie Lucilla" file="Form1.cs">
+// <copyright company="Viktorie Lucilla" file="IScanResult.cs">
 // Copyright © Viktorie Lucilla 2015. All Rights Reserved
 // </copyright>
 //-----------------------------------------------------------------------

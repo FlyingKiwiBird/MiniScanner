@@ -8,9 +8,6 @@ namespace EveScanner
     using System;
     using System.Collections.Generic;
     using System.Drawing;
-    using System.Globalization;
-    using System.IO;
-    using System.Reflection;
     using System.Runtime.InteropServices;
     using System.Text;
     using System.Text.RegularExpressions;
@@ -33,7 +30,7 @@ namespace EveScanner
         /// Holds the Handle to the next clipboard viewer in the chain.
         /// </summary>
         private IntPtr clipboardViewerNext;                // Our variable that will hold the value to identify the next window in the clipboard viewer chain
-
+        
         /// <summary>
         /// Holds a list of all results which have been parsed.
         /// </summary>
@@ -64,36 +61,17 @@ namespace EveScanner
         {
             this.InitializeComponent();
 
-            if (EveScannerConfig.Instance.WindowPosX == -1 && EveScannerConfig.Instance.WindowPosY == -1)
+            if (ConfigHelper.Instance.WindowPositionX == -1 && ConfigHelper.Instance.WindowPositionY == -1)
             {
                 this.StartPosition = FormStartPosition.CenterScreen;
             }
             else
             {
                 this.StartPosition = FormStartPosition.Manual;
-                this.Location = new Point(EveScannerConfig.Instance.WindowPosX, EveScannerConfig.Instance.WindowPosY);
+                this.Location = new Point(ConfigHelper.Instance.WindowPositionX, ConfigHelper.Instance.WindowPositionY);
             }
         }
         #endregion Constructors
-
-        #region P/Invoked Methods
-        /// <summary>
-        /// Adds a clipboard viewer to the current chain of clipboard registrees.
-        /// </summary>
-        /// <param name="hWndNewViewer">Handle to current process</param>
-        /// <returns>Handle of next process in chain</returns>
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr SetClipboardViewer(IntPtr hWndNewViewer);
-
-        /// <summary>
-        /// Removes a clipboard viewer from the chain of clipboard registrees, adding one back in its place.
-        /// </summary>
-        /// <param name="hWndRemove">Handle to remove from chain.</param>
-        /// <param name="hWndNewNext">Handle to replace with in chain.</param>
-        /// <returns>True if successful, false otherwise.</returns>
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern bool ChangeClipboardChain(IntPtr hWndRemove, IntPtr hWndNewNext);
-        #endregion P/Invoked Methods
 
         #region Form Events
         /// <summary>
@@ -104,7 +82,7 @@ namespace EveScanner
         {
             base.WndProc(ref m);
 
-            if (!EveScannerConfig.Instance.CaptureClipboard)
+            if (!ConfigHelper.Instance.CaptureClipboard)
             {
                 return;
             }
@@ -163,28 +141,28 @@ namespace EveScanner
             if (this.runningOnWindows)
             {
                 Logger.Debug("Attaching Clipboard Handler");
-                this.clipboardViewerNext = SetClipboardViewer(this.Handle);      // Adds our form to the chain of clipboard viewers.
+                this.clipboardViewerNext = NativeMethods.SetClipboardViewer(this.Handle);      // Adds our form to the chain of clipboard viewers.
             }
 
-            this.captureClipboardOnToolStripMenuItem.Checked = EveScannerConfig.Instance.CaptureClipboard;
-            this.toggleAlwaysOnTopToolStripMenuItem.Checked = EveScannerConfig.Instance.AlwaysOnTop;
-            if (EveScannerConfig.Instance.AlwaysOnTop)
+            this.captureClipboardOnToolStripMenuItem.Checked = ConfigHelper.Instance.CaptureClipboard;
+            this.toggleAlwaysOnTopToolStripMenuItem.Checked = ConfigHelper.Instance.AlwaysOnTop;
+            if (ConfigHelper.Instance.AlwaysOnTop)
             {
                 this.TopMost = true;
             }
 
-            if (!EveScannerConfig.Instance.ShowExtra)
+            if (!ConfigHelper.Instance.ShowExtra)
             {
                 this.ShowHideExtraOptionsToolStripMenuItem_Click(null, EventArgs.Empty);
             }
 
-            this.Width = EveScannerConfig.Instance.AppWidth;
-            this.Height = EveScannerConfig.Instance.AppHeight;
+            this.Width = ConfigHelper.Instance.AppWidth;
+            this.Height = ConfigHelper.Instance.AppHeight;
 
             for (int i = 0; i < this.loggingToolStripMenuItem.DropDownItems.Count; i++)
             {
                 ToolStripItem c = this.loggingToolStripMenuItem.DropDownItems[i];
-                if ((string)c.Tag == EveScannerConfig.Instance.DebugLevel)
+                if ((string)c.Tag == ConfigHelper.Instance.DebugLevel)
                 {
                     this.DebugLevelStripMenu_Click(c, EventArgs.Empty);
                 }
@@ -201,11 +179,11 @@ namespace EveScanner
             if (this.runningOnWindows)
             {
                 Logger.Debug("Detaching Clipboard Handler");
-                ChangeClipboardChain(this.Handle, this.clipboardViewerNext);        // Removes our from the chain of clipboard viewers when the form closes.
+                NativeMethods.ChangeClipboardChain(this.Handle, this.clipboardViewerNext);        // Removes our from the chain of clipboard viewers when the form closes.
             }
 
             Logger.Debug("Saving Config");
-            EveScannerConfig.Instance.Save();
+            ConfigHelper.Instance.Save();
             Logger.Debug("Config Saved");
         }
         #endregion Form Events
@@ -445,7 +423,7 @@ namespace EveScanner
                 }
             }
 
-            EveScannerConfig.Instance.DebugLevel = (string)tsmi.Tag;
+            ConfigHelper.Instance.DebugLevel = (string)tsmi.Tag;
         }
         #endregion Form Controls
 
@@ -481,9 +459,9 @@ namespace EveScanner
                 newHeight = shipContainer.Location.Y + shipContainer.Height + locationContainer.Height + (2 * containerBottomToContainerTop) + resultsContainer.Height + containerBottomToFormBottom;
             }
 
-            EveScannerConfig.Instance.ShowExtra = shipContainer.Visible;
-            EveScannerConfig.Instance.AppWidth = this.Width;
-            EveScannerConfig.Instance.AppHeight = this.Height;
+            ConfigHelper.Instance.ShowExtra = shipContainer.Visible;
+            ConfigHelper.Instance.AppWidth = this.Width;
+            ConfigHelper.Instance.AppHeight = this.Height;
 
             this.MinimumSize = new Size(this.MinimumSize.Width, newHeight);
             this.Height = this.MinimumSize.Height;
@@ -498,8 +476,8 @@ namespace EveScanner
         /// <param name="e">Not provided</param>
         private void CaptureClipboardOnToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EveScannerConfig.Instance.CaptureClipboard = !EveScannerConfig.Instance.CaptureClipboard;
-            captureClipboardOnToolStripMenuItem.Checked = EveScannerConfig.Instance.CaptureClipboard;
+            ConfigHelper.Instance.CaptureClipboard = !ConfigHelper.Instance.CaptureClipboard;
+            captureClipboardOnToolStripMenuItem.Checked = ConfigHelper.Instance.CaptureClipboard;
         }
 
         /// <summary>
@@ -511,7 +489,7 @@ namespace EveScanner
         {
             this.TopMost = !this.TopMost;
             this.toggleAlwaysOnTopToolStripMenuItem.Checked = this.TopMost;
-            EveScannerConfig.Instance.AlwaysOnTop = this.TopMost;
+            ConfigHelper.Instance.AlwaysOnTop = this.TopMost;
         }
 
         /// <summary>
@@ -523,26 +501,26 @@ namespace EveScanner
         {
             Logger.Debug("Clearing application values!");
 
-            sellValueLabel.Text = "---";
-            buyValueLabel.Text = "---";
-            volumeValueLabel.Text = "---";
-            stacksValueText.Text = "---";
-            otherShipRadioButton.Checked = true;
-            
-            location1Radio.Checked = false;
-            location2Radio.Checked = false;
-            location3Radio.Checked = false;
+            this.sellValueLabel.Text = "---";
+            this.buyValueLabel.Text = "---";
+            this.volumeValueLabel.Text = "---";
+            this.stacksValueText.Text = "---";
+            this.otherShipRadioButton.Checked = true;
 
-            location1Text.Text = "Perimeter -> Urlen";
-            location2Text.Text = "Ashab -> Madirmilire";
-            location3Text.Text = "Hatakani -> Sivala";
+            this.location1Radio.Checked = false;
+            this.location2Radio.Checked = false;
+            this.location3Radio.Checked = false;
 
-            resultUrlTextBox.Text = string.Empty;
-            scanText.Text = string.Empty;
+            this.location1Text.Text = "Perimeter -> Urlen";
+            this.location2Text.Text = "Ashab -> Madirmilire";
+            this.location3Text.Text = "Hatakani -> Sivala";
 
-            historyDropdown.Items.Clear();
+            this.resultUrlTextBox.Text = string.Empty;
+            this.scanText.Text = string.Empty;
+
+            this.historyDropdown.Items.Clear();
             this.scans.Clear();
-            scanValueLabel.Text = "0";
+            this.scanValueLabel.Text = "0";
         }
         #endregion Menu Items
 
@@ -585,7 +563,7 @@ namespace EveScanner
 
                 if (output == "Other")
                 {
-                    output = otherShipText.Text;
+                    output = this.otherShipText.Text;
                 }
             }
 
@@ -621,14 +599,14 @@ namespace EveScanner
         /// <summary>
         /// Adds a provided result to the list and makes it the top entry in the dropdown
         /// </summary>
-        /// <param name="result">Result to add</param>
-        private void AddResultToList(IScanResult result)
+        /// <param name="scanResult">Result to add</param>
+        private void AddResultToList(IScanResult scanResult)
         {
-            this.scans.Add(result);
-            this.historyDropdown.Items.Insert(0, result.ToString());
+            this.scans.Add(scanResult);
+            this.historyDropdown.Items.Insert(0, scanResult.ToString());
             this.historyDropdown.SelectedIndex = 0;
             this.scanValueLabel.Text = this.scans.Count.ToString();
-            Logger.Result(result.ToString());
+            Logger.Result(scanResult.ToString());
         }
 
         /// <summary>
@@ -636,8 +614,8 @@ namespace EveScanner
         /// </summary>
         private void ParseCurrentResult()
         {
-            this.buyValueLabel.Text = ScanResult.GetIskString(this.result.BuyValue) + " ISK";
-            this.sellValueLabel.Text = ScanResult.GetIskString(this.result.SellValue) + " ISK";
+            this.buyValueLabel.Text = ScanResult.GetISKString(this.result.BuyValue) + " ISK";
+            this.sellValueLabel.Text = ScanResult.GetISKString(this.result.SellValue) + " ISK";
             this.stacksValueText.Text = this.result.Stacks.ToString();
             this.volumeValueLabel.Text = string.Format("{0:n}", this.result.Volume) + " m3";
 
@@ -656,7 +634,7 @@ namespace EveScanner
             }
             else
             {
-                this.pictureBox.Image = Bitmap.FromFile(EveScannerConfig.Instance.ImageGroups[this.result.ImageIndex.ToString()]);
+                this.pictureBox.Image = Bitmap.FromFile(ConfigHelper.Instance.ImageGroups[this.result.ImageIndex.ToString()]);
             }
         }
 
@@ -668,7 +646,7 @@ namespace EveScanner
         private bool CheckTextFormat(string inputText)
         {
             string strRegex = @"^(?<line>\d+ [A-Za-z0-9,()'/\-]+( +[A-Za-z0-9,()'/\-]+)*)$";
-            string output = Regex.Replace(inputText, strRegex, string.Empty, RegexOptions.Multiline | RegexOptions.ExplicitCapture).Replace("\n", string.Empty);
+            string output = Regex.Replace(inputText, strRegex, string.Empty, RegexOptions.Multiline | RegexOptions.ExplicitCapture).Replace("\r\n", string.Empty).Replace("\n", string.Empty);
             if (string.IsNullOrEmpty(output))
             {
                 return true;
@@ -678,14 +656,14 @@ namespace EveScanner
         }
 
         /// <summary>
-        /// Updates the dropdown text with the current result data (updated if you changed shiptype/location)
+        /// Updates the dropdown text with the current result data (updated if you changed ship type/location)
         /// </summary>
         private void UpdateDropdown()
         {
-            int selectedIndex = historyDropdown.SelectedIndex;
-            historyDropdown.Items.RemoveAt(selectedIndex);
-            historyDropdown.Items.Insert(selectedIndex, this.result.ToString());
-            historyDropdown.SelectedIndex = selectedIndex;
+            int selectedIndex = this.historyDropdown.SelectedIndex;
+            this.historyDropdown.Items.RemoveAt(selectedIndex);
+            this.historyDropdown.Items.Insert(selectedIndex, this.result.ToString());
+            this.historyDropdown.SelectedIndex = selectedIndex;
         }
         #endregion Helper Functions
     }

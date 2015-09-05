@@ -119,7 +119,7 @@ namespace EveScanner
                 {
                     string data = (string)obj.GetData(format);
                     Logger.Debug("Captured scan {0}", data);
-                    if (this.CheckTextFormat(data))
+                    if (this.CheckTextFormat(data) || data.StartsWith("http"))
                     {
                         Logger.Scan("Captured scan {0}", data);
                         this.scanText.Text = data;
@@ -168,6 +168,15 @@ namespace EveScanner
                     this.DebugLevelStripMenu_Click(c, EventArgs.Empty);
                 }
             }
+
+            for (int i = 0; i < this.scanSourceToolStripMenuItem.DropDownItems.Count; i++)
+            {
+                ToolStripItem c = this.scanSourceToolStripMenuItem.DropDownItems[i];
+                if ((string)c.Tag == ConfigHelper.Instance.ScanSource)
+                {
+                    this.ScanSourceStripMenu_Click(c, EventArgs.Empty);
+                }
+            }
         }
 
         /// <summary>
@@ -214,15 +223,43 @@ namespace EveScanner
                 return;
             }
 
-            if (!this.CheckTextFormat(scanText.Text))
-            {
-                return;
-            }
-
             try
             {
-                Evepraisal ep = new Evepraisal();
-                IScanResult iresult = ep.GetAppraisalFromScan(this.scanText.Text);
+                IScanResult iresult = null;
+
+                if (scanText.Text.StartsWith("http://evepraisal.com/e/"))
+                {
+                    Evepraisal ep = new Evepraisal();
+                    iresult = ep.GetAppraisalFromUrl(this.scanText.Text);
+                }
+                else if (scanText.Text.StartsWith("https://goonpraisal.apps.goonswarm.org/e/"))
+                {
+                    Evepraisal ep = new Evepraisal("goonpraisal.apps.goonswarm.org", true);
+                    iresult = ep.GetAppraisalFromUrl(this.scanText.Text);
+                }
+                else if (this.CheckTextFormat(scanText.Text))
+                {
+                    if (evepraisalToolStripMenuItem.Checked)
+                    {
+                        Evepraisal ep = new Evepraisal();
+                        iresult = ep.GetAppraisalFromScan(this.scanText.Text);
+                    }
+
+                    if (goonmetricsToolStripMenuItem.Checked)
+                    {
+                        Evepraisal ep = new Evepraisal("goonpraisal.apps.goonswarm.org", true);
+                        iresult = ep.GetAppraisalFromScan(this.scanText.Text);
+                    }
+                }
+                else
+                {
+                    return;
+                }
+
+                if (iresult == null)
+                {
+                    return;
+                }
 
                 this.result = iresult;
                 this.scanText.Text = this.result.RawScan;
@@ -266,7 +303,13 @@ namespace EveScanner
 
             sb.Append(this.result.ToString());
 
+            bool prevClipboard = ConfigHelper.Instance.CaptureClipboard;
+
+            ConfigHelper.Instance.CaptureClipboard = false;
+
             Clipboard.SetText(sb.ToString());
+
+            ConfigHelper.Instance.CaptureClipboard = prevClipboard;
         }
 
         /// <summary>
@@ -426,6 +469,33 @@ namespace EveScanner
 
             ConfigHelper.Instance.DebugLevel = (string)tsmi.Tag;
         }
+
+        /// <summary>
+        /// This sets up the checkmarks properly when clicking an item on the scan source menu.
+        /// </summary>
+        /// <param name="sender">Options -> Debug</param>
+        /// <param name="e">Not provided.</param>
+        private void ScanSourceStripMenu_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
+            if (tsmi == null)
+            {
+                return;
+            }
+
+            foreach (ToolStripMenuItem tsmx in tsmi.GetCurrentParent().Items)
+            {
+                if (tsmx == tsmi)
+                {
+                    tsmx.Checked = true;
+                }
+                else
+                {
+                    tsmx.Checked = false;
+                }
+            }
+        }
+
         #endregion Form Controls
 
         #region Menuitems

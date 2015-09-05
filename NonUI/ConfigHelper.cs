@@ -106,6 +106,11 @@ namespace EveScanner
         public string Location3 { get; set; }
 
         /// <summary>
+        /// Gets or sets the source of our scan data.
+        /// </summary>
+        public string ScanSource { get; set; }
+
+        /// <summary>
         /// Gets the name value collection containing Image Group Id -> Physical Image Location
         /// </summary>
         public NameValueCollection ImageGroups { get; private set; }
@@ -139,6 +144,7 @@ namespace EveScanner
             ConfigHelper.SetAppConfigValue(cfg, "Location1", this.Location1);
             ConfigHelper.SetAppConfigValue(cfg, "Location2", this.Location2);
             ConfigHelper.SetAppConfigValue(cfg, "Location3", this.Location3);
+            ConfigHelper.SetAppConfigValue(cfg, "ScanSource", this.ScanSource);
 
             cfg.Save(ConfigurationSaveMode.Modified);
         }
@@ -246,6 +252,7 @@ namespace EveScanner
             this.Location1 = ConfigHelper.GetAppConfigValue(cfg, "Location1", "Perimeter -> Urlen");
             this.Location2 = ConfigHelper.GetAppConfigValue(cfg, "Location2", "Ashab -> Madirmilire");
             this.Location3 = ConfigHelper.GetAppConfigValue(cfg, "Location3", "Hatakani -> Sivala");
+            this.ScanSource = ConfigHelper.GetAppConfigValue(cfg, "ScanSource", "Evepraisal");
 
             this.ImageGroups = ConfigurationManager.GetSection("imageGroups") as NameValueCollection;
             this.ImageItems = ConfigurationManager.GetSection("imageItems") as NameValueCollection;

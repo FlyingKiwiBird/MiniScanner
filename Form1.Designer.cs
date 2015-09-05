@@ -81,6 +81,9 @@ namespace EveScanner
             this.scansAndResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.scanSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.evepraisalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.goonmetricsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.shipContainer.SuspendLayout();
             this.locationContainer.SuspendLayout();
             this.scanContainer.SuspendLayout();
@@ -550,6 +553,7 @@ namespace EveScanner
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.captureClipboardOnToolStripMenuItem,
             this.toggleAlwaysOnTopToolStripMenuItem,
+            this.scanSourceToolStripMenuItem,
             this.loggingToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -623,6 +627,33 @@ namespace EveScanner
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox.TabIndex = 37;
             this.pictureBox.TabStop = false;
+            // 
+            // scanSourceToolStripMenuItem
+            // 
+            this.scanSourceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.evepraisalToolStripMenuItem,
+            this.goonmetricsToolStripMenuItem});
+            this.scanSourceToolStripMenuItem.Name = "scanSourceToolStripMenuItem";
+            this.scanSourceToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.scanSourceToolStripMenuItem.Text = "Scan Source";
+            // 
+            // evepraisalToolStripMenuItem
+            // 
+            this.evepraisalToolStripMenuItem.Checked = true;
+            this.evepraisalToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.evepraisalToolStripMenuItem.Name = "evepraisalToolStripMenuItem";
+            this.evepraisalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.evepraisalToolStripMenuItem.Tag = "Evepraisal";
+            this.evepraisalToolStripMenuItem.Text = "Evepraisal";
+            this.evepraisalToolStripMenuItem.Click += new System.EventHandler(this.ScanSourceStripMenu_Click);
+            // 
+            // goonmetricsToolStripMenuItem
+            // 
+            this.goonmetricsToolStripMenuItem.Name = "goonmetricsToolStripMenuItem";
+            this.goonmetricsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.goonmetricsToolStripMenuItem.Tag = "Goonmetrics";
+            this.goonmetricsToolStripMenuItem.Text = "Goonmetrics";
+            this.goonmetricsToolStripMenuItem.Click += new System.EventHandler(this.ScanSourceStripMenu_Click);
             // 
             // Form1
             // 
@@ -719,6 +750,9 @@ namespace EveScanner
         private System.Windows.Forms.ToolStripMenuItem scansAndResultsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
         private System.Windows.Forms.PictureBox pictureBox;
+        private System.Windows.Forms.ToolStripMenuItem scanSourceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem evepraisalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem goonmetricsToolStripMenuItem;
     }
 }
 

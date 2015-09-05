@@ -6,6 +6,7 @@
 namespace EveScanner
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using EveScanner.Interfaces;
 
@@ -141,9 +142,25 @@ namespace EveScanner
             }
 
             sb.AppendFormat("{0} | {1} | {2} stacks |", ScanResult.GetISKString(this.SellValue), string.Format("{0:n}", this.Volume) + " m3", this.Stacks);
-            if (this.ImageIndex != null)
+            if (this.ImageIndex != null && this.ImageIndex.Count() > 0)
             {
-                sb.AppendFormat(" {0} |", ConfigHelper.Instance.ImageNames[this.ImageIndex.ToString()]);
+                bool first = true;
+
+                foreach (int i in this.ImageIndex)
+                {
+                    if (first)
+                    {
+                        first = false;
+                    }
+                    else
+                    {
+                        sb.Append(",");
+                    }
+
+                    sb.AppendFormat(" {0}", ConfigHelper.Instance.ImageNames[i.ToString()]);
+                }
+
+                sb.Append(" |");
             }
 
             sb.AppendFormat(" {0}", this.AppraisalUrl);

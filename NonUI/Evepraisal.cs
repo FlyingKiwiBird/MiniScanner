@@ -48,7 +48,7 @@ namespace EveScanner
         public IScanResult GetAppraisalFromScan(string data)
         {
             string appraisal = this.GetAppraisalFromScanData(data);
-            ScanResult rs = Evepraisal.ParseResponse(appraisal);
+            ScanResult rs = this.ParseResponse(appraisal);
             return rs;
         }
 
@@ -60,7 +60,7 @@ namespace EveScanner
         public IScanResult GetAppraisalFromUrl(string url)
         {
             string appraisal = this.GetPreviousAppraisal(url);
-            ScanResult rs = Evepraisal.ParseResponse(appraisal);
+            ScanResult rs = this.ParseResponse(appraisal);
             return rs;
         }
 
@@ -69,12 +69,12 @@ namespace EveScanner
         /// </summary>
         /// <param name="responseString">HTML from Evepraisal</param>
         /// <returns>Parsed ScanResult</returns>
-        private static ScanResult ParseResponse(string responseString)
+        private ScanResult ParseResponse(string responseString)
         {
             // Find the scan data
             string textArea = "<textarea class=\"input-block-level\" rows=\"10\">";
             int dataIx = responseString.IndexOf(textArea);
-            int dataIe = responseString.IndexOf("</textarea>");
+            int dataIe = responseString.IndexOf("</textarea>", dataIx + 1);
             string rawScan = responseString.Substring(dataIx + textArea.Length, dataIe - dataIx - textArea.Length);
             if (rawScan.IndexOf("\r\n") == -1)
             {
@@ -83,8 +83,8 @@ namespace EveScanner
 
             // Find the /e/ link
             int scanIx = responseString.IndexOf("<a href=\"/e/");
-            int scanIe = responseString.IndexOf("\"", scanIx + 7);
-            string url = "http://evepraisal.com" + responseString.Substring(scanIx + 9, scanIe - scanIx + 2);
+            int scanIe = responseString.IndexOf("\"", scanIx + 10);
+            string url = this.uri + responseString.Substring(scanIx + 10, scanIe - scanIx - 10);
             string appraisalUrl = url;
 
             // Find the footer with values...

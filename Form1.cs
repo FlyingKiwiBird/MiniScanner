@@ -11,7 +11,6 @@ namespace EveScanner
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text;
-    using System.Text.RegularExpressions;
     using System.Windows.Forms;
 
     using EveScanner.Interfaces;
@@ -51,6 +50,11 @@ namespace EveScanner
         /// Holds a value indicating if the clipboard event has fired yet.
         /// </summary>
         private bool firstFire = true;
+
+        /// <summary>
+        /// Holds the last clipboard copy to prevent copying twice.
+        /// </summary>
+        private string lastCopy = string.Empty;
         #endregion Private Fields
 
         #region Constructors
@@ -118,8 +122,17 @@ namespace EveScanner
                 if (!string.IsNullOrEmpty(format))
                 {
                     string data = (string)obj.GetData(format);
+
+                    if (data == this.lastCopy)
+                    {
+                        Logger.Debug("Captured same data twice, skipping.");
+                        return;
+                    }
+
+                    this.lastCopy = data;
+
                     Logger.Debug("Captured scan {0}", data);
-                    if (this.CheckTextFormat(data) || data.StartsWith("http"))
+                    if (this.submitANYClipboardDataToolStripMenuItem.Checked || this.CheckTextFormat(data) || data.StartsWith("http"))
                     {
                         Logger.Scan("Captured scan {0}", data);
                         this.scanText.Text = data;
@@ -176,6 +189,12 @@ namespace EveScanner
                 {
                     this.ScanSourceStripMenu_Click(c, EventArgs.Empty);
                 }
+            }
+
+            this.shipTypeDropdown.Items.Clear();
+            foreach (string desc in ConfigHelper.Instance.ShipTypes.Keys)
+            {
+                this.shipTypeDropdown.Items.Add(desc);
             }
         }
 
@@ -237,7 +256,7 @@ namespace EveScanner
                     Evepraisal ep = new Evepraisal("goonpraisal.apps.goonswarm.org", true);
                     iresult = ep.GetAppraisalFromUrl(this.scanText.Text);
                 }
-                else if (this.CheckTextFormat(scanText.Text))
+                else if (this.submitANYClipboardDataToolStripMenuItem.Checked || this.CheckTextFormat(scanText.Text))
                 {
                     if (evepraisalToolStripMenuItem.Checked)
                     {
@@ -266,16 +285,18 @@ namespace EveScanner
                 this.AddResultToList(this.result);
                 this.ParseCurrentResult();
 
-                // Clear the ship and location buttons.
-                this.otherShipRadioButton.Checked = true;
-                this.otherShipRadioButton.Checked = false;
-
                 this.location1Radio.Checked = true;
                 this.location1Radio.Checked = false;
             }
             catch (Exception ex)
             {
                 Logger.Error(ex.ToString());
+            }
+
+            // If we're minimized, fix that.
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
             }
 
             // If this isn't set to Always on Top, pop the screen up.
@@ -334,60 +355,6 @@ namespace EveScanner
 
             this.result = this.scans[scanIndex];
 
-            if (!string.IsNullOrEmpty(this.result.ShipType))
-            {
-                bool shipTypeFound = false;
-                foreach (Control cc in shipContainer.Controls)
-                {
-                    RadioButton rb = cc as RadioButton;
-                    if (rb != null)
-                    {
-                        if (rb.Text == this.result.ShipType)
-                        {
-                            rb.Checked = true;
-                            shipTypeFound = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (!shipTypeFound)
-                {
-                    otherShipRadioButton.Checked = true;
-                    otherShipText.Text = this.result.ShipType;
-                }
-            }
-
-            if (!string.IsNullOrEmpty(this.result.Location))
-            {
-                if (this.result.Location == location1Text.Text)
-                {
-                    location1Radio.Checked = true;
-                }
-                else
-                {
-                    location1Radio.Checked = false;
-                }
-
-                if (this.result.Location == location2Text.Text)
-                {
-                    location2Radio.Checked = true;
-                }
-                else
-                {
-                    location2Radio.Checked = false;
-                }
-
-                if (this.result.Location == location3Text.Text)
-                {
-                    location3Radio.Checked = true;
-                }
-                else
-                {
-                    location3Radio.Checked = false;
-                }
-            }
-
             this.ParseCurrentResult();
         }
 
@@ -443,6 +410,173 @@ namespace EveScanner
         }
 
         /// <summary>
+        /// Updates the character name into the results object.
+        /// </summary>
+        /// <param name="sender">Character Name text field</param>
+        /// <param name="e">Not provided.</param>
+        private void characterNameText_Leave(object sender, EventArgs e)
+        {
+            if (this.result == null)
+            {
+                return;
+            }
+
+            this.result.CharacterName = this.characterNameText.Text;
+        }
+
+        /// <summary>
+        /// Updates the Ship Type Dropdown in the Results Object
+        /// </summary>
+        /// <param name="sender">Ship Type Dropdown</param>
+        /// <param name="e">Not provided</param>
+        private void shipTypeDropdown_SelectedValueChanged(object sender, EventArgs e)
+        {
+            if (this.result == null)
+            {
+                return;
+            }
+
+            this.result.ShipType = this.shipTypeDropdown.Text;
+        }
+
+        /// <summary>
+        /// Updates the Fit Info text in the Results Object
+        /// </summary>
+        /// <param name="sender">Fit Info Box</param>
+        /// <param name="e">Not provided</param>
+        private void fitInfoText_Leave(object sender, EventArgs e)
+        {
+            if (this.result == null)
+            {
+                return;
+            }
+
+            this.result.FitInfo = this.fitInfoText.Text;
+        }
+
+        /// <summary>
+        /// Updates the Notes in the results object.
+        /// </summary>
+        /// <param name="sender">Notes box</param>
+        /// <param name="e">Not provided</param>
+        private void notesText_Leave(object sender, EventArgs e)
+        {
+            if (this.result == null)
+            {
+                return;
+            }
+
+            this.result.Notes = this.notesText.Text;
+        }
+
+        #endregion Form Controls
+
+        #region Menuitems
+        /// <summary>
+        /// Shows or hides the extra menu items. This method is also called when the app starts if they
+        /// need to be hidden.
+        /// </summary>
+        /// <param name="sender">Show/Hide Extra Buttons</param>
+        /// <param name="e">Not provided</param>
+        private void ShowHideExtraOptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.SuspendLayout();
+
+            int containerBottomToFormBottom = this.Height - (resultsContainer.Location.Y + resultsContainer.Size.Height);
+            int newHeight = 0;
+
+            if (infoContainer.Visible)
+            {
+                infoContainer.Visible = false;
+                locationContainer.Visible = false;
+                scanContainer.Visible = false;
+
+                newHeight = infoContainer.Location.Y + resultsContainer.Height + containerBottomToFormBottom;
+            }
+            else
+            {
+                infoContainer.Visible = true;
+                locationContainer.Visible = true;
+                scanContainer.Visible = true;
+
+                int containerBottomToContainerTop = locationContainer.Top - (infoContainer.Location.Y + infoContainer.Size.Height);
+                newHeight = infoContainer.Location.Y + infoContainer.Height + locationContainer.Height + (2 * containerBottomToContainerTop) + resultsContainer.Height + containerBottomToFormBottom;
+            }
+
+            ConfigHelper.Instance.ShowExtra = scanContainer.Visible;
+            ConfigHelper.Instance.AppWidth = this.Width;
+            ConfigHelper.Instance.AppHeight = this.Height;
+
+            this.MinimumSize = new Size(this.MinimumSize.Width, newHeight);
+            this.Height = this.MinimumSize.Height;
+
+            this.ResumeLayout();
+        }
+
+        /// <summary>
+        /// Configures whether clipboard data is automatically captured.
+        /// </summary>
+        /// <param name="sender">Options -> Capture Clipboard</param>
+        /// <param name="e">Not provided</param>
+        private void CaptureClipboardOnToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ConfigHelper.Instance.CaptureClipboard = !ConfigHelper.Instance.CaptureClipboard;
+            captureClipboardOnToolStripMenuItem.Checked = ConfigHelper.Instance.CaptureClipboard;
+        }
+
+        /// <summary>
+        /// Configures whether the window is always on top of all others
+        /// </summary>
+        /// <param name="sender">Options -> Toggle Always on Top</param>
+        /// <param name="e">Not provided</param>
+        private void ToggleAlwaysOnTopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.TopMost = !this.TopMost;
+            this.toggleAlwaysOnTopToolStripMenuItem.Checked = this.TopMost;
+            ConfigHelper.Instance.AlwaysOnTop = this.TopMost;
+        }
+
+        /// <summary>
+        /// Indicates that ANY clipboard text captured should be submitted to the appraisal.
+        /// </summary>
+        /// <param name="sender">Options -> Submit ANY Clipboard Data</param>
+        /// <param name="e">Not provided.</param>
+        private void submitANYClipboardDataToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.submitANYClipboardDataToolStripMenuItem.Checked = !this.submitANYClipboardDataToolStripMenuItem.Checked;
+        }
+
+        /// <summary>
+        /// Clears all the inputs and labels back to their original values.
+        /// </summary>
+        /// <param name="sender">File -> Reset Data</param>
+        /// <param name="e">Not provided</param>
+        private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Logger.Debug("Clearing application values!");
+
+            this.sellValueLabel.Text = "---";
+            this.buyValueLabel.Text = "---";
+            this.volumeValueLabel.Text = "---";
+            this.stacksValueText.Text = "---";
+
+            this.location1Radio.Checked = false;
+            this.location2Radio.Checked = false;
+            this.location3Radio.Checked = false;
+
+            this.location1Text.Text = "Perimeter -> Urlen";
+            this.location2Text.Text = "Ashab -> Madirmilire";
+            this.location3Text.Text = "Hatakani -> Sivala";
+
+            this.resultUrlTextBox.Text = string.Empty;
+            this.scanText.Text = string.Empty;
+
+            this.historyDropdown.Items.Clear();
+            this.scans.Clear();
+            this.scanValueLabel.Text = "0";
+        }
+
+        /// <summary>
         /// This sets up the checkmarks properly when clicking an item on the debug menu.
         /// </summary>
         /// <param name="sender">Options -> Debug</param>
@@ -495,104 +629,6 @@ namespace EveScanner
                 }
             }
         }
-
-        #endregion Form Controls
-
-        #region Menuitems
-        /// <summary>
-        /// Shows or hides the extra menu items. This method is also called when the app starts if they
-        /// need to be hidden.
-        /// </summary>
-        /// <param name="sender">Show/Hide Extra Buttons</param>
-        /// <param name="e">Not provided</param>
-        private void ShowHideExtraOptionsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.SuspendLayout();
-
-            int containerBottomToFormBottom = this.Height - (resultsContainer.Location.Y + resultsContainer.Size.Height);
-            int newHeight = 0;
-
-            if (shipContainer.Visible)
-            {
-                shipContainer.Visible = false;
-                locationContainer.Visible = false;
-                scanContainer.Visible = false;
-
-                newHeight = shipContainer.Location.Y + resultsContainer.Height + containerBottomToFormBottom;
-            }
-            else
-            {
-                shipContainer.Visible = true;
-                locationContainer.Visible = true;
-                scanContainer.Visible = true;
-
-                int containerBottomToContainerTop = locationContainer.Top - (shipContainer.Location.Y + shipContainer.Size.Height);
-                newHeight = shipContainer.Location.Y + shipContainer.Height + locationContainer.Height + (2 * containerBottomToContainerTop) + resultsContainer.Height + containerBottomToFormBottom;
-            }
-
-            ConfigHelper.Instance.ShowExtra = shipContainer.Visible;
-            ConfigHelper.Instance.AppWidth = this.Width;
-            ConfigHelper.Instance.AppHeight = this.Height;
-
-            this.MinimumSize = new Size(this.MinimumSize.Width, newHeight);
-            this.Height = this.MinimumSize.Height;
-
-            this.ResumeLayout();
-        }
-
-        /// <summary>
-        /// Configures whether clipboard data is automatically captured.
-        /// </summary>
-        /// <param name="sender">Options -> Capture Clipboard</param>
-        /// <param name="e">Not provided</param>
-        private void CaptureClipboardOnToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ConfigHelper.Instance.CaptureClipboard = !ConfigHelper.Instance.CaptureClipboard;
-            captureClipboardOnToolStripMenuItem.Checked = ConfigHelper.Instance.CaptureClipboard;
-        }
-
-        /// <summary>
-        /// Configures whether the window is always on top of all others
-        /// </summary>
-        /// <param name="sender">Options -> Toggle Always on Top</param>
-        /// <param name="e">Not provided</param>
-        private void ToggleAlwaysOnTopToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.TopMost = !this.TopMost;
-            this.toggleAlwaysOnTopToolStripMenuItem.Checked = this.TopMost;
-            ConfigHelper.Instance.AlwaysOnTop = this.TopMost;
-        }
-
-        /// <summary>
-        /// Clears all the inputs and labels back to their original values.
-        /// </summary>
-        /// <param name="sender">File -> Reset Data</param>
-        /// <param name="e">Not provided</param>
-        private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Logger.Debug("Clearing application values!");
-
-            this.sellValueLabel.Text = "---";
-            this.buyValueLabel.Text = "---";
-            this.volumeValueLabel.Text = "---";
-            this.stacksValueText.Text = "---";
-            this.otherShipRadioButton.Checked = true;
-
-            this.location1Radio.Checked = false;
-            this.location2Radio.Checked = false;
-            this.location3Radio.Checked = false;
-
-            this.location1Text.Text = "Perimeter -> Urlen";
-            this.location2Text.Text = "Ashab -> Madirmilire";
-            this.location3Text.Text = "Hatakani -> Sivala";
-
-            this.resultUrlTextBox.Text = string.Empty;
-            this.scanText.Text = string.Empty;
-
-            this.historyDropdown.Items.Clear();
-            this.scans.Clear();
-            this.scanValueLabel.Text = "0";
-        }
         #endregion Menu Items
 
         #region Helper Functions
@@ -627,15 +663,11 @@ namespace EveScanner
         {
             string output = string.Empty;
 
-            RadioButton radio = this.GetCheckedRadioButton(this.shipContainer);
+            RadioButton radio = this.GetCheckedRadioButton(this.infoContainer);
             if (radio != null)
             {
                 output = radio.Text;
 
-                if (output == "Other")
-                {
-                    output = this.otherShipText.Text;
-                }
             }
 
             return output;
@@ -673,11 +705,22 @@ namespace EveScanner
         /// <param name="scanResult">Result to add</param>
         private void AddResultToList(IScanResult scanResult)
         {
-            this.scans.Add(scanResult);
-            this.historyDropdown.Items.Insert(0, scanResult.ToString());
-            this.historyDropdown.SelectedIndex = 0;
-            this.scanValueLabel.Text = this.scans.Count.ToString();
-            Logger.Result(scanResult.ToString());
+            IScanResult result = this.scans.Where(x => x.AppraisalUrl == scanResult.AppraisalUrl).FirstOrDefault();
+
+            if (result == null)
+            {
+                this.scans.Add(scanResult);
+                this.historyDropdown.Items.Insert(0, scanResult.ToString());
+                this.historyDropdown.SelectedIndex = 0;
+                this.scanValueLabel.Text = this.scans.Count.ToString();
+                Logger.Result(scanResult.ToString());
+            }
+            else
+            {
+                int index = this.scans.IndexOf(result);
+
+                this.historyDropdown.SelectedIndex = index;
+            }
         }
 
         /// <summary>
@@ -685,15 +728,19 @@ namespace EveScanner
         /// </summary>
         private void ParseCurrentResult()
         {
+            // Top Labels
             this.buyValueLabel.Text = ScanResult.GetISKString(this.result.BuyValue) + " ISK";
             this.sellValueLabel.Text = ScanResult.GetISKString(this.result.SellValue) + " ISK";
             this.stacksValueText.Text = this.result.Stacks.ToString();
             this.volumeValueLabel.Text = string.Format("{0:n}", this.result.Volume) + " m3";
 
+            // Get URL
             this.resultUrlTextBox.Text = this.result.AppraisalUrl;
 
+            // Get Scan from Object
             this.scanText.Text = this.result.RawScan;
 
+            // Construct / Restore Image
             if (this.result.ImageIndex == null)
             {
                 if (this.pictureBox.Image != null)
@@ -706,6 +753,81 @@ namespace EveScanner
             else
             {
                 this.ConstructAndDisplayImages(this.result.ImageIndex);
+            }
+
+            // Restore Character Name
+            this.characterNameText.Text = string.Empty;
+
+            if (!string.IsNullOrEmpty(this.result.CharacterName))
+            {
+                this.characterNameText.Text = this.result.CharacterName;
+            }
+
+            // Restore Ship Type
+            this.shipTypeDropdown.Text = string.Empty;
+
+            if (!string.IsNullOrEmpty(this.result.ShipType))
+            {
+                int index = this.shipTypeDropdown.Items.IndexOf(this.result.ShipType);
+
+                this.shipTypeDropdown.SuspendLayout();
+                if (index > -1)
+                {
+                    this.shipTypeDropdown.SelectedIndex = index;
+                    this.shipTypeDropdown.Text = this.result.ShipType;
+                }
+                else
+                {
+                    this.shipTypeDropdown.Text = this.result.ShipType;
+                }
+                this.shipTypeDropdown.ResumeLayout();
+            }
+
+            // Restore Fit Into
+            this.fitInfoText.Text = string.Empty;
+
+            if (!string.IsNullOrEmpty(this.result.FitInfo))
+            {
+                this.fitInfoText.Text = this.result.FitInfo;
+            }
+
+            // Restore Notes
+            this.notesText.Text = string.Empty;
+
+            if (!string.IsNullOrEmpty(this.result.Notes))
+            {
+                this.notesText.Text = this.result.Notes;
+            }
+
+            // Restore Location
+            if (!string.IsNullOrEmpty(this.result.Location))
+            {
+                if (this.result.Location == location1Text.Text)
+                {
+                    location1Radio.Checked = true;
+                }
+                else
+                {
+                    location1Radio.Checked = false;
+                }
+
+                if (this.result.Location == location2Text.Text)
+                {
+                    location2Radio.Checked = true;
+                }
+                else
+                {
+                    location2Radio.Checked = false;
+                }
+
+                if (this.result.Location == location3Text.Text)
+                {
+                    location3Radio.Checked = true;
+                }
+                else
+                {
+                    location3Radio.Checked = false;
+                }
             }
         }
 
@@ -754,15 +876,7 @@ namespace EveScanner
         /// <returns>True if we think this is a cargo scan, false otherwise.</returns>
         private bool CheckForCargoScan(string inputText)
         {
-            foreach (string line in inputText.Split(new string[] { "\r", "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                if (!Regex.IsMatch(line, @"(?<line>\d+ [A-Za-z0-9,()'/\-\.]+( +[A-Za-z0-9,()'/\-\.]+)*)"))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return Validators.CheckForCargoScan(inputText);
         }
 
         /// <summary>

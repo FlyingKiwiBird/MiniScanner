@@ -68,6 +68,7 @@
     <Compile Include="NonUI\Logger.cs" />
     <Compile Include="NonUI\NativeMethods.cs" />
     <Compile Include="NonUI\ScanResult.cs" />
+    <Compile Include="NonUI\Validators.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">

@@ -33,25 +33,21 @@ namespace EveScanner
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.radioButton4 = new System.Windows.Forms.RadioButton();
-            this.radioButton5 = new System.Windows.Forms.RadioButton();
-            this.radioButton6 = new System.Windows.Forms.RadioButton();
-            this.radioButton7 = new System.Windows.Forms.RadioButton();
-            this.radioButton8 = new System.Windows.Forms.RadioButton();
-            this.radioButton9 = new System.Windows.Forms.RadioButton();
-            this.radioButton10 = new System.Windows.Forms.RadioButton();
-            this.otherShipText = new System.Windows.Forms.TextBox();
-            this.otherShipRadioButton = new System.Windows.Forms.RadioButton();
             this.location1Text = new System.Windows.Forms.TextBox();
             this.location1Radio = new System.Windows.Forms.RadioButton();
             this.location2Radio = new System.Windows.Forms.RadioButton();
             this.location3Radio = new System.Windows.Forms.RadioButton();
             this.location2Text = new System.Windows.Forms.TextBox();
             this.location3Text = new System.Windows.Forms.TextBox();
-            this.shipContainer = new System.Windows.Forms.GroupBox();
+            this.infoContainer = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.notesText = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.fitInfoText = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.characterNameText = new System.Windows.Forms.TextBox();
+            this.shipTypeDropdown = new System.Windows.Forms.ComboBox();
             this.locationContainer = new System.Windows.Forms.GroupBox();
             this.scanContainer = new System.Windows.Forms.GroupBox();
             this.submitRequestButton = new System.Windows.Forms.Button();
@@ -73,18 +69,19 @@ namespace EveScanner
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showHideExtraOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.captureClipboardOnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toggleAlwaysOnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.captureClipboardOnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.submitANYClipboardDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scanSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.evepraisalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.goonmetricsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loggingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scansAndResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.scanSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.evepraisalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.goonmetricsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.shipContainer.SuspendLayout();
+            this.infoContainer.SuspendLayout();
             this.locationContainer.SuspendLayout();
             this.scanContainer.SuspendLayout();
             this.resultsContainer.SuspendLayout();
@@ -131,134 +128,6 @@ namespace EveScanner
             this.label4.Size = new System.Drawing.Size(83, 25);
             this.label4.TabIndex = 7;
             this.label4.Text = "Stacks:";
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(6, 19);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(79, 17);
-            this.radioButton1.TabIndex = 2;
-            this.radioButton1.Text = "Providence";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.Click += new System.EventHandler(this.ShipButton_Click);
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(97, 19);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(59, 17);
-            this.radioButton2.TabIndex = 3;
-            this.radioButton2.Text = "Charon";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.Click += new System.EventHandler(this.ShipButton_Click);
-            // 
-            // radioButton3
-            // 
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Location = new System.Drawing.Point(188, 19);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(60, 17);
-            this.radioButton3.TabIndex = 4;
-            this.radioButton3.Text = "Obelisk";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.Click += new System.EventHandler(this.ShipButton_Click);
-            // 
-            // radioButton4
-            // 
-            this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(279, 19);
-            this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(51, 17);
-            this.radioButton4.TabIndex = 5;
-            this.radioButton4.Text = "Fenrir";
-            this.radioButton4.UseVisualStyleBackColor = true;
-            this.radioButton4.Click += new System.EventHandler(this.ShipButton_Click);
-            // 
-            // radioButton5
-            // 
-            this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(6, 42);
-            this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(41, 17);
-            this.radioButton5.TabIndex = 6;
-            this.radioButton5.Text = "Ark";
-            this.radioButton5.UseVisualStyleBackColor = true;
-            this.radioButton5.Click += new System.EventHandler(this.ShipButton_Click);
-            // 
-            // radioButton6
-            // 
-            this.radioButton6.AutoSize = true;
-            this.radioButton6.Location = new System.Drawing.Point(97, 42);
-            this.radioButton6.Name = "radioButton6";
-            this.radioButton6.Size = new System.Drawing.Size(51, 17);
-            this.radioButton6.TabIndex = 7;
-            this.radioButton6.Text = "Rhea";
-            this.radioButton6.UseVisualStyleBackColor = true;
-            this.radioButton6.Click += new System.EventHandler(this.ShipButton_Click);
-            // 
-            // radioButton7
-            // 
-            this.radioButton7.AutoSize = true;
-            this.radioButton7.Location = new System.Drawing.Point(188, 42);
-            this.radioButton7.Name = "radioButton7";
-            this.radioButton7.Size = new System.Drawing.Size(58, 17);
-            this.radioButton7.TabIndex = 8;
-            this.radioButton7.Text = "Anshar";
-            this.radioButton7.UseVisualStyleBackColor = true;
-            this.radioButton7.Click += new System.EventHandler(this.ShipButton_Click);
-            // 
-            // radioButton8
-            // 
-            this.radioButton8.AutoSize = true;
-            this.radioButton8.Location = new System.Drawing.Point(279, 42);
-            this.radioButton8.Name = "radioButton8";
-            this.radioButton8.Size = new System.Drawing.Size(59, 17);
-            this.radioButton8.TabIndex = 9;
-            this.radioButton8.Text = "Nomad";
-            this.radioButton8.UseVisualStyleBackColor = true;
-            this.radioButton8.Click += new System.EventHandler(this.ShipButton_Click);
-            // 
-            // radioButton9
-            // 
-            this.radioButton9.AutoSize = true;
-            this.radioButton9.Location = new System.Drawing.Point(6, 65);
-            this.radioButton9.Name = "radioButton9";
-            this.radioButton9.Size = new System.Drawing.Size(48, 17);
-            this.radioButton9.TabIndex = 10;
-            this.radioButton9.Text = "Orca";
-            this.radioButton9.UseVisualStyleBackColor = true;
-            this.radioButton9.Click += new System.EventHandler(this.ShipButton_Click);
-            // 
-            // radioButton10
-            // 
-            this.radioButton10.AutoSize = true;
-            this.radioButton10.Location = new System.Drawing.Point(97, 65);
-            this.radioButton10.Name = "radioButton10";
-            this.radioButton10.Size = new System.Drawing.Size(70, 17);
-            this.radioButton10.TabIndex = 11;
-            this.radioButton10.Text = "Bowhead";
-            this.radioButton10.UseVisualStyleBackColor = true;
-            this.radioButton10.Click += new System.EventHandler(this.ShipButton_Click);
-            // 
-            // otherShipText
-            // 
-            this.otherShipText.Location = new System.Drawing.Point(188, 88);
-            this.otherShipText.Name = "otherShipText";
-            this.otherShipText.Size = new System.Drawing.Size(150, 20);
-            this.otherShipText.TabIndex = 1;
-            // 
-            // otherShipRadioButton
-            // 
-            this.otherShipRadioButton.AutoSize = true;
-            this.otherShipRadioButton.Location = new System.Drawing.Point(188, 65);
-            this.otherShipRadioButton.Name = "otherShipRadioButton";
-            this.otherShipRadioButton.Size = new System.Drawing.Size(51, 17);
-            this.otherShipRadioButton.TabIndex = 0;
-            this.otherShipRadioButton.Text = "Other";
-            this.otherShipRadioButton.UseVisualStyleBackColor = true;
-            this.otherShipRadioButton.Click += new System.EventHandler(this.ShipButton_Click);
             // 
             // location1Text
             // 
@@ -320,26 +189,107 @@ namespace EveScanner
             this.location3Text.TabIndex = 17;
             this.location3Text.Text = "Hatakani -> Sivala";
             // 
-            // shipContainer
+            // infoContainer
             // 
-            this.shipContainer.Controls.Add(this.radioButton1);
-            this.shipContainer.Controls.Add(this.radioButton2);
-            this.shipContainer.Controls.Add(this.radioButton3);
-            this.shipContainer.Controls.Add(this.radioButton4);
-            this.shipContainer.Controls.Add(this.radioButton5);
-            this.shipContainer.Controls.Add(this.radioButton6);
-            this.shipContainer.Controls.Add(this.radioButton7);
-            this.shipContainer.Controls.Add(this.radioButton8);
-            this.shipContainer.Controls.Add(this.otherShipRadioButton);
-            this.shipContainer.Controls.Add(this.radioButton9);
-            this.shipContainer.Controls.Add(this.otherShipText);
-            this.shipContainer.Controls.Add(this.radioButton10);
-            this.shipContainer.Location = new System.Drawing.Point(21, 165);
-            this.shipContainer.Name = "shipContainer";
-            this.shipContainer.Size = new System.Drawing.Size(350, 120);
-            this.shipContainer.TabIndex = 28;
-            this.shipContainer.TabStop = false;
-            this.shipContainer.Text = "Ship";
+            this.infoContainer.Controls.Add(this.label9);
+            this.infoContainer.Controls.Add(this.notesText);
+            this.infoContainer.Controls.Add(this.label8);
+            this.infoContainer.Controls.Add(this.fitInfoText);
+            this.infoContainer.Controls.Add(this.label7);
+            this.infoContainer.Controls.Add(this.label6);
+            this.infoContainer.Controls.Add(this.characterNameText);
+            this.infoContainer.Controls.Add(this.shipTypeDropdown);
+            this.infoContainer.Location = new System.Drawing.Point(21, 165);
+            this.infoContainer.Name = "infoContainer";
+            this.infoContainer.Size = new System.Drawing.Size(350, 174);
+            this.infoContainer.TabIndex = 28;
+            this.infoContainer.TabStop = false;
+            this.infoContainer.Text = "Scan Info";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 101);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(35, 13);
+            this.label9.TabIndex = 19;
+            this.label9.Text = "Notes";
+            // 
+            // notesText
+            // 
+            this.notesText.Location = new System.Drawing.Point(103, 98);
+            this.notesText.Multiline = true;
+            this.notesText.Name = "notesText";
+            this.notesText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.notesText.Size = new System.Drawing.Size(235, 70);
+            this.notesText.TabIndex = 18;
+            this.notesText.Leave += new System.EventHandler(this.notesText_Leave);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 75);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(39, 13);
+            this.label8.TabIndex = 17;
+            this.label8.Text = "Fit Info";
+            // 
+            // fitInfoText
+            // 
+            this.fitInfoText.Location = new System.Drawing.Point(103, 72);
+            this.fitInfoText.Name = "fitInfoText";
+            this.fitInfoText.Size = new System.Drawing.Size(235, 20);
+            this.fitInfoText.TabIndex = 16;
+            this.fitInfoText.Leave += new System.EventHandler(this.fitInfoText_Leave);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(6, 48);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(55, 13);
+            this.label7.TabIndex = 15;
+            this.label7.Text = "Ship Type";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 22);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(84, 13);
+            this.label6.TabIndex = 14;
+            this.label6.Text = "Character Name";
+            // 
+            // characterNameText
+            // 
+            this.characterNameText.Location = new System.Drawing.Point(103, 19);
+            this.characterNameText.Name = "characterNameText";
+            this.characterNameText.Size = new System.Drawing.Size(235, 20);
+            this.characterNameText.TabIndex = 13;
+            this.characterNameText.Leave += new System.EventHandler(this.characterNameText_Leave);
+            // 
+            // shipTypeDropdown
+            // 
+            this.shipTypeDropdown.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.shipTypeDropdown.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+            this.shipTypeDropdown.FormattingEnabled = true;
+            this.shipTypeDropdown.Items.AddRange(new object[] {
+            "N/A",
+            "Providence",
+            "Charon",
+            "Obelisk",
+            "Fenrir",
+            "Ark",
+            "Rhea",
+            "Anshar",
+            "Nomad",
+            "Orca",
+            "Bowhead"});
+            this.shipTypeDropdown.Location = new System.Drawing.Point(103, 45);
+            this.shipTypeDropdown.Name = "shipTypeDropdown";
+            this.shipTypeDropdown.Size = new System.Drawing.Size(235, 21);
+            this.shipTypeDropdown.TabIndex = 14;
+            this.shipTypeDropdown.SelectedValueChanged += new System.EventHandler(this.shipTypeDropdown_SelectedValueChanged);
             // 
             // locationContainer
             // 
@@ -349,7 +299,7 @@ namespace EveScanner
             this.locationContainer.Controls.Add(this.location2Text);
             this.locationContainer.Controls.Add(this.location2Radio);
             this.locationContainer.Controls.Add(this.location3Radio);
-            this.locationContainer.Location = new System.Drawing.Point(21, 291);
+            this.locationContainer.Location = new System.Drawing.Point(21, 345);
             this.locationContainer.Name = "locationContainer";
             this.locationContainer.Size = new System.Drawing.Size(350, 104);
             this.locationContainer.TabIndex = 29;
@@ -365,7 +315,7 @@ namespace EveScanner
             this.scanContainer.Controls.Add(this.scanText);
             this.scanContainer.Location = new System.Drawing.Point(377, 165);
             this.scanContainer.Name = "scanContainer";
-            this.scanContainer.Size = new System.Drawing.Size(277, 230);
+            this.scanContainer.Size = new System.Drawing.Size(187, 284);
             this.scanContainer.TabIndex = 30;
             this.scanContainer.TabStop = false;
             this.scanContainer.Text = "Raw Scan Data";
@@ -373,7 +323,7 @@ namespace EveScanner
             // submitRequestButton
             // 
             this.submitRequestButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.submitRequestButton.Location = new System.Drawing.Point(171, 201);
+            this.submitRequestButton.Location = new System.Drawing.Point(81, 255);
             this.submitRequestButton.Name = "submitRequestButton";
             this.submitRequestButton.Size = new System.Drawing.Size(100, 23);
             this.submitRequestButton.TabIndex = 22;
@@ -389,7 +339,8 @@ namespace EveScanner
             this.scanText.Location = new System.Drawing.Point(6, 19);
             this.scanText.Multiline = true;
             this.scanText.Name = "scanText";
-            this.scanText.Size = new System.Drawing.Size(265, 176);
+            this.scanText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.scanText.Size = new System.Drawing.Size(175, 230);
             this.scanText.TabIndex = 21;
             // 
             // resultsContainer
@@ -401,9 +352,9 @@ namespace EveScanner
             this.resultsContainer.Controls.Add(this.label5);
             this.resultsContainer.Controls.Add(this.resultUrlTextBox);
             this.resultsContainer.Controls.Add(this.copySummaryButton);
-            this.resultsContainer.Location = new System.Drawing.Point(21, 401);
+            this.resultsContainer.Location = new System.Drawing.Point(21, 455);
             this.resultsContainer.Name = "resultsContainer";
-            this.resultsContainer.Size = new System.Drawing.Size(633, 75);
+            this.resultsContainer.Size = new System.Drawing.Size(543, 75);
             this.resultsContainer.TabIndex = 31;
             this.resultsContainer.TabStop = false;
             this.resultsContainer.Text = "Results";
@@ -416,14 +367,14 @@ namespace EveScanner
             this.historyDropdown.FormattingEnabled = true;
             this.historyDropdown.Location = new System.Drawing.Point(6, 47);
             this.historyDropdown.Name = "historyDropdown";
-            this.historyDropdown.Size = new System.Drawing.Size(462, 21);
+            this.historyDropdown.Size = new System.Drawing.Size(372, 21);
             this.historyDropdown.TabIndex = 21;
             this.historyDropdown.SelectedIndexChanged += new System.EventHandler(this.HistoryDropdown_SelectedIndexChanged);
             // 
             // scanValueLabel
             // 
             this.scanValueLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.scanValueLabel.Location = new System.Drawing.Point(527, 45);
+            this.scanValueLabel.Location = new System.Drawing.Point(437, 45);
             this.scanValueLabel.Name = "scanValueLabel";
             this.scanValueLabel.Size = new System.Drawing.Size(100, 23);
             this.scanValueLabel.TabIndex = 20;
@@ -434,7 +385,7 @@ namespace EveScanner
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(481, 50);
+            this.label5.Location = new System.Drawing.Point(391, 50);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(40, 13);
             this.label5.TabIndex = 3;
@@ -446,7 +397,7 @@ namespace EveScanner
             | System.Windows.Forms.AnchorStyles.Right)));
             this.resultUrlTextBox.Location = new System.Drawing.Point(173, 21);
             this.resultUrlTextBox.Name = "resultUrlTextBox";
-            this.resultUrlTextBox.Size = new System.Drawing.Size(454, 20);
+            this.resultUrlTextBox.Size = new System.Drawing.Size(364, 20);
             this.resultUrlTextBox.TabIndex = 19;
             // 
             // copySummaryButton
@@ -507,7 +458,7 @@ namespace EveScanner
             this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(664, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(574, 24);
             this.menuStrip1.TabIndex = 36;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -551,27 +502,62 @@ namespace EveScanner
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.captureClipboardOnToolStripMenuItem,
             this.toggleAlwaysOnTopToolStripMenuItem,
+            this.captureClipboardOnToolStripMenuItem,
+            this.submitANYClipboardDataToolStripMenuItem,
             this.scanSourceToolStripMenuItem,
             this.loggingToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "&Options";
             // 
-            // captureClipboardOnToolStripMenuItem
-            // 
-            this.captureClipboardOnToolStripMenuItem.Name = "captureClipboardOnToolStripMenuItem";
-            this.captureClipboardOnToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
-            this.captureClipboardOnToolStripMenuItem.Text = "&Capture Clipboard";
-            this.captureClipboardOnToolStripMenuItem.Click += new System.EventHandler(this.CaptureClipboardOnToolStripMenuItem_Click);
-            // 
             // toggleAlwaysOnTopToolStripMenuItem
             // 
             this.toggleAlwaysOnTopToolStripMenuItem.Name = "toggleAlwaysOnTopToolStripMenuItem";
-            this.toggleAlwaysOnTopToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.toggleAlwaysOnTopToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.toggleAlwaysOnTopToolStripMenuItem.Text = "&Toggle Always on Top";
             this.toggleAlwaysOnTopToolStripMenuItem.Click += new System.EventHandler(this.ToggleAlwaysOnTopToolStripMenuItem_Click);
+            // 
+            // captureClipboardOnToolStripMenuItem
+            // 
+            this.captureClipboardOnToolStripMenuItem.Name = "captureClipboardOnToolStripMenuItem";
+            this.captureClipboardOnToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.captureClipboardOnToolStripMenuItem.Text = "&Capture Clipboard";
+            this.captureClipboardOnToolStripMenuItem.Click += new System.EventHandler(this.CaptureClipboardOnToolStripMenuItem_Click);
+            // 
+            // submitANYClipboardDataToolStripMenuItem
+            // 
+            this.submitANYClipboardDataToolStripMenuItem.Name = "submitANYClipboardDataToolStripMenuItem";
+            this.submitANYClipboardDataToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.submitANYClipboardDataToolStripMenuItem.Text = "Submit &ANY Clipboard Data";
+            this.submitANYClipboardDataToolStripMenuItem.Click += new System.EventHandler(this.submitANYClipboardDataToolStripMenuItem_Click);
+            // 
+            // scanSourceToolStripMenuItem
+            // 
+            this.scanSourceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.evepraisalToolStripMenuItem,
+            this.goonmetricsToolStripMenuItem});
+            this.scanSourceToolStripMenuItem.Name = "scanSourceToolStripMenuItem";
+            this.scanSourceToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.scanSourceToolStripMenuItem.Text = "&Scan Source";
+            // 
+            // evepraisalToolStripMenuItem
+            // 
+            this.evepraisalToolStripMenuItem.Checked = true;
+            this.evepraisalToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.evepraisalToolStripMenuItem.Name = "evepraisalToolStripMenuItem";
+            this.evepraisalToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.evepraisalToolStripMenuItem.Tag = "Evepraisal";
+            this.evepraisalToolStripMenuItem.Text = "Evepraisal";
+            this.evepraisalToolStripMenuItem.Click += new System.EventHandler(this.ScanSourceStripMenu_Click);
+            // 
+            // goonmetricsToolStripMenuItem
+            // 
+            this.goonmetricsToolStripMenuItem.Name = "goonmetricsToolStripMenuItem";
+            this.goonmetricsToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.goonmetricsToolStripMenuItem.Tag = "Goonmetrics";
+            this.goonmetricsToolStripMenuItem.Text = "Goonmetrics";
+            this.goonmetricsToolStripMenuItem.Click += new System.EventHandler(this.ScanSourceStripMenu_Click);
             // 
             // loggingToolStripMenuItem
             // 
@@ -581,7 +567,7 @@ namespace EveScanner
             this.scansAndResultsToolStripMenuItem,
             this.debugToolStripMenuItem});
             this.loggingToolStripMenuItem.Name = "loggingToolStripMenuItem";
-            this.loggingToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.loggingToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.loggingToolStripMenuItem.Text = "&Logging";
             // 
             // noneToolStripMenuItem
@@ -621,45 +607,18 @@ namespace EveScanner
             // pictureBox
             // 
             this.pictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox.Location = new System.Drawing.Point(505, 24);
+            this.pictureBox.Location = new System.Drawing.Point(415, 24);
             this.pictureBox.Name = "pictureBox";
             this.pictureBox.Size = new System.Drawing.Size(149, 135);
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox.TabIndex = 37;
             this.pictureBox.TabStop = false;
             // 
-            // scanSourceToolStripMenuItem
-            // 
-            this.scanSourceToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.evepraisalToolStripMenuItem,
-            this.goonmetricsToolStripMenuItem});
-            this.scanSourceToolStripMenuItem.Name = "scanSourceToolStripMenuItem";
-            this.scanSourceToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
-            this.scanSourceToolStripMenuItem.Text = "Scan Source";
-            // 
-            // evepraisalToolStripMenuItem
-            // 
-            this.evepraisalToolStripMenuItem.Checked = true;
-            this.evepraisalToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.evepraisalToolStripMenuItem.Name = "evepraisalToolStripMenuItem";
-            this.evepraisalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.evepraisalToolStripMenuItem.Tag = "Evepraisal";
-            this.evepraisalToolStripMenuItem.Text = "Evepraisal";
-            this.evepraisalToolStripMenuItem.Click += new System.EventHandler(this.ScanSourceStripMenu_Click);
-            // 
-            // goonmetricsToolStripMenuItem
-            // 
-            this.goonmetricsToolStripMenuItem.Name = "goonmetricsToolStripMenuItem";
-            this.goonmetricsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.goonmetricsToolStripMenuItem.Tag = "Goonmetrics";
-            this.goonmetricsToolStripMenuItem.Text = "Goonmetrics";
-            this.goonmetricsToolStripMenuItem.Click += new System.EventHandler(this.ScanSourceStripMenu_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(664, 481);
+            this.ClientSize = new System.Drawing.Size(574, 535);
             this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.stacksValueText);
             this.Controls.Add(this.volumeValueLabel);
@@ -668,7 +627,7 @@ namespace EveScanner
             this.Controls.Add(this.resultsContainer);
             this.Controls.Add(this.scanContainer);
             this.Controls.Add(this.locationContainer);
-            this.Controls.Add(this.shipContainer);
+            this.Controls.Add(this.infoContainer);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -680,8 +639,8 @@ namespace EveScanner
             this.Text = "I LOVE SCANNING";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.shipContainer.ResumeLayout(false);
-            this.shipContainer.PerformLayout();
+            this.infoContainer.ResumeLayout(false);
+            this.infoContainer.PerformLayout();
             this.locationContainer.ResumeLayout(false);
             this.locationContainer.PerformLayout();
             this.scanContainer.ResumeLayout(false);
@@ -702,25 +661,13 @@ namespace EveScanner
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.RadioButton radioButton4;
-        private System.Windows.Forms.RadioButton radioButton5;
-        private System.Windows.Forms.RadioButton radioButton6;
-        private System.Windows.Forms.RadioButton radioButton7;
-        private System.Windows.Forms.RadioButton radioButton8;
-        private System.Windows.Forms.RadioButton radioButton9;
-        private System.Windows.Forms.RadioButton radioButton10;
-        private System.Windows.Forms.TextBox otherShipText;
-        private System.Windows.Forms.RadioButton otherShipRadioButton;
         private System.Windows.Forms.TextBox location1Text;
         private System.Windows.Forms.RadioButton location1Radio;
         private System.Windows.Forms.RadioButton location2Radio;
         private System.Windows.Forms.RadioButton location3Radio;
         private System.Windows.Forms.TextBox location2Text;
         private System.Windows.Forms.TextBox location3Text;
-        private System.Windows.Forms.GroupBox shipContainer;
+        private System.Windows.Forms.GroupBox infoContainer;
         private System.Windows.Forms.GroupBox locationContainer;
         private System.Windows.Forms.GroupBox scanContainer;
         private System.Windows.Forms.TextBox scanText;
@@ -753,6 +700,15 @@ namespace EveScanner
         private System.Windows.Forms.ToolStripMenuItem scanSourceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem evepraisalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem goonmetricsToolStripMenuItem;
+        private System.Windows.Forms.ComboBox shipTypeDropdown;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox characterNameText;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox notesText;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox fitInfoText;
+        private System.Windows.Forms.ToolStripMenuItem submitANYClipboardDataToolStripMenuItem;
     }
 }
 

@@ -126,6 +126,11 @@ namespace EveScanner
         public NameValueCollection ImageNames { get; private set; }
 
         /// <summary>
+        /// Gets the name value collection containing Ship Description -> Scan Output Name
+        /// </summary>
+        public NameValueCollection ShipTypes { get; private set; }
+
+        /// <summary>
         /// Saves the current state of the application to the configuration file.
         /// </summary>
         public void Save()
@@ -240,8 +245,8 @@ namespace EveScanner
         private void Load()
         {
             Configuration cfg = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            this.AppWidth = ConfigHelper.ConvertToInt(ConfigHelper.GetAppConfigValue(cfg, "AppWidth"), 680);
-            this.AppHeight = ConfigHelper.ConvertToInt(ConfigHelper.GetAppConfigValue(cfg, "AppHeight"), 520);
+            this.AppWidth = ConfigHelper.ConvertToInt(ConfigHelper.GetAppConfigValue(cfg, "AppWidth"), 590);
+            this.AppHeight = ConfigHelper.ConvertToInt(ConfigHelper.GetAppConfigValue(cfg, "AppHeight"), 574);
             this.WindowPositionX = ConfigHelper.ConvertToInt(ConfigHelper.GetAppConfigValue(cfg, "WindowPosX"), -1);
             this.WindowPositionY = ConfigHelper.ConvertToInt(ConfigHelper.GetAppConfigValue(cfg, "WindowPosY"), -1);
             this.ShowExtra = ConfigHelper.GetAppConfigValue(cfg, "ShowExtra") != "false";
@@ -257,6 +262,7 @@ namespace EveScanner
             this.ImageGroups = ConfigurationManager.GetSection("imageGroups") as NameValueCollection;
             this.ImageItems = ConfigurationManager.GetSection("imageItems") as NameValueCollection;
             this.ImageNames = ConfigurationManager.GetSection("imageNames") as NameValueCollection;
+            this.ShipTypes = ConfigurationManager.GetSection("shipTypes") as NameValueCollection;
         }
     }
 }

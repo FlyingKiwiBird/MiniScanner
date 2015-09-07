@@ -92,6 +92,10 @@ namespace EveScanner
         /// </summary>
         public string CharacterName { get; set; }
 
+        public string FitInfo { get; set; }
+
+        public string Notes { get; set; }
+
         /// <summary>
         /// Formats an ISK value as a string. Does not double the ISK. Returns up to 2 decimal places with an amount identifier.
         /// </summary>

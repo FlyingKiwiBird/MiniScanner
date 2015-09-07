@@ -61,5 +61,15 @@ namespace EveScanner.Interfaces
         /// Gets or sets the character name scanned.
         /// </summary>
         string CharacterName { get; set; }
+
+        /// <summary>
+        /// Gets or sets some fitting information
+        /// </summary>
+        string FitInfo { get; set; }
+
+        /// <summary>
+        /// Gets or sets additional user entered notes on the scan.
+        /// </summary>
+        string Notes { get; set; }
     }
 }

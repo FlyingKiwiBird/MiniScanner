@@ -741,16 +741,13 @@ namespace EveScanner
             this.scanText.Text = this.result.RawScan;
 
             // Construct / Restore Image
-            if (this.result.ImageIndex == null)
+            if (this.pictureBox.Image != null)
             {
-                if (this.pictureBox.Image != null)
-                {
-                    this.pictureBox.Image.Dispose();
-                }
-
+                this.pictureBox.Image.Dispose();
                 this.pictureBox.Image = null;
             }
-            else
+            
+            if (this.result.ImageIndex != null)
             {
                 this.ConstructAndDisplayImages(this.result.ImageIndex);
             }

@@ -92,8 +92,14 @@ namespace EveScanner
         /// </summary>
         public string CharacterName { get; set; }
 
+        /// <summary>
+        /// Gets or sets some fitting information
+        /// </summary>
         public string FitInfo { get; set; }
 
+        /// <summary>
+        /// Gets or sets additional user entered notes on the scan.
+        /// </summary>
         public string Notes { get; set; }
 
         /// <summary>
@@ -142,7 +148,14 @@ namespace EveScanner
             StringBuilder sb = new StringBuilder();
             if (!string.IsNullOrEmpty(this.ShipType))
             {
-                sb.AppendFormat("{0} | ", this.ShipType);
+                if (ConfigHelper.Instance.ShipTypes[this.ShipType] != null)
+                {
+                    sb.AppendFormat("{0} | ", ConfigHelper.Instance.ShipTypes[this.ShipType]);
+                }
+                else
+                {
+                    sb.AppendFormat("{0} | ", this.ShipType);
+                }
             }
 
             sb.AppendFormat("{0} | {1} | {2} stacks |", ScanResult.GetISKString(this.SellValue), string.Format("{0:n}", this.Volume) + " m3", this.Stacks);

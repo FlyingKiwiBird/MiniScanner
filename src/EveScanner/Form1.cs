@@ -719,7 +719,7 @@ namespace EveScanner
             {
                 int index = this.scans.IndexOf(result);
 
-                this.historyDropdown.SelectedIndex = index;
+                this.historyDropdown.SelectedIndex = this.scans.Count - index - 1;
             }
         }
 

@@ -1,11 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-
+﻿//-----------------------------------------------------------------------
+// <copyright company="Viktorie Lucilla" file="Validators.cs">
+// Copyright © Viktorie Lucilla 2015. All Rights Reserved
+// </copyright>
+//-----------------------------------------------------------------------
 namespace EveScanner
 {
+    using System;
+    using System.Text.RegularExpressions;
+
+    /// <summary>
+    /// Contains shared validation methods for the application.
+    /// </summary>
     public static class Validators
     {
         /// <summary>

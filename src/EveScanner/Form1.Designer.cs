@@ -82,6 +82,8 @@ namespace EveScanner
             this.scansAndResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.debugToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addExampleResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoContainer.SuspendLayout();
             this.locationContainer.SuspendLayout();
             this.scanContainer.SuspendLayout();
@@ -224,7 +226,7 @@ namespace EveScanner
             this.notesText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.notesText.Size = new System.Drawing.Size(235, 70);
             this.notesText.TabIndex = 18;
-            this.notesText.Leave += new System.EventHandler(this.notesText_Leave);
+            this.notesText.Leave += new System.EventHandler(this.NotesText_Leave);
             // 
             // label8
             // 
@@ -241,7 +243,7 @@ namespace EveScanner
             this.fitInfoText.Name = "fitInfoText";
             this.fitInfoText.Size = new System.Drawing.Size(235, 20);
             this.fitInfoText.TabIndex = 16;
-            this.fitInfoText.Leave += new System.EventHandler(this.fitInfoText_Leave);
+            this.fitInfoText.Leave += new System.EventHandler(this.FitInfoText_Leave);
             // 
             // label7
             // 
@@ -267,7 +269,7 @@ namespace EveScanner
             this.characterNameText.Name = "characterNameText";
             this.characterNameText.Size = new System.Drawing.Size(235, 20);
             this.characterNameText.TabIndex = 13;
-            this.characterNameText.Leave += new System.EventHandler(this.characterNameText_Leave);
+            this.characterNameText.Leave += new System.EventHandler(this.CharacterNameText_Leave);
             // 
             // shipTypeDropdown
             // 
@@ -290,7 +292,7 @@ namespace EveScanner
             this.shipTypeDropdown.Name = "shipTypeDropdown";
             this.shipTypeDropdown.Size = new System.Drawing.Size(235, 21);
             this.shipTypeDropdown.TabIndex = 14;
-            this.shipTypeDropdown.SelectedValueChanged += new System.EventHandler(this.shipTypeDropdown_SelectedValueChanged);
+            this.shipTypeDropdown.SelectedValueChanged += new System.EventHandler(this.ShipTypeDropdown_SelectedValueChanged);
             // 
             // locationContainer
             // 
@@ -507,7 +509,8 @@ namespace EveScanner
             this.captureClipboardOnToolStripMenuItem,
             this.submitANYClipboardDataToolStripMenuItem,
             this.scanSourceToolStripMenuItem,
-            this.loggingToolStripMenuItem});
+            this.loggingToolStripMenuItem,
+            this.debugToolStripMenuItem1});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "&Options";
@@ -531,7 +534,7 @@ namespace EveScanner
             this.submitANYClipboardDataToolStripMenuItem.Name = "submitANYClipboardDataToolStripMenuItem";
             this.submitANYClipboardDataToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
             this.submitANYClipboardDataToolStripMenuItem.Text = "Submit &ANY Clipboard Data";
-            this.submitANYClipboardDataToolStripMenuItem.Click += new System.EventHandler(this.submitANYClipboardDataToolStripMenuItem_Click);
+            this.submitANYClipboardDataToolStripMenuItem.Click += new System.EventHandler(this.SubmitANYClipboardDataToolStripMenuItem_Click);
             // 
             // scanSourceToolStripMenuItem
             // 
@@ -614,6 +617,21 @@ namespace EveScanner
             this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox.TabIndex = 37;
             this.pictureBox.TabStop = false;
+            // 
+            // debugToolStripMenuItem1
+            // 
+            this.debugToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addExampleResultsToolStripMenuItem});
+            this.debugToolStripMenuItem1.Name = "debugToolStripMenuItem1";
+            this.debugToolStripMenuItem1.Size = new System.Drawing.Size(221, 22);
+            this.debugToolStripMenuItem1.Text = "Debug";
+            // 
+            // addExampleResultsToolStripMenuItem
+            // 
+            this.addExampleResultsToolStripMenuItem.Name = "addExampleResultsToolStripMenuItem";
+            this.addExampleResultsToolStripMenuItem.Size = new System.Drawing.Size(297, 22);
+            this.addExampleResultsToolStripMenuItem.Text = "Show Example Results (Clears Current List)";
+            this.addExampleResultsToolStripMenuItem.Click += new System.EventHandler(this.AddExampleResultsToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -711,6 +729,8 @@ namespace EveScanner
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox fitInfoText;
         private System.Windows.Forms.ToolStripMenuItem submitANYClipboardDataToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem addExampleResultsToolStripMenuItem;
     }
 }
 

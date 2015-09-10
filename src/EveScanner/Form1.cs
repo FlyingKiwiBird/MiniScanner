@@ -249,22 +249,30 @@ namespace EveScanner
                 if (scanText.Text.StartsWith("http://evepraisal.com/e/"))
                 {
                     Evepraisal ep = new Evepraisal();
-                    iresult = ep.GetAppraisalFromUrl(this.scanText.Text);
+                    string url = this.scanText.Text;
+                    url = url.IndexOf(' ') < 0 ? url : url.Substring(0, url.IndexOf(' '));
+                    url = url.IndexOf('\r') < 0 ? url : url.Substring(0, url.IndexOf('\r'));
+                    url = url.IndexOf('\n') < 0 ? url : url.Substring(0, url.IndexOf('\n'));
+                    iresult = ep.GetAppraisalFromUrl(url);
                 }
                 else if (scanText.Text.StartsWith("https://goonpraisal.apps.goonswarm.org/e/"))
                 {
                     Evepraisal ep = new Evepraisal("goonpraisal.apps.goonswarm.org", true);
-                    iresult = ep.GetAppraisalFromUrl(this.scanText.Text);
+                    string url = this.scanText.Text;
+                    url = url.IndexOf(' ') < 0 ? url : url.Substring(0, url.IndexOf(' '));
+                    url = url.IndexOf('\r') < 0 ? url : url.Substring(0, url.IndexOf('\r'));
+                    url = url.IndexOf('\n') < 0 ? url : url.Substring(0, url.IndexOf('\n'));
+                    iresult = ep.GetAppraisalFromUrl(url);
                 }
                 else if (this.submitANYClipboardDataToolStripMenuItem.Checked || this.CheckTextFormat(scanText.Text))
                 {
-                    if (evepraisalToolStripMenuItem.Checked)
+                    if (this.evepraisalToolStripMenuItem.Checked)
                     {
                         Evepraisal ep = new Evepraisal();
                         iresult = ep.GetAppraisalFromScan(this.scanText.Text);
                     }
 
-                    if (goonmetricsToolStripMenuItem.Checked)
+                    if (this.goonmetricsToolStripMenuItem.Checked)
                     {
                         Evepraisal ep = new Evepraisal("goonpraisal.apps.goonswarm.org", true);
                         iresult = ep.GetAppraisalFromScan(this.scanText.Text);
@@ -414,7 +422,7 @@ namespace EveScanner
         /// </summary>
         /// <param name="sender">Character Name text field</param>
         /// <param name="e">Not provided.</param>
-        private void characterNameText_Leave(object sender, EventArgs e)
+        private void CharacterNameText_Leave(object sender, EventArgs e)
         {
             if (this.result == null)
             {
@@ -429,7 +437,7 @@ namespace EveScanner
         /// </summary>
         /// <param name="sender">Ship Type Dropdown</param>
         /// <param name="e">Not provided</param>
-        private void shipTypeDropdown_SelectedValueChanged(object sender, EventArgs e)
+        private void ShipTypeDropdown_SelectedValueChanged(object sender, EventArgs e)
         {
             if (this.result == null)
             {
@@ -444,7 +452,7 @@ namespace EveScanner
         /// </summary>
         /// <param name="sender">Fit Info Box</param>
         /// <param name="e">Not provided</param>
-        private void fitInfoText_Leave(object sender, EventArgs e)
+        private void FitInfoText_Leave(object sender, EventArgs e)
         {
             if (this.result == null)
             {
@@ -459,7 +467,7 @@ namespace EveScanner
         /// </summary>
         /// <param name="sender">Notes box</param>
         /// <param name="e">Not provided</param>
-        private void notesText_Leave(object sender, EventArgs e)
+        private void NotesText_Leave(object sender, EventArgs e)
         {
             if (this.result == null)
             {
@@ -482,28 +490,28 @@ namespace EveScanner
         {
             this.SuspendLayout();
 
-            int containerBottomToFormBottom = this.Height - (resultsContainer.Location.Y + resultsContainer.Size.Height);
+            int containerBottomToFormBottom = this.Height - (this.resultsContainer.Location.Y + this.resultsContainer.Size.Height);
             int newHeight = 0;
 
-            if (infoContainer.Visible)
+            if (this.infoContainer.Visible)
             {
-                infoContainer.Visible = false;
-                locationContainer.Visible = false;
-                scanContainer.Visible = false;
+                this.infoContainer.Visible = false;
+                this.locationContainer.Visible = false;
+                this.scanContainer.Visible = false;
 
-                newHeight = infoContainer.Location.Y + resultsContainer.Height + containerBottomToFormBottom;
+                newHeight = this.infoContainer.Location.Y + this.resultsContainer.Height + containerBottomToFormBottom;
             }
             else
             {
-                infoContainer.Visible = true;
-                locationContainer.Visible = true;
-                scanContainer.Visible = true;
+                this.infoContainer.Visible = true;
+                this.locationContainer.Visible = true;
+                this.scanContainer.Visible = true;
 
-                int containerBottomToContainerTop = locationContainer.Top - (infoContainer.Location.Y + infoContainer.Size.Height);
-                newHeight = infoContainer.Location.Y + infoContainer.Height + locationContainer.Height + (2 * containerBottomToContainerTop) + resultsContainer.Height + containerBottomToFormBottom;
+                int containerBottomToContainerTop = this.locationContainer.Top - (this.infoContainer.Location.Y + this.infoContainer.Size.Height);
+                newHeight = this.infoContainer.Location.Y + this.infoContainer.Height + this.locationContainer.Height + (2 * containerBottomToContainerTop) + this.resultsContainer.Height + containerBottomToFormBottom;
             }
 
-            ConfigHelper.Instance.ShowExtra = scanContainer.Visible;
+            ConfigHelper.Instance.ShowExtra = this.scanContainer.Visible;
             ConfigHelper.Instance.AppWidth = this.Width;
             ConfigHelper.Instance.AppHeight = this.Height;
 
@@ -521,7 +529,7 @@ namespace EveScanner
         private void CaptureClipboardOnToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConfigHelper.Instance.CaptureClipboard = !ConfigHelper.Instance.CaptureClipboard;
-            captureClipboardOnToolStripMenuItem.Checked = ConfigHelper.Instance.CaptureClipboard;
+            this.captureClipboardOnToolStripMenuItem.Checked = ConfigHelper.Instance.CaptureClipboard;
         }
 
         /// <summary>
@@ -541,7 +549,7 @@ namespace EveScanner
         /// </summary>
         /// <param name="sender">Options -> Submit ANY Clipboard Data</param>
         /// <param name="e">Not provided.</param>
-        private void submitANYClipboardDataToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SubmitANYClipboardDataToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.submitANYClipboardDataToolStripMenuItem.Checked = !this.submitANYClipboardDataToolStripMenuItem.Checked;
         }
@@ -629,6 +637,43 @@ namespace EveScanner
                 }
             }
         }
+
+        /// <summary>
+        /// Sets up some example scan results so someone can visually inspect and play with things.
+        /// </summary>
+        /// <param name="sender">Options -> Debug -> Show Example Results</param>
+        /// <param name="e">Not provided.</param>
+        private void AddExampleResultsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.ClearToolStripMenuItem_Click(null, EventArgs.Empty);
+
+            ScanResult r = new ScanResult("1 Dummy Item", 3000000000000, 4123456789012, 1, 1, "http://goonfleet.com/?1", new int[] { 1 }, string.Empty, string.Empty, string.Empty) { CharacterName = "T2 BPO", ShipType = "Providence - Freighter - Amarr", Notes = "Triggers T2 BPO Image", Location = "Perimeter -> Urlen" };
+            this.AddResultToList(r);
+
+            ScanResult s = new ScanResult(string.Empty, 300000000000, 412345678901, 3, 4, "http://goonfleet.com/?2", new int[] { 2 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Plastic Wrap", ShipType = "Charon - Freighter - Caldari", Notes = "Triggers Wrap Image" };
+            this.AddResultToList(s);
+
+            ScanResult t = new ScanResult(string.Empty, 30000000000, 41234567890, 3, 4, "http://goonfleet.com/?3", new int[] { 3 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Container", ShipType = "Obelisk - Freighter - Gallente", Notes = "Triggers Container Image" };
+            this.AddResultToList(t);
+
+            ScanResult u = new ScanResult(string.Empty, 3000000000, 4123456789, 3, 4, "http://goonfleet.com/?4", new int[] { 4 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Isotopes", ShipType = "Fenrir - Freighter - Minmatar", Notes = "Triggers Isotope Image", Location = "Ashab -> Madirmilire" };
+            this.AddResultToList(u);
+
+            ScanResult v = new ScanResult(string.Empty, 300000000, 412345678, 3, 4, "http://goonfleet.com/?5", new int[] { 5 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Valuable BPO", ShipType = "Ark - Jump Freighter - Amarr - Helium", Notes = "Triggers $$$ BPO Image" };
+            this.AddResultToList(v);
+
+            ScanResult w = new ScanResult(string.Empty, 30000000, 41234567, 3, 4, "http://goonfleet.com/?99", new int[] { 99 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Fedo", ShipType = "Rhea - Jump Freighter - Caldari - Nitrogen", Notes = "Triggers Fedo Image" };
+            this.AddResultToList(w);
+
+            ScanResult x = new ScanResult(string.Empty, 3000000, 4123456, 3, 4, "http://goonfleet.com/?23", new int[] { 2, 3 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Mixed 1", ShipType = "Anshar - Jump Freighter - Gallente - Oxygen", Notes = "Triggers Wrap+Container Image", Location = "Hatakani -> Sivala" };
+            this.AddResultToList(x);
+
+            ScanResult y = new ScanResult(string.Empty, 300000, 412345, 3, 4, "http://goonfleet.com/?1234", new int[] { 1, 2, 3, 4 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Mixed 2", ShipType = "Nomad - Jump Freighter - Minmatar - Hydrogen", Notes = "Triggers 4 Combined Image" };
+            this.AddResultToList(y);
+
+            ScanResult z = new ScanResult(string.Empty, 30000, 41234, 3, 4, "http://goonfleet.com/?1234599", new int[] { 1, 2, 3, 4, 5, 99 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Mixed 3", ShipType = string.Empty, Notes = "Triggers 6 Combined Image" };
+            this.AddResultToList(z);
+        }
         #endregion Menu Items
 
         #region Helper Functions
@@ -667,7 +712,6 @@ namespace EveScanner
             if (radio != null)
             {
                 output = radio.Text;
-
             }
 
             return output;
@@ -746,7 +790,7 @@ namespace EveScanner
                 this.pictureBox.Image.Dispose();
                 this.pictureBox.Image = null;
             }
-            
+
             if (this.result.ImageIndex != null)
             {
                 this.ConstructAndDisplayImages(this.result.ImageIndex);
@@ -777,6 +821,7 @@ namespace EveScanner
                 {
                     this.shipTypeDropdown.Text = this.result.ShipType;
                 }
+
                 this.shipTypeDropdown.ResumeLayout();
             }
 
@@ -797,34 +842,33 @@ namespace EveScanner
             }
 
             // Restore Location
-            if (!string.IsNullOrEmpty(this.result.Location))
+            bool hasLocation = !string.IsNullOrEmpty(this.result.Location);
+
+            if (hasLocation && this.result.Location == location1Text.Text)
             {
-                if (this.result.Location == location1Text.Text)
-                {
-                    location1Radio.Checked = true;
-                }
-                else
-                {
-                    location1Radio.Checked = false;
-                }
+                location1Radio.Checked = true;
+            }
+            else
+            {
+                location1Radio.Checked = false;
+            }
 
-                if (this.result.Location == location2Text.Text)
-                {
-                    location2Radio.Checked = true;
-                }
-                else
-                {
-                    location2Radio.Checked = false;
-                }
+            if (hasLocation && this.result.Location == location2Text.Text)
+            {
+                location2Radio.Checked = true;
+            }
+            else
+            {
+                location2Radio.Checked = false;
+            }
 
-                if (this.result.Location == location3Text.Text)
-                {
-                    location3Radio.Checked = true;
-                }
-                else
-                {
-                    location3Radio.Checked = false;
-                }
+            if (hasLocation && this.result.Location == location3Text.Text)
+            {
+                location3Radio.Checked = true;
+            }
+            else
+            {
+                location3Radio.Checked = false;
             }
         }
 
@@ -841,7 +885,7 @@ namespace EveScanner
 
             try
             {
-                string[] imageNames = imageList.OrderBy(x => x).Select(x => ConfigHelper.Instance.ImageGroups[x - 1]).ToArray();
+                string[] imageNames = imageList.OrderBy(x => x).Select(x => ConfigHelper.Instance.ImageGroups[x.ToString()]).ToArray();
 
                 this.pictureBox.Image = ImageCombiner.CombineImages(this.pictureBox.Width, this.pictureBox.Height, imageNames);
             }

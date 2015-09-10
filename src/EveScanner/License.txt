@@ -1,0 +1,2 @@
+﻿This pre-release software is for the exclusive use of Miniluv / Goonfleet
+and may not be redistributed without the prior consent of Miniluv.

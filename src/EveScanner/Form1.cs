@@ -14,6 +14,7 @@ namespace EveScanner
     using System.Windows.Forms;
 
     using EveScanner.Interfaces;
+    using System.IO;
 
     /// <summary>
     /// Main Form for the Application
@@ -636,6 +637,54 @@ namespace EveScanner
                     tsmx.Checked = false;
                 }
             }
+        }
+
+        /// <summary>
+        /// Displays the "About" message.
+        /// </summary>
+        /// <param name="sender">Help -> About</param>
+        /// <param name="e">Not provided.</param>
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string message = @"©2015 Viktorie Lucilla
+
+Comments/Suggestions/Complaints can be posted in the appropriate 
+thread on the Goonfleet Forums or sent to me via Jabber.
+";
+
+            MessageBox.Show(message, "About", MessageBoxButtons.OK, MessageBoxIcon.Question);
+        }
+
+        /// <summary>
+        /// Shows the license message (from License.txt)
+        /// </summary>
+        /// <param name="sender">Help -> License</param>
+        /// <param name="e">Not provided.</param>
+        private void licenseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string message = File.ReadAllText("license.txt");
+
+            MessageBox.Show(message, "License", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        /// <summary>
+        /// Sends the user to the source code.
+        /// </summary>
+        /// <param name="sender">Help -> Source Code</param>
+        /// <param name="e">Not Provided.</param>
+        private void sourceCodeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://bitbucket.org/viktorielucilla/evescanner-net4");
+        }
+
+        /// <summary>
+        /// Sends the user to the issue tracker.
+        /// </summary>
+        /// <param name="sender">Help -> Source Code</param>
+        /// <param name="e">Not Provided.</param>
+        private void issueTrackerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://bitbucket.org/viktorielucilla/evescanner-net4/issues");
         }
 
         /// <summary>

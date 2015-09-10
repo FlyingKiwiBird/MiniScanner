@@ -22,7 +22,7 @@ namespace EveScanner
         {
             foreach (string line in inputText.Split(new string[] { "\r", "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
             {
-                if (!Regex.IsMatch(line, @"^(?<line>\d+ [0-9a-z\-\. ()/']+)\r?$", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.CultureInvariant))
+                if (!Regex.IsMatch(line, @"^(?<line>\d+ [0-9a-z\-\. ()/':,]+)\r?$", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.CultureInvariant))
                 {
                     return false;
                 }

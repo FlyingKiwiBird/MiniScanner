@@ -65,8 +65,11 @@ namespace EveScanner
             this.stacksValueText = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newEmptyScanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showHideExtraOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toggleAlwaysOnTopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,14 +83,18 @@ namespace EveScanner
             this.resultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scansAndResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hideBordersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.darkerThemeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lighterThemeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.addExampleResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.licenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.licenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sourceCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.issueTrackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.infoContainer.SuspendLayout();
             this.locationContainer.SuspendLayout();
             this.scanContainer.SuspendLayout();
@@ -473,25 +480,45 @@ namespace EveScanner
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.exitToolStripMenuItem,
-            this.clearToolStripMenuItem});
+            this.newEmptyScanToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.clearToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
-            // exitToolStripMenuItem
+            // newEmptyScanToolStripMenuItem
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
+            this.newEmptyScanToolStripMenuItem.Name = "newEmptyScanToolStripMenuItem";
+            this.newEmptyScanToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.newEmptyScanToolStripMenuItem.Text = "New Empty Scan";
+            this.newEmptyScanToolStripMenuItem.Click += new System.EventHandler(this.NewEmptyScanToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(160, 6);
             // 
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.clearToolStripMenuItem.Text = "&Reset Data";
             this.clearToolStripMenuItem.Click += new System.EventHandler(this.ClearToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(160, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
             // showHideExtraOptionsToolStripMenuItem
             // 
@@ -508,6 +535,7 @@ namespace EveScanner
             this.submitANYClipboardDataToolStripMenuItem,
             this.scanSourceToolStripMenuItem,
             this.loggingToolStripMenuItem,
+            this.uIToolStripMenuItem,
             this.debugToolStripMenuItem1});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
@@ -548,7 +576,7 @@ namespace EveScanner
             this.evepraisalToolStripMenuItem.Checked = true;
             this.evepraisalToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.evepraisalToolStripMenuItem.Name = "evepraisalToolStripMenuItem";
-            this.evepraisalToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.evepraisalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.evepraisalToolStripMenuItem.Tag = "Evepraisal";
             this.evepraisalToolStripMenuItem.Text = "Evepraisal";
             this.evepraisalToolStripMenuItem.Click += new System.EventHandler(this.ScanSourceStripMenu_Click);
@@ -556,7 +584,7 @@ namespace EveScanner
             // goonmetricsToolStripMenuItem
             // 
             this.goonmetricsToolStripMenuItem.Name = "goonmetricsToolStripMenuItem";
-            this.goonmetricsToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.goonmetricsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.goonmetricsToolStripMenuItem.Tag = "Goonmetrics";
             this.goonmetricsToolStripMenuItem.Text = "Goonmetrics";
             this.goonmetricsToolStripMenuItem.Click += new System.EventHandler(this.ScanSourceStripMenu_Click);
@@ -606,6 +634,40 @@ namespace EveScanner
             this.debugToolStripMenuItem.Text = "&Debug";
             this.debugToolStripMenuItem.Click += new System.EventHandler(this.DebugLevelStripMenu_Click);
             // 
+            // uIToolStripMenuItem
+            // 
+            this.uIToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.hideBordersToolStripMenuItem,
+            this.darkerThemeToolStripMenuItem,
+            this.lighterThemeToolStripMenuItem});
+            this.uIToolStripMenuItem.Name = "uIToolStripMenuItem";
+            this.uIToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.uIToolStripMenuItem.Text = "&UI";
+            // 
+            // hideBordersToolStripMenuItem
+            // 
+            this.hideBordersToolStripMenuItem.Name = "hideBordersToolStripMenuItem";
+            this.hideBordersToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.B)));
+            this.hideBordersToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.hideBordersToolStripMenuItem.Text = "Hide Borders";
+            this.hideBordersToolStripMenuItem.Click += new System.EventHandler(this.HideBordersToolStripMenuItem_Click);
+            // 
+            // darkerThemeToolStripMenuItem
+            // 
+            this.darkerThemeToolStripMenuItem.Name = "darkerThemeToolStripMenuItem";
+            this.darkerThemeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D)));
+            this.darkerThemeToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.darkerThemeToolStripMenuItem.Text = "Darker Theme";
+            this.darkerThemeToolStripMenuItem.Click += new System.EventHandler(this.DarkerThemeToolStripMenuItem_Click);
+            // 
+            // lighterThemeToolStripMenuItem
+            // 
+            this.lighterThemeToolStripMenuItem.Name = "lighterThemeToolStripMenuItem";
+            this.lighterThemeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.L)));
+            this.lighterThemeToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.lighterThemeToolStripMenuItem.Text = "Lighter Theme";
+            this.lighterThemeToolStripMenuItem.Click += new System.EventHandler(this.LighterThemeToolStripMenuItem_Click);
+            // 
             // debugToolStripMenuItem1
             // 
             this.debugToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -621,16 +683,6 @@ namespace EveScanner
             this.addExampleResultsToolStripMenuItem.Text = "Show Example Results (Clears Current List)";
             this.addExampleResultsToolStripMenuItem.Click += new System.EventHandler(this.AddExampleResultsToolStripMenuItem_Click);
             // 
-            // pictureBox
-            // 
-            this.pictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox.Location = new System.Drawing.Point(415, 24);
-            this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(149, 135);
-            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox.TabIndex = 37;
-            this.pictureBox.TabStop = false;
-            // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
@@ -643,33 +695,43 @@ namespace EveScanner
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
-            // licenseToolStripMenuItem
-            // 
-            this.licenseToolStripMenuItem.Name = "licenseToolStripMenuItem";
-            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
-            this.licenseToolStripMenuItem.Text = "&License";
-            this.licenseToolStripMenuItem.Click += new System.EventHandler(this.licenseToolStripMenuItem_Click);
-            // 
             // aboutToolStripMenuItem1
             // 
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
             this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(245, 22);
             this.aboutToolStripMenuItem1.Text = "&About";
-            this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
+            // 
+            // licenseToolStripMenuItem
+            // 
+            this.licenseToolStripMenuItem.Name = "licenseToolStripMenuItem";
+            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
+            this.licenseToolStripMenuItem.Text = "&License";
+            this.licenseToolStripMenuItem.Click += new System.EventHandler(this.LicenseToolStripMenuItem_Click);
             // 
             // sourceCodeToolStripMenuItem
             // 
             this.sourceCodeToolStripMenuItem.Name = "sourceCodeToolStripMenuItem";
             this.sourceCodeToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.sourceCodeToolStripMenuItem.Text = "&Source Code (Opens in Browser)";
-            this.sourceCodeToolStripMenuItem.Click += new System.EventHandler(this.sourceCodeToolStripMenuItem_Click);
+            this.sourceCodeToolStripMenuItem.Click += new System.EventHandler(this.SourceCodeToolStripMenuItem_Click);
             // 
             // issueTrackerToolStripMenuItem
             // 
             this.issueTrackerToolStripMenuItem.Name = "issueTrackerToolStripMenuItem";
             this.issueTrackerToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
             this.issueTrackerToolStripMenuItem.Text = "&Issue Tracker (Opens in Browser)";
-            this.issueTrackerToolStripMenuItem.Click += new System.EventHandler(this.issueTrackerToolStripMenuItem_Click);
+            this.issueTrackerToolStripMenuItem.Click += new System.EventHandler(this.IssueTrackerToolStripMenuItem_Click);
+            // 
+            // pictureBox
+            // 
+            this.pictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox.Location = new System.Drawing.Point(415, 24);
+            this.pictureBox.Name = "pictureBox";
+            this.pictureBox.Size = new System.Drawing.Size(149, 135);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox.TabIndex = 37;
+            this.pictureBox.TabStop = false;
             // 
             // Form1
             // 
@@ -773,6 +835,13 @@ namespace EveScanner
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem sourceCodeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem issueTrackerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem uIToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hideBordersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem darkerThemeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newEmptyScanToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem lighterThemeToolStripMenuItem;
     }
 }
 

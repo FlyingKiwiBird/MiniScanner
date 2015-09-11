@@ -22,6 +22,11 @@ namespace EveScanner
         /// <returns>Combined Image</returns>
         public static Image CombineImages(int outerWidth, int outerHeight, string[] imagePaths)
         {
+            if (outerWidth == 0 || outerHeight == 0 || imagePaths == null || imagePaths.Length == 0)
+            {
+                return null;
+            }
+
             Image output = null;
 
             int numberOfImagesPerRow = (int)Math.Ceiling(Math.Sqrt(imagePaths.Length));

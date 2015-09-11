@@ -6,6 +6,7 @@
 namespace EveScanner
 {
     using System;
+    using System.Globalization;
     using System.IO;
     using System.Windows.Forms;
 
@@ -26,27 +27,27 @@ namespace EveScanner
         /// <param name="message">Message to log</param>
         public static void Log(string level, string message)
         {
-            string currentLevel = ConfigHelper.Instance.DebugLevel.ToLower();
-            if (level != "error" && level != "fatal")
+            string currentLevel = ConfigHelper.Instance.DebugLevel.ToUpper(CultureInfo.InvariantCulture);
+            if (level != "ERROR" && level != "FATAL")
             {
-                if (currentLevel == "none")
+                if (currentLevel == "NONE")
                 {
                     return;
                 }
 
-                if (currentLevel == "results" && level != currentLevel)
+                if (currentLevel == "RESULTS" && level != currentLevel)
                 {
                     return;
                 }
 
-                if (currentLevel == "scans" && level == "debug")
+                if (currentLevel == "SCANS" && level == "DEBUG")
                 {
                     return;
                 }
             }
 
             string format = "[{0}] - {1} - {2}";
-            string output = string.Format(format, DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss"), level, message);
+            string output = string.Format(CultureInfo.InvariantCulture, format, DateTime.Now.ToString("yyyy/MM/dd hh:mm:ss", CultureInfo.InvariantCulture), level, message);
 
             lock (lockIt)
             {
@@ -62,7 +63,7 @@ namespace EveScanner
         /// <param name="args">Message arguments</param>
         public static void Log(string level, string message, params string[] args)
         {
-            Logger.Log(level, string.Format(message, args));
+            Logger.Log(level, string.Format(CultureInfo.InvariantCulture, message, args));
         }
 
         /// <summary>
@@ -81,7 +82,7 @@ namespace EveScanner
         /// <param name="args">Message arguments</param>
         public static void Result(string message, params string[] args)
         {
-            Logger.Result(string.Format(message, args));
+            Logger.Result(string.Format(CultureInfo.InvariantCulture, message, args));
         }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace EveScanner
         /// <param name="args">Message arguments</param>
         public static void Scan(string message, params string[] args)
         {
-            Logger.Scan(string.Format(message, args));
+            Logger.Scan(string.Format(CultureInfo.InvariantCulture, message, args));
         }
 
         /// <summary>
@@ -119,7 +120,7 @@ namespace EveScanner
         /// <param name="args">Message arguments</param>
         public static void Debug(string message, params string[] args)
         {
-            Logger.Debug(string.Format(message, args));
+            Logger.Debug(string.Format(CultureInfo.InvariantCulture, message, args));
         }
 
         /// <summary>
@@ -142,7 +143,7 @@ namespace EveScanner
 
             if (!skipDialog)
             {
-                DialogResult result = MessageBox.Show("An error occurred, do you wish to continue?" + Environment.NewLine + message, "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1);
+                DialogResult result = MessageBox.Show("An error occurred, do you wish to continue?" + Environment.NewLine + message, "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
                 if (result == DialogResult.No)
                 {
                     Logger.Fatal("User selected No option, exiting.");
@@ -162,7 +163,7 @@ namespace EveScanner
         /// <param name="args">Message arguments</param>
         public static void Error(string message, params string[] args)
         {
-            Logger.Error(string.Format(message, args));
+            Logger.Error(string.Format(CultureInfo.InvariantCulture, message, args));
         }
 
         /// <summary>
@@ -181,7 +182,7 @@ namespace EveScanner
         /// <param name="args">Message arguments</param>
         public static void Fatal(string message, params string[] args)
         {
-            Logger.Fatal(string.Format(message, args));
+            Logger.Fatal(string.Format(CultureInfo.InvariantCulture, message, args));
         }
     }
 }

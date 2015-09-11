@@ -6,6 +6,7 @@
 namespace EveScanner
 {
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Text;
     using EveScanner.Interfaces;
@@ -113,27 +114,27 @@ namespace EveScanner
 
             if (value > 1000000000000000)
             {
-                output = (value / 1000000000000000).ToString("#.00Q");
+                output = (value / 1000000000000000).ToString("#.00Q", CultureInfo.InvariantCulture);
             }
             else if (value > 1000000000000)
             {
-                output = (value / 1000000000000).ToString("#.00T");
+                output = (value / 1000000000000).ToString("#.00T", CultureInfo.InvariantCulture);
             }
             else if (value > 1000000000)
             {
-                output = (value / 1000000000).ToString("#.00B");
+                output = (value / 1000000000).ToString("#.00B", CultureInfo.InvariantCulture);
             }
             else if (value > 1000000)
             {
-                output = (value / 1000000).ToString("#.00M");
+                output = (value / 1000000).ToString("#.00M", CultureInfo.InvariantCulture);
             }
             else if (value > 1000)
             {
-                output = (value / 1000).ToString("#.00K");
+                output = (value / 1000).ToString("#.00K", CultureInfo.InvariantCulture);
             }
             else
             {
-                output = value.ToString();
+                output = value.ToString(CultureInfo.InvariantCulture);
             }
 
             return output;
@@ -158,7 +159,7 @@ namespace EveScanner
                 }
             }
 
-            sb.AppendFormat("{0} | {1} | {2} stacks |", ScanResult.GetISKString(this.SellValue), string.Format("{0:n}", this.Volume) + " m3", this.Stacks);
+            sb.AppendFormat("{0} | {1} | {2} stacks |", ScanResult.GetISKString(this.SellValue), string.Format(CultureInfo.InvariantCulture, "{0:n}", this.Volume) + " m3", this.Stacks);
             if (this.ImageIndex != null && this.ImageIndex.Count() > 0)
             {
                 bool first = true;
@@ -174,7 +175,7 @@ namespace EveScanner
                         sb.Append(",");
                     }
 
-                    sb.AppendFormat(" {0}", ConfigHelper.Instance.ImageNames[i.ToString()]);
+                    sb.AppendFormat(" {0}", ConfigHelper.Instance.ImageNames[i.ToString(CultureInfo.InvariantCulture)]);
                 }
 
                 sb.Append(" |");

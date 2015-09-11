@@ -9,6 +9,7 @@ namespace EveScanner
     using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Configuration;
+    using System.Globalization;
 
     /// <summary>
     /// Holds the application configuration and provides helper methods for
@@ -137,10 +138,10 @@ namespace EveScanner
         {
             Configuration cfg = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
-            ConfigHelper.SetAppConfigValue(cfg, "AppWidth", this.AppWidth.ToString());
-            ConfigHelper.SetAppConfigValue(cfg, "AppHeight", this.AppHeight.ToString());
-            ConfigHelper.SetAppConfigValue(cfg, "WindowPosX", this.WindowPositionX.ToString());
-            ConfigHelper.SetAppConfigValue(cfg, "WindowPosY", this.WindowPositionY.ToString());
+            ConfigHelper.SetAppConfigValue(cfg, "AppWidth", this.AppWidth.ToString(CultureInfo.InvariantCulture));
+            ConfigHelper.SetAppConfigValue(cfg, "AppHeight", this.AppHeight.ToString(CultureInfo.InvariantCulture));
+            ConfigHelper.SetAppConfigValue(cfg, "WindowPosX", this.WindowPositionX.ToString(CultureInfo.InvariantCulture));
+            ConfigHelper.SetAppConfigValue(cfg, "WindowPosY", this.WindowPositionY.ToString(CultureInfo.InvariantCulture));
             ConfigHelper.SetAppConfigValue(cfg, "ShowExtra", this.ShowExtra ? "true" : "false");
             ConfigHelper.SetAppConfigValue(cfg, "CaptureClipboard", this.CaptureClipboard ? "true" : "false");
             ConfigHelper.SetAppConfigValue(cfg, "AlwaysOnTop", this.AlwaysOnTop ? "true" : "false");

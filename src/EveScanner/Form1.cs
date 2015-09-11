@@ -8,13 +8,14 @@ namespace EveScanner
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Globalization;
+    using System.IO;
     using System.Linq;
     using System.Runtime.InteropServices;
     using System.Text;
     using System.Windows.Forms;
 
     using EveScanner.Interfaces;
-    using System.IO;
 
     /// <summary>
     /// Main Form for the Application
@@ -92,6 +93,20 @@ namespace EveScanner
             {
                 return;
             }
+             
+            // This is the shittiest way to do drag on click, but, I don't rely on more
+            // P/Invoke messaging to do it, so, it's what I'm going to use.
+            if (m.Msg == 0x84)
+            {
+                if (this.FormBorderStyle == System.Windows.Forms.FormBorderStyle.None)
+                {
+                    if ((int)m.Result == 0x01)
+                    {
+                        m.Result = (IntPtr)0x02;
+                        return;
+                    }
+                }
+            }
 
             if (m.Msg == WM_DRAWCLIPBOARD)
             {
@@ -133,7 +148,7 @@ namespace EveScanner
                     this.lastCopy = data;
 
                     Logger.Debug("Captured scan {0}", data);
-                    if (this.submitANYClipboardDataToolStripMenuItem.Checked || this.CheckTextFormat(data) || data.StartsWith("http"))
+                    if (this.submitANYClipboardDataToolStripMenuItem.Checked || this.CheckTextFormat(data) || data.StartsWith("http", StringComparison.OrdinalIgnoreCase))
                     {
                         Logger.Scan("Captured scan {0}", data);
                         this.scanText.Text = data;
@@ -238,7 +253,7 @@ namespace EveScanner
         /// <param name="e">Not provided.</param>
         private void SubmitRequestButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(scanText.Text))
+            if (string.IsNullOrEmpty(this.scanText.Text))
             {
                 return;
             }
@@ -247,7 +262,7 @@ namespace EveScanner
             {
                 IScanResult iresult = null;
 
-                if (scanText.Text.StartsWith("http://evepraisal.com/e/"))
+                if (this.scanText.Text.StartsWith("http://evepraisal.com/e/", StringComparison.OrdinalIgnoreCase))
                 {
                     Evepraisal ep = new Evepraisal();
                     string url = this.scanText.Text;
@@ -256,7 +271,7 @@ namespace EveScanner
                     url = url.IndexOf('\n') < 0 ? url : url.Substring(0, url.IndexOf('\n'));
                     iresult = ep.GetAppraisalFromUrl(url);
                 }
-                else if (scanText.Text.StartsWith("https://goonpraisal.apps.goonswarm.org/e/"))
+                else if (this.scanText.Text.StartsWith("https://goonpraisal.apps.goonswarm.org/e/", StringComparison.OrdinalIgnoreCase))
                 {
                     Evepraisal ep = new Evepraisal("goonpraisal.apps.goonswarm.org", true);
                     string url = this.scanText.Text;
@@ -265,7 +280,7 @@ namespace EveScanner
                     url = url.IndexOf('\n') < 0 ? url : url.Substring(0, url.IndexOf('\n'));
                     iresult = ep.GetAppraisalFromUrl(url);
                 }
-                else if (this.submitANYClipboardDataToolStripMenuItem.Checked || this.CheckTextFormat(scanText.Text))
+                else if (this.submitANYClipboardDataToolStripMenuItem.Checked || this.CheckTextFormat(this.scanText.Text))
                 {
                     if (this.evepraisalToolStripMenuItem.Checked)
                     {
@@ -491,33 +506,24 @@ namespace EveScanner
         {
             this.SuspendLayout();
 
-            int containerBottomToFormBottom = this.Height - (this.resultsContainer.Location.Y + this.resultsContainer.Size.Height);
-            int newHeight = 0;
-
             if (this.infoContainer.Visible)
             {
                 this.infoContainer.Visible = false;
                 this.locationContainer.Visible = false;
                 this.scanContainer.Visible = false;
-
-                newHeight = this.infoContainer.Location.Y + this.resultsContainer.Height + containerBottomToFormBottom;
             }
             else
             {
                 this.infoContainer.Visible = true;
                 this.locationContainer.Visible = true;
                 this.scanContainer.Visible = true;
-
-                int containerBottomToContainerTop = this.locationContainer.Top - (this.infoContainer.Location.Y + this.infoContainer.Size.Height);
-                newHeight = this.infoContainer.Location.Y + this.infoContainer.Height + this.locationContainer.Height + (2 * containerBottomToContainerTop) + this.resultsContainer.Height + containerBottomToFormBottom;
             }
 
             ConfigHelper.Instance.ShowExtra = this.scanContainer.Visible;
             ConfigHelper.Instance.AppWidth = this.Width;
             ConfigHelper.Instance.AppHeight = this.Height;
 
-            this.MinimumSize = new Size(this.MinimumSize.Width, newHeight);
-            this.Height = this.MinimumSize.Height;
+            this.FixWindowHeight();
 
             this.ResumeLayout();
         }
@@ -562,6 +568,15 @@ namespace EveScanner
         /// <param name="e">Not provided</param>
         private void ClearToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (sender != null && sender == this.clearToolStripMenuItem)
+            {
+                DialogResult dialogResult = MessageBox.Show("Are you sure you want to clear current data?", "Reset Data", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
+                if (dialogResult == System.Windows.Forms.DialogResult.No)
+                {
+                    return;
+                }
+            }
+
             Logger.Debug("Clearing application values!");
 
             this.sellValueLabel.Text = "---";
@@ -579,6 +594,16 @@ namespace EveScanner
 
             this.resultUrlTextBox.Text = string.Empty;
             this.scanText.Text = string.Empty;
+            this.characterNameText.Text = string.Empty;
+            this.notesText.Text = string.Empty;
+            this.shipTypeDropdown.Text = string.Empty;
+            this.fitInfoText.Text = string.Empty;
+
+            if (this.pictureBox.Image != null)
+            {
+                this.pictureBox.Image.Dispose();
+                this.pictureBox.Image = null;
+            }
 
             this.historyDropdown.Items.Clear();
             this.scans.Clear();
@@ -644,7 +669,7 @@ namespace EveScanner
         /// </summary>
         /// <param name="sender">Help -> About</param>
         /// <param name="e">Not provided.</param>
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string message = @"©2015 Viktorie Lucilla
 
@@ -652,7 +677,7 @@ Comments/Suggestions/Complaints can be posted in the appropriate
 thread on the Goonfleet Forums or sent to me via Jabber.
 ";
 
-            MessageBox.Show(message, "About", MessageBoxButtons.OK, MessageBoxIcon.Question);
+            MessageBox.Show(message, "About", MessageBoxButtons.OK, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
         }
 
         /// <summary>
@@ -660,11 +685,11 @@ thread on the Goonfleet Forums or sent to me via Jabber.
         /// </summary>
         /// <param name="sender">Help -> License</param>
         /// <param name="e">Not provided.</param>
-        private void licenseToolStripMenuItem_Click(object sender, EventArgs e)
+        private void LicenseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string message = File.ReadAllText("license.txt");
 
-            MessageBox.Show(message, "License", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            MessageBox.Show(message, "License", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0);
         }
 
         /// <summary>
@@ -672,7 +697,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
         /// </summary>
         /// <param name="sender">Help -> Source Code</param>
         /// <param name="e">Not Provided.</param>
-        private void sourceCodeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SourceCodeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://bitbucket.org/viktorielucilla/evescanner-net4");
         }
@@ -682,7 +707,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
         /// </summary>
         /// <param name="sender">Help -> Source Code</param>
         /// <param name="e">Not Provided.</param>
-        private void issueTrackerToolStripMenuItem_Click(object sender, EventArgs e)
+        private void IssueTrackerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://bitbucket.org/viktorielucilla/evescanner-net4/issues");
         }
@@ -722,6 +747,62 @@ thread on the Goonfleet Forums or sent to me via Jabber.
 
             ScanResult z = new ScanResult(string.Empty, 30000, 41234, 3, 4, "http://goonfleet.com/?1234599", new int[] { 1, 2, 3, 4, 5, 99 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Mixed 3", ShipType = string.Empty, Notes = "Triggers 6 Combined Image" };
             this.AddResultToList(z);
+        }
+
+        /// <summary>
+        /// Hides or restores borders on the form.
+        /// </summary>
+        /// <param name="sender">Options -> UI -> Hide Borders</param>
+        /// <param name="e">Not provided.</param>
+        private void HideBordersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.FormBorderStyle == System.Windows.Forms.FormBorderStyle.Sizable)
+            {
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            }
+            else
+            {
+                this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+            }
+
+            this.hideBordersToolStripMenuItem.Checked = !this.hideBordersToolStripMenuItem.Checked;
+
+            this.SuspendLayout();
+
+            this.FixWindowHeight();
+
+            this.ResumeLayout();
+        }
+
+        /// <summary>
+        /// Makes the colors in the application dark and spooky.
+        /// </summary>
+        /// <param name="sender">Options -> UI -> Darker Theme</param>
+        /// <param name="e">Not provided.</param>
+        private void DarkerThemeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.ChangeFormColorsNightMode(this);
+        }
+
+        /// <summary>
+        /// Makes the colors in the application light and airy.
+        /// </summary>
+        /// <param name="sender">Options -> UI -> Lighter Theme</param>
+        /// <param name="e">Not provided.</param>
+        private void LighterThemeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.ChangeFormColorsDayMode(this);
+        }
+
+        /// <summary>
+        /// Adds an empty scan result to the application.
+        /// </summary>
+        /// <param name="sender">File -> New Empty Scan</param>
+        /// <param name="e">Not provided.</param>
+        private void NewEmptyScanToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ScanResult rx = new ScanResult("1 Empty Cargohold", 0, 0, 0, 0, "http://goonfleet.com/?" + this.scanValueLabel.Text, null, string.Empty, string.Empty, string.Empty);
+            this.AddResultToList(rx);
         }
         #endregion Menu Items
 
@@ -798,19 +879,19 @@ thread on the Goonfleet Forums or sent to me via Jabber.
         /// <param name="scanResult">Result to add</param>
         private void AddResultToList(IScanResult scanResult)
         {
-            IScanResult result = this.scans.Where(x => x.AppraisalUrl == scanResult.AppraisalUrl).FirstOrDefault();
+            IScanResult resultToAdd = this.scans.Where(x => x.AppraisalUrl == scanResult.AppraisalUrl).FirstOrDefault();
 
-            if (result == null)
+            if (resultToAdd == null)
             {
                 this.scans.Add(scanResult);
                 this.historyDropdown.Items.Insert(0, scanResult.ToString());
                 this.historyDropdown.SelectedIndex = 0;
-                this.scanValueLabel.Text = this.scans.Count.ToString();
+                this.scanValueLabel.Text = this.scans.Count.ToString(CultureInfo.CurrentCulture);
                 Logger.Result(scanResult.ToString());
             }
             else
             {
-                int index = this.scans.IndexOf(result);
+                int index = this.scans.IndexOf(resultToAdd);
 
                 this.historyDropdown.SelectedIndex = this.scans.Count - index - 1;
             }
@@ -824,8 +905,8 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             // Top Labels
             this.buyValueLabel.Text = ScanResult.GetISKString(this.result.BuyValue) + " ISK";
             this.sellValueLabel.Text = ScanResult.GetISKString(this.result.SellValue) + " ISK";
-            this.stacksValueText.Text = this.result.Stacks.ToString();
-            this.volumeValueLabel.Text = string.Format("{0:n}", this.result.Volume) + " m3";
+            this.stacksValueText.Text = this.result.Stacks.ToString(CultureInfo.CurrentCulture);
+            this.volumeValueLabel.Text = string.Format(CultureInfo.CurrentCulture, "{0:n}", this.result.Volume) + " m3";
 
             // Get URL
             this.resultUrlTextBox.Text = this.result.AppraisalUrl;
@@ -893,31 +974,31 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             // Restore Location
             bool hasLocation = !string.IsNullOrEmpty(this.result.Location);
 
-            if (hasLocation && this.result.Location == location1Text.Text)
+            if (hasLocation && this.result.Location == this.location1Text.Text)
             {
-                location1Radio.Checked = true;
+                this.location1Radio.Checked = true;
             }
             else
             {
-                location1Radio.Checked = false;
+                this.location1Radio.Checked = false;
             }
 
-            if (hasLocation && this.result.Location == location2Text.Text)
+            if (hasLocation && this.result.Location == this.location2Text.Text)
             {
-                location2Radio.Checked = true;
+                this.location2Radio.Checked = true;
             }
             else
             {
-                location2Radio.Checked = false;
+                this.location2Radio.Checked = false;
             }
 
-            if (hasLocation && this.result.Location == location3Text.Text)
+            if (hasLocation && this.result.Location == this.location3Text.Text)
             {
-                location3Radio.Checked = true;
+                this.location3Radio.Checked = true;
             }
             else
             {
-                location3Radio.Checked = false;
+                this.location3Radio.Checked = false;
             }
         }
 
@@ -934,7 +1015,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
 
             try
             {
-                string[] imageNames = imageList.OrderBy(x => x).Select(x => ConfigHelper.Instance.ImageGroups[x.ToString()]).ToArray();
+                string[] imageNames = imageList.OrderBy(x => x).Select(x => ConfigHelper.Instance.ImageGroups[x.ToString(CultureInfo.InvariantCulture)]).ToArray();
 
                 this.pictureBox.Image = ImageCombiner.CombineImages(this.pictureBox.Width, this.pictureBox.Height, imageNames);
             }
@@ -983,6 +1064,92 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             this.historyDropdown.Items.RemoveAt(selectedIndex);
             this.historyDropdown.Items.Insert(selectedIndex, this.result.ToString());
             this.historyDropdown.SelectedIndex = selectedIndex;
+        }
+
+        /// <summary>
+        /// Fixes the window height based on the controls on the form.
+        /// </summary>
+        private void FixWindowHeight()
+        {
+            int newHeight = 0;
+            int containerBottomToFormBottom = this.Height - (this.resultsContainer.Location.Y + this.resultsContainer.Size.Height);
+
+            if (!this.infoContainer.Visible)
+            {
+                newHeight = this.infoContainer.Location.Y + this.resultsContainer.Height + containerBottomToFormBottom;
+            }
+            else
+            {
+                int containerBottomToContainerTop = this.locationContainer.Top - (this.infoContainer.Location.Y + this.infoContainer.Size.Height);
+                newHeight = this.infoContainer.Location.Y + this.infoContainer.Height + this.locationContainer.Height + (2 * containerBottomToContainerTop) + this.resultsContainer.Height + containerBottomToFormBottom;
+            }
+
+            this.MinimumSize = new Size(this.MinimumSize.Width, newHeight);
+            this.Height = this.MinimumSize.Height;
+        }
+
+        /// <summary>
+        /// Changes the colors of a control and all controls below to a darker color scheme.
+        /// </summary>
+        /// <param name="c">Outer control</param>
+        private void ChangeFormColorsNightMode(Control c)
+        {
+            Color foreground = Color.DarkGray;
+            Color background = Color.Black;
+
+            c.ForeColor = foreground;
+            c.BackColor = background;
+
+            Button b = c as Button;
+            if (b != null)
+            {
+                b.FlatStyle = FlatStyle.Flat;
+                b.FlatAppearance.BorderSize = 1;
+            }
+
+            foreach (Control x in c.Controls)
+            {
+                this.ChangeFormColorsNightMode(x);
+            }
+        }
+
+        /// <summary>
+        /// Changes the colors of a control and all controls below to a darker color scheme.
+        /// </summary>
+        /// <param name="c">Outer control</param>
+        /// <param name="foreground">New Foreground Color</param>
+        /// <param name="background">New Background Color</param>
+        private void ChangeFormColorsDayMode(Control c)
+        {
+            Color foreground = SystemColors.ControlText;
+            Color background = SystemColors.Control;
+
+            c.ForeColor = foreground;
+            c.BackColor = background;
+
+            Button b = c as Button;
+            if (b != null)
+            {
+                b.FlatStyle = FlatStyle.Standard;
+                b.FlatAppearance.BorderSize = 1;
+            }
+
+            TextBox t = c as TextBox;
+            if (t != null)
+            {
+                t.BackColor = SystemColors.Window;
+            }
+
+            ComboBox cb = c as ComboBox;
+            if (cb != null)
+            {
+                cb.BackColor = SystemColors.Window;
+            }
+
+            foreach (Control x in c.Controls)
+            {
+                this.ChangeFormColorsDayMode(x);
+            }
         }
         #endregion Helper Functions
     }

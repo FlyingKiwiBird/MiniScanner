@@ -80,7 +80,124 @@ namespace EveScanner
         }
         #endregion Constructors
 
-        #region Form Events
+        #region Helper Functions
+
+        /// <summary>
+        /// Changes the colors of a control and all controls below to a darker color scheme.
+        /// </summary>
+        /// <param name="c">Outer control</param>
+        public void ChangeFormColorsNightMode(Control c)
+        {
+            if (c == null)
+            {
+                return;
+            }
+
+            Color foreground = Color.DarkGray;
+            Color background = Color.Black;
+
+            c.ForeColor = foreground;
+            c.BackColor = background;
+
+            Button b = c as Button;
+            if (b != null)
+            {
+                b.FlatStyle = FlatStyle.Flat;
+                b.FlatAppearance.BorderSize = 1;
+            }
+
+            foreach (Control x in c.Controls)
+            {
+                this.ChangeFormColorsNightMode(x);
+            }
+        }
+
+        /// <summary>
+        /// Changes the colors of a control and all controls below to a darker color scheme.
+        /// </summary>
+        /// <param name="c">Outer control</param>
+        public void ChangeFormColorsDayMode(Control c)
+        {
+            if (c == null)
+            {
+                return;
+            }
+
+            Color foreground = SystemColors.ControlText;
+            Color background = SystemColors.Control;
+
+            c.ForeColor = foreground;
+            c.BackColor = background;
+
+            Button b = c as Button;
+            if (b != null)
+            {
+                b.FlatStyle = FlatStyle.Standard;
+                b.FlatAppearance.BorderSize = 1;
+            }
+
+            TextBox t = c as TextBox;
+            if (t != null)
+            {
+                t.BackColor = SystemColors.Window;
+            }
+
+            ComboBox cb = c as ComboBox;
+            if (cb != null)
+            {
+                cb.BackColor = SystemColors.Window;
+            }
+
+            foreach (Control x in c.Controls)
+            {
+                this.ChangeFormColorsDayMode(x);
+            }
+        }
+
+        /// <summary>
+        /// Updates the Ship Type Dropdown if provided by another form.
+        /// </summary>
+        /// <param name="shipString">Ship String key</param>
+        public void UpdateShipType(string shipString)
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(() => this.UpdateShipType(shipString)));
+            }
+            else
+            {
+                foreach (string s in ConfigHelper.Instance.ShipTypes.AllKeys)
+                {
+                    if (ConfigHelper.Instance.ShipTypes[s] == shipString)
+                    {
+                        int index = this.shipTypeDropdown.Items.IndexOf(s);
+
+                        if (index > -1)
+                        {
+                            this.shipTypeDropdown.SelectedIndex = index;
+                            this.shipTypeDropdown.Text = s;
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the Fit String box.
+        /// </summary>
+        /// <param name="newFitValue">New value for Fit String</param>
+        public void UpdateFitType(string newFitValue)
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(() => this.UpdateFitType(newFitValue)));
+            }
+            else
+            {
+                this.fitInfoText.Text = newFitValue;
+            }
+        }
+
         /// <summary>
         /// This processes window messages such as clipboard events.
         /// </summary>
@@ -93,7 +210,7 @@ namespace EveScanner
             {
                 return;
             }
-             
+
             // This is the shittiest way to do drag on click, but, I don't rely on more
             // P/Invoke messaging to do it, so, it's what I'm going to use.
             if (m.Msg == 0x84)
@@ -158,6 +275,289 @@ namespace EveScanner
             }
         }
 
+        /// <summary>
+        /// Gets the selected radio button from a container.
+        /// </summary>
+        /// <param name="container">Container to find radio button in.</param>
+        /// <returns>Selected radio button, or null if none found.</returns>
+        private RadioButton GetCheckedRadioButton(Control container)
+        {
+            foreach (var control in container.Controls)
+            {
+                RadioButton radio = control as RadioButton;
+
+                if (radio != null)
+                {
+                    if (radio.Checked)
+                    {
+                        return radio;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Gets the Ship Name from either the selected radio button, or, the textbox if "Other" is selected.
+        /// </summary>
+        /// <returns>Ship Name</returns>
+        private string GetShipName()
+        {
+            string output = string.Empty;
+
+            RadioButton radio = this.GetCheckedRadioButton(this.infoContainer);
+            if (radio != null)
+            {
+                output = radio.Text;
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Gets the text associated with the currently selected location radio button.
+        /// </summary>
+        /// <returns>Location to associate</returns>
+        private string GetLocation()
+        {
+            string output = string.Empty;
+
+            if (this.location1Radio.Checked)
+            {
+                return this.location1Text.Text;
+            }
+
+            if (this.location2Radio.Checked)
+            {
+                return this.location2Text.Text;
+            }
+
+            if (this.location3Radio.Checked)
+            {
+                return this.location3Text.Text;
+            }
+
+            return output;
+        }
+
+        /// <summary>
+        /// Adds a provided result to the list and makes it the top entry in the dropdown
+        /// </summary>
+        /// <param name="scanResult">Result to add</param>
+        private void AddResultToList(IScanResult scanResult)
+        {
+            IScanResult resultToAdd = this.scans.Where(x => x.AppraisalUrl == scanResult.AppraisalUrl).FirstOrDefault();
+
+            if (resultToAdd == null)
+            {
+                this.scans.Add(scanResult);
+                this.historyDropdown.Items.Insert(0, scanResult.ToString());
+                this.historyDropdown.SelectedIndex = 0;
+                this.scanValueLabel.Text = this.scans.Count.ToString(CultureInfo.CurrentCulture);
+                Logger.Result(scanResult.ToString());
+            }
+            else
+            {
+                int index = this.scans.IndexOf(resultToAdd);
+
+                this.historyDropdown.SelectedIndex = this.scans.Count - index - 1;
+            }
+        }
+
+        /// <summary>
+        /// Parses the currently selected result and fills in form fields.
+        /// </summary>
+        private void ParseCurrentResult()
+        {
+            // Top Labels
+            this.buyValueLabel.Text = ScanResult.GetISKString(this.result.BuyValue) + " ISK";
+            this.sellValueLabel.Text = ScanResult.GetISKString(this.result.SellValue) + " ISK";
+            this.stacksValueText.Text = this.result.Stacks.ToString(CultureInfo.CurrentCulture);
+            this.volumeValueLabel.Text = string.Format(CultureInfo.CurrentCulture, "{0:n}", this.result.Volume) + " m3";
+
+            // Get URL
+            this.resultUrlTextBox.Text = this.result.AppraisalUrl;
+
+            // Get Scan from Object
+            this.scanText.Text = this.result.RawScan;
+
+            // Construct / Restore Image
+            if (this.pictureBox.Image != null)
+            {
+                this.pictureBox.Image.Dispose();
+                this.pictureBox.Image = null;
+            }
+
+            if (this.result.ImageIndex != null)
+            {
+                this.ConstructAndDisplayImages(this.result.ImageIndex);
+            }
+
+            // Restore Character Name
+            this.characterNameText.Text = string.Empty;
+
+            if (!string.IsNullOrEmpty(this.result.CharacterName))
+            {
+                this.characterNameText.Text = this.result.CharacterName;
+            }
+
+            // Restore Ship Type
+            this.shipTypeDropdown.Text = string.Empty;
+
+            if (!string.IsNullOrEmpty(this.result.ShipType))
+            {
+                int index = this.shipTypeDropdown.Items.IndexOf(this.result.ShipType);
+
+                this.shipTypeDropdown.SuspendLayout();
+                if (index > -1)
+                {
+                    this.shipTypeDropdown.SelectedIndex = index;
+                    this.shipTypeDropdown.Text = this.result.ShipType;
+                }
+                else
+                {
+                    this.shipTypeDropdown.Text = this.result.ShipType;
+                }
+
+                this.shipTypeDropdown.ResumeLayout();
+            }
+
+            // Restore Fit Into
+            this.fitInfoText.Text = string.Empty;
+
+            if (!string.IsNullOrEmpty(this.result.FitInfo))
+            {
+                this.fitInfoText.Text = this.result.FitInfo;
+            }
+
+            // Restore Notes
+            this.notesText.Text = string.Empty;
+
+            if (!string.IsNullOrEmpty(this.result.Notes))
+            {
+                this.notesText.Text = this.result.Notes;
+            }
+
+            // Restore Location
+            bool hasLocation = !string.IsNullOrEmpty(this.result.Location);
+
+            if (hasLocation && this.result.Location == this.location1Text.Text)
+            {
+                this.location1Radio.Checked = true;
+            }
+            else
+            {
+                this.location1Radio.Checked = false;
+            }
+
+            if (hasLocation && this.result.Location == this.location2Text.Text)
+            {
+                this.location2Radio.Checked = true;
+            }
+            else
+            {
+                this.location2Radio.Checked = false;
+            }
+
+            if (hasLocation && this.result.Location == this.location3Text.Text)
+            {
+                this.location3Radio.Checked = true;
+            }
+            else
+            {
+                this.location3Radio.Checked = false;
+            }
+        }
+
+        /// <summary>
+        /// Constructs a composite image and loads it into the image box.
+        /// </summary>
+        /// <param name="imageList">List of image index</param>
+        private void ConstructAndDisplayImages(IEnumerable<int> imageList)
+        {
+            if (imageList.Count() == 0)
+            {
+                return;
+            }
+
+            try
+            {
+                string[] imageNames = imageList.OrderBy(x => x).Select(x => ConfigHelper.Instance.ImageGroups[x.ToString(CultureInfo.InvariantCulture)]).ToArray();
+
+                this.pictureBox.Image = ImageCombiner.CombineImages(this.pictureBox.Width, this.pictureBox.Height, imageNames);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error(ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// This method checks that the input text is in the form of a scan we recognize.
+        /// </summary>
+        /// <param name="inputText">Supposed cargo scan.</param>
+        /// <returns>True if the text is determined to be a cargo scan, false otherwise.</returns>
+        private bool CheckTextFormat(string inputText)
+        {
+            if (this.CheckForCargoScan(inputText))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Check every line. If one doesn't match the Cargo Scan criteria, return false.
+        /// </summary>
+        /// <param name="inputText">Scan data</param>
+        /// <returns>True if we think this is a cargo scan, false otherwise.</returns>
+        private bool CheckForCargoScan(string inputText)
+        {
+            return Validators.CheckForCargoScan(inputText);
+        }
+
+        /// <summary>
+        /// Updates the dropdown text with the current result data (updated if you changed ship type/location)
+        /// </summary>
+        private void UpdateDropdown()
+        {
+            if (this.result == null)
+            {
+                return;
+            }
+
+            int selectedIndex = this.historyDropdown.SelectedIndex;
+            this.historyDropdown.Items.RemoveAt(selectedIndex);
+            this.historyDropdown.Items.Insert(selectedIndex, this.result.ToString());
+            this.historyDropdown.SelectedIndex = selectedIndex;
+        }
+
+        /// <summary>
+        /// Fixes the window height based on the controls on the form.
+        /// </summary>
+        private void FixWindowHeight()
+        {
+            int newHeight = 0;
+            int containerBottomToFormBottom = this.Height - (this.resultsContainer.Location.Y + this.resultsContainer.Size.Height);
+
+            if (!this.infoContainer.Visible)
+            {
+                newHeight = this.infoContainer.Location.Y + this.resultsContainer.Height + containerBottomToFormBottom;
+            }
+            else
+            {
+                int containerBottomToContainerTop = this.locationContainer.Top - (this.infoContainer.Location.Y + this.infoContainer.Size.Height);
+                newHeight = this.infoContainer.Location.Y + this.infoContainer.Height + this.locationContainer.Height + (2 * containerBottomToContainerTop) + this.resultsContainer.Height + containerBottomToFormBottom;
+            }
+
+            this.MinimumSize = new Size(this.MinimumSize.Width, newHeight);
+            this.Height = this.MinimumSize.Height;
+        }
+        #endregion Helper Functions
+
+        #region Form Events
         /// <summary>
         /// Called when the form loads, sets up clipboard, always on top, etc.
         /// </summary>
@@ -493,6 +893,35 @@ namespace EveScanner
             this.result.Notes = this.notesText.Text;
         }
 
+        /// <summary>
+        /// Opens the Ship Picker form as a dialog box.
+        /// </summary>
+        /// <param name="sender">... button next to ship dropdown.</param>
+        /// <param name="e">Not provided.</param>
+        private void ShipTypePickerButton_Click(object sender, EventArgs e)
+        {
+            using (ShipPicker sp = new ShipPicker())
+            {
+                sp.CallingForm = this;
+
+                sp.ShowDialog(this);
+            }
+        }
+
+        /// <summary>
+        /// Opens the Fit Picker form as a dialog box.
+        /// </summary>
+        /// <param name="sender">... button next to fit textbox.</param>
+        /// <param name="e">Not provided.</param>
+        private void FitInfoPickerButton_Click(object sender, EventArgs e)
+        {
+            using (FitPicker fp = new FitPicker())
+            {
+                fp.CallingForm = this;
+
+                fp.ShowDialog(this);
+            }
+        }
         #endregion Form Controls
 
         #region Menuitems
@@ -721,31 +1150,31 @@ thread on the Goonfleet Forums or sent to me via Jabber.
         {
             this.ClearToolStripMenuItem_Click(null, EventArgs.Empty);
 
-            ScanResult r = new ScanResult("1 Dummy Item", 3000000000000, 4123456789012, 1, 1, "http://goonfleet.com/?1", new int[] { 1 }, string.Empty, string.Empty, string.Empty) { CharacterName = "T2 BPO", ShipType = "Providence - Freighter - Amarr", Notes = "Triggers T2 BPO Image", Location = "Perimeter -> Urlen" };
+            ScanResult r = new ScanResult("1 Dummy Item", 3000000000000, 4123456789012, 1, 1, "http://goonfleet.com/?1", new int[] { 1 }) { CharacterName = "T2 BPO", ShipType = "Providence - Freighter - Amarr", Notes = "Triggers T2 BPO Image", Location = "Perimeter -> Urlen" };
             this.AddResultToList(r);
 
-            ScanResult s = new ScanResult(string.Empty, 300000000000, 412345678901, 3, 4, "http://goonfleet.com/?2", new int[] { 2 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Plastic Wrap", ShipType = "Charon - Freighter - Caldari", Notes = "Triggers Wrap Image" };
+            ScanResult s = new ScanResult(string.Empty, 300000000000, 412345678901, 3, 4, "http://goonfleet.com/?2", new int[] { 2 }) { CharacterName = "Plastic Wrap", ShipType = "Charon - Freighter - Caldari", Notes = "Triggers Wrap Image" };
             this.AddResultToList(s);
 
-            ScanResult t = new ScanResult(string.Empty, 30000000000, 41234567890, 3, 4, "http://goonfleet.com/?3", new int[] { 3 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Container", ShipType = "Obelisk - Freighter - Gallente", Notes = "Triggers Container Image" };
+            ScanResult t = new ScanResult(string.Empty, 30000000000, 41234567890, 3, 4, "http://goonfleet.com/?3", new int[] { 3 }) { CharacterName = "Container", ShipType = "Obelisk - Freighter - Gallente", Notes = "Triggers Container Image" };
             this.AddResultToList(t);
 
-            ScanResult u = new ScanResult(string.Empty, 3000000000, 4123456789, 3, 4, "http://goonfleet.com/?4", new int[] { 4 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Isotopes", ShipType = "Fenrir - Freighter - Minmatar", Notes = "Triggers Isotope Image", Location = "Ashab -> Madirmilire" };
+            ScanResult u = new ScanResult(string.Empty, 3000000000, 4123456789, 3, 4, "http://goonfleet.com/?4", new int[] { 4 }) { CharacterName = "Isotopes", ShipType = "Fenrir - Freighter - Minmatar", Notes = "Triggers Isotope Image", Location = "Ashab -> Madirmilire" };
             this.AddResultToList(u);
 
-            ScanResult v = new ScanResult(string.Empty, 300000000, 412345678, 3, 4, "http://goonfleet.com/?5", new int[] { 5 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Valuable BPO", ShipType = "Ark - Jump Freighter - Amarr - Helium", Notes = "Triggers $$$ BPO Image" };
+            ScanResult v = new ScanResult(string.Empty, 300000000, 412345678, 3, 4, "http://goonfleet.com/?5", new int[] { 5 }) { CharacterName = "Valuable BPO", ShipType = "Ark - Jump Freighter - Amarr - Helium", Notes = "Triggers $$$ BPO Image" };
             this.AddResultToList(v);
 
-            ScanResult w = new ScanResult(string.Empty, 30000000, 41234567, 3, 4, "http://goonfleet.com/?99", new int[] { 99 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Fedo", ShipType = "Rhea - Jump Freighter - Caldari - Nitrogen", Notes = "Triggers Fedo Image" };
+            ScanResult w = new ScanResult(string.Empty, 30000000, 41234567, 3, 4, "http://goonfleet.com/?99", new int[] { 99 }) { CharacterName = "Fedo", ShipType = "Rhea - Jump Freighter - Caldari - Nitrogen", Notes = "Triggers Fedo Image" };
             this.AddResultToList(w);
 
-            ScanResult x = new ScanResult(string.Empty, 3000000, 4123456, 3, 4, "http://goonfleet.com/?23", new int[] { 2, 3 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Mixed 1", ShipType = "Anshar - Jump Freighter - Gallente - Oxygen", Notes = "Triggers Wrap+Container Image", Location = "Hatakani -> Sivala" };
+            ScanResult x = new ScanResult(string.Empty, 3000000, 4123456, 3, 4, "http://goonfleet.com/?23", new int[] { 2, 3 }) { CharacterName = "Mixed 1", ShipType = "Anshar - Jump Freighter - Gallente - Oxygen", Notes = "Triggers Wrap+Container Image", Location = "Hatakani -> Sivala" };
             this.AddResultToList(x);
 
-            ScanResult y = new ScanResult(string.Empty, 300000, 412345, 3, 4, "http://goonfleet.com/?1234", new int[] { 1, 2, 3, 4 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Mixed 2", ShipType = "Nomad - Jump Freighter - Minmatar - Hydrogen", Notes = "Triggers 4 Combined Image" };
+            ScanResult y = new ScanResult(string.Empty, 300000, 412345, 3, 4, "http://goonfleet.com/?1234", new int[] { 1, 2, 3, 4 }) { CharacterName = "Mixed 2", ShipType = "Nomad - Jump Freighter - Minmatar - Hydrogen", Notes = "Triggers 4 Combined Image" };
             this.AddResultToList(y);
 
-            ScanResult z = new ScanResult(string.Empty, 30000, 41234, 3, 4, "http://goonfleet.com/?1234599", new int[] { 1, 2, 3, 4, 5, 99 }, string.Empty, string.Empty, string.Empty) { CharacterName = "Mixed 3", ShipType = string.Empty, Notes = "Triggers 6 Combined Image" };
+            ScanResult z = new ScanResult(string.Empty, 30000, 41234, 3, 4, "http://goonfleet.com/?1234599", new int[] { 1, 2, 3, 4, 5, 99 }) { CharacterName = "Mixed 3", ShipType = string.Empty, Notes = "Triggers 6 Combined Image" };
             this.AddResultToList(z);
         }
 
@@ -801,356 +1230,9 @@ thread on the Goonfleet Forums or sent to me via Jabber.
         /// <param name="e">Not provided.</param>
         private void NewEmptyScanToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ScanResult rx = new ScanResult("1 Empty Cargohold", 0, 0, 0, 0, "http://goonfleet.com/?" + this.scanValueLabel.Text, null, string.Empty, string.Empty, string.Empty);
+            ScanResult rx = new ScanResult("1 Empty Cargohold", 0, 0, 0, 0, "http://goonfleet.com/?" + this.scanValueLabel.Text, null);
             this.AddResultToList(rx);
         }
         #endregion Menu Items
-
-        #region Helper Functions
-        /// <summary>
-        /// Gets the selected radio button from a container.
-        /// </summary>
-        /// <param name="container">Container to find radio button in.</param>
-        /// <returns>Selected radio button, or null if none found.</returns>
-        private RadioButton GetCheckedRadioButton(Control container)
-        {
-            foreach (var control in container.Controls)
-            {
-                RadioButton radio = control as RadioButton;
-
-                if (radio != null)
-                {
-                    if (radio.Checked)
-                    {
-                        return radio;
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Gets the Ship Name from either the selected radio button, or, the textbox if "Other" is selected.
-        /// </summary>
-        /// <returns>Ship Name</returns>
-        private string GetShipName()
-        {
-            string output = string.Empty;
-
-            RadioButton radio = this.GetCheckedRadioButton(this.infoContainer);
-            if (radio != null)
-            {
-                output = radio.Text;
-            }
-
-            return output;
-        }
-
-        /// <summary>
-        /// Gets the text associated with the currently selected location radio button.
-        /// </summary>
-        /// <returns>Location to associate</returns>
-        private string GetLocation()
-        {
-            string output = string.Empty;
-
-            if (this.location1Radio.Checked)
-            {
-                return this.location1Text.Text;
-            }
-
-            if (this.location2Radio.Checked)
-            {
-                return this.location2Text.Text;
-            }
-
-            if (this.location3Radio.Checked)
-            {
-                return this.location3Text.Text;
-            }
-
-            return output;
-        }
-
-        /// <summary>
-        /// Adds a provided result to the list and makes it the top entry in the dropdown
-        /// </summary>
-        /// <param name="scanResult">Result to add</param>
-        private void AddResultToList(IScanResult scanResult)
-        {
-            IScanResult resultToAdd = this.scans.Where(x => x.AppraisalUrl == scanResult.AppraisalUrl).FirstOrDefault();
-
-            if (resultToAdd == null)
-            {
-                this.scans.Add(scanResult);
-                this.historyDropdown.Items.Insert(0, scanResult.ToString());
-                this.historyDropdown.SelectedIndex = 0;
-                this.scanValueLabel.Text = this.scans.Count.ToString(CultureInfo.CurrentCulture);
-                Logger.Result(scanResult.ToString());
-            }
-            else
-            {
-                int index = this.scans.IndexOf(resultToAdd);
-
-                this.historyDropdown.SelectedIndex = this.scans.Count - index - 1;
-            }
-        }
-
-        /// <summary>
-        /// Parses the currently selected result and fills in form fields.
-        /// </summary>
-        private void ParseCurrentResult()
-        {
-            // Top Labels
-            this.buyValueLabel.Text = ScanResult.GetISKString(this.result.BuyValue) + " ISK";
-            this.sellValueLabel.Text = ScanResult.GetISKString(this.result.SellValue) + " ISK";
-            this.stacksValueText.Text = this.result.Stacks.ToString(CultureInfo.CurrentCulture);
-            this.volumeValueLabel.Text = string.Format(CultureInfo.CurrentCulture, "{0:n}", this.result.Volume) + " m3";
-
-            // Get URL
-            this.resultUrlTextBox.Text = this.result.AppraisalUrl;
-
-            // Get Scan from Object
-            this.scanText.Text = this.result.RawScan;
-
-            // Construct / Restore Image
-            if (this.pictureBox.Image != null)
-            {
-                this.pictureBox.Image.Dispose();
-                this.pictureBox.Image = null;
-            }
-
-            if (this.result.ImageIndex != null)
-            {
-                this.ConstructAndDisplayImages(this.result.ImageIndex);
-            }
-
-            // Restore Character Name
-            this.characterNameText.Text = string.Empty;
-
-            if (!string.IsNullOrEmpty(this.result.CharacterName))
-            {
-                this.characterNameText.Text = this.result.CharacterName;
-            }
-
-            // Restore Ship Type
-            this.shipTypeDropdown.Text = string.Empty;
-
-            if (!string.IsNullOrEmpty(this.result.ShipType))
-            {
-                int index = this.shipTypeDropdown.Items.IndexOf(this.result.ShipType);
-
-                this.shipTypeDropdown.SuspendLayout();
-                if (index > -1)
-                {
-                    this.shipTypeDropdown.SelectedIndex = index;
-                    this.shipTypeDropdown.Text = this.result.ShipType;
-                }
-                else
-                {
-                    this.shipTypeDropdown.Text = this.result.ShipType;
-                }
-
-                this.shipTypeDropdown.ResumeLayout();
-            }
-
-            // Restore Fit Into
-            this.fitInfoText.Text = string.Empty;
-
-            if (!string.IsNullOrEmpty(this.result.FitInfo))
-            {
-                this.fitInfoText.Text = this.result.FitInfo;
-            }
-
-            // Restore Notes
-            this.notesText.Text = string.Empty;
-
-            if (!string.IsNullOrEmpty(this.result.Notes))
-            {
-                this.notesText.Text = this.result.Notes;
-            }
-
-            // Restore Location
-            bool hasLocation = !string.IsNullOrEmpty(this.result.Location);
-
-            if (hasLocation && this.result.Location == this.location1Text.Text)
-            {
-                this.location1Radio.Checked = true;
-            }
-            else
-            {
-                this.location1Radio.Checked = false;
-            }
-
-            if (hasLocation && this.result.Location == this.location2Text.Text)
-            {
-                this.location2Radio.Checked = true;
-            }
-            else
-            {
-                this.location2Radio.Checked = false;
-            }
-
-            if (hasLocation && this.result.Location == this.location3Text.Text)
-            {
-                this.location3Radio.Checked = true;
-            }
-            else
-            {
-                this.location3Radio.Checked = false;
-            }
-        }
-
-        /// <summary>
-        /// Constructs a composite image and loads it into the image box.
-        /// </summary>
-        /// <param name="imageList">List of image index</param>
-        private void ConstructAndDisplayImages(IEnumerable<int> imageList)
-        {
-            if (imageList.Count() == 0)
-            {
-                return;
-            }
-
-            try
-            {
-                string[] imageNames = imageList.OrderBy(x => x).Select(x => ConfigHelper.Instance.ImageGroups[x.ToString(CultureInfo.InvariantCulture)]).ToArray();
-
-                this.pictureBox.Image = ImageCombiner.CombineImages(this.pictureBox.Width, this.pictureBox.Height, imageNames);
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex.ToString());
-            }
-        }
-
-        /// <summary>
-        /// This method checks that the input text is in the form of a scan we recognize.
-        /// </summary>
-        /// <param name="inputText">Supposed cargo scan.</param>
-        /// <returns>True if the text is determined to be a cargo scan, false otherwise.</returns>
-        private bool CheckTextFormat(string inputText)
-        {
-            if (this.CheckForCargoScan(inputText))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Check every line. If one doesn't match the Cargo Scan criteria, return false.
-        /// </summary>
-        /// <param name="inputText">Scan data</param>
-        /// <returns>True if we think this is a cargo scan, false otherwise.</returns>
-        private bool CheckForCargoScan(string inputText)
-        {
-            return Validators.CheckForCargoScan(inputText);
-        }
-
-        /// <summary>
-        /// Updates the dropdown text with the current result data (updated if you changed ship type/location)
-        /// </summary>
-        private void UpdateDropdown()
-        {
-            if (this.result == null)
-            {
-                return;
-            }
-
-            int selectedIndex = this.historyDropdown.SelectedIndex;
-            this.historyDropdown.Items.RemoveAt(selectedIndex);
-            this.historyDropdown.Items.Insert(selectedIndex, this.result.ToString());
-            this.historyDropdown.SelectedIndex = selectedIndex;
-        }
-
-        /// <summary>
-        /// Fixes the window height based on the controls on the form.
-        /// </summary>
-        private void FixWindowHeight()
-        {
-            int newHeight = 0;
-            int containerBottomToFormBottom = this.Height - (this.resultsContainer.Location.Y + this.resultsContainer.Size.Height);
-
-            if (!this.infoContainer.Visible)
-            {
-                newHeight = this.infoContainer.Location.Y + this.resultsContainer.Height + containerBottomToFormBottom;
-            }
-            else
-            {
-                int containerBottomToContainerTop = this.locationContainer.Top - (this.infoContainer.Location.Y + this.infoContainer.Size.Height);
-                newHeight = this.infoContainer.Location.Y + this.infoContainer.Height + this.locationContainer.Height + (2 * containerBottomToContainerTop) + this.resultsContainer.Height + containerBottomToFormBottom;
-            }
-
-            this.MinimumSize = new Size(this.MinimumSize.Width, newHeight);
-            this.Height = this.MinimumSize.Height;
-        }
-
-        /// <summary>
-        /// Changes the colors of a control and all controls below to a darker color scheme.
-        /// </summary>
-        /// <param name="c">Outer control</param>
-        private void ChangeFormColorsNightMode(Control c)
-        {
-            Color foreground = Color.DarkGray;
-            Color background = Color.Black;
-
-            c.ForeColor = foreground;
-            c.BackColor = background;
-
-            Button b = c as Button;
-            if (b != null)
-            {
-                b.FlatStyle = FlatStyle.Flat;
-                b.FlatAppearance.BorderSize = 1;
-            }
-
-            foreach (Control x in c.Controls)
-            {
-                this.ChangeFormColorsNightMode(x);
-            }
-        }
-
-        /// <summary>
-        /// Changes the colors of a control and all controls below to a darker color scheme.
-        /// </summary>
-        /// <param name="c">Outer control</param>
-        /// <param name="foreground">New Foreground Color</param>
-        /// <param name="background">New Background Color</param>
-        private void ChangeFormColorsDayMode(Control c)
-        {
-            Color foreground = SystemColors.ControlText;
-            Color background = SystemColors.Control;
-
-            c.ForeColor = foreground;
-            c.BackColor = background;
-
-            Button b = c as Button;
-            if (b != null)
-            {
-                b.FlatStyle = FlatStyle.Standard;
-                b.FlatAppearance.BorderSize = 1;
-            }
-
-            TextBox t = c as TextBox;
-            if (t != null)
-            {
-                t.BackColor = SystemColors.Window;
-            }
-
-            ComboBox cb = c as ComboBox;
-            if (cb != null)
-            {
-                cb.BackColor = SystemColors.Window;
-            }
-
-            foreach (Control x in c.Controls)
-            {
-                this.ChangeFormColorsDayMode(x);
-            }
-        }
-        #endregion Helper Functions
     }
 }

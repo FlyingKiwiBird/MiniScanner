@@ -95,6 +95,8 @@ namespace EveScanner
             this.sourceCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.issueTrackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.shipTypePickerButton = new System.Windows.Forms.Button();
+            this.fitInfoPickerButton = new System.Windows.Forms.Button();
             this.infoContainer.SuspendLayout();
             this.locationContainer.SuspendLayout();
             this.scanContainer.SuspendLayout();
@@ -205,6 +207,8 @@ namespace EveScanner
             // 
             // infoContainer
             // 
+            this.infoContainer.Controls.Add(this.fitInfoPickerButton);
+            this.infoContainer.Controls.Add(this.shipTypePickerButton);
             this.infoContainer.Controls.Add(this.label9);
             this.infoContainer.Controls.Add(this.notesText);
             this.infoContainer.Controls.Add(this.label8);
@@ -252,7 +256,7 @@ namespace EveScanner
             // 
             this.fitInfoText.Location = new System.Drawing.Point(103, 72);
             this.fitInfoText.Name = "fitInfoText";
-            this.fitInfoText.Size = new System.Drawing.Size(235, 20);
+            this.fitInfoText.Size = new System.Drawing.Size(203, 20);
             this.fitInfoText.TabIndex = 16;
             this.fitInfoText.Leave += new System.EventHandler(this.FitInfoText_Leave);
             // 
@@ -301,7 +305,7 @@ namespace EveScanner
             "Bowhead"});
             this.shipTypeDropdown.Location = new System.Drawing.Point(103, 45);
             this.shipTypeDropdown.Name = "shipTypeDropdown";
-            this.shipTypeDropdown.Size = new System.Drawing.Size(235, 21);
+            this.shipTypeDropdown.Size = new System.Drawing.Size(203, 21);
             this.shipTypeDropdown.TabIndex = 14;
             this.shipTypeDropdown.SelectedValueChanged += new System.EventHandler(this.ShipTypeDropdown_SelectedValueChanged);
             // 
@@ -733,6 +737,28 @@ namespace EveScanner
             this.pictureBox.TabIndex = 37;
             this.pictureBox.TabStop = false;
             // 
+            // shipTypePickerButton
+            // 
+            this.shipTypePickerButton.AutoSize = true;
+            this.shipTypePickerButton.Location = new System.Drawing.Point(312, 43);
+            this.shipTypePickerButton.Name = "shipTypePickerButton";
+            this.shipTypePickerButton.Size = new System.Drawing.Size(26, 23);
+            this.shipTypePickerButton.TabIndex = 38;
+            this.shipTypePickerButton.Text = "...";
+            this.shipTypePickerButton.UseVisualStyleBackColor = true;
+            this.shipTypePickerButton.Click += new System.EventHandler(this.ShipTypePickerButton_Click);
+            // 
+            // fitInfoPickerButton
+            // 
+            this.fitInfoPickerButton.AutoSize = true;
+            this.fitInfoPickerButton.Location = new System.Drawing.Point(312, 70);
+            this.fitInfoPickerButton.Name = "fitInfoPickerButton";
+            this.fitInfoPickerButton.Size = new System.Drawing.Size(26, 23);
+            this.fitInfoPickerButton.TabIndex = 38;
+            this.fitInfoPickerButton.Text = "...";
+            this.fitInfoPickerButton.UseVisualStyleBackColor = true;
+            this.fitInfoPickerButton.Click += new System.EventHandler(this.FitInfoPickerButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -842,6 +868,8 @@ namespace EveScanner
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem lighterThemeToolStripMenuItem;
+        private System.Windows.Forms.Button fitInfoPickerButton;
+        private System.Windows.Forms.Button shipTypePickerButton;
     }
 }
 

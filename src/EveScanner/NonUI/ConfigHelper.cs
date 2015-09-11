@@ -200,7 +200,7 @@ namespace EveScanner
 
             if (throwExceptionIfMissing && (v == null || string.IsNullOrEmpty(v.Value)))
             {
-                throw new Exception("missing app config key");
+                throw new ConfigurationErrorsException("missing app config key");
             }
 
             return v != null ? v.Value : defaultValue;

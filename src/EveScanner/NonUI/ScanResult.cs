@@ -26,10 +26,7 @@ namespace EveScanner
         /// <param name="volume">Volume of items in the scan.</param>
         /// <param name="appraisalUrl">URL to the Appraisal</param>
         /// <param name="imageIndex">Image Index for the Appraisal</param>
-        /// <param name="shipType">Ship type scanned</param>
-        /// <param name="location">Location of the scan.</param>
-        /// <param name="characterName">Character name scanned.</param>
-        public ScanResult(string rawScan, decimal buyValue, decimal sellValue, int stacks, decimal volume, string appraisalUrl, IEnumerable<int> imageIndex, string shipType, string location, string characterName)
+        public ScanResult(string rawScan, decimal buyValue, decimal sellValue, int stacks, decimal volume, string appraisalUrl, IEnumerable<int> imageIndex)
         {
             this.RawScan = rawScan;
             this.BuyValue = buyValue;
@@ -38,9 +35,6 @@ namespace EveScanner
             this.Volume = volume;
             this.AppraisalUrl = appraisalUrl;
             this.ImageIndex = imageIndex;
-            this.ShipType = shipType;
-            this.Location = location;
-            this.CharacterName = characterName;
         }
 
         /// <summary>

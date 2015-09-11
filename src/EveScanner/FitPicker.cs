@@ -1,0 +1,167 @@
+﻿//-----------------------------------------------------------------------
+// <copyright company="Viktorie Lucilla" file="FitPicker.cs">
+// Copyright © Viktorie Lucilla 2015. All Rights Reserved
+// </copyright>
+//-----------------------------------------------------------------------
+namespace EveScanner
+{
+    using System;
+    using System.Drawing;
+    using System.Linq;
+    using System.Windows.Forms;
+
+    /// <summary>
+    /// Form to allow quick low slot picking.
+    /// </summary>
+    public partial class FitPicker : Form
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FitPicker"/> class.
+        /// </summary>
+        public FitPicker()
+        {
+            this.InitializeComponent();
+        }
+
+        /// <summary>
+        /// Gets or sets a reference to the Parent Form.
+        /// </summary>
+        public Form1 CallingForm { get; set; }
+
+        /// <summary>
+        /// Called when the form is loaded.
+        /// </summary>
+        /// <param name="sender">The parameter is not used.</param>
+        /// <param name="e">The parameter is not used.</param>
+        private void FitPicker_Load(object sender, EventArgs e)
+        {
+            if (this.CallingForm.BackColor == Color.Black)
+            {
+                this.CallingForm.ChangeFormColorsNightMode(this);
+            }
+
+            if (this.CallingForm.FormBorderStyle == FormBorderStyle.None)
+            {
+                this.Text = string.Empty;
+                this.ControlBox = false;
+                this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            }
+        }
+
+        /// <summary>
+        /// Fills in the textbox with the text from the button
+        /// </summary>
+        /// <param name="b">Button to Source Text From</param>
+        /// <param name="t">Textbox to fill</param>
+        private void Slot_Click(object b, TextBox t)
+        {
+            if (b == null || t == null)
+            {
+                return;
+            }
+
+            Button x = b as Button;
+
+            if (x == null)
+            {
+                return;
+            }
+
+            t.Text = x.Text;
+        }
+
+        /// <summary>
+        /// Called when a button for the first text slot is clicked.
+        /// </summary>
+        /// <param name="sender">Buttons in slot 1</param>
+        /// <param name="e">Not provided.</param>
+        private void Slot1_Click(object sender, EventArgs e)
+        {
+            this.Slot_Click(sender, this.slot1Text);
+        }
+
+        /// <summary>
+        /// Called when a button for the second text slot is clicked.
+        /// </summary>
+        /// <param name="sender">Buttons in slot 2</param>
+        /// <param name="e">Not provided.</param>
+        private void Slot2_Click(object sender, EventArgs e)
+        {
+            this.Slot_Click(sender, this.slot2Text);
+        }
+
+        /// <summary>
+        /// Called when a button for the third text slot is clicked.
+        /// </summary>
+        /// <param name="sender">Buttons in slot 1</param>
+        /// <param name="e">Not provided.</param>
+        private void Slot3_Click(object sender, EventArgs e)
+        {
+            this.Slot_Click(sender, this.slot3Text);
+        }
+
+        /// <summary>
+        /// Loads text from the menu items into the 3 textboxes.
+        /// </summary>
+        /// <param name="sender">Menu Items</param>
+        /// <param name="e">Not provided.</param>
+        private void MultiSelectMenu_Click(object sender, EventArgs e)
+        {
+            if (sender == null)
+            {
+                return;
+            }
+
+            ToolStripMenuItem tsmi = sender as ToolStripMenuItem;
+            if (tsmi == null)
+            {
+                return;
+            }
+
+            string textString = tsmi.Text.Substring(3);
+
+            slot1Text.Text = textString;
+            slot2Text.Text = textString;
+            slot3Text.Text = textString;
+        }
+
+        /// <summary>
+        /// Called when the OK button is clicked. Groups text items and returns text string to the parent form.
+        /// </summary>
+        /// <param name="sender">OK Button</param>
+        /// <param name="e">Not provided.</param>
+        private void OkButton_Click(object sender, EventArgs e)
+        {
+            string[] output = null;
+
+            string a = slot1Text.Text;
+            string b = slot2Text.Text;
+            string c = slot3Text.Text;
+
+            if (a == b && b == c)
+            {
+                output = new string[] { "3x " + a };
+            }
+            else if (a == b && a != c)
+            {
+                output = new string[] { "2x " + a, "1x " + c };
+            }
+            else if (b == c && a != b)
+            {
+                output = new string[] { "2x " + b, "1x " + a };
+            }
+            else if (a == c && b != c)
+            {
+                output = new string[] { "2x " + a, "1x " + b };
+            }
+            else
+            {
+                output = new string[] { "1x " + a, "1x " + b, "1x " + c };
+            }
+
+            this.CallingForm.UpdateFitType(string.Join(", ", output.OrderBy(x => x).Reverse().ToArray()));
+
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+        }
+    }
+}

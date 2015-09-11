@@ -24,6 +24,21 @@ namespace EveScanner
         private string uri = string.Empty;
 
         /// <summary>
+        /// Holds Scan Data
+        /// </summary>
+        private string scanData = string.Empty;
+
+        /// <summary>
+        /// Holds scan url
+        /// </summary>
+        private string scanUrl = string.Empty;
+
+        /// <summary>
+        /// Holds appraisal response.
+        /// </summary>
+        private string appraisalResponse = string.Empty;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Evepraisal"/> class.
         /// </summary>
         public Evepraisal()
@@ -48,8 +63,10 @@ namespace EveScanner
         /// <returns>Parsed ScanResult</returns>
         public IScanResult GetAppraisalFromScan(string data)
         {
-            string appraisal = this.GetAppraisalFromScanData(data);
-            ScanResult rs = this.ParseResponse(appraisal);
+            this.scanUrl = string.Empty;
+            this.scanData = data;
+            this.appraisalResponse = this.GetAppraisalFromScanData();
+            ScanResult rs = this.ParseResponse();
             return rs;
         }
 
@@ -60,84 +77,111 @@ namespace EveScanner
         /// <returns>Parsed ScanResult</returns>
         public IScanResult GetAppraisalFromUrl(string url)
         {
-            string appraisal = this.GetPreviousAppraisal(url);
-            ScanResult rs = this.ParseResponse(appraisal);
+            this.scanUrl = url;
+            this.scanData = string.Empty;
+            this.appraisalResponse = this.GetPreviousAppraisal();
+            ScanResult rs = this.ParseResponse();
             return rs;
         }
 
         /// <summary>
         /// Parses an Evepraisal HTML document and returns a scan result.
         /// </summary>
-        /// <param name="responseString">HTML from Evepraisal</param>
         /// <returns>Parsed ScanResult</returns>
-        private ScanResult ParseResponse(string responseString)
+        private ScanResult ParseResponse()
         {
-            // Find the scan data
-            string textArea = "<textarea class=\"input-block-level\" rows=\"10\">";
-            int dataIx = responseString.IndexOf(textArea, StringComparison.OrdinalIgnoreCase);
-            int dataIe = responseString.IndexOf("</textarea>", dataIx + 1, StringComparison.OrdinalIgnoreCase);
-            string rawScan = responseString.Substring(dataIx + textArea.Length, dataIe - dataIx - textArea.Length);
-            if (rawScan.IndexOf("\r\n", StringComparison.OrdinalIgnoreCase) == -1)
+            string responseString = this.appraisalResponse;
+
+            try
             {
-                rawScan = rawScan.Replace("\n", "\r\n");
+                // Find the scan data
+                string textArea = "<textarea class=\"input-block-level\" rows=\"10\">";
+                int dataIx = responseString.IndexOf(textArea, StringComparison.OrdinalIgnoreCase);
+                int dataIe = responseString.IndexOf("</textarea>", dataIx + 1, StringComparison.OrdinalIgnoreCase);
+                string rawScan = responseString.Substring(dataIx + textArea.Length, dataIe - dataIx - textArea.Length);
+                if (rawScan.IndexOf("\r\n", StringComparison.OrdinalIgnoreCase) == -1)
+                {
+                    rawScan = rawScan.Replace("\n", "\r\n");
+                }
+
+                // Find the /e/ link
+                int scanIx = responseString.IndexOf("<a href=\"/e/", StringComparison.OrdinalIgnoreCase);
+                int scanIe = responseString.IndexOf("\"", scanIx + 10, StringComparison.OrdinalIgnoreCase);
+                string url = this.uri + responseString.Substring(scanIx + 10, scanIe - scanIx - 10);
+                string appraisalUrl = url;
+
+                // Find the footer with values...
+                int footerIx = responseString.IndexOf("<th colspan=\"2\" style=\"text-align:right\">", StringComparison.OrdinalIgnoreCase);
+                int footerEnd = responseString.IndexOf("</th>", footerIx, StringComparison.OrdinalIgnoreCase);
+                string footer = responseString.Substring(footerIx, footerEnd - footerIx).Replace("\r", string.Empty).Replace("\n", string.Empty);
+
+                // Find "Sell"
+                string spanStart = "<span class=\"nowrap\">";
+                string spanEnd = "</span>";
+
+                int span1s = footer.IndexOf(spanStart, StringComparison.OrdinalIgnoreCase) + spanStart.Length;
+                int span1e = footer.IndexOf(spanEnd, span1s, StringComparison.OrdinalIgnoreCase);
+
+                string sellValueString = footer.Substring(span1s, span1e - span1s);
+                decimal sellValue = decimal.Parse(sellValueString, CultureInfo.InvariantCulture);
+
+                // Find "Buy"
+                int span2s = footer.IndexOf(spanStart, span1e, StringComparison.OrdinalIgnoreCase) + spanStart.Length;
+                int span2e = footer.IndexOf(spanEnd, span2s, StringComparison.OrdinalIgnoreCase);
+
+                string buyValueString = footer.Substring(span2s, span2e - span2s);
+                decimal buyValue = decimal.Parse(buyValueString, CultureInfo.InvariantCulture);
+
+                // Find "Volume"
+                int span3s = footer.IndexOf(spanStart, span2e, StringComparison.OrdinalIgnoreCase) + spanStart.Length;
+                int span3e = footer.IndexOf("m", span2s, StringComparison.OrdinalIgnoreCase);
+
+                string volumeString = footer.Substring(span3s, span3e - span3s);
+                decimal volume = decimal.Parse(volumeString, CultureInfo.InvariantCulture);
+
+                // Find "Stacks", and fix items for comparison in images.
+                string[] items = rawScan.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < items.Length; i++)
+                {
+                    items[i] = items[i].Substring(items[i].IndexOf(' ') + 1);
+                }
+
+                int stacks = items.Length;
+
+                IEnumerable<int> imageIndex = ConfigHelper.Instance.FindImagesToDisplay(items);
+
+                return new ScanResult(rawScan, buyValue, sellValue, stacks, volume, appraisalUrl, imageIndex);
             }
-
-            // Find the /e/ link
-            int scanIx = responseString.IndexOf("<a href=\"/e/", StringComparison.OrdinalIgnoreCase);
-            int scanIe = responseString.IndexOf("\"", scanIx + 10, StringComparison.OrdinalIgnoreCase);
-            string url = this.uri + responseString.Substring(scanIx + 10, scanIe - scanIx - 10);
-            string appraisalUrl = url;
-
-            // Find the footer with values...
-            int footerIx = responseString.IndexOf("<th colspan=\"2\" style=\"text-align:right\">", StringComparison.OrdinalIgnoreCase);
-            int footerEnd = responseString.IndexOf("</th>", footerIx, StringComparison.OrdinalIgnoreCase);
-            string footer = responseString.Substring(footerIx, footerEnd - footerIx).Replace("\r", string.Empty).Replace("\n", string.Empty);
-
-            // Find "Sell"
-            string spanStart = "<span class=\"nowrap\">";
-            string spanEnd = "</span>";
-
-            int span1s = footer.IndexOf(spanStart, StringComparison.OrdinalIgnoreCase) + spanStart.Length;
-            int span1e = footer.IndexOf(spanEnd, span1s, StringComparison.OrdinalIgnoreCase);
-
-            string sellValueString = footer.Substring(span1s, span1e - span1s);
-            decimal sellValue = decimal.Parse(sellValueString, CultureInfo.InvariantCulture);
-
-            // Find "Buy"
-            int span2s = footer.IndexOf(spanStart, span1e, StringComparison.OrdinalIgnoreCase) + spanStart.Length;
-            int span2e = footer.IndexOf(spanEnd, span2s, StringComparison.OrdinalIgnoreCase);
-
-            string buyValueString = footer.Substring(span2s, span2e - span2s);
-            decimal buyValue = decimal.Parse(buyValueString, CultureInfo.InvariantCulture);
-
-            // Find "Volume"
-            int span3s = footer.IndexOf(spanStart, span2e, StringComparison.OrdinalIgnoreCase) + spanStart.Length;
-            int span3e = footer.IndexOf("m", span2s, StringComparison.OrdinalIgnoreCase);
-
-            string volumeString = footer.Substring(span3s, span3e - span3s);
-            decimal volume = decimal.Parse(volumeString, CultureInfo.InvariantCulture);
-
-            // Find "Stacks", and fix items for comparison in images.
-            string[] items = rawScan.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < items.Length; i++)
+            catch
             {
-                items[i] = items[i].Substring(items[i].IndexOf(' ') + 1);
+                string s = "SCAN-" + DateTime.Now.ToString("yyyyMMddhhmmss", CultureInfo.InvariantCulture);
+
+                if (!string.IsNullOrEmpty(this.scanData))
+                {
+                    File.WriteAllText(s + ".req.txt", this.scanData);
+                }
+
+                if (!string.IsNullOrEmpty(this.scanUrl))
+                {
+                    File.WriteAllText(s + ".req.txt", this.scanUrl);
+                }
+
+                File.WriteAllText(s + ".rsp.txt", this.appraisalResponse);
+
+                Logger.Error("Scan Parsing Failed! Logged scan data to " + s + ".req/rsp.txt", true);
+
+                throw;
             }
-
-            int stacks = items.Length;
-
-            IEnumerable<int> imageIndex = ConfigHelper.Instance.FindImagesToDisplay(items);
-
-            return new ScanResult(rawScan, buyValue, sellValue, stacks, volume, appraisalUrl, imageIndex, string.Empty, string.Empty, string.Empty);
         }
 
         /// <summary>
         /// Retrieves the content of the page at the specified url.
         /// </summary>
-        /// <param name="url">Unified Resource Locator</param>
         /// <returns>Contents of the URL specified</returns>
-        private string GetPreviousAppraisal(string url)
+        private string GetPreviousAppraisal()
         {
+            string url = this.scanUrl;
+
             WebRequest req = WebRequest.Create(url);
             req.Method = WebRequestMethods.Http.Get;
 
@@ -160,10 +204,11 @@ namespace EveScanner
         /// <summary>
         /// Posts a set of data to Evepraisal for a new appraisal.
         /// </summary>
-        /// <param name="data">Items to appraise</param>
         /// <returns>Page HTML</returns>
-        private string GetAppraisalFromScanData(string data)
+        private string GetAppraisalFromScanData()
         {
+            string data = this.scanData;
+
             try
             {
                 // Let's ask Evepraisal how much the cargo is worth...

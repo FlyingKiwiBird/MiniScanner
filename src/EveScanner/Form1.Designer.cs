@@ -41,6 +41,8 @@ namespace EveScanner
             this.location2Text = new System.Windows.Forms.TextBox();
             this.location3Text = new System.Windows.Forms.TextBox();
             this.infoContainer = new System.Windows.Forms.GroupBox();
+            this.fitInfoPickerButton = new System.Windows.Forms.Button();
+            this.shipTypePickerButton = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.notesText = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -95,8 +97,7 @@ namespace EveScanner
             this.sourceCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.issueTrackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.shipTypePickerButton = new System.Windows.Forms.Button();
-            this.fitInfoPickerButton = new System.Windows.Forms.Button();
+            this.keepLocationBetweenScansToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoContainer.SuspendLayout();
             this.locationContainer.SuspendLayout();
             this.scanContainer.SuspendLayout();
@@ -223,6 +224,28 @@ namespace EveScanner
             this.infoContainer.TabIndex = 28;
             this.infoContainer.TabStop = false;
             this.infoContainer.Text = "Scan Info";
+            // 
+            // fitInfoPickerButton
+            // 
+            this.fitInfoPickerButton.AutoSize = true;
+            this.fitInfoPickerButton.Location = new System.Drawing.Point(312, 70);
+            this.fitInfoPickerButton.Name = "fitInfoPickerButton";
+            this.fitInfoPickerButton.Size = new System.Drawing.Size(26, 23);
+            this.fitInfoPickerButton.TabIndex = 38;
+            this.fitInfoPickerButton.Text = "...";
+            this.fitInfoPickerButton.UseVisualStyleBackColor = true;
+            this.fitInfoPickerButton.Click += new System.EventHandler(this.FitInfoPickerButton_Click);
+            // 
+            // shipTypePickerButton
+            // 
+            this.shipTypePickerButton.AutoSize = true;
+            this.shipTypePickerButton.Location = new System.Drawing.Point(312, 43);
+            this.shipTypePickerButton.Name = "shipTypePickerButton";
+            this.shipTypePickerButton.Size = new System.Drawing.Size(26, 23);
+            this.shipTypePickerButton.TabIndex = 38;
+            this.shipTypePickerButton.Text = "...";
+            this.shipTypePickerButton.UseVisualStyleBackColor = true;
+            this.shipTypePickerButton.Click += new System.EventHandler(this.ShipTypePickerButton_Click);
             // 
             // label9
             // 
@@ -537,6 +560,7 @@ namespace EveScanner
             this.toggleAlwaysOnTopToolStripMenuItem,
             this.captureClipboardOnToolStripMenuItem,
             this.submitANYClipboardDataToolStripMenuItem,
+            this.keepLocationBetweenScansToolStripMenuItem,
             this.scanSourceToolStripMenuItem,
             this.loggingToolStripMenuItem,
             this.uIToolStripMenuItem,
@@ -548,21 +572,21 @@ namespace EveScanner
             // toggleAlwaysOnTopToolStripMenuItem
             // 
             this.toggleAlwaysOnTopToolStripMenuItem.Name = "toggleAlwaysOnTopToolStripMenuItem";
-            this.toggleAlwaysOnTopToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.toggleAlwaysOnTopToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.toggleAlwaysOnTopToolStripMenuItem.Text = "&Toggle Always on Top";
             this.toggleAlwaysOnTopToolStripMenuItem.Click += new System.EventHandler(this.ToggleAlwaysOnTopToolStripMenuItem_Click);
             // 
             // captureClipboardOnToolStripMenuItem
             // 
             this.captureClipboardOnToolStripMenuItem.Name = "captureClipboardOnToolStripMenuItem";
-            this.captureClipboardOnToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.captureClipboardOnToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.captureClipboardOnToolStripMenuItem.Text = "&Capture Clipboard";
             this.captureClipboardOnToolStripMenuItem.Click += new System.EventHandler(this.CaptureClipboardOnToolStripMenuItem_Click);
             // 
             // submitANYClipboardDataToolStripMenuItem
             // 
             this.submitANYClipboardDataToolStripMenuItem.Name = "submitANYClipboardDataToolStripMenuItem";
-            this.submitANYClipboardDataToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.submitANYClipboardDataToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.submitANYClipboardDataToolStripMenuItem.Text = "Submit &ANY Clipboard Data";
             this.submitANYClipboardDataToolStripMenuItem.Click += new System.EventHandler(this.SubmitANYClipboardDataToolStripMenuItem_Click);
             // 
@@ -572,7 +596,7 @@ namespace EveScanner
             this.evepraisalToolStripMenuItem,
             this.goonmetricsToolStripMenuItem});
             this.scanSourceToolStripMenuItem.Name = "scanSourceToolStripMenuItem";
-            this.scanSourceToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.scanSourceToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.scanSourceToolStripMenuItem.Text = "&Scan Source";
             // 
             // evepraisalToolStripMenuItem
@@ -601,7 +625,7 @@ namespace EveScanner
             this.scansAndResultsToolStripMenuItem,
             this.debugToolStripMenuItem});
             this.loggingToolStripMenuItem.Name = "loggingToolStripMenuItem";
-            this.loggingToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.loggingToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.loggingToolStripMenuItem.Text = "&Logging";
             // 
             // noneToolStripMenuItem
@@ -645,7 +669,7 @@ namespace EveScanner
             this.darkerThemeToolStripMenuItem,
             this.lighterThemeToolStripMenuItem});
             this.uIToolStripMenuItem.Name = "uIToolStripMenuItem";
-            this.uIToolStripMenuItem.Size = new System.Drawing.Size(221, 22);
+            this.uIToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.uIToolStripMenuItem.Text = "&UI";
             // 
             // hideBordersToolStripMenuItem
@@ -677,7 +701,7 @@ namespace EveScanner
             this.debugToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addExampleResultsToolStripMenuItem});
             this.debugToolStripMenuItem1.Name = "debugToolStripMenuItem1";
-            this.debugToolStripMenuItem1.Size = new System.Drawing.Size(221, 22);
+            this.debugToolStripMenuItem1.Size = new System.Drawing.Size(230, 22);
             this.debugToolStripMenuItem1.Text = "Debug";
             // 
             // addExampleResultsToolStripMenuItem
@@ -737,27 +761,12 @@ namespace EveScanner
             this.pictureBox.TabIndex = 37;
             this.pictureBox.TabStop = false;
             // 
-            // shipTypePickerButton
+            // keepLocationBetweenScansToolStripMenuItem
             // 
-            this.shipTypePickerButton.AutoSize = true;
-            this.shipTypePickerButton.Location = new System.Drawing.Point(312, 43);
-            this.shipTypePickerButton.Name = "shipTypePickerButton";
-            this.shipTypePickerButton.Size = new System.Drawing.Size(26, 23);
-            this.shipTypePickerButton.TabIndex = 38;
-            this.shipTypePickerButton.Text = "...";
-            this.shipTypePickerButton.UseVisualStyleBackColor = true;
-            this.shipTypePickerButton.Click += new System.EventHandler(this.ShipTypePickerButton_Click);
-            // 
-            // fitInfoPickerButton
-            // 
-            this.fitInfoPickerButton.AutoSize = true;
-            this.fitInfoPickerButton.Location = new System.Drawing.Point(312, 70);
-            this.fitInfoPickerButton.Name = "fitInfoPickerButton";
-            this.fitInfoPickerButton.Size = new System.Drawing.Size(26, 23);
-            this.fitInfoPickerButton.TabIndex = 38;
-            this.fitInfoPickerButton.Text = "...";
-            this.fitInfoPickerButton.UseVisualStyleBackColor = true;
-            this.fitInfoPickerButton.Click += new System.EventHandler(this.FitInfoPickerButton_Click);
+            this.keepLocationBetweenScansToolStripMenuItem.Name = "keepLocationBetweenScansToolStripMenuItem";
+            this.keepLocationBetweenScansToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
+            this.keepLocationBetweenScansToolStripMenuItem.Text = "Keep Location between Scans";
+            this.keepLocationBetweenScansToolStripMenuItem.Click += new System.EventHandler(this.keepLocationBetweenScansToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -870,6 +879,7 @@ namespace EveScanner
         private System.Windows.Forms.ToolStripMenuItem lighterThemeToolStripMenuItem;
         private System.Windows.Forms.Button fitInfoPickerButton;
         private System.Windows.Forms.Button shipTypePickerButton;
+        private System.Windows.Forms.ToolStripMenuItem keepLocationBetweenScansToolStripMenuItem;
     }
 }
 

@@ -82,6 +82,11 @@ namespace EveScanner
         public bool AlwaysOnTop { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether we should keep the location checked between scans.
+        /// </summary>
+        public bool KeepLocation { get; set; }
+
+        /// <summary>
         /// Gets or sets the logging level for the application.
         /// </summary>
         public string DebugLevel { get; set; }
@@ -145,6 +150,7 @@ namespace EveScanner
             ConfigHelper.SetAppConfigValue(cfg, "ShowExtra", this.ShowExtra ? "true" : "false");
             ConfigHelper.SetAppConfigValue(cfg, "CaptureClipboard", this.CaptureClipboard ? "true" : "false");
             ConfigHelper.SetAppConfigValue(cfg, "AlwaysOnTop", this.AlwaysOnTop ? "true" : "false");
+            ConfigHelper.SetAppConfigValue(cfg, "KeepLocation", this.KeepLocation ? "true" : "false");
             ConfigHelper.SetAppConfigValue(cfg, "DebugLevel", this.DebugLevel);
             ConfigHelper.SetAppConfigValue(cfg, "LogFile", this.LogFile);
             ConfigHelper.SetAppConfigValue(cfg, "Location1", this.Location1);
@@ -253,6 +259,7 @@ namespace EveScanner
             this.ShowExtra = ConfigHelper.GetAppConfigValue(cfg, "ShowExtra") != "false";
             this.CaptureClipboard = ConfigHelper.GetAppConfigValue(cfg, "CaptureClipboard") != "false";
             this.AlwaysOnTop = ConfigHelper.GetAppConfigValue(cfg, "AlwaysOnTop") == "true";
+            this.KeepLocation = ConfigHelper.GetAppConfigValue(cfg, "KeepLocation") == "true";
             this.DebugLevel = ConfigHelper.GetAppConfigValue(cfg, "DebugLevel", "none");
             this.LogFile = ConfigHelper.GetAppConfigValue(cfg, "LogFile", "evescanner.log");
             this.Location1 = ConfigHelper.GetAppConfigValue(cfg, "Location1", "Perimeter -> Urlen");

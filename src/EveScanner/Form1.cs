@@ -195,6 +195,8 @@ namespace EveScanner
             else
             {
                 this.fitInfoText.Text = newFitValue;
+
+                this.FitInfoText_Leave(null, EventArgs.Empty);
             }
         }
 
@@ -581,6 +583,8 @@ namespace EveScanner
                 this.TopMost = true;
             }
 
+            this.keepLocationBetweenScansToolStripMenuItem.Checked = ConfigHelper.Instance.KeepLocation;
+
             if (!ConfigHelper.Instance.ShowExtra)
             {
                 this.ShowHideExtraOptionsToolStripMenuItem_Click(null, EventArgs.Empty);
@@ -704,13 +708,15 @@ namespace EveScanner
                     return;
                 }
 
+                if (ConfigHelper.Instance.KeepLocation && this.result != null && !string.IsNullOrEmpty(this.result.Location))
+                {
+                    iresult.Location = this.result.Location;
+                }
+
                 this.result = iresult;
                 this.scanText.Text = this.result.RawScan;
                 this.AddResultToList(this.result);
                 this.ParseCurrentResult();
-
-                this.location1Radio.Checked = true;
-                this.location1Radio.Checked = false;
             }
             catch (Exception ex)
             {
@@ -1232,6 +1238,18 @@ thread on the Goonfleet Forums or sent to me via Jabber.
         {
             ScanResult rx = new ScanResult("1 Empty Cargohold", 0, 0, 0, 0, "http://goonfleet.com/?" + this.scanValueLabel.Text, null);
             this.AddResultToList(rx);
+        }
+
+        /// <summary>
+        /// Toggles the keeping of locations between scans.
+        /// </summary>
+        /// <param name="sender">Options -> Keep Location Between Scans</param>
+        /// <param name="e">Not provided.</param>
+        private void keepLocationBetweenScansToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.keepLocationBetweenScansToolStripMenuItem.Checked = !this.keepLocationBetweenScansToolStripMenuItem.Checked;
+
+            ConfigHelper.Instance.KeepLocation = this.keepLocationBetweenScansToolStripMenuItem.Checked;
         }
         #endregion Menu Items
     }

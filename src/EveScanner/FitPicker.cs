@@ -6,6 +6,7 @@
 namespace EveScanner
 {
     using System;
+    using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
     using System.Windows.Forms;
@@ -132,7 +133,7 @@ namespace EveScanner
         /// <param name="e">Not provided.</param>
         private void OkButton_Click(object sender, EventArgs e)
         {
-            string[] output = null;
+            List<string> output = new List<string>();
 
             string a = slot1Text.Text;
             string b = slot2Text.Text;
@@ -140,23 +141,58 @@ namespace EveScanner
 
             if (a == b && b == c)
             {
-                output = new string[] { "3x " + a };
+                if (!string.IsNullOrEmpty(a))
+                {
+                    output.Add("3x " + a );
+                }
             }
             else if (a == b && a != c)
             {
-                output = new string[] { "2x " + a, "1x " + c };
+                if (!string.IsNullOrEmpty(a))
+                {
+                    output.Add("2x " + a);
+                }
+                if (!string.IsNullOrEmpty(c))
+                {
+                    output.Add("1x " + c);
+                }
             }
             else if (b == c && a != b)
             {
-                output = new string[] { "2x " + b, "1x " + a };
+                if (!string.IsNullOrEmpty(b))
+                {
+                    output.Add("2x " + a);
+                }
+                if (!string.IsNullOrEmpty(a))
+                {
+                    output.Add("1x " + c);
+                }
             }
             else if (a == c && b != c)
             {
-                output = new string[] { "2x " + a, "1x " + b };
+                if (!string.IsNullOrEmpty(a))
+                {
+                    output.Add("2x " + a);
+                }
+                if (!string.IsNullOrEmpty(b))
+                {
+                    output.Add("1x " + b);
+                }
             }
             else
             {
-                output = new string[] { "1x " + a, "1x " + b, "1x " + c };
+                if (!string.IsNullOrEmpty(a))
+                {
+                    output.Add(a);
+                }
+                if (!string.IsNullOrEmpty(b))
+                {
+                    output.Add(b);
+                }
+                if (!string.IsNullOrEmpty(c))
+                {
+                    output.Add(c);
+                }
             }
 
             this.CallingForm.UpdateFitType(string.Join(", ", output.OrderBy(x => x).Reverse().ToArray()));

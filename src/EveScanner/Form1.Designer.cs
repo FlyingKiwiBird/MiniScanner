@@ -766,7 +766,7 @@ namespace EveScanner
             this.keepLocationBetweenScansToolStripMenuItem.Name = "keepLocationBetweenScansToolStripMenuItem";
             this.keepLocationBetweenScansToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.keepLocationBetweenScansToolStripMenuItem.Text = "Keep Location between Scans";
-            this.keepLocationBetweenScansToolStripMenuItem.Click += new System.EventHandler(this.keepLocationBetweenScansToolStripMenuItem_Click);
+            this.keepLocationBetweenScansToolStripMenuItem.Click += new System.EventHandler(this.KeepLocationBetweenScansToolStripMenuItem_Click);
             // 
             // Form1
             // 

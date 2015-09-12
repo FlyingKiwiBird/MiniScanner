@@ -121,9 +121,9 @@ namespace EveScanner
 
             string textString = tsmi.Text.Substring(3);
 
-            slot1Text.Text = textString;
-            slot2Text.Text = textString;
-            slot3Text.Text = textString;
+            this.slot1Text.Text = textString;
+            this.slot2Text.Text = textString;
+            this.slot3Text.Text = textString;
         }
 
         /// <summary>
@@ -135,15 +135,15 @@ namespace EveScanner
         {
             List<string> output = new List<string>();
 
-            string a = slot1Text.Text;
-            string b = slot2Text.Text;
-            string c = slot3Text.Text;
+            string a = this.slot1Text.Text;
+            string b = this.slot2Text.Text;
+            string c = this.slot3Text.Text;
 
             if (a == b && b == c)
             {
                 if (!string.IsNullOrEmpty(a))
                 {
-                    output.Add("3x " + a );
+                    output.Add("3x " + a);
                 }
             }
             else if (a == b && a != c)
@@ -152,6 +152,7 @@ namespace EveScanner
                 {
                     output.Add("2x " + a);
                 }
+
                 if (!string.IsNullOrEmpty(c))
                 {
                     output.Add("1x " + c);
@@ -163,6 +164,7 @@ namespace EveScanner
                 {
                     output.Add("2x " + a);
                 }
+
                 if (!string.IsNullOrEmpty(a))
                 {
                     output.Add("1x " + c);
@@ -174,6 +176,7 @@ namespace EveScanner
                 {
                     output.Add("2x " + a);
                 }
+
                 if (!string.IsNullOrEmpty(b))
                 {
                     output.Add("1x " + b);
@@ -185,10 +188,12 @@ namespace EveScanner
                 {
                     output.Add(a);
                 }
+
                 if (!string.IsNullOrEmpty(b))
                 {
                     output.Add(b);
                 }
+
                 if (!string.IsNullOrEmpty(c))
                 {
                     output.Add(c);

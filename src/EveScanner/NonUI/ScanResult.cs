@@ -186,6 +186,11 @@ namespace EveScanner
                 sb.AppendFormat(" | {0}", this.FitInfo);
             }
 
+            if (!string.IsNullOrEmpty(this.CharacterName))
+            {
+                sb.AppendFormat(" | {0}", this.CharacterName);
+            }
+
             return sb.ToString();
         }
     }

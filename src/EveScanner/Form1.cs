@@ -1106,7 +1106,7 @@ namespace EveScanner
         /// <param name="e">Not provided.</param>
         private void AboutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string message = @"©2015 Viktorie Lucilla
+            string message = @"©2015 Viktorie Lucilla <viktorie@rifter.ca>
 
 Comments/Suggestions/Complaints can be posted in the appropriate 
 thread on the Goonfleet Forums or sent to me via Jabber.
@@ -1245,7 +1245,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
         /// </summary>
         /// <param name="sender">Options -> Keep Location Between Scans</param>
         /// <param name="e">Not provided.</param>
-        private void keepLocationBetweenScansToolStripMenuItem_Click(object sender, EventArgs e)
+        private void KeepLocationBetweenScansToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.keepLocationBetweenScansToolStripMenuItem.Checked = !this.keepLocationBetweenScansToolStripMenuItem.Checked;
 

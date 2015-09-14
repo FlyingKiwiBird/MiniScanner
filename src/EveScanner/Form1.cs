@@ -547,11 +547,15 @@ namespace EveScanner
             if (!this.infoContainer.Visible)
             {
                 newHeight = this.infoContainer.Location.Y + this.resultsContainer.Height + containerBottomToFormBottom;
+
+                infoContainer.Tag = infoContainer.Height;
             }
             else
             {
-                int containerBottomToContainerTop = this.locationContainer.Top - (this.infoContainer.Location.Y + this.infoContainer.Size.Height);
+                int containerBottomToContainerTop = this.resultsContainer.Top - (this.locationContainer.Location.Y + this.locationContainer.Size.Height);
                 newHeight = this.infoContainer.Location.Y + this.infoContainer.Height + this.locationContainer.Height + (2 * containerBottomToContainerTop) + this.resultsContainer.Height + containerBottomToFormBottom;
+
+                newHeight = newHeight + (int)infoContainer.Tag;
             }
 
             this.MinimumSize = new Size(this.MinimumSize.Width, newHeight);
@@ -733,8 +737,8 @@ namespace EveScanner
             if (!this.TopMost)
             {
                 this.TopMost = true;
-                this.Activate();
                 this.TopMost = false;
+                this.Activate();
             }
         }
 
@@ -867,6 +871,7 @@ namespace EveScanner
             }
 
             this.result.ShipType = this.shipTypeDropdown.Text;
+            this.historyDropdown.Items[this.historyDropdown.SelectedIndex] = this.result.ToString();
         }
 
         /// <summary>
@@ -941,7 +946,7 @@ namespace EveScanner
         {
             this.SuspendLayout();
 
-            if (this.infoContainer.Visible)
+            if (this.scanContainer.Visible)
             {
                 this.infoContainer.Visible = false;
                 this.locationContainer.Visible = false;
@@ -954,11 +959,11 @@ namespace EveScanner
                 this.scanContainer.Visible = true;
             }
 
+            this.FixWindowHeight();
+
             ConfigHelper.Instance.ShowExtra = this.scanContainer.Visible;
             ConfigHelper.Instance.AppWidth = this.Width;
             ConfigHelper.Instance.AppHeight = this.Height;
-
-            this.FixWindowHeight();
 
             this.ResumeLayout();
         }
@@ -1252,5 +1257,6 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             ConfigHelper.Instance.KeepLocation = this.keepLocationBetweenScansToolStripMenuItem.Checked;
         }
         #endregion Menu Items
+
     }
 }

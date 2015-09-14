@@ -153,7 +153,15 @@ namespace EveScanner
                 }
             }
 
-            sb.AppendFormat("{0} | {1} | {2} stacks |", ScanResult.GetISKString(this.SellValue), string.Format(CultureInfo.InvariantCulture, "{0:n}", this.Volume) + " m3", this.Stacks);
+            if (this.SellValue == 0 && this.BuyValue == 0 && this.Volume == 0 && this.Stacks == 0)
+            {
+                sb.Append("EMPTY |");
+            }
+            else
+            {
+                sb.AppendFormat("{0}/{1} | {2} | {3} stacks |", ScanResult.GetISKString(this.SellValue), ScanResult.GetISKString(this.BuyValue), string.Format(CultureInfo.InvariantCulture, "{0:n}", this.Volume) + " m3", this.Stacks);
+            }
+
             if (this.ImageIndex != null && this.ImageIndex.Count() > 0)
             {
                 bool first = true;

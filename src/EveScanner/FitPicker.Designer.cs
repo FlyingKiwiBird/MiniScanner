@@ -30,10 +30,10 @@ namespace EveScanner
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.xISTABToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.xReinforcedBulkheadsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.xExpandedCargoholdToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xISTABToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.xATypeAdaptiveNanoPlatingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xReinforcedBulkheadsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
@@ -51,6 +51,9 @@ namespace EveScanner
             this.slot1Text = new System.Windows.Forms.TextBox();
             this.slot2Text = new System.Windows.Forms.TextBox();
             this.slot3Text = new System.Windows.Forms.TextBox();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,27 +70,19 @@ namespace EveScanner
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // xISTABToolStripMenuItem
-            // 
-            this.xISTABToolStripMenuItem.Name = "xISTABToolStripMenuItem";
-            this.xISTABToolStripMenuItem.Size = new System.Drawing.Size(124, 20);
-            this.xISTABToolStripMenuItem.Text = "3x Inertial Stabilizers";
-            this.xISTABToolStripMenuItem.Click += new System.EventHandler(this.MultiSelectMenu_Click);
-            // 
-            // xReinforcedBulkheadsToolStripMenuItem
-            // 
-            this.xReinforcedBulkheadsToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.xReinforcedBulkheadsToolStripMenuItem.Name = "xReinforcedBulkheadsToolStripMenuItem";
-            this.xReinforcedBulkheadsToolStripMenuItem.Size = new System.Drawing.Size(147, 20);
-            this.xReinforcedBulkheadsToolStripMenuItem.Text = "3x Reinforced Bulkheads";
-            this.xReinforcedBulkheadsToolStripMenuItem.Click += new System.EventHandler(this.MultiSelectMenu_Click);
-            // 
             // xExpandedCargoholdToolStripMenuItem
             // 
             this.xExpandedCargoholdToolStripMenuItem.Name = "xExpandedCargoholdToolStripMenuItem";
             this.xExpandedCargoholdToolStripMenuItem.Size = new System.Drawing.Size(143, 20);
             this.xExpandedCargoholdToolStripMenuItem.Text = "3x Expanded Cargohold";
             this.xExpandedCargoholdToolStripMenuItem.Click += new System.EventHandler(this.MultiSelectMenu_Click);
+            // 
+            // xISTABToolStripMenuItem
+            // 
+            this.xISTABToolStripMenuItem.Name = "xISTABToolStripMenuItem";
+            this.xISTABToolStripMenuItem.Size = new System.Drawing.Size(124, 20);
+            this.xISTABToolStripMenuItem.Text = "3x Inertial Stabilizers";
+            this.xISTABToolStripMenuItem.Click += new System.EventHandler(this.MultiSelectMenu_Click);
             // 
             // xATypeAdaptiveNanoPlatingToolStripMenuItem
             // 
@@ -96,6 +91,14 @@ namespace EveScanner
             this.xATypeAdaptiveNanoPlatingToolStripMenuItem.Size = new System.Drawing.Size(194, 20);
             this.xATypeAdaptiveNanoPlatingToolStripMenuItem.Text = "3x A-Type Adaptive Nano Plating";
             this.xATypeAdaptiveNanoPlatingToolStripMenuItem.Click += new System.EventHandler(this.MultiSelectMenu_Click);
+            // 
+            // xReinforcedBulkheadsToolStripMenuItem
+            // 
+            this.xReinforcedBulkheadsToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.xReinforcedBulkheadsToolStripMenuItem.Name = "xReinforcedBulkheadsToolStripMenuItem";
+            this.xReinforcedBulkheadsToolStripMenuItem.Size = new System.Drawing.Size(147, 20);
+            this.xReinforcedBulkheadsToolStripMenuItem.Text = "3x Reinforced Bulkheads";
+            this.xReinforcedBulkheadsToolStripMenuItem.Click += new System.EventHandler(this.MultiSelectMenu_Click);
             // 
             // button1
             // 
@@ -216,7 +219,7 @@ namespace EveScanner
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(177, 161);
+            this.okButton.Location = new System.Drawing.Point(176, 190);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(75, 23);
             this.okButton.TabIndex = 19;
@@ -227,7 +230,7 @@ namespace EveScanner
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(381, 161);
+            this.cancelButton.Location = new System.Drawing.Point(382, 190);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 20;
@@ -236,31 +239,64 @@ namespace EveScanner
             // 
             // slot1Text
             // 
-            this.slot1Text.Location = new System.Drawing.Point(12, 135);
+            this.slot1Text.Location = new System.Drawing.Point(12, 164);
             this.slot1Text.Name = "slot1Text";
             this.slot1Text.Size = new System.Drawing.Size(199, 20);
             this.slot1Text.TabIndex = 21;
             // 
             // slot2Text
             // 
-            this.slot2Text.Location = new System.Drawing.Point(217, 135);
+            this.slot2Text.Location = new System.Drawing.Point(217, 164);
             this.slot2Text.Name = "slot2Text";
             this.slot2Text.Size = new System.Drawing.Size(199, 20);
             this.slot2Text.TabIndex = 22;
             // 
             // slot3Text
             // 
-            this.slot3Text.Location = new System.Drawing.Point(422, 135);
+            this.slot3Text.Location = new System.Drawing.Point(422, 164);
             this.slot3Text.Name = "slot3Text";
             this.slot3Text.Size = new System.Drawing.Size(198, 20);
             this.slot3Text.TabIndex = 23;
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(12, 135);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(199, 23);
+            this.button10.TabIndex = 24;
+            this.button10.Text = "Hyperspatial Accelerator";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.Slot1_Click);
+            // 
+            // button11
+            // 
+            this.button11.Location = new System.Drawing.Point(217, 135);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(199, 23);
+            this.button11.TabIndex = 25;
+            this.button11.Text = "Hyperspatial Accelerator";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.Slot2_Click);
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(422, 135);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(199, 23);
+            this.button12.TabIndex = 26;
+            this.button12.Text = "Hyperspatial Accelerator";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.Slot3_Click);
             // 
             // FitPicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(632, 193);
+            this.ClientSize = new System.Drawing.Size(632, 220);
+            this.Controls.Add(this.button12);
+            this.Controls.Add(this.button11);
+            this.Controls.Add(this.button10);
             this.Controls.Add(this.slot3Text);
             this.Controls.Add(this.slot2Text);
             this.Controls.Add(this.slot1Text);
@@ -318,5 +354,8 @@ namespace EveScanner
         private System.Windows.Forms.TextBox slot1Text;
         private System.Windows.Forms.TextBox slot2Text;
         private System.Windows.Forms.TextBox slot3Text;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button button12;
     }
 }

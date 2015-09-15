@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace EveScanner.Interfaces
 {
+    using System;
     using System.Collections.Generic;
 
     /// <summary>
@@ -12,6 +13,16 @@ namespace EveScanner.Interfaces
     /// </summary>
     public interface IScanResult
     {
+        /// <summary>
+        /// Gets the unique value for the scan id.
+        /// </summary>
+        Guid Id { get; }
+
+        /// <summary>
+        /// Gets the Date that the scan was taken.
+        /// </summary>
+        DateTime ScanDate { get; }
+        
         /// <summary>
         /// Gets the Raw Scan submitted to the engine.
         /// </summary>

@@ -11,7 +11,6 @@ namespace EveScanner
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Runtime.InteropServices;
     using System.Text;
     using System.Windows.Forms;
 
@@ -34,14 +33,14 @@ namespace EveScanner
         private IntPtr clipboardViewerNext;                // Our variable that will hold the value to identify the next window in the clipboard viewer chain
 
         /// <summary>
-        /// Holds a list of all results which have been parsed.
-        /// </summary>
-        private List<IScanResult> scans = new List<IScanResult>();
-
-        /// <summary>
         /// Holds the current result being parsed.
         /// </summary>
         private IScanResult result = null;
+
+        /// <summary>
+        /// Holds result history. Replaces scans.
+        /// </summary>
+        private IScanHistory history = null;
 
         /// <summary>
         /// Holds a value indicating if we're running on windows, which is necessary for clipboard setup/teardown.
@@ -77,18 +76,19 @@ namespace EveScanner
                 this.StartPosition = FormStartPosition.Manual;
                 this.Location = new Point(ConfigHelper.Instance.WindowPositionX, ConfigHelper.Instance.WindowPositionY);
             }
+
+            this.history = ConfigHelper.GetImplementation<IScanHistory>();
         }
         #endregion Constructors
 
         #region Helper Functions
-
         /// <summary>
         /// Changes the colors of a control and all controls below to a darker color scheme.
         /// </summary>
-        /// <param name="c">Outer control</param>
-        public void ChangeFormColorsNightMode(Control c)
+        /// <param name="baseControl">Outer control</param>
+        public void ChangeFormColorsNightMode(Control baseControl)
         {
-            if (c == null)
+            if (baseControl == null)
             {
                 return;
             }
@@ -96,17 +96,17 @@ namespace EveScanner
             Color foreground = Color.DarkGray;
             Color background = Color.Black;
 
-            c.ForeColor = foreground;
-            c.BackColor = background;
+            baseControl.ForeColor = foreground;
+            baseControl.BackColor = background;
 
-            Button b = c as Button;
+            Button b = baseControl as Button;
             if (b != null)
             {
                 b.FlatStyle = FlatStyle.Flat;
                 b.FlatAppearance.BorderSize = 1;
             }
 
-            foreach (Control x in c.Controls)
+            foreach (Control x in baseControl.Controls)
             {
                 this.ChangeFormColorsNightMode(x);
             }
@@ -115,10 +115,10 @@ namespace EveScanner
         /// <summary>
         /// Changes the colors of a control and all controls below to a darker color scheme.
         /// </summary>
-        /// <param name="c">Outer control</param>
-        public void ChangeFormColorsDayMode(Control c)
+        /// <param name="baseControl">Outer control</param>
+        public void ChangeFormColorsDayMode(Control baseControl)
         {
-            if (c == null)
+            if (baseControl == null)
             {
                 return;
             }
@@ -126,29 +126,29 @@ namespace EveScanner
             Color foreground = SystemColors.ControlText;
             Color background = SystemColors.Control;
 
-            c.ForeColor = foreground;
-            c.BackColor = background;
+            baseControl.ForeColor = foreground;
+            baseControl.BackColor = background;
 
-            Button b = c as Button;
+            Button b = baseControl as Button;
             if (b != null)
             {
                 b.FlatStyle = FlatStyle.Standard;
                 b.FlatAppearance.BorderSize = 1;
             }
 
-            TextBox t = c as TextBox;
+            TextBox t = baseControl as TextBox;
             if (t != null)
             {
                 t.BackColor = SystemColors.Window;
             }
 
-            ComboBox cb = c as ComboBox;
+            ComboBox cb = baseControl as ComboBox;
             if (cb != null)
             {
                 cb.BackColor = SystemColors.Window;
             }
 
-            foreach (Control x in c.Controls)
+            foreach (Control x in baseControl.Controls)
             {
                 this.ChangeFormColorsDayMode(x);
             }
@@ -157,18 +157,18 @@ namespace EveScanner
         /// <summary>
         /// Updates the Ship Type Dropdown if provided by another form.
         /// </summary>
-        /// <param name="shipString">Ship String key</param>
-        public void UpdateShipType(string shipString)
+        /// <param name="shipValue">Ship String key</param>
+        public void UpdateShipType(string shipValue)
         {
             if (this.InvokeRequired)
             {
-                this.Invoke(new MethodInvoker(() => this.UpdateShipType(shipString)));
+                this.Invoke(new MethodInvoker(() => this.UpdateShipType(shipValue)));
             }
             else
             {
                 foreach (string s in ConfigHelper.Instance.ShipTypes.AllKeys)
                 {
-                    if (ConfigHelper.Instance.ShipTypes[s] == shipString)
+                    if (ConfigHelper.Instance.ShipTypes[s] == shipValue)
                     {
                         int index = this.shipTypeDropdown.Items.IndexOf(s);
 
@@ -197,6 +197,22 @@ namespace EveScanner
                 this.fitInfoText.Text = newFitValue;
 
                 this.FitInfoText_Leave(null, EventArgs.Empty);
+            }
+        }
+
+        /// <summary>
+        /// Injects a scan from an external object into the application (like the history form)
+        /// </summary>
+        /// <param name="scanResult">Scan to inject</param>
+        public void InjectExternalScan(IScanResult scanResult)
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new MethodInvoker(() => this.InjectExternalScan(scanResult)));
+            }
+            else
+            {
+                this.AddResultToList(scanResult);
             }
         }
 
@@ -349,21 +365,21 @@ namespace EveScanner
         /// <param name="scanResult">Result to add</param>
         private void AddResultToList(IScanResult scanResult)
         {
-            IScanResult resultToAdd = this.scans.Where(x => x.AppraisalUrl == scanResult.AppraisalUrl).FirstOrDefault();
+            IScanResult resultToAdd = this.historyDropdown.Items.Cast<IScanResult>().Where(x => x.Id == scanResult.Id).FirstOrDefault();
 
             if (resultToAdd == null)
             {
-                this.scans.Add(scanResult);
-                this.historyDropdown.Items.Insert(0, scanResult.ToString());
+                this.history.AddScan(scanResult);
+                this.historyDropdown.Items.Insert(0, scanResult);
                 this.historyDropdown.SelectedIndex = 0;
-                this.scanValueLabel.Text = this.scans.Count.ToString(CultureInfo.CurrentCulture);
+                this.scanValueLabel.Text = this.historyDropdown.Items.Count.ToString(CultureInfo.CurrentCulture);
                 Logger.Result(scanResult.ToString());
             }
             else
             {
-                int index = this.scans.IndexOf(resultToAdd);
+                int index = this.historyDropdown.Items.IndexOf(resultToAdd);
 
-                this.historyDropdown.SelectedIndex = this.scans.Count - index - 1;
+                this.historyDropdown.SelectedIndex = index;
             }
         }
 
@@ -532,7 +548,7 @@ namespace EveScanner
 
             int selectedIndex = this.historyDropdown.SelectedIndex;
             this.historyDropdown.Items.RemoveAt(selectedIndex);
-            this.historyDropdown.Items.Insert(selectedIndex, this.result.ToString());
+            this.historyDropdown.Items.Insert(selectedIndex, this.result);
             this.historyDropdown.SelectedIndex = selectedIndex;
         }
 
@@ -548,14 +564,14 @@ namespace EveScanner
             {
                 newHeight = this.infoContainer.Location.Y + this.resultsContainer.Height + containerBottomToFormBottom;
 
-                infoContainer.Tag = infoContainer.Height;
+                this.infoContainer.Tag = this.infoContainer.Height;
             }
             else
             {
                 int containerBottomToContainerTop = this.resultsContainer.Top - (this.locationContainer.Location.Y + this.locationContainer.Size.Height);
                 newHeight = this.infoContainer.Location.Y + this.infoContainer.Height + this.locationContainer.Height + (2 * containerBottomToContainerTop) + this.resultsContainer.Height + containerBottomToFormBottom;
 
-                newHeight = newHeight + (int)infoContainer.Tag;
+                newHeight = newHeight + (int)this.infoContainer.Tag;
             }
 
             this.MinimumSize = new Size(this.MinimumSize.Width, newHeight);
@@ -780,14 +796,12 @@ namespace EveScanner
                 return;
             }
 
-            if (this.scans.Count == 0)
+            if (this.historyDropdown.Items.Count == 0)
             {
                 return;
             }
 
-            int scanIndex = this.scans.Count - cb.SelectedIndex - 1;
-
-            this.result = this.scans[scanIndex];
+            this.result = (IScanResult)this.historyDropdown.SelectedItem;
 
             this.ParseCurrentResult();
         }
@@ -856,6 +870,7 @@ namespace EveScanner
             }
 
             this.result.CharacterName = this.characterNameText.Text;
+            this.UpdateDropdown();
         }
 
         /// <summary>
@@ -871,7 +886,9 @@ namespace EveScanner
             }
 
             this.result.ShipType = this.shipTypeDropdown.Text;
-            this.historyDropdown.Items[this.historyDropdown.SelectedIndex] = this.result.ToString();
+
+            this.historyDropdown.SelectedItem = this.result;
+            this.UpdateDropdown();
         }
 
         /// <summary>
@@ -887,6 +904,7 @@ namespace EveScanner
             }
 
             this.result.FitInfo = this.fitInfoText.Text;
+            this.UpdateDropdown();
         }
 
         /// <summary>
@@ -902,6 +920,7 @@ namespace EveScanner
             }
 
             this.result.Notes = this.notesText.Text;
+            this.UpdateDropdown();
         }
 
         /// <summary>
@@ -1046,7 +1065,6 @@ namespace EveScanner
             }
 
             this.historyDropdown.Items.Clear();
-            this.scans.Clear();
             this.scanValueLabel.Text = "0";
         }
 
@@ -1161,31 +1179,31 @@ thread on the Goonfleet Forums or sent to me via Jabber.
         {
             this.ClearToolStripMenuItem_Click(null, EventArgs.Empty);
 
-            ScanResult r = new ScanResult("1 Dummy Item", 3000000000000, 4123456789012, 1, 1, "http://goonfleet.com/?1", new int[] { 1 }) { CharacterName = "T2 BPO", ShipType = "Providence - Freighter - Amarr", Notes = "Triggers T2 BPO Image", Location = "Perimeter -> Urlen" };
+            ScanResult r = new ScanResult(Guid.Empty, DateTime.Now, "1 Dummy Item", 3000000000000, 4123456789012, 1, 1, "http://goonfleet.com/?1", new int[] { 1 }) { CharacterName = "T2 BPO", ShipType = "Providence - Freighter - Amarr", Notes = "Triggers T2 BPO Image", Location = "Perimeter -> Urlen" };
             this.AddResultToList(r);
 
-            ScanResult s = new ScanResult(string.Empty, 300000000000, 412345678901, 3, 4, "http://goonfleet.com/?2", new int[] { 2 }) { CharacterName = "Plastic Wrap", ShipType = "Charon - Freighter - Caldari", Notes = "Triggers Wrap Image" };
+            ScanResult s = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 300000000000, 412345678901, 3, 4, "http://goonfleet.com/?2", new int[] { 2 }) { CharacterName = "Plastic Wrap", ShipType = "Charon - Freighter - Caldari", Notes = "Triggers Wrap Image" };
             this.AddResultToList(s);
 
-            ScanResult t = new ScanResult(string.Empty, 30000000000, 41234567890, 3, 4, "http://goonfleet.com/?3", new int[] { 3 }) { CharacterName = "Container", ShipType = "Obelisk - Freighter - Gallente", Notes = "Triggers Container Image" };
+            ScanResult t = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000000000, 41234567890, 3, 4, "http://goonfleet.com/?3", new int[] { 3 }) { CharacterName = "Container", ShipType = "Obelisk - Freighter - Gallente", Notes = "Triggers Container Image" };
             this.AddResultToList(t);
 
-            ScanResult u = new ScanResult(string.Empty, 3000000000, 4123456789, 3, 4, "http://goonfleet.com/?4", new int[] { 4 }) { CharacterName = "Isotopes", ShipType = "Fenrir - Freighter - Minmatar", Notes = "Triggers Isotope Image", Location = "Ashab -> Madirmilire" };
+            ScanResult u = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 3000000000, 4123456789, 3, 4, "http://goonfleet.com/?4", new int[] { 4 }) { CharacterName = "Isotopes", ShipType = "Fenrir - Freighter - Minmatar", Notes = "Triggers Isotope Image", Location = "Ashab -> Madirmilire" };
             this.AddResultToList(u);
 
-            ScanResult v = new ScanResult(string.Empty, 300000000, 412345678, 3, 4, "http://goonfleet.com/?5", new int[] { 5 }) { CharacterName = "Valuable BPO", ShipType = "Ark - Jump Freighter - Amarr - Helium", Notes = "Triggers $$$ BPO Image" };
+            ScanResult v = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 300000000, 412345678, 3, 4, "http://goonfleet.com/?5", new int[] { 5 }) { CharacterName = "Valuable BPO", ShipType = "Ark - Jump Freighter - Amarr - Helium", Notes = "Triggers $$$ BPO Image" };
             this.AddResultToList(v);
 
-            ScanResult w = new ScanResult(string.Empty, 30000000, 41234567, 3, 4, "http://goonfleet.com/?99", new int[] { 99 }) { CharacterName = "Fedo", ShipType = "Rhea - Jump Freighter - Caldari - Nitrogen", Notes = "Triggers Fedo Image" };
+            ScanResult w = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000000, 41234567, 3, 4, "http://goonfleet.com/?99", new int[] { 99 }) { CharacterName = "Fedo", ShipType = "Rhea - Jump Freighter - Caldari - Nitrogen", Notes = "Triggers Fedo Image" };
             this.AddResultToList(w);
 
-            ScanResult x = new ScanResult(string.Empty, 3000000, 4123456, 3, 4, "http://goonfleet.com/?23", new int[] { 2, 3 }) { CharacterName = "Mixed 1", ShipType = "Anshar - Jump Freighter - Gallente - Oxygen", Notes = "Triggers Wrap+Container Image", Location = "Hatakani -> Sivala" };
+            ScanResult x = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 3000000, 4123456, 3, 4, "http://goonfleet.com/?23", new int[] { 2, 3 }) { CharacterName = "Mixed 1", ShipType = "Anshar - Jump Freighter - Gallente - Oxygen", Notes = "Triggers Wrap+Container Image", Location = "Hatakani -> Sivala" };
             this.AddResultToList(x);
 
-            ScanResult y = new ScanResult(string.Empty, 300000, 412345, 3, 4, "http://goonfleet.com/?1234", new int[] { 1, 2, 3, 4 }) { CharacterName = "Mixed 2", ShipType = "Nomad - Jump Freighter - Minmatar - Hydrogen", Notes = "Triggers 4 Combined Image" };
+            ScanResult y = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 300000, 412345, 3, 4, "http://goonfleet.com/?1234", new int[] { 1, 2, 3, 4 }) { CharacterName = "Mixed 2", ShipType = "Nomad - Jump Freighter - Minmatar - Hydrogen", Notes = "Triggers 4 Combined Image" };
             this.AddResultToList(y);
 
-            ScanResult z = new ScanResult(string.Empty, 30000, 41234, 3, 4, "http://goonfleet.com/?1234599", new int[] { 1, 2, 3, 4, 5, 99 }) { CharacterName = "Mixed 3", ShipType = string.Empty, Notes = "Triggers 6 Combined Image" };
+            ScanResult z = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000, 41234, 3, 4, "http://goonfleet.com/?1234599", new int[] { 1, 2, 3, 4, 5, 99 }) { CharacterName = "Mixed 3", ShipType = string.Empty, Notes = "Triggers 6 Combined Image" };
             this.AddResultToList(z);
         }
 
@@ -1241,7 +1259,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
         /// <param name="e">Not provided.</param>
         private void NewEmptyScanToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ScanResult rx = new ScanResult("1 Empty Cargohold", 0, 0, 0, 0, "http://goonfleet.com/?" + this.scanValueLabel.Text, null);
+            ScanResult rx = new ScanResult(Guid.Empty, DateTime.Now, "1 Empty Cargohold", 0, 0, 0, 0, "http://goonfleet.com/?" + this.scanValueLabel.Text, null);
             this.AddResultToList(rx);
         }
 
@@ -1256,7 +1274,21 @@ thread on the Goonfleet Forums or sent to me via Jabber.
 
             ConfigHelper.Instance.KeepLocation = this.keepLocationBetweenScansToolStripMenuItem.Checked;
         }
-        #endregion Menu Items
+        
+        /// <summary>
+        /// Called when the History item on the menu bar is called. Shows the history form.
+        /// </summary>
+        /// <param name="sender">History menu item.</param>
+        /// <param name="e">This parameter is not used.</param>
+        private void HistoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (ScanHistory hi = new ScanHistory())
+            {
+                hi.CallingForm = this;
 
+                hi.ShowDialog();
+            }
+        }
+        #endregion Menu Items
     }
 }

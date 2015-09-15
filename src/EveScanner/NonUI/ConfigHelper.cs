@@ -137,6 +137,11 @@ namespace EveScanner
         public NameValueCollection ShipTypes { get; private set; }
 
         /// <summary>
+        /// Gets the name value collection containing Interface -> Implementation
+        /// </summary>
+        public NameValueCollection Implementations { get; private set; }
+
+        /// <summary>
         /// Saves the current state of the application to the configuration file.
         /// </summary>
         public void Save()
@@ -190,6 +195,23 @@ namespace EveScanner
             }
 
             yield break;
+        }
+
+        /// <summary>
+        /// Gets an implementation of an interface as defined in the configuration file. This is not high-performance, so, don't use it a lot.
+        /// </summary>
+        /// <typeparam name="T">Interface Type</typeparam>
+        /// <returns>Instantiated Object</returns>
+        internal static T GetImplementation<T>()
+        {
+            string objType = ConfigHelper.Instance.Implementations[typeof(T).Name];
+
+            if (string.IsNullOrEmpty(objType))
+            {
+                return default(T);
+            }
+
+            return (T)Activator.CreateInstance(Type.GetType(objType));
         }
 
         /// <summary>
@@ -271,6 +293,7 @@ namespace EveScanner
             this.ImageItems = ConfigurationManager.GetSection("imageItems") as NameValueCollection;
             this.ImageNames = ConfigurationManager.GetSection("imageNames") as NameValueCollection;
             this.ShipTypes = ConfigurationManager.GetSection("shipTypes") as NameValueCollection;
+            this.Implementations = ConfigurationManager.GetSection("implementations") as NameValueCollection;
         }
     }
 }

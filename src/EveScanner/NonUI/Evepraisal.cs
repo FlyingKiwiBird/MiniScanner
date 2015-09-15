@@ -150,7 +150,7 @@ namespace EveScanner
 
                 IEnumerable<int> imageIndex = ConfigHelper.Instance.FindImagesToDisplay(items);
 
-                return new ScanResult(rawScan, buyValue, sellValue, stacks, volume, appraisalUrl, imageIndex);
+                return new ScanResult(Guid.Empty, DateTime.Now, rawScan, buyValue, sellValue, stacks, volume, appraisalUrl, imageIndex);
             }
             catch
             {

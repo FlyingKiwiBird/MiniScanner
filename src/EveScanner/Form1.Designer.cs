@@ -98,6 +98,7 @@ namespace EveScanner
             this.sourceCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.issueTrackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.historyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoContainer.SuspendLayout();
             this.locationContainer.SuspendLayout();
             this.scanContainer.SuspendLayout();
@@ -518,7 +519,8 @@ namespace EveScanner
             this.fileToolStripMenuItem,
             this.showHideExtraOptionsToolStripMenuItem,
             this.optionsToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.helpToolStripMenuItem,
+            this.historyToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(574, 24);
@@ -790,6 +792,13 @@ namespace EveScanner
             this.pictureBox.TabIndex = 37;
             this.pictureBox.TabStop = false;
             // 
+            // historyToolStripMenuItem
+            // 
+            this.historyToolStripMenuItem.Name = "historyToolStripMenuItem";
+            this.historyToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.historyToolStripMenuItem.Text = "Histor&y";
+            this.historyToolStripMenuItem.Click += new System.EventHandler(this.HistoryToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -902,6 +911,7 @@ namespace EveScanner
         private System.Windows.Forms.Button fitInfoPickerButton;
         private System.Windows.Forms.Button shipTypePickerButton;
         private System.Windows.Forms.ToolStripMenuItem keepLocationBetweenScansToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem historyToolStripMenuItem;
     }
 }
 

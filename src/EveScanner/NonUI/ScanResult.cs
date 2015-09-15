@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace EveScanner
 {
+    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
@@ -19,6 +20,8 @@ namespace EveScanner
         /// <summary>
         /// Initializes a new instance of the <see cref="ScanResult"/> class.
         /// </summary>
+        /// <param name="id">Unique Identifier for the Scan</param>
+        /// <param name="scanDate">Date / Time the scan was taken.</param>
         /// <param name="rawScan">Raw scan submitted to the engine.</param>
         /// <param name="buyValue">Value of the scan from a "Buy" perspective.</param>
         /// <param name="sellValue">Value of the scan from a "Sell" perspective.</param>
@@ -26,8 +29,26 @@ namespace EveScanner
         /// <param name="volume">Volume of items in the scan.</param>
         /// <param name="appraisalUrl">URL to the Appraisal</param>
         /// <param name="imageIndex">Image Index for the Appraisal</param>
-        public ScanResult(string rawScan, decimal buyValue, decimal sellValue, int stacks, decimal volume, string appraisalUrl, IEnumerable<int> imageIndex)
+        public ScanResult(Guid id, DateTime scanDate, string rawScan, decimal buyValue, decimal sellValue, int stacks, decimal volume, string appraisalUrl, IEnumerable<int> imageIndex)
         {
+            if (id == null || id == Guid.Empty)
+            {
+                this.Id = Guid.NewGuid();
+            }
+            else
+            {
+                this.Id = id;
+            }
+
+            if (scanDate == null || scanDate == DateTime.MinValue || scanDate == DateTime.MaxValue)
+            {
+                this.ScanDate = DateTime.Now;
+            }
+            else
+            {
+                this.ScanDate = scanDate;
+            }
+
             this.RawScan = rawScan;
             this.BuyValue = buyValue;
             this.SellValue = sellValue;
@@ -36,6 +57,16 @@ namespace EveScanner
             this.AppraisalUrl = appraisalUrl;
             this.ImageIndex = imageIndex;
         }
+
+        /// <summary>
+        /// Gets the unique value for the scan id.
+        /// </summary>
+        public Guid Id { get; private set; }
+
+        /// <summary>
+        /// Gets the Date that the scan was taken.
+        /// </summary>
+        public DateTime ScanDate { get; private set; }
 
         /// <summary>
         /// Gets the Raw Scan submitted to the engine.
@@ -159,7 +190,7 @@ namespace EveScanner
             }
             else
             {
-                sb.AppendFormat("{0}/{1} | {2} | {3} stacks |", ScanResult.GetISKString(this.SellValue), ScanResult.GetISKString(this.BuyValue), string.Format(CultureInfo.InvariantCulture, "{0:n}", this.Volume) + " m3", this.Stacks);
+                sb.AppendFormat(CultureInfo.CurrentCulture, "{0}/{1} | {2} | {3} stacks |", ScanResult.GetISKString(this.SellValue), ScanResult.GetISKString(this.BuyValue), string.Format(CultureInfo.InvariantCulture, "{0:n}", this.Volume) + " m3", this.Stacks);
             }
 
             if (this.ImageIndex != null && this.ImageIndex.Count() > 0)

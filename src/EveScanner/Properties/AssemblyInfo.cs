@@ -13,7 +13,7 @@ using System.Security;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("EveScanner")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Loads the main UI")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("EveScanner")]
@@ -43,4 +43,4 @@ using System.Security;
 [assembly: AssemblyVersion("1.0.*")]
 [assembly: SecurityRules(SecurityRuleSet.Level2)]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
-[assembly: AssemblyFileVersionAttribute("1.0.2.0")]
+[assembly: AssemblyFileVersionAttribute("1.0.2.5")]

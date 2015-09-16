@@ -138,6 +138,20 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EveScanner.Core\EveScanner.Core.csproj">
+      <Project>{1eda3726-407b-4e66-add3-84475e24ac0b}</Project>
+      <Name>EveScanner.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveScanner.Interfaces\EveScanner.Interfaces.csproj">
+      <Project>{58d010c9-8f3f-438b-b60e-eed817781a88}</Project>
+      <Name>EveScanner.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveScanner.UI\EveScanner.UI.csproj">
+      <Project>{dfb55a23-fa38-4e31-8762-55e1d871c50f}</Project>
+      <Name>EveScanner.UI</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

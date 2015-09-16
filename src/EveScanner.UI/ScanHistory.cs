@@ -3,13 +3,14 @@
 // Copyright © Viktorie Lucilla 2015. All Rights Reserved
 // </copyright>
 //-----------------------------------------------------------------------
-namespace EveScanner
+namespace EveScanner.UI
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Windows.Forms;
 
+    using EveScanner.Core;
     using EveScanner.Interfaces;
 
     /// <summary>

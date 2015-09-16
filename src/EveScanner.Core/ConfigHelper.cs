@@ -3,7 +3,7 @@
 // Copyright © Viktorie Lucilla 2015. All Rights Reserved
 // </copyright>
 //-----------------------------------------------------------------------
-namespace EveScanner
+namespace EveScanner.Core
 {
     using System;
     using System.Collections.Generic;
@@ -202,7 +202,7 @@ namespace EveScanner
         /// </summary>
         /// <typeparam name="T">Interface Type</typeparam>
         /// <returns>Instantiated Object</returns>
-        internal static T GetImplementation<T>()
+        public static T GetImplementation<T>()
         {
             string objType = ConfigHelper.Instance.Implementations[typeof(T).Name];
 

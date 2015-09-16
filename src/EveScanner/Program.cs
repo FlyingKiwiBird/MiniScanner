@@ -7,6 +7,9 @@ namespace EveScanner
 {
     using System;
     using System.Windows.Forms;
+    
+    using EveScanner.Core;
+    using EveScanner.UI;
 
     /// <summary>
     /// Entry class for the application.

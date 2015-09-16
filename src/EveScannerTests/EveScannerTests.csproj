@@ -54,9 +54,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EveScanner\EveScanner.csproj">
-      <Project>{3715238a-1823-45d4-b289-d8561d415f17}</Project>
-      <Name>EveScanner</Name>
+    <ProjectReference Include="..\EveScanner.Core\EveScanner.Core.csproj">
+      <Project>{1eda3726-407b-4e66-add3-84475e24ac0b}</Project>
+      <Name>EveScanner.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

@@ -56,7 +56,6 @@
     <Compile Include="ImageCombiner.cs" />
     <Compile Include="ListScanHistory.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScanResult.cs" />
     <Compile Include="Validators.cs" />

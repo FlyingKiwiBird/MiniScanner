@@ -3,7 +3,7 @@
 // Copyright © Viktorie Lucilla 2015. All Rights Reserved
 // </copyright>
 //-----------------------------------------------------------------------
-namespace EveScanner.Core
+namespace EveScanner.UI
 {
     using System;
     using System.Runtime.InteropServices;

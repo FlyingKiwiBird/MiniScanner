@@ -58,50 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FitPicker.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FitPicker.Designer.cs">
-      <DependentUpon>FitPicker.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Interfaces\IAppraisalService.cs" />
-    <Compile Include="Interfaces\IScanHistory.cs" />
-    <Compile Include="Interfaces\IScanResult.cs" />
-    <Compile Include="NonUI\ConfigHelper.cs" />
-    <Compile Include="NonUI\Evepraisal.cs" />
-    <Compile Include="NonUI\HistoryWrapper.cs" />
-    <Compile Include="NonUI\ImageCombiner.cs" />
-    <Compile Include="NonUI\Logger.cs" />
-    <Compile Include="NonUI\NativeMethods.cs" />
-    <Compile Include="NonUI\ListScanHistory.cs" />
-    <Compile Include="NonUI\ScanResult.cs" />
-    <Compile Include="NonUI\Validators.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScanHistory.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ScanHistory.Designer.cs">
-      <DependentUpon>ScanHistory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ShipPicker.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ShipPicker.Designer.cs">
-      <DependentUpon>ShipPicker.cs</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="FitPicker.resx">
-      <DependentUpon>FitPicker.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -112,12 +70,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ScanHistory.resx">
-      <DependentUpon>ScanHistory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ShipPicker.resx">
-      <DependentUpon>ShipPicker.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="EveScanner.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

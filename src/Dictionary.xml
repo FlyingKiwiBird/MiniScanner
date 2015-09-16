@@ -1,0 +1,24 @@
+<Dictionary>
+      <Words>
+         <Unrecognized>
+            <Word></Word>
+         </Unrecognized>
+         <Recognized>
+            <Word>Evepraisal</Word>
+         </Recognized>
+         <Deprecated>
+            <Term PreferredAlternate=""></Term>
+         </Deprecated>
+         <Compound>
+            <Term CompoundAlternate=""></Term>
+         </Compound>
+         <DiscreteExceptions>
+            <Term></Term>
+         </DiscreteExceptions>
+      </Words>
+      <Acronyms>
+         <CasingExceptions>
+            <Acronym>ISK</Acronym>
+         </CasingExceptions>
+      </Acronyms>
+   </Dictionary>

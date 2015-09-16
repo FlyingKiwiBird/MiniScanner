@@ -57,6 +57,26 @@ namespace EveScanner.UI
         /// Holds the last clipboard copy to prevent copying twice.
         /// </summary>
         private string lastCopy = string.Empty;
+
+        /// <summary>
+        /// Holds an indication if an item is being injected from history so we don't write it back.
+        /// </summary>
+        private bool itemFromHistory = false;
+
+        /// <summary>
+        /// Holds the last Character Name value
+        /// </summary>
+        private string lastCharacterName = string.Empty;
+
+        /// <summary>
+        /// Holds the last Fit Info value
+        /// </summary>
+        private string lastFitInfo = string.Empty;
+
+        /// <summary>
+        /// Holds the last Notes value
+        /// </summary>
+        private string lastNotes = string.Empty;
         #endregion Private Fields
 
         #region Constructors
@@ -213,7 +233,7 @@ namespace EveScanner.UI
             }
             else
             {
-                this.AddResultToList(scanResult);
+                this.AddResultToList(scanResult, true);
             }
         }
 
@@ -366,13 +386,30 @@ namespace EveScanner.UI
         /// <param name="scanResult">Result to add</param>
         private void AddResultToList(IScanResult scanResult)
         {
+            this.AddResultToList(scanResult, false);
+        }
+
+        /// <summary>
+        /// Adds a provided result to the list and makes it the top entry in the dropdown
+        /// </summary>
+        /// <param name="scanResult">Result to add</param>
+        /// <param name="fromHistory">Indicates if the scan came from a history component</param>
+        private void AddResultToList(IScanResult scanResult, bool fromHistory)
+        {
+            this.itemFromHistory = fromHistory;
+
             IScanResult resultToAdd = this.historyDropdown.Items.Cast<IScanResult>().Where(x => x.Id == scanResult.Id).FirstOrDefault();
 
             if (resultToAdd == null)
             {
-                this.history.AddScan(scanResult);
+                if (!fromHistory)
+                {
+                    this.history.AddScan(scanResult);
+                }
+                
                 this.historyDropdown.Items.Insert(0, scanResult);
                 this.historyDropdown.SelectedIndex = 0;
+                
                 this.scanValueLabel.Text = this.historyDropdown.Items.Count.ToString(CultureInfo.CurrentCulture);
                 Logger.Result(scanResult.ToString());
             }
@@ -382,6 +419,8 @@ namespace EveScanner.UI
 
                 this.historyDropdown.SelectedIndex = index;
             }
+
+            this.itemFromHistory = false;
         }
 
         /// <summary>
@@ -421,6 +460,8 @@ namespace EveScanner.UI
                 this.characterNameText.Text = this.result.CharacterName;
             }
 
+            this.lastCharacterName = this.characterNameText.Text;
+
             // Restore Ship Type
             this.shipTypeDropdown.Text = string.Empty;
 
@@ -450,6 +491,8 @@ namespace EveScanner.UI
                 this.fitInfoText.Text = this.result.FitInfo;
             }
 
+            this.lastFitInfo = this.fitInfoText.Text;
+
             // Restore Notes
             this.notesText.Text = string.Empty;
 
@@ -457,6 +500,8 @@ namespace EveScanner.UI
             {
                 this.notesText.Text = this.result.Notes;
             }
+
+            this.lastNotes = this.notesText.Text;
 
             // Restore Location
             bool hasLocation = !string.IsNullOrEmpty(this.result.Location);
@@ -551,6 +596,8 @@ namespace EveScanner.UI
             this.historyDropdown.Items.RemoveAt(selectedIndex);
             this.historyDropdown.Items.Insert(selectedIndex, this.result);
             this.historyDropdown.SelectedIndex = selectedIndex;
+
+            this.history.UpdateScan(this.result);
         }
 
         /// <summary>
@@ -870,6 +917,11 @@ namespace EveScanner.UI
                 return;
             }
 
+            if (this.characterNameText.Text == this.lastCharacterName)
+            {
+                return;
+            }
+
             this.result.CharacterName = this.characterNameText.Text;
             this.UpdateDropdown();
         }
@@ -881,7 +933,7 @@ namespace EveScanner.UI
         /// <param name="e">Not provided</param>
         private void ShipTypeDropdown_SelectedValueChanged(object sender, EventArgs e)
         {
-            if (this.result == null)
+            if (this.result == null || this.itemFromHistory)
             {
                 return;
             }
@@ -904,6 +956,11 @@ namespace EveScanner.UI
                 return;
             }
 
+            if (this.fitInfoText.Text == this.lastFitInfo)
+            {
+                return;
+            }
+            
             this.result.FitInfo = this.fitInfoText.Text;
             this.UpdateDropdown();
         }
@@ -916,6 +973,11 @@ namespace EveScanner.UI
         private void NotesText_Leave(object sender, EventArgs e)
         {
             if (this.result == null)
+            {
+                return;
+            }
+
+            if (this.notesText.Text == this.lastNotes)
             {
                 return;
             }

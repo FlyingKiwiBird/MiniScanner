@@ -70,6 +70,15 @@ namespace EveScanner.Core
         }
 
         /// <summary>
+        /// Updates the scan in the list.
+        /// </summary>
+        /// <param name="result">Scan to update</param>
+        public void UpdateScan(IScanResult result)
+        {
+            ListScanHistory.UpdateListScan(result);
+        }
+
+        /// <summary>
         /// Gets a Result by Id from the Static List
         /// </summary>
         /// <param name="id">Scan Identifier</param>
@@ -103,6 +112,35 @@ namespace EveScanner.Core
                 index.Add(result.Id, ix);
 
                 return result.Id;
+            }
+        }
+
+        /// <summary>
+        /// Updates a scan
+        /// </summary>
+        /// <param name="result">Scan to update</param>
+        private static void UpdateListScan(IScanResult result)
+        {
+            bool isAdd = false;
+
+            lock (locker)
+            {
+                if (!index.ContainsKey(result.Id))
+                {
+                    isAdd = true;
+                }
+            }
+
+            if (isAdd)
+            {
+                ListScanHistory.AddListResult(result);
+            }
+            else
+            {
+                lock (locker)
+                {
+                    results[index[result.Id]] = result;
+                }
             }
         }
 

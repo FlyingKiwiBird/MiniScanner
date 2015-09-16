@@ -21,6 +21,12 @@ namespace EveScanner.Interfaces
         Guid AddScan(IScanResult result);
 
         /// <summary>
+        /// Updates a scan in storage.
+        /// </summary>
+        /// <param name="result">Scan Result to Update.</param>
+        void UpdateScan(IScanResult result);
+
+        /// <summary>
         /// Gets a particular scan from storage.
         /// </summary>
         /// <param name="id">Scan Id</param>

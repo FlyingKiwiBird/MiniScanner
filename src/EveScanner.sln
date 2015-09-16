@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveScanner.Interfaces", "Ev
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveScanner.UI", "EveScanner.UI\EveScanner.UI.csproj", "{DFB55A23-FA38-4E31-8762-55E1D871C50F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveScanner.SQLiteStorage", "EveScanner.SQLiteStorage\EveScanner.SQLiteStorage.csproj", "{D0023EB5-9DED-4AC1-8244-A0C8775755BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DFB55A23-FA38-4E31-8762-55E1D871C50F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFB55A23-FA38-4E31-8762-55E1D871C50F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFB55A23-FA38-4E31-8762-55E1D871C50F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0023EB5-9DED-4AC1-8244-A0C8775755BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0023EB5-9DED-4AC1-8244-A0C8775755BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0023EB5-9DED-4AC1-8244-A0C8775755BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0023EB5-9DED-4AC1-8244-A0C8775755BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

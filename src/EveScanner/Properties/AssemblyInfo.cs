@@ -43,4 +43,4 @@ using System.Security;
 [assembly: AssemblyVersion("1.0.*")]
 [assembly: SecurityRules(SecurityRuleSet.Level2)]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
-[assembly: AssemblyFileVersionAttribute("1.0.3.0")]
+[assembly: AssemblyFileVersionAttribute("1.0.3.1")]

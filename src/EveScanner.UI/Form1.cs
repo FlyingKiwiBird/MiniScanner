@@ -307,12 +307,17 @@ namespace EveScanner.UI
 
                     this.lastCopy = data;
 
+                    this.SetStatusMessage("Detected Clipboard Copy");
                     Logger.Debug("Captured scan {0}", data);
                     if (this.submitANYClipboardDataToolStripMenuItem.Checked || this.CheckTextFormat(data) || data.StartsWith("http", StringComparison.OrdinalIgnoreCase))
                     {
                         Logger.Scan("Captured scan {0}", data);
                         this.scanText.Text = data;
                         this.SubmitRequestButton_Click(this.submitRequestButton, EventArgs.Empty);
+                    }
+                    else
+                    {
+                        this.SetStatusMessage("Clipboard Copy was not a Cargo Scan or URL");
                     }
                 }
             }
@@ -410,10 +415,10 @@ namespace EveScanner.UI
                 {
                     this.history.AddScan(scanResult);
                 }
-                
+
                 this.historyDropdown.Items.Insert(0, scanResult);
                 this.historyDropdown.SelectedIndex = 0;
-                
+
                 this.scanValueLabel.Text = this.historyDropdown.Items.Count.ToString(CultureInfo.CurrentCulture);
                 Logger.Result(scanResult.ToString());
             }
@@ -629,6 +634,16 @@ namespace EveScanner.UI
             this.MinimumSize = new Size(this.MinimumSize.Width, newHeight);
             this.Height = this.MinimumSize.Height;
         }
+
+        /// <summary>
+        /// Sets the message in the status bar.
+        /// </summary>
+        /// <param name="message">Format Message</param>
+        /// <param name="args">Format Arguments</param>
+        private void SetStatusMessage(string message, params object[] args)
+        {
+            this.statusLabel.Text = string.Format(message, args);
+        }
         #endregion Helper Functions
 
         #region Form Events
@@ -729,6 +744,9 @@ namespace EveScanner.UI
         /// <param name="e">Not provided.</param>
         private void SubmitRequestButton_Click(object sender, EventArgs e)
         {
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.RunWorkerCompleted += scanworker_RunWorkerCompleted;
+
             if (string.IsNullOrEmpty(this.scanText.Text))
             {
                 return;
@@ -736,77 +754,31 @@ namespace EveScanner.UI
 
             try
             {
-                IScanResult iresult = null;
+                if (this.scanText.Text.StartsWith("http://evepraisal.com/e/", StringComparison.OrdinalIgnoreCase) || this.scanText.Text.StartsWith("https://goonpraisal.apps.goonswarm.org/e/", StringComparison.OrdinalIgnoreCase))
+                {
+                    worker.DoWork += scanworker_DoWork_EvePraisalUrl;
 
-                if (this.scanText.Text.StartsWith("http://evepraisal.com/e/", StringComparison.OrdinalIgnoreCase))
-                {
-                    Evepraisal ep = new Evepraisal();
                     string url = this.scanText.Text;
                     url = url.IndexOf(' ') < 0 ? url : url.Substring(0, url.IndexOf(' '));
                     url = url.IndexOf('\r') < 0 ? url : url.Substring(0, url.IndexOf('\r'));
                     url = url.IndexOf('\n') < 0 ? url : url.Substring(0, url.IndexOf('\n'));
-                    iresult = ep.GetAppraisalFromUrl(url);
-                }
-                else if (this.scanText.Text.StartsWith("https://goonpraisal.apps.goonswarm.org/e/", StringComparison.OrdinalIgnoreCase))
-                {
-                    Evepraisal ep = new Evepraisal("goonpraisal.apps.goonswarm.org", true);
-                    string url = this.scanText.Text;
-                    url = url.IndexOf(' ') < 0 ? url : url.Substring(0, url.IndexOf(' '));
-                    url = url.IndexOf('\r') < 0 ? url : url.Substring(0, url.IndexOf('\r'));
-                    url = url.IndexOf('\n') < 0 ? url : url.Substring(0, url.IndexOf('\n'));
-                    iresult = ep.GetAppraisalFromUrl(url);
+
+                    this.SetStatusMessage("Trying to retrieve previous scan from {0}", url);
+                    worker.RunWorkerAsync(url);
                 }
                 else if (this.submitANYClipboardDataToolStripMenuItem.Checked || this.CheckTextFormat(this.scanText.Text))
                 {
-                    if (this.evepraisalToolStripMenuItem.Checked)
-                    {
-                        Evepraisal ep = new Evepraisal();
-                        iresult = ep.GetAppraisalFromScan(this.scanText.Text);
-                    }
-
-                    if (this.goonmetricsToolStripMenuItem.Checked)
-                    {
-                        Evepraisal ep = new Evepraisal("goonpraisal.apps.goonswarm.org", true);
-                        iresult = ep.GetAppraisalFromScan(this.scanText.Text);
-                    }
+                    worker.DoWork += scanworker_DoWork_ScanText;
+                    worker.RunWorkerAsync(this.scanText.Text);
                 }
                 else
                 {
                     return;
                 }
-
-                if (iresult == null)
-                {
-                    return;
-                }
-
-                if (ConfigHelper.Instance.KeepLocation && this.result != null && !string.IsNullOrEmpty(this.result.Location))
-                {
-                    iresult.Location = this.result.Location;
-                }
-
-                this.result = iresult;
-                this.scanText.Text = this.result.RawScan;
-                this.AddResultToList(this.result);
-                this.ParseCurrentResult();
             }
             catch (Exception ex)
             {
                 Logger.Error(ex.ToString());
-            }
-
-            // If we're minimized, fix that.
-            if (this.WindowState == FormWindowState.Minimized)
-            {
-                this.WindowState = FormWindowState.Normal;
-            }
-
-            // If this isn't set to Always on Top, pop the screen up.
-            if (!this.TopMost)
-            {
-                this.TopMost = true;
-                this.TopMost = false;
-                this.Activate();
             }
         }
 
@@ -964,7 +936,7 @@ namespace EveScanner.UI
             {
                 return;
             }
-            
+
             this.result.FitInfo = this.fitInfoText.Text;
             this.UpdateDropdown();
         }
@@ -1018,6 +990,31 @@ namespace EveScanner.UI
 
                 fp.ShowDialog(this);
             }
+        }
+
+        /// <summary>
+        /// Called when the Character Lookup button is clicked. Does a lookup of Corp/Alliance tickers.
+        /// </summary>
+        /// <param name="sender">Question Mark Button</param>
+        /// <param name="e">This parameter is not used.</param>
+        private void characterLookupButton_Click(object sender, EventArgs e)
+        {
+            if (this.result == null)
+            {
+                return;
+            }
+
+            if (string.IsNullOrEmpty(characterNameText.Text))
+            {
+                return;
+            }
+
+            BackgroundWorker characterLookup = new BackgroundWorker();
+            characterLookup.DoWork += characterLookup_DoWork;
+            characterLookup.RunWorkerCompleted += characterLookup_RunWorkerCompleted;
+            characterLookup.RunWorkerAsync(this.result);
+
+            this.SetStatusMessage("Looking up Character Data...");
         }
         #endregion Form Controls
 
@@ -1328,6 +1325,8 @@ thread on the Goonfleet Forums or sent to me via Jabber.
         {
             ScanResult rx = new ScanResult(Guid.Empty, DateTime.Now, "1 Empty Cargohold", 0, 0, 0, 0, "http://goonfleet.com/?" + this.scanValueLabel.Text, null);
             this.AddResultToList(rx);
+
+            this.SetStatusMessage("New (Empty) Scan Created.");
         }
 
         /// <summary>
@@ -1341,7 +1340,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
 
             ConfigHelper.Instance.KeepLocation = this.keepLocationBetweenScansToolStripMenuItem.Checked;
         }
-        
+
         /// <summary>
         /// Called when the History item on the menu bar is called. Shows the history form.
         /// </summary>
@@ -1358,26 +1357,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
         }
         #endregion Menu Items
 
-        private void characterLookupButton_Click(object sender, EventArgs e)
-        {
-            if (this.result == null)
-            {
-                return;
-            }
-
-            if (string.IsNullOrEmpty(characterNameText.Text))
-            {
-                return;
-            }
-
-            BackgroundWorker characterLookup = new BackgroundWorker();
-            characterLookup.DoWork += characterLookup_DoWork;
-            characterLookup.RunWorkerCompleted += characterLookup_RunWorkerCompleted;
-            characterLookup.RunWorkerAsync(this.result);
-
-            this.characterLookupButton.Text = "//";
-        }
-
+        #region Background Worker Methods
         private void characterLookup_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker bw = sender as BackgroundWorker;
@@ -1399,7 +1379,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
 
             cx.PopulateCorpAllianceData();
             rx.Character = cx;
-            
+
             e.Result = rx;
 
             if (bw.CancellationPending)
@@ -1422,9 +1402,9 @@ thread on the Goonfleet Forums or sent to me via Jabber.
 
             IScanResult rx = (IScanResult)e.Result;
 
-            if (rx == null)
+            if (rx == null || rx.Character == null)
             {
-                this.characterLookupButton.Text = "?";
+                this.SetStatusMessage("Character Not Found or no Data Received");
                 return;
             }
 
@@ -1445,8 +1425,127 @@ thread on the Goonfleet Forums or sent to me via Jabber.
                     }
                 }
             }
-
-            this.characterLookupButton.Text = "?";
+            this.SetStatusMessage("Found {0}", rx.Character.ToString());
         }
+
+        private void scanworker_DoWork_EvePraisalUrl(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker bw = sender as BackgroundWorker;
+            if (bw == null)
+            {
+                return;
+            }
+
+            string scanArgument = e.Argument as string;
+
+            if (string.IsNullOrWhiteSpace(scanArgument))
+            {
+                return;
+            }
+
+            IAppraisalService svc = null;
+            IScanResult iresult = null;
+
+            if (scanArgument.StartsWith("https://goonpraisal.apps.goonswarm.org/e/", StringComparison.OrdinalIgnoreCase))
+            {
+                svc = new Evepraisal("goonpraisal.apps.goonswarm.org", true);
+            }
+            else if (scanArgument.StartsWith("http://evepraisal.com/e/", StringComparison.OrdinalIgnoreCase))
+            {
+                svc = new Evepraisal();
+            }
+
+            if (svc == null)
+            {
+                return;
+            }
+
+            iresult = svc.GetAppraisalFromUrl(scanArgument);
+
+            e.Result = iresult;
+
+            if (bw.CancellationPending)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void scanworker_DoWork_ScanText(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker bw = sender as BackgroundWorker;
+            if (bw == null)
+            {
+                return;
+            }
+
+            IScanResult iresult = null;
+            string scanArgument = e.Argument as string;
+
+            if (string.IsNullOrWhiteSpace(scanArgument))
+            {
+                return;
+            }
+
+            if (this.evepraisalToolStripMenuItem.Checked)
+            {
+                Evepraisal ep = new Evepraisal();
+                iresult = ep.GetAppraisalFromScan(scanArgument);
+            }
+            else if (this.goonmetricsToolStripMenuItem.Checked)
+            {
+                Evepraisal ep = new Evepraisal("goonpraisal.apps.goonswarm.org", true);
+                iresult = ep.GetAppraisalFromScan(scanArgument);
+            }
+
+            e.Result = iresult;
+
+            if (bw.CancellationPending)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void scanworker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                this.SetStatusMessage("Error occurred while retrieving scan result. Check log file.");
+                Logger.Error(e.Error.ToString(), true);
+                return;
+            }
+
+            IScanResult iresult = e.Result as IScanResult;
+            if (iresult == null)
+            {
+                this.SetStatusMessage("No scan was returned from the worker.");
+                return;
+            }
+
+            if (ConfigHelper.Instance.KeepLocation && this.result != null && !string.IsNullOrEmpty(this.result.Location))
+            {
+                iresult.Location = this.result.Location;
+            }
+
+            this.result = iresult;
+            this.AddResultToList(this.result);
+            this.ParseCurrentResult();
+
+            this.SetStatusMessage("Got Scan! {0}", iresult);
+
+            // If we're minimized, fix that.
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
+            }
+
+            // If this isn't set to Always on Top, pop the screen up.
+            if (!this.TopMost)
+            {
+                this.TopMost = true;
+                this.TopMost = false;
+                this.Activate();
+            }
+        }
+        #endregion Background Worker Methods
     }
 }

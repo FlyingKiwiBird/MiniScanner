@@ -41,6 +41,7 @@ namespace EveScanner.UI
             this.location2Text = new System.Windows.Forms.TextBox();
             this.location3Text = new System.Windows.Forms.TextBox();
             this.infoContainer = new System.Windows.Forms.GroupBox();
+            this.characterLookupButton = new System.Windows.Forms.Button();
             this.fitInfoPickerButton = new System.Windows.Forms.Button();
             this.shipTypePickerButton = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -57,8 +58,6 @@ namespace EveScanner.UI
             this.scanText = new System.Windows.Forms.TextBox();
             this.resultsContainer = new System.Windows.Forms.GroupBox();
             this.historyDropdown = new System.Windows.Forms.ComboBox();
-            this.scanValueLabel = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.resultUrlTextBox = new System.Windows.Forms.TextBox();
             this.copySummaryButton = new System.Windows.Forms.Button();
             this.sellValueLabel = new System.Windows.Forms.Label();
@@ -99,13 +98,17 @@ namespace EveScanner.UI
             this.issueTrackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.historyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
-            this.characterLookupButton = new System.Windows.Forms.Button();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.scanValueLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.infoContainer.SuspendLayout();
             this.locationContainer.SuspendLayout();
             this.scanContainer.SuspendLayout();
             this.resultsContainer.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -232,10 +235,21 @@ namespace EveScanner.UI
             this.infoContainer.Controls.Add(this.shipTypeDropdown);
             this.infoContainer.Location = new System.Drawing.Point(21, 165);
             this.infoContainer.Name = "infoContainer";
-            this.infoContainer.Size = new System.Drawing.Size(350, 174);
+            this.infoContainer.Size = new System.Drawing.Size(350, 192);
             this.infoContainer.TabIndex = 28;
             this.infoContainer.TabStop = false;
             this.infoContainer.Text = "Scan Info";
+            // 
+            // characterLookupButton
+            // 
+            this.characterLookupButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.characterLookupButton.Location = new System.Drawing.Point(312, 17);
+            this.characterLookupButton.Name = "characterLookupButton";
+            this.characterLookupButton.Size = new System.Drawing.Size(26, 23);
+            this.characterLookupButton.TabIndex = 38;
+            this.characterLookupButton.Text = "?";
+            this.characterLookupButton.UseVisualStyleBackColor = true;
+            this.characterLookupButton.Click += new System.EventHandler(this.characterLookupButton_Click);
             // 
             // fitInfoPickerButton
             // 
@@ -279,7 +293,7 @@ namespace EveScanner.UI
             this.notesText.Multiline = true;
             this.notesText.Name = "notesText";
             this.notesText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.notesText.Size = new System.Drawing.Size(235, 70);
+            this.notesText.Size = new System.Drawing.Size(235, 88);
             this.notesText.TabIndex = 18;
             this.notesText.Leave += new System.EventHandler(this.NotesText_Leave);
             // 
@@ -365,7 +379,7 @@ namespace EveScanner.UI
             this.locationContainer.Controls.Add(this.location2Text);
             this.locationContainer.Controls.Add(this.location2Radio);
             this.locationContainer.Controls.Add(this.location3Radio);
-            this.locationContainer.Location = new System.Drawing.Point(21, 345);
+            this.locationContainer.Location = new System.Drawing.Point(21, 363);
             this.locationContainer.Name = "locationContainer";
             this.locationContainer.Size = new System.Drawing.Size(350, 104);
             this.locationContainer.TabIndex = 29;
@@ -380,7 +394,7 @@ namespace EveScanner.UI
             this.scanContainer.Controls.Add(this.scanText);
             this.scanContainer.Location = new System.Drawing.Point(377, 165);
             this.scanContainer.Name = "scanContainer";
-            this.scanContainer.Size = new System.Drawing.Size(187, 284);
+            this.scanContainer.Size = new System.Drawing.Size(187, 302);
             this.scanContainer.TabIndex = 30;
             this.scanContainer.TabStop = false;
             this.scanContainer.Text = "Raw Scan Data";
@@ -388,7 +402,7 @@ namespace EveScanner.UI
             // submitRequestButton
             // 
             this.submitRequestButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.submitRequestButton.Location = new System.Drawing.Point(81, 255);
+            this.submitRequestButton.Location = new System.Drawing.Point(81, 273);
             this.submitRequestButton.Name = "submitRequestButton";
             this.submitRequestButton.Size = new System.Drawing.Size(100, 23);
             this.submitRequestButton.TabIndex = 22;
@@ -405,7 +419,7 @@ namespace EveScanner.UI
             this.scanText.Multiline = true;
             this.scanText.Name = "scanText";
             this.scanText.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.scanText.Size = new System.Drawing.Size(175, 230);
+            this.scanText.Size = new System.Drawing.Size(175, 248);
             this.scanText.TabIndex = 21;
             // 
             // resultsContainer
@@ -413,11 +427,9 @@ namespace EveScanner.UI
             this.resultsContainer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.resultsContainer.Controls.Add(this.historyDropdown);
-            this.resultsContainer.Controls.Add(this.scanValueLabel);
-            this.resultsContainer.Controls.Add(this.label5);
             this.resultsContainer.Controls.Add(this.resultUrlTextBox);
             this.resultsContainer.Controls.Add(this.copySummaryButton);
-            this.resultsContainer.Location = new System.Drawing.Point(21, 455);
+            this.resultsContainer.Location = new System.Drawing.Point(21, 467);
             this.resultsContainer.Name = "resultsContainer";
             this.resultsContainer.Size = new System.Drawing.Size(543, 75);
             this.resultsContainer.TabIndex = 31;
@@ -432,29 +444,9 @@ namespace EveScanner.UI
             this.historyDropdown.FormattingEnabled = true;
             this.historyDropdown.Location = new System.Drawing.Point(6, 47);
             this.historyDropdown.Name = "historyDropdown";
-            this.historyDropdown.Size = new System.Drawing.Size(372, 21);
+            this.historyDropdown.Size = new System.Drawing.Size(531, 21);
             this.historyDropdown.TabIndex = 21;
             this.historyDropdown.SelectedIndexChanged += new System.EventHandler(this.HistoryDropdown_SelectedIndexChanged);
-            // 
-            // scanValueLabel
-            // 
-            this.scanValueLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.scanValueLabel.Location = new System.Drawing.Point(437, 45);
-            this.scanValueLabel.Name = "scanValueLabel";
-            this.scanValueLabel.Size = new System.Drawing.Size(100, 23);
-            this.scanValueLabel.TabIndex = 20;
-            this.scanValueLabel.Text = "0";
-            this.scanValueLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(391, 50);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(40, 13);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Scans:";
             // 
             // resultUrlTextBox
             // 
@@ -801,21 +793,44 @@ namespace EveScanner.UI
             this.pictureBox.TabIndex = 37;
             this.pictureBox.TabStop = false;
             // 
-            // characterLookupButton
+            // statusStrip1
             // 
-            this.characterLookupButton.Location = new System.Drawing.Point(312, 17);
-            this.characterLookupButton.Name = "characterLookupButton";
-            this.characterLookupButton.Size = new System.Drawing.Size(26, 23);
-            this.characterLookupButton.TabIndex = 38;
-            this.characterLookupButton.Text = "?";
-            this.characterLookupButton.UseVisualStyleBackColor = true;
-            this.characterLookupButton.Click += new System.EventHandler(this.characterLookupButton_Click);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusLabel,
+            this.toolStripStatusLabel2,
+            this.scanValueLabel});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 545);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(574, 22);
+            this.statusStrip1.TabIndex = 38;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // statusLabel
+            // 
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(506, 17);
+            this.statusLabel.Spring = true;
+            this.statusLabel.Text = "Ready";
+            this.statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toolStripStatusLabel2
+            // 
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(40, 17);
+            this.toolStripStatusLabel2.Text = "Scans:";
+            // 
+            // scanValueLabel
+            // 
+            this.scanValueLabel.Name = "scanValueLabel";
+            this.scanValueLabel.Size = new System.Drawing.Size(13, 17);
+            this.scanValueLabel.Text = "0";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(574, 535);
+            this.ClientSize = new System.Drawing.Size(574, 567);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.stacksValueText);
             this.Controls.Add(this.volumeValueLabel);
@@ -848,6 +863,8 @@ namespace EveScanner.UI
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -870,7 +887,6 @@ namespace EveScanner.UI
         private System.Windows.Forms.GroupBox scanContainer;
         private System.Windows.Forms.TextBox scanText;
         private System.Windows.Forms.GroupBox resultsContainer;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox resultUrlTextBox;
         private System.Windows.Forms.Button copySummaryButton;
         private System.Windows.Forms.Label sellValueLabel;
@@ -883,7 +899,6 @@ namespace EveScanner.UI
         private System.Windows.Forms.ToolStripMenuItem showHideExtraOptionsToolStripMenuItem;
         private System.Windows.Forms.Button submitRequestButton;
         private System.Windows.Forms.ToolStripMenuItem toggleAlwaysOnTopToolStripMenuItem;
-        private System.Windows.Forms.Label scanValueLabel;
         private System.Windows.Forms.ComboBox historyDropdown;
         private System.Windows.Forms.ToolStripMenuItem captureClipboardOnToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
@@ -925,6 +940,10 @@ namespace EveScanner.UI
         private System.Windows.Forms.ToolStripMenuItem keepLocationBetweenScansToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem historyToolStripMenuItem;
         private System.Windows.Forms.Button characterLookupButton;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel statusLabel;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ToolStripStatusLabel scanValueLabel;
     }
 }
 

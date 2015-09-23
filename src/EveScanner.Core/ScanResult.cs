@@ -10,6 +10,7 @@ namespace EveScanner.Core
     using System.Globalization;
     using System.Linq;
     using System.Text;
+    using EveOnlineApi.Entities;
     using EveScanner.Interfaces;
 
     /// <summary>
@@ -129,6 +130,11 @@ namespace EveScanner.Core
         public string Notes { get; set; }
 
         /// <summary>
+        /// Gets or sets additional Character data.
+        /// </summary>
+        public Character Character { get; set; }
+
+        /// <summary>
         /// Formats an ISK value as a string. Does not double the ISK. Returns up to 2 decimal places with an amount identifier.
         /// </summary>
         /// <param name="value">ISK value</param>
@@ -227,7 +233,14 @@ namespace EveScanner.Core
 
             if (!string.IsNullOrEmpty(this.CharacterName))
             {
-                sb.AppendFormat(" | {0}", this.CharacterName);
+                if (this.Character != null)
+                {
+                    sb.AppendFormat(" | {0}", this.Character.ToString());
+                }
+                else
+                {
+                    sb.AppendFormat(" | {0}", this.CharacterName);
+                }
             }
 
             return sb.ToString();

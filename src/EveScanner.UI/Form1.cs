@@ -7,6 +7,7 @@ namespace EveScanner.UI
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Drawing;
     using System.Globalization;
     using System.IO;
@@ -14,6 +15,9 @@ namespace EveScanner.UI
     using System.Text;
     using System.Windows.Forms;
 
+    using EveOnlineApi.Common;
+    using EveOnlineApi.Entities;
+    using EveOnlineApi.Interfaces;
     using EveScanner.Core;
     using EveScanner.Interfaces;
 
@@ -1353,5 +1357,96 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             }
         }
         #endregion Menu Items
+
+        private void characterLookupButton_Click(object sender, EventArgs e)
+        {
+            if (this.result == null)
+            {
+                return;
+            }
+
+            if (string.IsNullOrEmpty(characterNameText.Text))
+            {
+                return;
+            }
+
+            BackgroundWorker characterLookup = new BackgroundWorker();
+            characterLookup.DoWork += characterLookup_DoWork;
+            characterLookup.RunWorkerCompleted += characterLookup_RunWorkerCompleted;
+            characterLookup.RunWorkerAsync(this.result);
+
+            this.characterLookupButton.Text = "//";
+        }
+
+        private void characterLookup_DoWork(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker bw = sender as BackgroundWorker;
+
+            IScanResult rx = (IScanResult)e.Argument;
+
+            // Do work.
+            ICharacterDataProvider dp = Injector.Resolve<ICharacterDataProvider>();
+            int characterId = dp.GetCharacterId(rx.CharacterName);
+            if (characterId == 0)
+            {
+                return;
+            }
+            Character cx = dp.GetCharacterInfo(characterId);
+            if (cx == null)
+            {
+                return;
+            }
+
+            cx.PopulateCorpAllianceData();
+            rx.Character = cx;
+            
+            e.Result = rx;
+
+            if (bw.CancellationPending)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        private void characterLookup_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled)
+            {
+                return;
+            }
+
+            if (e.Error != null)
+            {
+                return;
+            }
+
+            IScanResult rx = (IScanResult)e.Result;
+
+            if (rx == null)
+            {
+                this.characterLookupButton.Text = "?";
+                return;
+            }
+
+            if (rx.Id == this.result.Id)
+            {
+                this.result = rx;
+                this.UpdateDropdown();
+            }
+            else
+            {
+                for (int i = 0; i < this.historyDropdown.Items.Count; i++)
+                {
+                    IScanResult r = (IScanResult)this.historyDropdown.Items[i];
+                    if (r.Id == rx.Id)
+                    {
+                        this.historyDropdown.Items.RemoveAt(i);
+                        this.historyDropdown.Items.Insert(i, rx);
+                    }
+                }
+            }
+
+            this.characterLookupButton.Text = "?";
+        }
     }
 }

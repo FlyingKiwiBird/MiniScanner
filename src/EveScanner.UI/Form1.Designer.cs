@@ -97,8 +97,9 @@ namespace EveScanner.UI
             this.licenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sourceCodeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.issueTrackerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox = new System.Windows.Forms.PictureBox();
             this.historyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox = new System.Windows.Forms.PictureBox();
+            this.characterLookupButton = new System.Windows.Forms.Button();
             this.infoContainer.SuspendLayout();
             this.locationContainer.SuspendLayout();
             this.scanContainer.SuspendLayout();
@@ -218,6 +219,7 @@ namespace EveScanner.UI
             this.infoContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.infoContainer.Controls.Add(this.characterLookupButton);
             this.infoContainer.Controls.Add(this.fitInfoPickerButton);
             this.infoContainer.Controls.Add(this.shipTypePickerButton);
             this.infoContainer.Controls.Add(this.label9);
@@ -324,7 +326,7 @@ namespace EveScanner.UI
             | System.Windows.Forms.AnchorStyles.Right)));
             this.characterNameText.Location = new System.Drawing.Point(103, 19);
             this.characterNameText.Name = "characterNameText";
-            this.characterNameText.Size = new System.Drawing.Size(235, 20);
+            this.characterNameText.Size = new System.Drawing.Size(203, 20);
             this.characterNameText.TabIndex = 13;
             this.characterNameText.Leave += new System.EventHandler(this.CharacterNameText_Leave);
             // 
@@ -782,6 +784,13 @@ namespace EveScanner.UI
             this.issueTrackerToolStripMenuItem.Text = "&Issue Tracker (Opens in Browser)";
             this.issueTrackerToolStripMenuItem.Click += new System.EventHandler(this.IssueTrackerToolStripMenuItem_Click);
             // 
+            // historyToolStripMenuItem
+            // 
+            this.historyToolStripMenuItem.Name = "historyToolStripMenuItem";
+            this.historyToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.historyToolStripMenuItem.Text = "Histor&y";
+            this.historyToolStripMenuItem.Click += new System.EventHandler(this.HistoryToolStripMenuItem_Click);
+            // 
             // pictureBox
             // 
             this.pictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -792,12 +801,15 @@ namespace EveScanner.UI
             this.pictureBox.TabIndex = 37;
             this.pictureBox.TabStop = false;
             // 
-            // historyToolStripMenuItem
+            // characterLookupButton
             // 
-            this.historyToolStripMenuItem.Name = "historyToolStripMenuItem";
-            this.historyToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-            this.historyToolStripMenuItem.Text = "Histor&y";
-            this.historyToolStripMenuItem.Click += new System.EventHandler(this.HistoryToolStripMenuItem_Click);
+            this.characterLookupButton.Location = new System.Drawing.Point(312, 17);
+            this.characterLookupButton.Name = "characterLookupButton";
+            this.characterLookupButton.Size = new System.Drawing.Size(26, 23);
+            this.characterLookupButton.TabIndex = 38;
+            this.characterLookupButton.Text = "?";
+            this.characterLookupButton.UseVisualStyleBackColor = true;
+            this.characterLookupButton.Click += new System.EventHandler(this.characterLookupButton_Click);
             // 
             // Form1
             // 
@@ -912,6 +924,7 @@ namespace EveScanner.UI
         private System.Windows.Forms.Button shipTypePickerButton;
         private System.Windows.Forms.ToolStripMenuItem keepLocationBetweenScansToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem historyToolStripMenuItem;
+        private System.Windows.Forms.Button characterLookupButton;
     }
 }
 

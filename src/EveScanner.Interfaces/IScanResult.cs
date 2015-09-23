@@ -8,6 +8,8 @@ namespace EveScanner.Interfaces
     using System;
     using System.Collections.Generic;
 
+    using EveOnlineApi.Entities;
+
     /// <summary>
     /// Interface representing the properties required by the application from a scan result.
     /// </summary>
@@ -82,5 +84,10 @@ namespace EveScanner.Interfaces
         /// Gets or sets additional user entered notes on the scan.
         /// </summary>
         string Notes { get; set; }
+
+        /// <summary>
+        /// Gets or sets additional Character data.
+        /// </summary>
+        Character Character { get; set; }
     }
 }

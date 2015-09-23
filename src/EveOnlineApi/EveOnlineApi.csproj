@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{35D84931-08A2-439B-B217-4D7E1643E23C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EveOnlineApi</RootNamespace>
+    <AssemblyName>EveOnlineApi</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>EveScanner.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Entities\AllianceMemberCorporation.cs" />
+    <Compile Include="Common\Injector.cs" />
+    <Compile Include="Entities\Alliance.cs" />
+    <Compile Include="Entities\Character.cs" />
+    <Compile Include="Entities\Corporation.cs" />
+    <Compile Include="Entities\CorporationLogo.cs" />
+    <Compile Include="Entities\EmploymentHistoryEntry.cs" />
+    <Compile Include="Entities\EveOnlineCacheable.cs" />
+    <Compile Include="Entities\Xml\AllianceListApi.cs" />
+    <Compile Include="Entities\Xml\AllianceListResult.cs" />
+    <Compile Include="Entities\Xml\AllianceRow.cs" />
+    <Compile Include="Entities\Xml\AlliancesRowset.cs" />
+    <Compile Include="Entities\Xml\CallGroupRow.cs" />
+    <Compile Include="Entities\Xml\CallGroupRowset.cs" />
+    <Compile Include="Entities\Xml\CallListApi.cs" />
+    <Compile Include="Entities\Xml\CallListResult.cs" />
+    <Compile Include="Entities\Xml\CallRow.cs" />
+    <Compile Include="Entities\Xml\CallsRowset.cs" />
+    <Compile Include="Entities\Xml\CharacterEmploymentRow.cs" />
+    <Compile Include="Entities\Xml\CharacterEmploymentRowset.cs" />
+    <Compile Include="Entities\Xml\CharacterIdApi.cs" />
+    <Compile Include="Entities\Xml\CharacterIdResult.cs" />
+    <Compile Include="Entities\Xml\CharacterInfoApi.cs" />
+    <Compile Include="Entities\Xml\Base\EveApi.cs" />
+    <Compile Include="Entities\Xml\Base\EveApiResult.cs" />
+    <Compile Include="Entities\Xml\Base\EveApiRowset.cs" />
+    <Compile Include="Entities\Xml\Base\EveRow.cs" />
+    <Compile Include="Entities\Xml\CharacterIdRow.cs" />
+    <Compile Include="Entities\Xml\CharacterIdRowset.cs" />
+    <Compile Include="Entities\Xml\CharacterInfoResult.cs" />
+    <Compile Include="Entities\Xml\CorporationLogo.cs" />
+    <Compile Include="Entities\Xml\CorporationSheetApi.cs" />
+    <Compile Include="Entities\Xml\CorporationSheetResult.cs" />
+    <Compile Include="Entities\Xml\CorporationSheetRow.cs" />
+    <Compile Include="Entities\Xml\CorporationSheetRowset.cs" />
+    <Compile Include="Entities\Xml\MemberCorporationRow.cs" />
+    <Compile Include="Entities\Xml\MemberCorporationsRowset.cs" />
+    <Compile Include="EveOnlineXmlApi.cs" />
+    <Compile Include="FileBackedImageDataProvider.cs" />
+    <Compile Include="Interfaces\IImageDataProvider.cs" />
+    <Compile Include="Interfaces\Xml\ICallListXmlDataProvider.cs" />
+    <Compile Include="XmlBackedEveOnlineApi.cs" />
+    <Compile Include="FileBackedEveOnlineXmlApi.cs" />
+    <Compile Include="Interfaces\IAllianceDataProvider.cs" />
+    <Compile Include="Interfaces\ICharacterDataProvider.cs" />
+    <Compile Include="Interfaces\Xml\IAllianceXmlDataProvider.cs" />
+    <Compile Include="Interfaces\Xml\ICharacterXmlDataProvider.cs" />
+    <Compile Include="Interfaces\ICorporationDataProvider.cs" />
+    <Compile Include="Interfaces\Xml\ICorporationXmlDataProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Common\XmlSerialization.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EveScanner.pfx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

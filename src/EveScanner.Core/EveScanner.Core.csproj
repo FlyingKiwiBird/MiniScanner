@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>EveScanner.pfx</AssemblyOriginatorKeyFile>
@@ -61,6 +61,10 @@
     <Compile Include="Validators.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EveOnlineApi\EveOnlineApi.csproj">
+      <Project>{35d84931-08a2-439b-b217-4d7e1643e23c}</Project>
+      <Name>EveOnlineApi</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveScanner.Interfaces\EveScanner.Interfaces.csproj">
       <Project>{58d010c9-8f3f-438b-b60e-eed817781a88}</Project>
       <Name>EveScanner.Interfaces</Name>

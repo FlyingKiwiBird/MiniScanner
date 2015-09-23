@@ -102,6 +102,41 @@ namespace EveScanner.Core
             }
         }
 
+        public string CorpTicker
+        {
+            get
+            {
+                if (this.Scan.Character != null)
+                {
+                    if (this.Scan.Character.CorporationId > 0)
+                    {
+                        return this.Scan.Character.Corporation.Ticker;
+                    }
+                }
+                
+                return string.Empty;
+            }
+        }
+
+        public string AllianceTicker
+        {
+            get
+            {
+                if (this.Scan.Character != null)
+                {
+                    if (this.Scan.Character.CorporationId > 0)
+                    {
+                        if (this.Scan.Character.Corporation.AllianceId > 0)
+                        {
+                            return this.Scan.Character.Corporation.Alliance.ShortName;
+                        }
+                    }
+                }
+
+                return string.Empty;
+            }
+        }
+
         /// <summary>
         /// Gets a formatted string of the special cases for the scan.
         /// </summary>

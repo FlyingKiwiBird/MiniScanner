@@ -6,6 +6,7 @@
 namespace EveOnlineApi.Entities
 {
     using System;
+    using System.Globalization;
     
     using EveOnlineApi.Entities.Xml.Base;
 
@@ -32,8 +33,8 @@ namespace EveOnlineApi.Entities
         internal EveOnlineCacheable(int version, string currentTime, string cachedUntil)
         {
             this.Version = version;
-            this.CurrentTime = DateTime.Parse(currentTime + "Z").ToUniversalTime();
-            this.CachedUntil = DateTime.Parse(cachedUntil + "Z").ToUniversalTime();
+            this.CurrentTime = DateTime.Parse(currentTime + "Z", CultureInfo.InvariantCulture).ToUniversalTime();
+            this.CachedUntil = DateTime.Parse(cachedUntil + "Z", CultureInfo.InvariantCulture).ToUniversalTime();
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace EveOnlineApi
 {
+    using System.Globalization;
     using System.IO;
     using System.Net;
     
@@ -46,13 +47,13 @@ namespace EveOnlineApi
                 Directory.CreateDirectory(localPath);
             }
 
-            string fileName = Path.Combine(localPath, string.Format("{0}_{1}.png", id, width));
+            string fileName = Path.Combine(localPath, string.Format(CultureInfo.InvariantCulture, "{0}_{1}.png", id, width));
 
             if (!File.Exists(fileName))
             {
                 using (WebClient cli = new WebClient())
                 {
-                    cli.DownloadFile(string.Format("https://image.eveonline.com/{0}/{1}_{2}.png", imageType, id, width), fileName);
+                    cli.DownloadFile(string.Format(CultureInfo.InvariantCulture, "https://image.eveonline.com/{0}/{1}_{2}.png", imageType, id, width), fileName);
                 }
             }
 

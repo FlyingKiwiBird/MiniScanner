@@ -24,7 +24,7 @@ namespace EveOnlineApi.Entities.Xml
         /// Gets or sets the type of API call.
         /// </summary>
         [XmlAttribute("type")]
-        public string Type { get; set; }
+        public string CallType { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the API call.

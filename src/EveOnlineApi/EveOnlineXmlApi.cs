@@ -7,6 +7,7 @@ namespace EveOnlineApi
 {
     using System;
     using System.IO;
+    using System.Globalization;
     using System.Linq;
     using System.Net;
 
@@ -64,7 +65,7 @@ namespace EveOnlineApi
         /// <returns>Character Id</returns>
         public int GetCharacterId(string characterName)
         {
-            string url = string.Format("https://api.eveonline.com/eve/CharacterID.xml.aspx?names={0}", characterName);
+            string url = string.Format(CultureInfo.InvariantCulture, "https://api.eveonline.com/eve/CharacterID.xml.aspx?names={0}", characterName);
             Uri uri = new Uri(url);
             CharacterIdApi api = this.DownloadAndDeserialize<CharacterIdApi>(uri);
             return api.Result.RowSet.Rows[0].CharacterId;
@@ -77,7 +78,7 @@ namespace EveOnlineApi
         /// <returns>Character Info XML Object</returns>
         public CharacterInfoApi GetCharacterInfo(int characterId)
         {
-            string url = string.Format("https://api.eveonline.com/eve/CharacterInfo.xml.aspx?characterID={0}", characterId);
+            string url = string.Format(CultureInfo.InvariantCulture, "https://api.eveonline.com/eve/CharacterInfo.xml.aspx?characterID={0}", characterId);
             Uri uri = new Uri(url);
             CharacterInfoApi api = this.DownloadAndDeserialize<CharacterInfoApi>(uri);
             return api;
@@ -90,7 +91,7 @@ namespace EveOnlineApi
         /// <returns>CorporationSheet XML Object</returns>
         public CorporationSheetApi GetCorporationInfo(int corporationId)
         {
-            string url = string.Format("https://api.eveonline.com/corp/CorporationSheet.xml.aspx?corporationID={0}", corporationId);
+            string url = string.Format(CultureInfo.InvariantCulture, "https://api.eveonline.com/corp/CorporationSheet.xml.aspx?corporationID={0}", corporationId);
             Uri uri = new Uri(url);
             CorporationSheetApi api = this.DownloadAndDeserialize<CorporationSheetApi>(uri);
             return api;

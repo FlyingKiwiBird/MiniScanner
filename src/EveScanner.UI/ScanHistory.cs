@@ -12,6 +12,7 @@ namespace EveScanner.UI
 
     using EveScanner.Core;
     using EveScanner.Interfaces;
+    using EveScanner.IoC;
 
     /// <summary>
     /// Used for displaying Scan History and doing some basic filtering.
@@ -38,7 +39,7 @@ namespace EveScanner.UI
         /// <param name="e">This parameter is not used.</param>
         private void ScanHistory_Load(object sender, EventArgs e)
         {
-            IScanHistory history = ConfigHelper.GetImplementation<IScanHistory>();
+            IScanHistory history = Injector.Create<IScanHistory>();
 
             List<HistoryWrapper> wrapped = history.GetAllScans().Select(x => new HistoryWrapper(x)).ToList();
 
@@ -138,7 +139,7 @@ namespace EveScanner.UI
         /// <param name="e">This parameter is not used.</param>
         private void CharacterFilter_Click(object sender, EventArgs e)
         {
-            IScanHistory history = ConfigHelper.GetImplementation<IScanHistory>();
+            IScanHistory history = Injector.Create<IScanHistory>();
 
             List<HistoryWrapper> wrapped = history.GetScansByCharacterName(this.characterName.Text).Select(x => new HistoryWrapper(x)).ToList();
 

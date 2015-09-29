@@ -10,6 +10,8 @@ namespace EveOnlineApi
     using EveOnlineApi.Interfaces;
     using EveOnlineApi.Interfaces.Xml;
 
+    using EveScanner.IoC;
+
     /// <summary>
     /// This is an un-cached interface to whatever XML API provider is registered
     /// to be used by the application. Hopefully that API provider is cached, since
@@ -26,7 +28,7 @@ namespace EveOnlineApi
         /// <returns>Character Id</returns>
         public int GetCharacterId(string characterName)
         {
-            ICharacterXmlDataProvider xdp = Injector.Resolve<ICharacterXmlDataProvider>();
+            ICharacterXmlDataProvider xdp = Injector.Create<ICharacterXmlDataProvider>();
             return xdp.GetCharacterId(characterName);
         }
 
@@ -37,7 +39,7 @@ namespace EveOnlineApi
         /// <returns>Character Info Object</returns>
         public Character GetCharacterInfo(int characterId)
         {
-            ICharacterXmlDataProvider xdp = Injector.Resolve<ICharacterXmlDataProvider>();
+            ICharacterXmlDataProvider xdp = Injector.Create<ICharacterXmlDataProvider>();
             return new Character(xdp.GetCharacterInfo(characterId));
         }
 
@@ -48,7 +50,7 @@ namespace EveOnlineApi
         /// <returns>Corporation Object</returns>
         public Corporation GetCorporationInfo(int corporationId)
         {
-            ICorporationXmlDataProvider xdp = Injector.Resolve<ICorporationXmlDataProvider>();
+            ICorporationXmlDataProvider xdp = Injector.Create<ICorporationXmlDataProvider>();
             return new Corporation(xdp.GetCorporationInfo(corporationId));
         }
 
@@ -72,7 +74,7 @@ namespace EveOnlineApi
         /// <returns>Alliance Object</returns>
         public Alliance GetAllianceInfo(int allianceId, bool suppressMemberCorps)
         {
-            IAllianceXmlDataProvider xdp = Injector.Resolve<IAllianceXmlDataProvider>();
+            IAllianceXmlDataProvider xdp = Injector.Create<IAllianceXmlDataProvider>();
             return new Alliance(xdp.GetAllianceData(allianceId, suppressMemberCorps));
         }
     }

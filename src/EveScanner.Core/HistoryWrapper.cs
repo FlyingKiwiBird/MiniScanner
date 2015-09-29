@@ -102,6 +102,9 @@ namespace EveScanner.Core
             }
         }
 
+        /// <summary>
+        /// Gets the corporation ticker
+        /// </summary>
         public string CorpTicker
         {
             get
@@ -118,6 +121,9 @@ namespace EveScanner.Core
             }
         }
 
+        /// <summary>
+        /// Gets the alliance ticker
+        /// </summary>
         public string AllianceTicker
         {
             get

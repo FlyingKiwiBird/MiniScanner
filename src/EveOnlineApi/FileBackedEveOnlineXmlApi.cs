@@ -220,7 +220,7 @@ namespace EveOnlineApi
             }
 
             EveApi api = XmlSerialization.DeserializeFile<EveApi>(path);
-            if (DateTime.UtcNow > DateTime.Parse(api.CachedUntil + "Z").ToUniversalTime())
+            if (DateTime.UtcNow > DateTime.Parse(api.CachedUntil + "Z", CultureInfo.InvariantCulture).ToUniversalTime())
             {
                 return true;
             }

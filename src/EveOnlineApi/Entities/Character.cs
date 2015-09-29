@@ -5,12 +5,14 @@
 //-----------------------------------------------------------------------
 namespace EveOnlineApi.Entities
 {
+    using System;
     using System.Collections.Generic;
+    using System.Text;
 
     using EveOnlineApi.Common;
     using EveOnlineApi.Entities.Xml;
     using EveOnlineApi.Interfaces;
-    using System.Text;
+    using EveScanner.IoC;
 
     /// <summary>
     /// Represents the data exposed about an Eve Online character.
@@ -29,6 +31,11 @@ namespace EveOnlineApi.Entities
         public Character(CharacterInfoApi apiResult) 
             : base(apiResult)
         {
+            if (apiResult == null)
+            {
+                throw new ArgumentException("API Result cannot be null", "apiResult");
+            }
+
             this.Id = apiResult.Result.CharacterId;
             this.Name = apiResult.Result.CharacterName;
             this.CorporationId = apiResult.Result.CorporationId;
@@ -113,7 +120,7 @@ namespace EveOnlineApi.Entities
         /// <returns>Character object.</returns>
         public static Character GetCharacterByCharacterId(int characterId)
         {
-            ICharacterDataProvider cdp = Injector.Resolve<ICharacterDataProvider>();
+            ICharacterDataProvider cdp = Injector.Create<ICharacterDataProvider>();
             return cdp.GetCharacterInfo(characterId);
         }
 
@@ -124,7 +131,7 @@ namespace EveOnlineApi.Entities
         /// <returns>Character object.</returns>
         public static Character GetCharacterByCharacterName(string characterName)
         {
-            ICharacterDataProvider cdp = Injector.Resolve<ICharacterDataProvider>();
+            ICharacterDataProvider cdp = Injector.Create<ICharacterDataProvider>();
             int characterId = cdp.GetCharacterId(characterName);
             return cdp.GetCharacterInfo(characterId);
         }

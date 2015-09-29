@@ -5,9 +5,13 @@
 //-----------------------------------------------------------------------
 namespace EveOnlineApi.Entities
 {
+    using System;
+
     using EveOnlineApi.Common;
     using EveOnlineApi.Entities.Xml;
     using EveOnlineApi.Interfaces;
+
+    using EveScanner.IoC;
 
     /// <summary>
     /// Represents an EVE Online Corporation
@@ -31,6 +35,11 @@ namespace EveOnlineApi.Entities
         public Corporation(CorporationSheetApi apiResult)
             : base(apiResult)
         {
+            if (apiResult == null)
+            {
+                throw new ArgumentException("API Result cannot be null.", "apiResult");
+            }
+
             this.Id = apiResult.Result.CorporationId;
             this.Name = apiResult.Result.CorporationName;
             this.Ticker = apiResult.Result.Ticker;
@@ -198,7 +207,7 @@ namespace EveOnlineApi.Entities
         /// <returns>Corporation Object</returns>
         public static Corporation GetCorporationByCorporationId(int corporationId)
         {
-            ICorporationDataProvider cdp = Injector.Resolve<ICorporationDataProvider>();
+            ICorporationDataProvider cdp = Injector.Create<ICorporationDataProvider>();
             return cdp.GetCorporationInfo(corporationId);
         }
     }

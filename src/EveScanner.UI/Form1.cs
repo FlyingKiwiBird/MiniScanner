@@ -15,11 +15,12 @@ namespace EveScanner.UI
     using System.Text;
     using System.Windows.Forms;
 
-    using EveOnlineApi.Common;
     using EveOnlineApi.Entities;
     using EveOnlineApi.Interfaces;
+
     using EveScanner.Core;
     using EveScanner.Interfaces;
+    using EveScanner.IoC;
 
     /// <summary>
     /// Main Form for the Application
@@ -102,7 +103,7 @@ namespace EveScanner.UI
                 this.Location = new Point(ConfigHelper.Instance.WindowPositionX, ConfigHelper.Instance.WindowPositionY);
             }
 
-            this.history = ConfigHelper.GetImplementation<IScanHistory>();
+            this.history = Injector.Create<IScanHistory>();
         }
         #endregion Constructors
 
@@ -541,6 +542,8 @@ namespace EveScanner.UI
             {
                 this.location3Radio.Checked = false;
             }
+
+            this.employmentHistoryToolStripMenuItem.Enabled = this.result.Character == null;
         }
 
         /// <summary>
@@ -642,7 +645,7 @@ namespace EveScanner.UI
         /// <param name="args">Format Arguments</param>
         private void SetStatusMessage(string message, params object[] args)
         {
-            this.statusLabel.Text = string.Format(message, args);
+            this.statusLabel.Text = string.Format(CultureInfo.CurrentCulture, message, args);
         }
         #endregion Helper Functions
 
@@ -745,7 +748,7 @@ namespace EveScanner.UI
         private void SubmitRequestButton_Click(object sender, EventArgs e)
         {
             BackgroundWorker worker = new BackgroundWorker();
-            worker.RunWorkerCompleted += scanworker_RunWorkerCompleted;
+            worker.RunWorkerCompleted += this.Scanworker_RunWorkerCompleted;
 
             if (string.IsNullOrEmpty(this.scanText.Text))
             {
@@ -756,7 +759,7 @@ namespace EveScanner.UI
             {
                 if (this.scanText.Text.StartsWith("http://evepraisal.com/e/", StringComparison.OrdinalIgnoreCase) || this.scanText.Text.StartsWith("https://goonpraisal.apps.goonswarm.org/e/", StringComparison.OrdinalIgnoreCase))
                 {
-                    worker.DoWork += scanworker_DoWork_EvePraisalUrl;
+                    worker.DoWork += this.Scanworker_DoWork_EvePraisalUrl;
 
                     string url = this.scanText.Text;
                     url = url.IndexOf(' ') < 0 ? url : url.Substring(0, url.IndexOf(' '));
@@ -768,7 +771,7 @@ namespace EveScanner.UI
                 }
                 else if (this.submitANYClipboardDataToolStripMenuItem.Checked || this.CheckTextFormat(this.scanText.Text))
                 {
-                    worker.DoWork += scanworker_DoWork_ScanText;
+                    worker.DoWork += this.Scanworker_DoWork_ScanText;
                     worker.RunWorkerAsync(this.scanText.Text);
                 }
                 else
@@ -997,21 +1000,31 @@ namespace EveScanner.UI
         /// </summary>
         /// <param name="sender">Question Mark Button</param>
         /// <param name="e">This parameter is not used.</param>
-        private void characterLookupButton_Click(object sender, EventArgs e)
+        private void CharacterLookupButton_MouseDown(object sender, MouseEventArgs e)
         {
             if (this.result == null)
             {
                 return;
             }
 
-            if (string.IsNullOrEmpty(characterNameText.Text))
+            if (string.IsNullOrEmpty(this.characterNameText.Text))
             {
                 return;
             }
 
+            if (this.result.Character != null)
+            {
+                this.employmentHistoryToolStripMenuItem.Enabled = true;
+                return;
+            }
+            else
+            {
+                this.employmentHistoryToolStripMenuItem.Enabled = false;
+            }
+
             BackgroundWorker characterLookup = new BackgroundWorker();
-            characterLookup.DoWork += characterLookup_DoWork;
-            characterLookup.RunWorkerCompleted += characterLookup_RunWorkerCompleted;
+            characterLookup.DoWork += this.CharacterLookup_DoWork;
+            characterLookup.RunWorkerCompleted += this.CharacterLookup_RunWorkerCompleted;
             characterLookup.RunWorkerAsync(this.result);
 
             this.SetStatusMessage("Looking up Character Data...");
@@ -1130,6 +1143,7 @@ namespace EveScanner.UI
 
             this.historyDropdown.Items.Clear();
             this.scanValueLabel.Text = "0";
+            this.employmentHistoryToolStripMenuItem.Enabled = false;
         }
 
         /// <summary>
@@ -1234,6 +1248,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             System.Diagnostics.Process.Start("https://bitbucket.org/viktorielucilla/evescanner-net4/issues");
         }
 
+#if DEBUG
         /// <summary>
         /// Sets up some example scan results so someone can visually inspect and play with things.
         /// </summary>
@@ -1270,6 +1285,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             ScanResult z = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000, 41234, 3, 4, "http://goonfleet.com/?1234599", new int[] { 1, 2, 3, 4, 5, 99 }) { CharacterName = "Mixed 3", ShipType = string.Empty, Notes = "Triggers 6 Combined Image" };
             this.AddResultToList(z);
         }
+#endif
 
         /// <summary>
         /// Hides or restores borders on the form.
@@ -1327,6 +1343,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             this.AddResultToList(rx);
 
             this.SetStatusMessage("New (Empty) Scan Created.");
+            this.employmentHistoryToolStripMenuItem.Enabled = false;
         }
 
         /// <summary>
@@ -1355,22 +1372,52 @@ thread on the Goonfleet Forums or sent to me via Jabber.
                 hi.ShowDialog();
             }
         }
+
+        /// <summary>
+        /// Called when the Employment History item on the Character Info dropdown is clicked. Loads
+        /// a background worker to show the Employment History form.
+        /// </summary>
+        /// <param name="sender">? -> Employment History</param>
+        /// <param name="e">This parameter is not used.</param>
+        private void EmploymentHistoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.result == null)
+            {
+                return;
+            }
+
+            if (this.result.Character == null)
+            {
+                return;
+            }
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += this.EmploymentWorker_DoWork;
+            worker.RunWorkerCompleted += this.EmploymentWorker_RunWorkerCompleted;
+            worker.RunWorkerAsync(this.result);
+        }
         #endregion Menu Items
 
         #region Background Worker Methods
-        private void characterLookup_DoWork(object sender, DoWorkEventArgs e)
+        /// <summary>
+        /// Background lookup for character information.
+        /// </summary>
+        /// <param name="sender">characterLookupButton_Click method</param>
+        /// <param name="e">Provides interaction through different methods.</param>
+        private void CharacterLookup_DoWork(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker bw = sender as BackgroundWorker;
 
             IScanResult rx = (IScanResult)e.Argument;
 
             // Do work.
-            ICharacterDataProvider dp = Injector.Resolve<ICharacterDataProvider>();
+            ICharacterDataProvider dp = Injector.Create<ICharacterDataProvider>();
             int characterId = dp.GetCharacterId(rx.CharacterName);
             if (characterId == 0)
             {
                 return;
             }
+
             Character cx = dp.GetCharacterInfo(characterId);
             if (cx == null)
             {
@@ -1388,7 +1435,12 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             }
         }
 
-        private void characterLookup_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        /// <summary>
+        /// Runs when the character lookup is completed to populate objects.
+        /// </summary>
+        /// <param name="sender">Background worker</param>
+        /// <param name="e">Provides returned data</param>
+        private void CharacterLookup_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Cancelled)
             {
@@ -1412,6 +1464,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             {
                 this.result = rx;
                 this.UpdateDropdown();
+                this.employmentHistoryToolStripMenuItem.Enabled = true;
             }
             else
             {
@@ -1425,10 +1478,16 @@ thread on the Goonfleet Forums or sent to me via Jabber.
                     }
                 }
             }
+
             this.SetStatusMessage("Found {0}", rx.Character.ToString());
         }
 
-        private void scanworker_DoWork_EvePraisalUrl(object sender, DoWorkEventArgs e)
+        /// <summary>
+        /// Background worker for Evepraisal URLs or Evepraisal mirrors to retrieve URL data
+        /// </summary>
+        /// <param name="sender">submitRequestWorker button</param>
+        /// <param name="e">Provides Scan URL</param>
+        private void Scanworker_DoWork_EvePraisalUrl(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker bw = sender as BackgroundWorker;
             if (bw == null)
@@ -1470,7 +1529,12 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             }
         }
 
-        private void scanworker_DoWork_ScanText(object sender, DoWorkEventArgs e)
+        /// <summary>
+        /// Background worker for Evepraisal URLs or Evepraisal mirrors to retrieve scan data
+        /// </summary>
+        /// <param name="sender">submitRequestWorker button</param>
+        /// <param name="e">Provides Scan Data</param>
+        private void Scanworker_DoWork_ScanText(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker bw = sender as BackgroundWorker;
             if (bw == null)
@@ -1505,12 +1569,23 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             }
         }
 
-        private void scanworker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        /// <summary>
+        /// Runs when a scan appraisal is returned.
+        /// </summary>
+        /// <param name="sender">Background worker</param>
+        /// <param name="e">Provides returned data</param>
+        private void Scanworker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Error != null)
             {
                 this.SetStatusMessage("Error occurred while retrieving scan result. Check log file.");
                 Logger.Error(e.Error.ToString(), true);
+                return;
+            }
+
+            if (e.Cancelled)
+            {
+                this.SetStatusMessage("Scan cancelled.");
                 return;
             }
 
@@ -1545,6 +1620,88 @@ thread on the Goonfleet Forums or sent to me via Jabber.
                 this.TopMost = false;
                 this.Activate();
             }
+        }
+
+        /// <summary>
+        /// Background Worker to gather Employment History details.
+        /// </summary>
+        /// <param name="sender">Background Worker</param>
+        /// <param name="e">Provides Result to Scan</param>
+        private void EmploymentWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            this.SetStatusMessage("Loading Employment History...");
+
+            BackgroundWorker worker = sender as BackgroundWorker;
+            if (worker == null)
+            {
+                return;
+            }
+
+            IScanResult wresult = e.Argument as IScanResult;
+
+            if (wresult == null)
+            {
+                return;
+            }
+
+            Character ch = wresult.Character;
+
+            if (ch == null)
+            {
+                return;
+            }
+
+            // Make sure we're pulling this data before sending it back...
+            var employment = ch.EmploymentHistory;
+
+            foreach (var x in employment)
+            {
+                var e_corp = x.Corporation;
+                var e_alli = x.Corporation.Alliance;
+            }
+
+            e.Result = ch;
+
+            if (worker.CancellationPending)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        /// <summary>
+        /// Runs when the Employment History is retrieved.
+        /// </summary>
+        /// <param name="sender">Background Worker</param>
+        /// <param name="e">Provides returned character object</param>
+        private void EmploymentWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                this.SetStatusMessage("Error occurred while retrieving scan result. Check log file.");
+                Logger.Error(e.Error.ToString(), true);
+                return;
+            }
+
+            if (e.Cancelled)
+            {
+                this.SetStatusMessage("Scan cancelled.");
+                return;
+            }
+
+            Character ch = e.Result as Character;
+            if (ch == null)
+            {
+                return;
+            }
+
+            this.SetStatusMessage("Showing Employment History...");
+
+            using (EmploymentHistory form1 = new EmploymentHistory(ch))
+            {
+                form1.ShowDialog();
+            }
+
+            this.SetStatusMessage("Done.");
         }
         #endregion Background Worker Methods
     }

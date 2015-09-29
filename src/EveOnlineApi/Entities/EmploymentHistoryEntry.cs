@@ -7,6 +7,7 @@ namespace EveOnlineApi.Entities
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
 
     using EveOnlineApi.Entities.Xml;
 
@@ -26,9 +27,14 @@ namespace EveOnlineApi.Entities
         /// <param name="row">Character Employment XML Object</param>
         public EmploymentHistoryEntry(CharacterEmploymentRow row)
         {
+            if (row == null)
+            {
+                throw new ArgumentException("row cannot be null", "row");
+            }
+
             this.Id = row.RecordId;
             this.CorporationId = row.CorporationId;
-            this.StartDate = DateTime.Parse(row.StartDate + "Z").ToUniversalTime();
+            this.StartDate = DateTime.Parse(row.StartDate + "Z", CultureInfo.InvariantCulture).ToUniversalTime();
         }
 
         /// <summary>
@@ -87,6 +93,11 @@ namespace EveOnlineApi.Entities
         /// <returns>Employment History Entries</returns>
         public static IEnumerable<EmploymentHistoryEntry> CreateEmploymentHistory(CharacterEmploymentRowset employment)
         {
+            if (employment == null)
+            {
+                throw new ArgumentException("Employment History cannot be null", "employment");
+            }
+
             List<EmploymentHistoryEntry> entries = new List<EmploymentHistoryEntry>();
 
             foreach (CharacterEmploymentRow row in employment.Rows)

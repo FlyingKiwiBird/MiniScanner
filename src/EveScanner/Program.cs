@@ -7,8 +7,14 @@ namespace EveScanner
 {
     using System;
     using System.Windows.Forms;
-    
+
+    using EveOnlineApi;
+    using EveOnlineApi.Interfaces;
+    using EveOnlineApi.Interfaces.Xml;
+
     using EveScanner.Core;
+    using EveScanner.Interfaces;
+    using EveScanner.IoC;    
     using EveScanner.UI;
 
     /// <summary>
@@ -25,6 +31,23 @@ namespace EveScanner
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // Configure XML API Injections
+            Injector.Register<IAllianceXmlDataProvider>(typeof(FileBackedEveOnlineXmlApi));
+            Injector.Register<ICharacterXmlDataProvider>(typeof(FileBackedEveOnlineXmlApi));
+            Injector.Register<ICorporationXmlDataProvider>(typeof(FileBackedEveOnlineXmlApi));
+
+            // Configure other API Entity Injections
+            Injector.Register<IAllianceDataProvider>(typeof(XmlBackedEveOnlineApi));
+            Injector.Register<ICharacterDataProvider>(typeof(XmlBackedEveOnlineApi));
+            Injector.Register<ICorporationDataProvider>(typeof(XmlBackedEveOnlineApi));
+            
+            Injector.Register<IImageDataProvider>(typeof(FileBackedImageDataProvider));
+
+            // Configure EveScanner Injections
+            Injector.Register<IAppraisalService>(typeof(Evepraisal));
+            Injector.Register<IScanHistory>(typeof(ListScanHistory));
+
             Application.Run(new Form1());
         }
 

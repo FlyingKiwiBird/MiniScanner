@@ -37,13 +37,13 @@ namespace EveOnlineApi.Entities.Xml
         /// Gets or sets the Character Bloodline Id
         /// </summary>
         [XmlElement("bloodlineID")]
-        public int BloodLineId { get; set; }
+        public int BloodlineId { get; set; }
 
         /// <summary>
         /// Gets or sets the Character Bloodline
         /// </summary>
         [XmlElement("bloodline")]
-        public string BloodLine { get; set; }
+        public string Bloodline { get; set; }
 
         /// <summary>
         /// Gets or sets the Character Ancestry Id

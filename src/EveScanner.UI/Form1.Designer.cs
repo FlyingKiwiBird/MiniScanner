@@ -29,6 +29,7 @@ namespace EveScanner.UI
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -41,7 +42,9 @@ namespace EveScanner.UI
             this.location2Text = new System.Windows.Forms.TextBox();
             this.location3Text = new System.Windows.Forms.TextBox();
             this.infoContainer = new System.Windows.Forms.GroupBox();
-            this.characterLookupButton = new System.Windows.Forms.Button();
+            this.characterLookupButton = new EveScanner.UI.MenuButton();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.employmentHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fitInfoPickerButton = new System.Windows.Forms.Button();
             this.shipTypePickerButton = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -103,6 +106,7 @@ namespace EveScanner.UI
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.scanValueLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.infoContainer.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.locationContainer.SuspendLayout();
             this.scanContainer.SuspendLayout();
             this.resultsContainer.SuspendLayout();
@@ -242,14 +246,30 @@ namespace EveScanner.UI
             // 
             // characterLookupButton
             // 
-            this.characterLookupButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.characterLookupButton.Location = new System.Drawing.Point(312, 17);
+            this.characterLookupButton.Menu = this.contextMenuStrip1;
             this.characterLookupButton.Name = "characterLookupButton";
             this.characterLookupButton.Size = new System.Drawing.Size(26, 23);
-            this.characterLookupButton.TabIndex = 38;
+            this.characterLookupButton.TabIndex = 39;
             this.characterLookupButton.Text = "?";
+            this.characterLookupButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.characterLookupButton.UseVisualStyleBackColor = true;
-            this.characterLookupButton.Click += new System.EventHandler(this.characterLookupButton_Click);
+            this.characterLookupButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CharacterLookupButton_MouseDown);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.employmentHistoryToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(193, 48);
+            // 
+            // employmentHistoryToolStripMenuItem
+            // 
+            this.employmentHistoryToolStripMenuItem.Enabled = false;
+            this.employmentHistoryToolStripMenuItem.Name = "employmentHistoryToolStripMenuItem";
+            this.employmentHistoryToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.employmentHistoryToolStripMenuItem.Text = "Employment History...";
+            this.employmentHistoryToolStripMenuItem.Click += new System.EventHandler(this.EmploymentHistoryToolStripMenuItem_Click);
             // 
             // fitInfoPickerButton
             // 
@@ -854,6 +874,7 @@ namespace EveScanner.UI
             this.Load += new System.EventHandler(this.Form1_Load);
             this.infoContainer.ResumeLayout(false);
             this.infoContainer.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.locationContainer.ResumeLayout(false);
             this.locationContainer.PerformLayout();
             this.scanContainer.ResumeLayout(false);
@@ -907,7 +928,10 @@ namespace EveScanner.UI
         private System.Windows.Forms.ToolStripMenuItem noneToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resultsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem scansAndResultsToolStripMenuItem;
+#if DEBUG
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem1;
+#endif
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.ToolStripMenuItem scanSourceToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem evepraisalToolStripMenuItem;
@@ -921,7 +945,7 @@ namespace EveScanner.UI
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox fitInfoText;
         private System.Windows.Forms.ToolStripMenuItem submitANYClipboardDataToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem1;
+        
         private System.Windows.Forms.ToolStripMenuItem addExampleResultsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem licenseToolStripMenuItem;
@@ -939,11 +963,13 @@ namespace EveScanner.UI
         private System.Windows.Forms.Button shipTypePickerButton;
         private System.Windows.Forms.ToolStripMenuItem keepLocationBetweenScansToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem historyToolStripMenuItem;
-        private System.Windows.Forms.Button characterLookupButton;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel statusLabel;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         private System.Windows.Forms.ToolStripStatusLabel scanValueLabel;
+        private MenuButton characterLookupButton;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem employmentHistoryToolStripMenuItem;
     }
 }
 

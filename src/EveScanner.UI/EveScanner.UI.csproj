@@ -49,6 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EmploymentHistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EmploymentHistory.designer.cs">
+      <DependentUpon>EmploymentHistory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EmploymentHistoryListbox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="FitPicker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +69,9 @@
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MenuButton.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,6 +92,9 @@
     <Compile Include="ShipPicker.Designer.cs">
       <DependentUpon>ShipPicker.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="EmploymentHistory.resx">
+      <DependentUpon>EmploymentHistory.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FitPicker.resx">
       <DependentUpon>FitPicker.cs</DependentUpon>
     </EmbeddedResource>
@@ -105,6 +120,10 @@
     <ProjectReference Include="..\EveScanner.Core\EveScanner.Core.csproj">
       <Project>{1eda3726-407b-4e66-add3-84475e24ac0b}</Project>
       <Name>EveScanner.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveScanner.DI\EveScanner.IoC.csproj">
+      <Project>{1234a1da-8f4f-4560-b364-19342c1d219d}</Project>
+      <Name>EveScanner.IoC</Name>
     </ProjectReference>
     <ProjectReference Include="..\EveScanner.Interfaces\EveScanner.Interfaces.csproj">
       <Project>{58d010c9-8f3f-438b-b60e-eed817781a88}</Project>

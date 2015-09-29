@@ -7,6 +7,7 @@ namespace EveOnlineApi.Entities
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using EveOnlineApi.Entities.Xml;
 
     /// <summary>
@@ -25,8 +26,13 @@ namespace EveOnlineApi.Entities
         /// <param name="row">Member Corporation Row from XML</param>
         public AllianceMemberCorporation(MemberCorporationRow row)
         {
+            if (row == null)
+            {
+                throw new ArgumentException("row cannot be null", "row");
+            }
+
             this.CorporationId = row.CorporationId;
-            this.StartTime = DateTime.Parse(row.StartDate + "Z").ToUniversalTime();
+            this.StartTime = DateTime.Parse(row.StartDate + "Z", CultureInfo.InvariantCulture).ToUniversalTime();
         }
 
         /// <summary>

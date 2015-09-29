@@ -142,13 +142,25 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EveOnlineApi\EveOnlineApi.csproj">
+      <Project>{35d84931-08a2-439b-b217-4d7e1643e23c}</Project>
+      <Name>EveOnlineApi</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveScanner.Core\EveScanner.Core.csproj">
       <Project>{1eda3726-407b-4e66-add3-84475e24ac0b}</Project>
       <Name>EveScanner.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EveScanner.DI\EveScanner.IoC.csproj">
+      <Project>{1234a1da-8f4f-4560-b364-19342c1d219d}</Project>
+      <Name>EveScanner.IoC</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveScanner.Interfaces\EveScanner.Interfaces.csproj">
       <Project>{58d010c9-8f3f-438b-b60e-eed817781a88}</Project>
       <Name>EveScanner.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveScanner.SQLiteStorage\EveScanner.SQLiteStorage.csproj">
+      <Project>{d0023eb5-9ded-4ac1-8244-a0c8775755be}</Project>
+      <Name>EveScanner.SQLiteStorage</Name>
     </ProjectReference>
     <ProjectReference Include="..\EveScanner.UI\EveScanner.UI.csproj">
       <Project>{dfb55a23-fa38-4e31-8762-55e1d871c50f}</Project>

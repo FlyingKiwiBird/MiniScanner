@@ -7,10 +7,13 @@ namespace EveOnlineApi.Entities
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
 
     using EveOnlineApi.Common;
     using EveOnlineApi.Entities.Xml;
     using EveOnlineApi.Interfaces;
+
+    using EveScanner.IoC;
 
     /// <summary>
     /// Represents an Eve Online Alliance
@@ -28,12 +31,17 @@ namespace EveOnlineApi.Entities
         /// <param name="row">Alliance XML Row</param>
         public Alliance(AllianceRow row)
         {
+            if (row == null)
+            {
+                throw new ArgumentException("row cannot be null", "row");
+            }
+
             this.Name = row.Name;
             this.ShortName = row.ShortName;
             this.Id = row.AllianceId;
             this.ExecutorCorporationId = row.ExecutorCorpId;
             this.MemberCount = row.MemberCount;
-            this.StartDate = DateTime.Parse(row.StartDate + "Z").ToUniversalTime();
+            this.StartDate = DateTime.Parse(row.StartDate + "Z", CultureInfo.InvariantCulture).ToUniversalTime();
             this.MemberCorporations = AllianceMemberCorporation.GetMemberCorporationsFromXml(row.MemberCorporations);
         }
 
@@ -116,7 +124,7 @@ namespace EveOnlineApi.Entities
         /// <returns>Alliance Object</returns>
         public static Alliance GetAllianceByAllianceId(int allianceId)
         {
-            IAllianceDataProvider adp = Injector.Resolve<IAllianceDataProvider>();
+            IAllianceDataProvider adp = Injector.Create<IAllianceDataProvider>();
             return adp.GetAllianceInfo(allianceId);
         }
     }

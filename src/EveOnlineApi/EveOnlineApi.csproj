@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>..\AllRulesWithoutCA1303.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\AllianceMemberCorporation.cs" />
-    <Compile Include="Common\Injector.cs" />
     <Compile Include="Entities\Alliance.cs" />
     <Compile Include="Entities\Character.cs" />
     <Compile Include="Entities\Corporation.cs" />
@@ -100,6 +100,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="EveScanner.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EveScanner.DI\EveScanner.IoC.csproj">
+      <Project>{1234a1da-8f4f-4560-b364-19342c1d219d}</Project>
+      <Name>EveScanner.IoC</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

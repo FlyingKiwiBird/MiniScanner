@@ -198,23 +198,6 @@ namespace EveScanner.Core
         }
 
         /// <summary>
-        /// Gets an implementation of an interface as defined in the configuration file. This is not high-performance, so, don't use it a lot.
-        /// </summary>
-        /// <typeparam name="T">Interface Type</typeparam>
-        /// <returns>Instantiated Object</returns>
-        public static T GetImplementation<T>()
-        {
-            string objType = ConfigHelper.Instance.Implementations[typeof(T).Name];
-
-            if (string.IsNullOrEmpty(objType))
-            {
-                return default(T);
-            }
-
-            return (T)Activator.CreateInstance(Type.GetType(objType));
-        }
-
-        /// <summary>
         /// Gets the Application Configuration Value for the Specified Key
         /// </summary>
         /// <param name="cfg">Configuration object</param>

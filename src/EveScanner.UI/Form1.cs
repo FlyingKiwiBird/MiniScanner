@@ -706,6 +706,21 @@ namespace EveScanner.UI
             {
                 this.shipTypeDropdown.Items.Add(desc);
             }
+
+            if (!string.IsNullOrEmpty(ConfigHelper.Instance.Location1))
+            {
+                this.location1Text.Text = ConfigHelper.Instance.Location1;
+            }
+
+            if (!string.IsNullOrEmpty(ConfigHelper.Instance.Location2))
+            {
+                this.location2Text.Text = ConfigHelper.Instance.Location2;
+            }
+
+            if (!string.IsNullOrEmpty(ConfigHelper.Instance.Location3))
+            {
+                this.location3Text.Text = ConfigHelper.Instance.Location3;
+            }
         }
 
         /// <summary>
@@ -722,6 +737,14 @@ namespace EveScanner.UI
             }
 
             Logger.Debug("Saving Config");
+            
+            ConfigHelper.Instance.Location1 = this.location1Text.Text;
+            ConfigHelper.Instance.Location2 = this.location2Text.Text;
+            ConfigHelper.Instance.Location3 = this.location3Text.Text;
+
+            ConfigHelper.Instance.WindowPositionX = this.Location.X;
+            ConfigHelper.Instance.WindowPositionY = this.Location.Y;
+            
             ConfigHelper.Instance.Save();
             Logger.Debug("Config Saved");
         }

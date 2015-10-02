@@ -1,4 +1,9 @@
-﻿namespace EveScanner.SQLiteStorage
+﻿//-----------------------------------------------------------------------
+// <copyright company="Viktorie Lucilla" file="SQLiteScanHistory.cs">
+// Copyright © Viktorie Lucilla 2015. All Rights Reserved
+// </copyright>
+//-----------------------------------------------------------------------
+namespace EveScanner.SQLiteStorage
 {
     using System;
     using System.Collections.Generic;
@@ -10,10 +15,19 @@
     using EveScanner.Core;
     using EveScanner.Interfaces;
 
+    /// <summary>
+    /// Stores Scan History in an SQLite Database
+    /// </summary>
     public class SQLiteScanHistory : IScanHistory
     {
-        private static string ConnectionString = "Data Source=ScanHistory.db;Version=3;";
+        /// <summary>
+        /// Holds the connection string.
+        /// </summary>
+        private static string connectionString = "Data Source=ScanHistory.db;Version=3;";
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SQLiteScanHistory"/> class.
+        /// </summary>
         public SQLiteScanHistory()
         {
             if (!File.Exists("ScanHistory.db"))
@@ -22,6 +36,11 @@
             }
         }
 
+        /// <summary>
+        /// Adds a scan to storage.
+        /// </summary>
+        /// <param name="result">Scan Result to add to the Storage</param>
+        /// <returns>Unique identifier of the returned row. In the horrifically low chance there's a collision, if the unique identifier returned doesn't match the one you passed in, you should retrieve the record back from the DB.</returns>
         public Guid AddScan(IScanResult result)
         {
             string checkForUUIDText = "SELECT COUNT(ID) FROM tblScanHistory WHERE Id = @Id";
@@ -29,7 +48,7 @@
 
             int output = -1;
 
-            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.ConnectionString))
+            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.connectionString))
             {
                 cn.Open();
 
@@ -52,7 +71,8 @@
                             isNewId = true;
                         }
                     }
-                } while (isNewId == false);
+                } 
+                while (isNewId == false);
 
                 using (SQLiteCommand cmd = new SQLiteCommand(insertCommandText, cn))
                 {
@@ -78,13 +98,18 @@
                 return uuid;
             }
         }
-
+        
+        /// <summary>
+        /// Gets a particular scan from storage.
+        /// </summary>
+        /// <param name="id">Scan Id</param>
+        /// <returns>Scan Data</returns>
         public IScanResult GetResultById(Guid id)
         {
             string selectCommandText = "SELECT * FROM tblScanHistory WHERE Id = @Id";
             IScanResult output = null;
 
-            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.ConnectionString))
+            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.connectionString))
             {
                 cn.Open();
                 using (SQLiteCommand cmd = new SQLiteCommand(selectCommandText, cn))
@@ -105,11 +130,15 @@
             return output;
         }
 
+        /// <summary>
+        /// Gets all scans currently stored in storage.
+        /// </summary>
+        /// <returns>Collection of all scans</returns>
         public IEnumerable<IScanResult> GetAllScans()
         {
             string selectCommandText = "SELECT * FROM tblScanHistory ORDER BY rowid DESC";
 
-            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.ConnectionString))
+            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.connectionString))
             {
                 cn.Open();
                 using (SQLiteCommand cmd = new SQLiteCommand(selectCommandText, cn))
@@ -128,11 +157,16 @@
             yield break;
         }
 
+        /// <summary>
+        /// Gets all scans currently stored in storage for a particular character.
+        /// </summary>
+        /// <param name="characterName">Character Name</param>
+        /// <returns>Collection of all scans</returns>
         public IEnumerable<IScanResult> GetScansByCharacterName(string characterName)
         {
             string selectCommandText = "SELECT * FROM tblScanHistory WHERE CharacterName = @CharacterName ORDER BY rowid DESC";
 
-            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.ConnectionString))
+            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.connectionString))
             {
                 cn.Open();
                 using (SQLiteCommand cmd = new SQLiteCommand(selectCommandText, cn))
@@ -152,13 +186,17 @@
             yield break;
         }
 
+        /// <summary>
+        /// Updates a scan in storage.
+        /// </summary>
+        /// <param name="result">Scan Result to Update.</param>
         public void UpdateScan(IScanResult result)
         {
             string checkForUUIDText = "SELECT COUNT(ID) FROM tblScanHistory WHERE Id = @Id;";
             string updateCommandText = "UPDATE tblScanHistory SET ShipType = @ShipType, Location = @Location, CharacterName = @CharacterName, FitInfo = @FitInfo, Notes = @Notes WHERE ID = @Id;";
             bool isAdd = false;
 
-            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.ConnectionString))
+            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.connectionString))
             {
                 cn.Open();
 
@@ -194,6 +232,9 @@
             }
         }
 
+        /// <summary>
+        /// Internal use, creates the database if it doesn't exist.
+        /// </summary>
         private static void CreateDatabase()
         {
             #region Create Table SQL
@@ -216,7 +257,7 @@ CREATE TABLE ""tblScanHistory"" (
 );";
             #endregion Create Table SQL
 
-            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.ConnectionString))
+            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.connectionString))
             {
                 cn.Open();
                 using (SQLiteCommand cmd = new SQLiteCommand(createTable, cn))
@@ -226,6 +267,11 @@ CREATE TABLE ""tblScanHistory"" (
             }
         }
 
+        /// <summary>
+        /// Takes a row from an IDataReader, and converts it to a scan result.
+        /// </summary>
+        /// <param name="reader">IDataReader with active result set</param>
+        /// <returns>Scan Result</returns>
         private IScanResult ResolveReaderToScanResult(IDataReader reader)
         {
             string rawScan = (string)this.GetResultData(reader, "RawScan");
@@ -240,8 +286,7 @@ CREATE TABLE ""tblScanHistory"" (
                 (int)(long)this.GetResultData(reader, "Stacks"),
                 (decimal)this.GetResultData(reader, "Volume"),
                 (string)this.GetResultData(reader, "AppraisalUrl"),
-                ConfigHelper.Instance.FindImagesToDisplay(items)
-            )
+                ConfigHelper.Instance.FindImagesToDisplay(items))
             {
                 ShipType = (string)this.GetResultData(reader, "ShipType"),
                 Location = (string)this.GetResultData(reader, "Location"),
@@ -251,6 +296,12 @@ CREATE TABLE ""tblScanHistory"" (
             };
         }
 
+        /// <summary>
+        /// Gets result data, and auto converts DBNull to null.
+        /// </summary>
+        /// <param name="reader">IDataReader with active result set</param>
+        /// <param name="columnName">Column Name to parse</param>
+        /// <returns>Null optional object</returns>
         private object GetResultData(IDataReader reader, string columnName)
         {
             object obj = reader[columnName];

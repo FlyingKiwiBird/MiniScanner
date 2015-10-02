@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
@@ -93,6 +94,12 @@
     <Compile Include="ShipPicker.Designer.cs">
       <DependentUpon>ShipPicker.cs</DependentUpon>
     </Compile>
+    <Compile Include="TimerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TimerForm.Designer.cs">
+      <DependentUpon>TimerForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="EmploymentHistory.resx">
       <DependentUpon>EmploymentHistory.cs</DependentUpon>
     </EmbeddedResource>
@@ -111,6 +118,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ShipPicker.resx">
       <DependentUpon>ShipPicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TimerForm.resx">
+      <DependentUpon>TimerForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

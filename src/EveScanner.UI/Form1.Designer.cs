@@ -105,6 +105,7 @@ namespace EveScanner.UI
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.scanValueLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.newTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoContainer.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.locationContainer.SuspendLayout();
@@ -261,7 +262,7 @@ namespace EveScanner.UI
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.employmentHistoryToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(193, 48);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(193, 26);
             // 
             // employmentHistoryToolStripMenuItem
             // 
@@ -545,6 +546,7 @@ namespace EveScanner.UI
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newEmptyScanToolStripMenuItem,
+            this.newTimerToolStripMenuItem,
             this.toolStripSeparator1,
             this.clearToolStripMenuItem,
             this.toolStripSeparator2,
@@ -845,6 +847,14 @@ namespace EveScanner.UI
             this.scanValueLabel.Size = new System.Drawing.Size(13, 17);
             this.scanValueLabel.Text = "0";
             // 
+            // newTimerToolStripMenuItem
+            // 
+            this.newTimerToolStripMenuItem.Name = "newTimerToolStripMenuItem";
+            this.newTimerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.newTimerToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.newTimerToolStripMenuItem.Text = "New Timer";
+            this.newTimerToolStripMenuItem.Click += new System.EventHandler(this.newTimerToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -970,6 +980,7 @@ namespace EveScanner.UI
         private MenuButton characterLookupButton;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem employmentHistoryToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newTimerToolStripMenuItem;
     }
 }
 

@@ -1419,6 +1419,20 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             worker.RunWorkerCompleted += this.EmploymentWorker_RunWorkerCompleted;
             worker.RunWorkerAsync(this.result);
         }
+
+
+        /// <summary>
+        /// Displays a countdown timer form.
+        /// </summary>
+        /// <param name="sender">The parameter is not used.</param>
+        /// <param name="e">The parameter is not used.</param>
+        private void newTimerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TimerForm frm = new TimerForm();
+            frm.Show();
+
+            this.components.Add(frm);
+        }
         #endregion Menu Items
 
         #region Background Worker Methods

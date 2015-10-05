@@ -1,0 +1,31 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<eveapi version="2">
+  <currentTime>2015-09-17 13:27:17</currentTime>
+  <result>
+    <corporationID>667531913</corporationID>
+    <corporationName>GoonWaffe</corporationName>
+    <ticker>GEWNS</ticker>
+    <ceoID>443630591</ceoID>
+    <ceoName>The Mittani</ceoName>
+    <stationID>60002104</stationID>
+    <stationName>S-U8A4 V - Moon 1 - Ishukone Corporation Factory</stationName>
+    <description>FNLN: i killed my moms and my god. j/k. god isn't real and is a human concept. do babys ever think of god? no. because hes fake. baby geniuses was true... i guess.&lt;br&gt;dintlu: babies they cannot talk. if they know of god they cannot communicate of god. in growing they learn about adults needs to control information: Knowledge is Power. the baby genious indulges the moronic parent&lt;br&gt;FNLN: the baby thinks. it looks. ity understands. baby becomes ahigher being. baby is chrsit itself....??? maybe in your world. but you're in our world now.&lt;br&gt;dintlu: god is the ultimate. he is every baby&lt;br&gt;dintlu: also in every baby. he is their past and present. not their future. babys are left by god and become neitchze&lt;br&gt;dintlu: the baby grows and the baby is dead but not dead. only god is dead&lt;br&gt;FNLN: the baby. it always was about the baby. never about me, or her... just. ababy.&lt;br&gt;dintlu: you communicate. you are grown, not a baby, godless adult: resized devil&lt;br&gt;FNLN: holy shit</description>
+    <url />
+    <allianceID>1354830081</allianceID>
+    <factionID>0</factionID>
+    <allianceName>Goonswarm Federation</allianceName>
+    <taxRate>15</taxRate>
+    <memberCount>2830</memberCount>
+    <shares>100000</shares>
+    <logo>
+      <graphicID>0</graphicID>
+      <shape1>558</shape1>
+      <shape2>533</shape2>
+      <shape3>533</shape3>
+      <color1>673</color1>
+      <color2>680</color2>
+      <color3>680</color3>
+    </logo>
+  </result>
+  <cachedUntil>2015-09-17 16:46:26</cachedUntil>
+</eveapi>

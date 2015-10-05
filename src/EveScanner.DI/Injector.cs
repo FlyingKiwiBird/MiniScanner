@@ -48,7 +48,7 @@ namespace EveScanner.IoC
             }
 
             Delegate d = Expression.Lambda(Expression.New(implementationType)).Compile();
-            implementations.Add(typeof(TInterfaceType), d);
+            AddImplementationToMap(typeof(TInterfaceType), d);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace EveScanner.IoC
         /// <param name="constructor">Constructor Lambda</param>
         public static void Register<TInterfaceType>(Func<TInterfaceType> constructor)
         {
-            implementations.Add(typeof(TInterfaceType), constructor);
+            AddImplementationToMap(typeof(TInterfaceType), constructor);
         }
 
         /// <summary>
@@ -95,6 +95,21 @@ namespace EveScanner.IoC
             }
             
             return output;
+        }
+
+        /// <summary>
+        /// Adds an implementation to the mapping, removing the old one if necessary.
+        /// </summary>
+        /// <param name="t">Type to Add</param>
+        /// <param name="d">Delegate to Map</param>
+        private static void AddImplementationToMap(Type t, Delegate d)
+        {
+            if (implementations.ContainsKey(t))
+            {
+                implementations.Remove(t);
+            }
+
+            implementations.Add(t, d);
         }
     }
 }

@@ -1,0 +1,29 @@
+﻿<?xml version='1.0' encoding='UTF-8'?>
+<eveapi version="2">
+  <currentTime>2015-09-17 02:51:43</currentTime>
+  <result>
+    <characterID>1170031179</characterID>
+    <characterName>Viktorie Lucilla</characterName>
+    <race>Amarr</race>
+    <bloodlineID>13</bloodlineID>
+    <bloodline>Khanid</bloodline>
+    <ancestryID>37</ancestryID>
+    <ancestry>Cyber Knights</ancestry>
+    <corporationID>667531913</corporationID>
+    <corporation>GoonWaffe</corporation>
+    <corporationDate>2012-04-10 13:05:00</corporationDate>
+    <allianceID>1354830081</allianceID>
+    <alliance>Goonswarm Federation</alliance>
+    <allianceDate>2010-06-04 00:55:00</allianceDate>
+    <securityStatus>-1.2521440165047</securityStatus>
+    <rowset name="employmentHistory" key="recordID" columns="recordID,corporationID,corporationName,startDate">
+      <row recordID="19437644" corporationID="667531913" corporationName="GoonWaffe" startDate="2012-04-10 13:05:00" />
+      <row recordID="17668090" corporationID="1000080" corporationName="Ministry of War" startDate="2011-08-18 15:20:00" />
+      <row recordID="13108243" corporationID="667531913" corporationName="GoonWaffe" startDate="2010-03-01 02:50:00" />
+      <row recordID="11340919" corporationID="1000080" corporationName="Ministry of War" startDate="2009-08-23 02:20:00" />
+      <row recordID="7089510" corporationID="749147334" corporationName="GoonFleet" startDate="2009-02-06 02:58:00" />
+      <row recordID="7089509" corporationID="1000166" corporationName="Imperial Academy" startDate="2009-02-05 16:57:00" />
+    </rowset>
+  </result>
+  <cachedUntil>2015-09-17 03:46:12</cachedUntil>
+</eveapi>

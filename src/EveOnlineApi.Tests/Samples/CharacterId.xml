@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<eveapi version="2">
+  <currentTime>2015-09-17 02:50:49</currentTime>
+  <result>
+    <rowset name="characters" key="characterID" columns="name,characterID">
+      <row name="Viktorie Lucilla" characterID="1170031179" />
+    </rowset>
+  </result>
+  <cachedUntil>2015-10-17 02:50:49</cachedUntil>
+</eveapi>

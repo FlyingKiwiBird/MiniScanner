@@ -13,7 +13,7 @@ namespace EveOnlineApi.Entities.Xml
     /// Result tag for the EVE Corporation Sheet API
     /// </summary>
     [XmlRoot("result")]
-    public class CorporationSheetResult : EveApiResult<CorporationSheetRowset, CorporationSheetRow>
+    public class CorporationSheetResult : EveApiSingleResult<CorporationSheetRowset>
     {
         /// <summary>
         /// Gets or sets the Corporation Id

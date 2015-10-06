@@ -13,7 +13,7 @@ namespace EveOnlineApi.Entities.Xml
     /// Result tag for the EVE Alliance List API
     /// </summary>
     [XmlRoot("result")]
-    public class AllianceListResult : EveApiResult<AlliancesRowset, AllianceRow>
+    public class AllianceListResult : EveApiSingleResult<AlliancesRowset>
     {
     }
 }

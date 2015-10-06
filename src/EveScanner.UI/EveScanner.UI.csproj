@@ -94,6 +94,12 @@
     <Compile Include="ShipPicker.Designer.cs">
       <DependentUpon>ShipPicker.cs</DependentUpon>
     </Compile>
+    <Compile Include="StandingsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StandingsForm.Designer.cs">
+      <DependentUpon>StandingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="TimerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -118,6 +124,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ShipPicker.resx">
       <DependentUpon>ShipPicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StandingsForm.resx">
+      <DependentUpon>StandingsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TimerForm.resx">
       <DependentUpon>TimerForm.cs</DependentUpon>

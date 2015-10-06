@@ -13,7 +13,7 @@ namespace EveOnlineApi.Entities.Xml
     /// Base for the EVE Character Info API
     /// </summary>
     [XmlRoot("eveapi")]
-    public class CharacterInfoApi : EveApi<CharacterInfoResult, CharacterEmploymentRowset, CharacterEmploymentRow>
+    public class CharacterInfoApi : EveApi<CharacterInfoResult>
     {
     }
 }

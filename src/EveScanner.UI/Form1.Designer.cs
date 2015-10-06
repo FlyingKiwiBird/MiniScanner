@@ -42,7 +42,6 @@ namespace EveScanner.UI
             this.location2Text = new System.Windows.Forms.TextBox();
             this.location3Text = new System.Windows.Forms.TextBox();
             this.infoContainer = new System.Windows.Forms.GroupBox();
-            this.characterLookupButton = new EveScanner.UI.MenuButton();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.employmentHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fitInfoPickerButton = new System.Windows.Forms.Button();
@@ -70,6 +69,7 @@ namespace EveScanner.UI
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newEmptyScanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.clearToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -105,7 +105,8 @@ namespace EveScanner.UI
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.scanValueLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.newTimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.characterLookupButton = new EveScanner.UI.MenuButton();
+            this.standingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoContainer.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.locationContainer.SuspendLayout();
@@ -245,24 +246,13 @@ namespace EveScanner.UI
             this.infoContainer.TabStop = false;
             this.infoContainer.Text = "Scan Info";
             // 
-            // characterLookupButton
-            // 
-            this.characterLookupButton.Location = new System.Drawing.Point(312, 17);
-            this.characterLookupButton.Menu = this.contextMenuStrip1;
-            this.characterLookupButton.Name = "characterLookupButton";
-            this.characterLookupButton.Size = new System.Drawing.Size(26, 23);
-            this.characterLookupButton.TabIndex = 39;
-            this.characterLookupButton.Text = "?";
-            this.characterLookupButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.characterLookupButton.UseVisualStyleBackColor = true;
-            this.characterLookupButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CharacterLookupButton_MouseDown);
-            // 
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.employmentHistoryToolStripMenuItem});
+            this.employmentHistoryToolStripMenuItem,
+            this.standingsToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(193, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(193, 70);
             // 
             // employmentHistoryToolStripMenuItem
             // 
@@ -563,6 +553,14 @@ namespace EveScanner.UI
             this.newEmptyScanToolStripMenuItem.Text = "New Empty Scan";
             this.newEmptyScanToolStripMenuItem.Click += new System.EventHandler(this.NewEmptyScanToolStripMenuItem_Click);
             // 
+            // newTimerToolStripMenuItem
+            // 
+            this.newTimerToolStripMenuItem.Name = "newTimerToolStripMenuItem";
+            this.newTimerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
+            this.newTimerToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.newTimerToolStripMenuItem.Text = "New Timer";
+            this.newTimerToolStripMenuItem.Click += new System.EventHandler(this.NewTimerToolStripMenuItem_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -847,13 +845,25 @@ namespace EveScanner.UI
             this.scanValueLabel.Size = new System.Drawing.Size(13, 17);
             this.scanValueLabel.Text = "0";
             // 
-            // newTimerToolStripMenuItem
+            // characterLookupButton
             // 
-            this.newTimerToolStripMenuItem.Name = "newTimerToolStripMenuItem";
-            this.newTimerToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.T)));
-            this.newTimerToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
-            this.newTimerToolStripMenuItem.Text = "New Timer";
-            this.newTimerToolStripMenuItem.Click += new System.EventHandler(this.newTimerToolStripMenuItem_Click);
+            this.characterLookupButton.Location = new System.Drawing.Point(312, 17);
+            this.characterLookupButton.Menu = this.contextMenuStrip1;
+            this.characterLookupButton.Name = "characterLookupButton";
+            this.characterLookupButton.Size = new System.Drawing.Size(26, 23);
+            this.characterLookupButton.TabIndex = 39;
+            this.characterLookupButton.Text = "?";
+            this.characterLookupButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.characterLookupButton.UseVisualStyleBackColor = true;
+            this.characterLookupButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CharacterLookupButton_MouseDown);
+            // 
+            // standingsToolStripMenuItem
+            // 
+            this.standingsToolStripMenuItem.Enabled = false;
+            this.standingsToolStripMenuItem.Name = "standingsToolStripMenuItem";
+            this.standingsToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.standingsToolStripMenuItem.Text = "Standings";
+            this.standingsToolStripMenuItem.Click += new System.EventHandler(this.StandingsToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -981,6 +991,7 @@ namespace EveScanner.UI
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem employmentHistoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newTimerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem standingsToolStripMenuItem;
     }
 }
 

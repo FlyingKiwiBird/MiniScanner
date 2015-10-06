@@ -543,7 +543,12 @@ namespace EveScanner.UI
                 this.location3Radio.Checked = false;
             }
 
+            this.standingsToolStripMenuItem.Enabled = false;
             this.employmentHistoryToolStripMenuItem.Enabled = this.result.Character == null;
+            if (this.result.Character != null)
+            {
+                this.standingsToolStripMenuItem.Enabled = this.result.Character.Standings != null;
+            }
         }
 
         /// <summary>
@@ -1038,11 +1043,17 @@ namespace EveScanner.UI
             if (this.result.Character != null)
             {
                 this.employmentHistoryToolStripMenuItem.Enabled = true;
+                if (this.result.Character.Standings != null)
+                {
+                    this.standingsToolStripMenuItem.Enabled = true;
+                }
+
                 return;
             }
             else
             {
                 this.employmentHistoryToolStripMenuItem.Enabled = false;
+                this.standingsToolStripMenuItem.Enabled = false;
             }
 
             BackgroundWorker characterLookup = new BackgroundWorker();
@@ -1167,6 +1178,7 @@ namespace EveScanner.UI
             this.historyDropdown.Items.Clear();
             this.scanValueLabel.Text = "0";
             this.employmentHistoryToolStripMenuItem.Enabled = false;
+            this.standingsToolStripMenuItem.Enabled = false;
         }
 
         /// <summary>
@@ -1367,6 +1379,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
 
             this.SetStatusMessage("New (Empty) Scan Created.");
             this.employmentHistoryToolStripMenuItem.Enabled = false;
+            this.standingsToolStripMenuItem.Enabled = false;
         }
 
         /// <summary>
@@ -1420,13 +1433,35 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             worker.RunWorkerAsync(this.result);
         }
 
+        /// <summary>
+        /// Called when the Standings item on the Character Info dropdown is clicked.
+        /// </summary>
+        /// <param name="sender">The parameter is not used.</param>
+        /// <param name="e">The parameter is not used.</param>
+        private void StandingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.result == null)
+            {
+                return;
+            }
+
+            if (this.result.Character == null)
+            {
+                return;
+            }
+
+            using (StandingsForm frm = new StandingsForm(this.result.Character.Standings))
+            {
+                frm.ShowDialog();
+            }
+        }
 
         /// <summary>
         /// Displays a countdown timer form.
         /// </summary>
         /// <param name="sender">The parameter is not used.</param>
         /// <param name="e">The parameter is not used.</param>
-        private void newTimerToolStripMenuItem_Click(object sender, EventArgs e)
+        private void NewTimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TimerForm frm = new TimerForm();
             frm.Show();
@@ -1462,6 +1497,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             }
 
             cx.PopulateCorpAllianceData();
+            cx.PopulateStandings();
             rx.Character = cx;
 
             e.Result = rx;
@@ -1502,6 +1538,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
                 this.result = rx;
                 this.UpdateDropdown();
                 this.employmentHistoryToolStripMenuItem.Enabled = true;
+                this.standingsToolStripMenuItem.Enabled = true;
             }
             else
             {

@@ -36,11 +36,13 @@ namespace EveScanner
             Injector.Register<IAllianceXmlDataProvider>(typeof(FileBackedEveOnlineXmlApi));
             Injector.Register<ICharacterXmlDataProvider>(typeof(FileBackedEveOnlineXmlApi));
             Injector.Register<ICorporationXmlDataProvider>(typeof(FileBackedEveOnlineXmlApi));
+            Injector.Register<IContactListXmlDataProvider>(typeof(FileBackedEveOnlineXmlApi));
 
             // Configure other API Entity Injections
             Injector.Register<IAllianceDataProvider>(typeof(XmlBackedEveOnlineApi));
             Injector.Register<ICharacterDataProvider>(typeof(XmlBackedEveOnlineApi));
             Injector.Register<ICorporationDataProvider>(typeof(XmlBackedEveOnlineApi));
+            Injector.Register<IStandingsDataProvider>(typeof(XmlBackedEveOnlineApi));
             
             Injector.Register<IImageDataProvider>(typeof(FileBackedImageDataProvider));
 

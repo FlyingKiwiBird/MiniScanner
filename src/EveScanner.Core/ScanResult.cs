@@ -19,6 +19,11 @@ namespace EveScanner.Core
     public class ScanResult : IScanResult
     {
         /// <summary>
+        /// Holds the character object so we can do other things with it.
+        /// </summary>
+        private Character character = default(Character);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ScanResult"/> class.
         /// </summary>
         /// <param name="id">Unique Identifier for the Scan</param>
@@ -132,7 +137,58 @@ namespace EveScanner.Core
         /// <summary>
         /// Gets or sets additional Character data.
         /// </summary>
-        public Character Character { get; set; }
+        public Character Character
+        {
+            get
+            {
+                return this.character;
+            }
+
+            set
+            {
+                this.character = value;
+
+                List<int> integers = null;
+                if (this.ImageIndex == null)
+                {
+                    integers = new List<int>();
+                }
+                else
+                {
+                    integers = new List<int>(this.ImageIndex);
+                }
+
+                foreach (int i in new int[] { 190, 195, 205, 210 })
+                {
+                    if (integers.Contains(i))
+                    {
+                        integers.Remove(i);
+                    }
+                }
+
+                if (this.character.Standings != null)
+                {
+                    if (this.Character.Standings.DerivedStanding < -5)
+                    {
+                        integers.Add(190);
+                    }
+                    else if (this.Character.Standings.DerivedStanding < 0)
+                    {
+                        integers.Add(195);
+                    }
+                    else if (this.Character.Standings.DerivedStanding > 5)
+                    {
+                        integers.Add(210);
+                    }
+                    else if (this.Character.Standings.DerivedStanding > 0)
+                    {
+                        integers.Add(205);
+                    }
+                }
+
+                this.ImageIndex = integers;
+            }
+        }
 
         /// <summary>
         /// Formats an ISK value as a string. Does not double the ISK. Returns up to 2 decimal places with an amount identifier.
@@ -178,6 +234,25 @@ namespace EveScanner.Core
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
+
+            if (this.character != null && this.character.Standings != null)
+            {
+                decimal st = this.character.Standings.DerivedStanding;
+
+                if (st < -5)
+                {
+                    sb.Append("RED ");
+                }
+                else if (st < 0)
+                {
+                    sb.Append("ORANGE ");
+                }
+                else if (st > 0)
+                {
+                    sb.Append("BLUE ");
+                }
+            }
+
             if (!string.IsNullOrEmpty(this.ShipType))
             {
                 if (ConfigHelper.Instance.ShipTypes[this.ShipType] != null)
@@ -188,6 +263,10 @@ namespace EveScanner.Core
                 {
                     sb.AppendFormat("{0} | ", this.ShipType);
                 }
+            }
+            else if (!string.IsNullOrEmpty(sb.ToString()))
+            {
+                sb.Append("| ");
             }
 
             if (this.SellValue == 0 && this.BuyValue == 0 && this.Volume == 0 && this.Stacks == 0)
@@ -202,8 +281,7 @@ namespace EveScanner.Core
             if (this.ImageIndex != null && this.ImageIndex.Count() > 0)
             {
                 bool first = true;
-
-                foreach (int i in this.ImageIndex)
+                foreach (int i in this.ImageIndex.Where(x => !(new int[] { 190, 195, 205, 210 }).Contains(x)))
                 {
                     if (first)
                     {
@@ -217,7 +295,10 @@ namespace EveScanner.Core
                     sb.AppendFormat(" {0}", ConfigHelper.Instance.ImageNames[i.ToString(CultureInfo.InvariantCulture)]);
                 }
 
-                sb.Append(" |");
+                if (!first)
+                {
+                    sb.Append(" |");
+                }
             }
 
             sb.AppendFormat(" {0}", this.AppraisalUrl);

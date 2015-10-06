@@ -54,7 +54,9 @@
     <Compile Include="Entities\Corporation.cs" />
     <Compile Include="Entities\CorporationLogo.cs" />
     <Compile Include="Entities\EmploymentHistoryEntry.cs" />
+    <Compile Include="Entities\EntityType.cs" />
     <Compile Include="Entities\EveOnlineCacheable.cs" />
+    <Compile Include="Entities\Standings.cs" />
     <Compile Include="Entities\Xml\AllianceListApi.cs" />
     <Compile Include="Entities\Xml\AllianceListResult.cs" />
     <Compile Include="Entities\Xml\AllianceRow.cs" />
@@ -77,6 +79,13 @@
     <Compile Include="Entities\Xml\CharacterIdRow.cs" />
     <Compile Include="Entities\Xml\CharacterIdRowset.cs" />
     <Compile Include="Entities\Xml\CharacterInfoResult.cs" />
+    <Compile Include="Entities\Xml\ContactLabelRow.cs" />
+    <Compile Include="Entities\Xml\ContactLabelRowset.cs" />
+    <Compile Include="Entities\Xml\ContactListApi.cs" />
+    <Compile Include="Entities\Xml\ContactListResult.cs" />
+    <Compile Include="Entities\Xml\GroupContactListRow.cs" />
+    <Compile Include="Entities\Xml\PersonalContactListRowset.cs" />
+    <Compile Include="Entities\Xml\GroupContactListRowset.cs" />
     <Compile Include="Entities\Xml\CorporationLogo.cs" />
     <Compile Include="Entities\Xml\CorporationSheetApi.cs" />
     <Compile Include="Entities\Xml\CorporationSheetResult.cs" />
@@ -84,10 +93,13 @@
     <Compile Include="Entities\Xml\CorporationSheetRowset.cs" />
     <Compile Include="Entities\Xml\MemberCorporationRow.cs" />
     <Compile Include="Entities\Xml\MemberCorporationsRowset.cs" />
+    <Compile Include="Entities\Xml\PersonalContactListRow.cs" />
     <Compile Include="EveOnlineXmlApi.cs" />
     <Compile Include="FileBackedImageDataProvider.cs" />
     <Compile Include="Interfaces\IImageDataProvider.cs" />
+    <Compile Include="Interfaces\IStandingsDataProvider.cs" />
     <Compile Include="Interfaces\Xml\ICallListXmlDataProvider.cs" />
+    <Compile Include="Interfaces\Xml\IContactListXmlDataProvider.cs" />
     <Compile Include="XmlBackedEveOnlineApi.cs" />
     <Compile Include="FileBackedEveOnlineXmlApi.cs" />
     <Compile Include="Interfaces\IAllianceDataProvider.cs" />

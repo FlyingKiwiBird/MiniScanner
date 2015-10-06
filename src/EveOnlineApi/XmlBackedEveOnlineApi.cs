@@ -5,11 +5,13 @@
 //-----------------------------------------------------------------------
 namespace EveOnlineApi
 {
+    using System.Linq;
+    
     using EveOnlineApi.Common;
     using EveOnlineApi.Entities;
+    using EveOnlineApi.Entities.Xml;
     using EveOnlineApi.Interfaces;
     using EveOnlineApi.Interfaces.Xml;
-
     using EveScanner.IoC;
 
     /// <summary>
@@ -19,7 +21,7 @@ namespace EveOnlineApi
     /// provides more a more friendly interface to the EVE data, complete with lazy
     /// loaded properties where applicable.
     /// </summary>
-    public class XmlBackedEveOnlineApi : ICharacterDataProvider, ICorporationDataProvider, IAllianceDataProvider
+    public class XmlBackedEveOnlineApi : ICharacterDataProvider, ICorporationDataProvider, IAllianceDataProvider, IStandingsDataProvider
     {
         /// <summary>
         /// Gets the Character Id for a particular Character Name
@@ -76,6 +78,145 @@ namespace EveOnlineApi
         {
             IAllianceXmlDataProvider xdp = Injector.Create<IAllianceXmlDataProvider>();
             return new Alliance(xdp.GetAllianceData(allianceId, suppressMemberCorps));
+        }
+
+        /// <summary>
+        /// Gets Standings for a given Entity
+        /// </summary>
+        /// <param name="entityName">Name of Entity</param>
+        /// <param name="entityType">Type of Entity</param>
+        /// <returns>Standings Information</returns>
+        public Standings GetStandingsInfo(string entityName, EntityType entityType)
+        {
+            int entityId = this.GetCharacterId(entityName);
+
+            // This is a little complicated...
+            Character ch = null;
+            Corporation cp = null;
+            Alliance al = null;
+
+            if (entityType == EntityType.Character)
+            {
+                ch = this.GetCharacterInfo(entityId);
+            }
+
+            if (entityType == EntityType.Corporation)
+            {
+                cp = this.GetCorporationInfo(entityId);
+            }
+
+            if (entityType == EntityType.Alliance)
+            {
+                al = this.GetAllianceInfo(entityId);
+            }
+
+            if (ch != null && ch.CorporationId > 0)
+            {
+                cp = ch.Corporation;
+            }
+
+            if (cp != null && cp.AllianceId > 0)
+            {
+                al = cp.Alliance;
+            }
+
+            IContactListXmlDataProvider xdp = Injector.Create<IContactListXmlDataProvider>();
+
+            ContactListApi api = xdp.GetContactList();
+
+            decimal psch = 0, pscr = 0, psa = 0, csch = 0, cscr = 0, csa = 0, asch = 0, ascr = 0, asa = 0;
+
+            if (al != null)
+            {
+                if (api.Result.ContactList != null)
+                {
+                    var a1 = api.Result.ContactList.Rows.Where(x => x.ContactName == al.Name && x.ContactTypeId == EntityType.Alliance).FirstOrDefault();
+                    if (a1 != null)
+                    {
+                        psa = a1.Standing;
+                    }
+                }
+
+                if (api.Result.CorporateContactList != null)
+                {
+                    var a2 = api.Result.CorporateContactList.Rows.Where(x => x.ContactName == al.Name && x.ContactTypeId == EntityType.Alliance).FirstOrDefault();
+                    if (a2 != null)
+                    {
+                        csa = a2.Standing;
+                    }
+                }
+
+                if (api.Result.AllianceContactList != null)
+                {
+                    var a3 = api.Result.AllianceContactList.Rows.Where(x => x.ContactName == al.Name && x.ContactTypeId == EntityType.Alliance).FirstOrDefault();
+                    if (a3 != null)
+                    {
+                        asa = a3.Standing;
+                    }
+                }
+            }
+
+            if (cp != null)
+            {
+                if (api.Result.ContactList != null)
+                {
+                    var c1 = api.Result.ContactList.Rows.Where(x => x.ContactName == cp.Name && x.ContactTypeId == EntityType.Corporation).FirstOrDefault();
+                    if (c1 != null)
+                    {
+                        pscr = c1.Standing;
+                    }
+                }
+
+                if (api.Result.CorporateContactList != null)
+                {
+                    var c2 = api.Result.CorporateContactList.Rows.Where(x => x.ContactName == cp.Name && x.ContactTypeId == EntityType.Corporation).FirstOrDefault();
+                    if (c2 != null)
+                    {
+                        cscr = c2.Standing;
+                    }
+                }
+
+                if (api.Result.AllianceContactList != null)
+                {
+                    var c3 = api.Result.AllianceContactList.Rows.Where(x => x.ContactName == cp.Name && x.ContactTypeId == EntityType.Corporation).FirstOrDefault();
+                    if (c3 != null)
+                    {
+                        ascr = c3.Standing;
+                    }
+                }
+            }
+
+            if (ch != null)
+            {
+                if (api.Result.ContactList != null)
+                {
+                    var h1 = api.Result.ContactList.Rows.Where(x => x.ContactName == ch.Name && x.ContactTypeId == EntityType.Character).FirstOrDefault();
+                    if (h1 != null)
+                    {
+                        psch = h1.Standing;
+                    }
+                }
+
+                if (api.Result.CorporateContactList != null)
+                {
+                    var h2 = api.Result.CorporateContactList.Rows.Where(x => x.ContactName == ch.Name && x.ContactTypeId == EntityType.Character).FirstOrDefault();
+                    if (h2 != null)
+                    {
+                        csch = h2.Standing;
+                    }
+                }
+
+                if (api.Result.AllianceContactList != null)
+                {
+                    var h3 = api.Result.AllianceContactList.Rows.Where(x => x.ContactName == ch.Name && x.ContactTypeId == EntityType.Character).FirstOrDefault();
+                    if (h3 != null)
+                    {
+                        asch = h3.Standing;
+                    }
+                }
+            }
+
+            return new Standings(psch, pscr, psa, csch, cscr, csa, asch, ascr, asa);
         }
     }
 }

@@ -39,6 +39,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.XML" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -55,6 +56,7 @@
   <ItemGroup>
     <Compile Include="AssemblyLevel.cs" />
     <Compile Include="NonXMLTest.cs" />
+    <Compile Include="XmlContactList.cs" />
     <Compile Include="XMLAllianceList.cs" />
     <Compile Include="XMLCallList.cs" />
     <Compile Include="XMLCorporationSheet.cs" />
@@ -73,6 +75,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Samples\CharacterInfo.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Samples\ContactList.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Samples\CorporationSheet.xml">

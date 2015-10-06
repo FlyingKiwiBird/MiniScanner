@@ -37,13 +37,9 @@ namespace EveOnlineApi.Entities.Xml.Base
     /// sets are strongly typed down to the row level.
     /// </summary>
     /// <typeparam name="T">API Result Type</typeparam>
-    /// <typeparam name="U">API Row Set Type</typeparam>
-    /// <typeparam name="V">API Row Type</typeparam>
     [XmlRoot("eveapi")]
-    public abstract class EveApi<T, U, V> : EveApi
-        where T : EveApiResult<U, V>
-        where U : EveApiRowset<V>
-        where V : EveRow
+    public abstract class EveApi<T> : EveApi
+        where T : EveApiResult
     {
         /// <summary>
         /// Gets or sets the EVE API Result

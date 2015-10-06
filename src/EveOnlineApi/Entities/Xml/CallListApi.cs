@@ -12,14 +12,7 @@ namespace EveOnlineApi.Entities.Xml
     /// Base for the EVE Call List API
     /// </summary>
     [XmlRoot("eveapi")]
-    public class CallListApi : EveApi
+    public class CallListApi : EveApi<CallListResult>
     {
-        /// <summary>
-        /// Gets or sets the Result object. This class defines
-        /// the result directly since it holds two row sets unlike
-        /// the normal result object.
-        /// </summary>
-        [XmlElement("result")]
-        public CallListResult Result { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace EveOnlineApi.Entities.Xml
     /// Base for the EVE Corporation Sheet API
     /// </summary>
     [XmlRoot("eveapi")]
-    public class CorporationSheetApi : EveApi<CorporationSheetResult, CorporationSheetRowset, CorporationSheetRow>
+    public class CorporationSheetApi : EveApi<CorporationSheetResult>
     {
     }
 }

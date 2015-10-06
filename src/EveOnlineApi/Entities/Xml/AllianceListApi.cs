@@ -15,7 +15,7 @@ namespace EveOnlineApi.Entities.Xml
     /// Base for the EVE Alliance List API
     /// </summary>
     [XmlRoot("eveapi")]
-    public class AllianceListApi : EveApi<AllianceListResult, AlliancesRowset, AllianceRow>
+    public class AllianceListApi : EveApi<AllianceListResult>
     {
     }
 }

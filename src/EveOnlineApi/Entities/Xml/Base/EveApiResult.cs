@@ -10,6 +10,7 @@ namespace EveOnlineApi.Entities.Xml.Base
     /// <summary>
     /// Represents an EVI API Result Set. Usually extended with a row set.
     /// </summary>
+    [XmlRoot("result")]
     public class EveApiResult
     {
     }
@@ -18,11 +19,9 @@ namespace EveOnlineApi.Entities.Xml.Base
     /// Represents an EVI API Result Set. Usually just contains a "Row set" element, but, can contain other items.
     /// </summary>
     /// <typeparam name="U">API Row Set Type</typeparam>
-    /// <typeparam name="V">API Row Type</typeparam>
     [XmlRoot("result")]
-    public abstract class EveApiResult<U, V> : EveApiResult
-        where U : EveApiRowset<V>
-        where V : EveRow
+    public abstract class EveApiSingleResult<U> : EveApiResult
+        where U : EveApiRowset
     {
         /// <summary>
         /// Gets or sets the Row Set

@@ -26,7 +26,7 @@ namespace EveOnlineApi
     /// not the most friendly objects to work with. You likely want to work with the non-XML
     /// entities which are also defined in this project.
     /// </summary>
-    public class FileBackedEveOnlineXmlApi : IAllianceXmlDataProvider, ICharacterXmlDataProvider, ICorporationXmlDataProvider, ICallListXmlDataProvider
+    public class FileBackedEveOnlineXmlApi : IAllianceXmlDataProvider, ICharacterXmlDataProvider, ICorporationXmlDataProvider, ICallListXmlDataProvider, IContactListXmlDataProvider
     {
         /// <summary>
         /// Holds the directory where we're setting our cache.
@@ -203,6 +203,41 @@ namespace EveOnlineApi
             }
 
             CallListApi api = XmlSerialization.DeserializeFile<CallListApi>(localCacheFile);
+
+            return api;
+        }
+
+        /// <summary>
+        /// Gets the Contact List. This item is not retrieved from Eve API Servers. It is static.
+        /// </summary>
+        /// <returns>ContactList XML Object</returns>
+        public ContactListApi GetContactList()
+        {
+            string localCacheDirectory = Path.Combine(this.cacheDirectory, "ContactList");
+            if (!Directory.Exists(localCacheDirectory))
+            {
+                Directory.CreateDirectory(localCacheDirectory);
+            }
+
+            string localCacheFile = Path.Combine(localCacheDirectory, "ContactList.xml");
+
+            if (this.NeedNewFile(localCacheFile))
+            {
+                /*this.DownloadFile(new Uri("https://standings.goonfleet.com"), localCacheFile);
+
+                // Modify the GoonFleet contact list (remove XSL declaration and change expiry to 1 day)
+                string goonfleetStandings = File.ReadAllText(localCacheFile);
+                goonfleetStandings = goonfleetStandings.Replace("<?xml-stylesheet href=\"contacts.xsl\" type=\"text/xsl\"?>", "");
+                int cu = goonfleetStandings.IndexOf("<cachedUntil>");
+                string oldDate = goonfleetStandings.Substring(cu + 13, 19);
+                string newDate = DateTime.Parse(oldDate).AddDays(1).ToString("yyyy-MM-dd hh:mm:ss");
+
+                goonfleetStandings = goonfleetStandings.Substring(0, cu - 1) + "<cachedUntil>" + newDate + "</cachedUntil>" + Environment.NewLine + "</eveapi>";
+
+                File.WriteAllText(localCacheFile, goonfleetStandings);*/
+            }
+            
+            ContactListApi api = XmlSerialization.DeserializeFile<ContactListApi>(localCacheFile);
 
             return api;
         }

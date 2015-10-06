@@ -13,7 +13,7 @@ namespace EveOnlineApi.Entities.Xml
     /// Result tag for the EVE Character Info API
     /// </summary>
     [XmlRoot("result")]
-    public class CharacterInfoResult : EveApiResult<CharacterEmploymentRowset, CharacterEmploymentRow>
+    public class CharacterInfoResult : EveApiSingleResult<CharacterEmploymentRowset>
     {
         /// <summary>
         /// Gets or sets the Character Id

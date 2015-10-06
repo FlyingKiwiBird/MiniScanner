@@ -6,6 +6,7 @@
 namespace EveScanner.UI
 {
     using System;
+    using System.Globalization;
     using System.Windows.Forms;
 
     /// <summary>
@@ -91,9 +92,9 @@ namespace EveScanner.UI
                     double frac = timeRemaining - (int)timeRemaining;
                     int fracInt = (int)(frac * 100);
 
-                    this.minsLabel.Text = (minutes < 10 ? "0" : string.Empty) + minutes.ToString();
-                    this.secsLabel.Text = (seconds < 10 ? "0" : string.Empty) + seconds.ToString();
-                    this.fractionLabel.Text = (fracInt < 10 ? "0" : string.Empty) + fracInt.ToString();
+                    this.minsLabel.Text = (minutes < 10 ? "0" : string.Empty) + minutes.ToString(CultureInfo.InvariantCulture);
+                    this.secsLabel.Text = (seconds < 10 ? "0" : string.Empty) + seconds.ToString(CultureInfo.InvariantCulture);
+                    this.fractionLabel.Text = (fracInt < 10 ? "0" : string.Empty) + fracInt.ToString(CultureInfo.InvariantCulture);
                 }
             }
         }

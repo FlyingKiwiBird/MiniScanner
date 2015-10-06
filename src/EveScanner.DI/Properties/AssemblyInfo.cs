@@ -1,9 +1,9 @@
-﻿using System;
-//-----------------------------------------------------------------------
+﻿//-----------------------------------------------------------------------
 // <copyright company="Viktorie Lucilla" file="AssemblyInfo.cs">
 // Copyright © Viktorie Lucilla 2015. All Rights Reserved
 // </copyright>
 //-----------------------------------------------------------------------
+using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;

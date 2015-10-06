@@ -25,6 +25,11 @@ namespace EveOnlineApi.Entities
         private Corporation corporation;
 
         /// <summary>
+        /// Holds the lazy loaded Standings object.
+        /// </summary>
+        private Standings standings;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Character"/> class.
         /// </summary>
         /// <param name="apiResult">Xml API Result</param>
@@ -114,6 +119,22 @@ namespace EveOnlineApi.Entities
         public IEnumerable<EmploymentHistoryEntry> EmploymentHistory { get; private set; }
 
         /// <summary>
+        /// Gets the Character's Standings.
+        /// </summary>
+        public Standings Standings
+        {
+            get
+            {
+                if (this.standings == null)
+                {
+                    this.PopulateStandings();
+                }
+
+                return this.standings;
+            }
+        }
+
+        /// <summary>
         /// Gets the Character data for a particular Character Id.
         /// </summary>
         /// <param name="characterId">Character Id to lookup.</param>
@@ -159,6 +180,19 @@ namespace EveOnlineApi.Entities
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Forces the object to populate standings.
+        /// </summary>
+        public void PopulateStandings()
+        {
+            if (this.standings != null)
+            {
+                return;
+            }
+
+            this.standings = Standings.GetStandings(this.Name, EntityType.Character);
         }
 
         /// <summary>

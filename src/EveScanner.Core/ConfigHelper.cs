@@ -5,7 +5,6 @@
 //-----------------------------------------------------------------------
 namespace EveScanner.Core
 {
-    using System;
     using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.Configuration;
@@ -195,6 +194,29 @@ namespace EveScanner.Core
             }
 
             yield break;
+        }
+
+        /// <summary>
+        /// Gets the Connection String for the Specified Key
+        /// </summary>
+        /// <param name="key">Name of the Configuration String to retrieve</param>
+        /// <param name="throwExceptionIfMissing">A value indicating whether an exception should be thrown if the key isn't present</param>
+        /// <returns>Configured Value</returns>
+        public static string GetConnectionString(string key, bool throwExceptionIfMissing = false)
+        {
+            Configuration cfg = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+            if (cfg.ConnectionStrings.ConnectionStrings[key] == null)
+            {
+                if (throwExceptionIfMissing)
+                {
+                    throw new ConfigurationErrorsException("missing app config key");
+                }
+
+                return string.Empty;
+            }
+
+            return cfg.ConnectionStrings.ConnectionStrings[key].ConnectionString;
         }
 
         /// <summary>

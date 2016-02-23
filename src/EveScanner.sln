@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveScanner", "EveScanner\EveScanner.csproj", "{3715238A-1823-45D4-B289-D8561D415F17}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveScanner.IoC", "EveScanner.DI\EveScanner.IoC.csproj", "{1234A1DA-8F4F-4560-B364-19342C1D219D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveOnlineApi.Tests", "EveOnlineApi.Tests\EveOnlineApi.Tests.csproj", "{EA606EF8-8F12-49A9-8DC7-C15958D89868}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveScanner.SQLiteStorage.Tests", "EveScanner.SQLiteStorage.Tests\EveScanner.SQLiteStorage.Tests.csproj", "{B599E1DF-9817-4EDA-9F77-084C1B54C1EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{EA606EF8-8F12-49A9-8DC7-C15958D89868}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA606EF8-8F12-49A9-8DC7-C15958D89868}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA606EF8-8F12-49A9-8DC7-C15958D89868}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B599E1DF-9817-4EDA-9F77-084C1B54C1EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B599E1DF-9817-4EDA-9F77-084C1B54C1EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B599E1DF-9817-4EDA-9F77-084C1B54C1EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B599E1DF-9817-4EDA-9F77-084C1B54C1EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

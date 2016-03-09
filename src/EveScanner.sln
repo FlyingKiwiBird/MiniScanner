@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveOnlineApi.Tests", "EveOn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveScanner.SQLiteStorage.Tests", "EveScanner.SQLiteStorage.Tests\EveScanner.SQLiteStorage.Tests.csproj", "{B599E1DF-9817-4EDA-9F77-084C1B54C1EF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveScanner.Evepraisal", "EveScanner.Evepraisal\EveScanner.Evepraisal.csproj", "{FE35FE00-C2B5-4CF0-AC04-CB825C9ADCF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveScanner.Evepraisal.Tests", "EveScanner.Evepraisal.Tests\EveScanner.Evepraisal.Tests.csproj", "{E0398E4B-4DD6-4B8E-9B8E-477BFF170C3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +73,14 @@ Global
 		{B599E1DF-9817-4EDA-9F77-084C1B54C1EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B599E1DF-9817-4EDA-9F77-084C1B54C1EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B599E1DF-9817-4EDA-9F77-084C1B54C1EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE35FE00-C2B5-4CF0-AC04-CB825C9ADCF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE35FE00-C2B5-4CF0-AC04-CB825C9ADCF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE35FE00-C2B5-4CF0-AC04-CB825C9ADCF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE35FE00-C2B5-4CF0-AC04-CB825C9ADCF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0398E4B-4DD6-4B8E-9B8E-477BFF170C3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0398E4B-4DD6-4B8E-9B8E-477BFF170C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0398E4B-4DD6-4B8E-9B8E-477BFF170C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0398E4B-4DD6-4B8E-9B8E-477BFF170C3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

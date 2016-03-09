@@ -15,7 +15,7 @@ namespace EveScanner.SQLiteStorage
 
         public SQLiteExtraDataProvider()
         {
-            this.connectionString = ConfigHelper.GetConnectionString("EDEProvider");
+            this.connectionString = ConfigHelper.GetConnectionString("SQLiteExtraDataProvider");
         }
 
         public SQLiteExtraDataProvider(string databaseName)

@@ -1,6 +1,6 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright company="Viktorie Lucilla" file="SQLiteScanHistory.cs">
-// Copyright © Viktorie Lucilla 2015. All Rights Reserved
+// Copyright © Viktorie Lucilla 2015-2016. All Rights Reserved
 // </copyright>
 //-----------------------------------------------------------------------
 namespace EveScanner.SQLiteStorage
@@ -18,21 +18,33 @@ namespace EveScanner.SQLiteStorage
     /// <summary>
     /// Stores Scan History in an SQLite Database
     /// </summary>
-    public class SQLiteScanHistory : IScanHistory
+    public class SQLiteScanHistory : SQLiteQueryable, IScanHistory
     {
         /// <summary>
         /// Holds the connection string.
         /// </summary>
-        private static string connectionString = "Data Source=ScanHistory.db;Version=3;";
+        private string connectionString;
+
+        public override string ConnectionString
+        {
+            get
+            {
+                return this.connectionString;
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SQLiteScanHistory"/> class.
         /// </summary>
         public SQLiteScanHistory()
         {
-            if (!File.Exists("ScanHistory.db"))
+            this.connectionString = ConfigHelper.GetConnectionString("SQLiteScanHistory");
+            SQLiteConnectionStringBuilder sb = new SQLiteConnectionStringBuilder(this.connectionString);
+            string filename = sb.DataSource;
+
+            if (!File.Exists(filename))
             {
-                SQLiteScanHistory.CreateDatabase();
+                this.CreateDatabase();
             }
         }
 
@@ -46,9 +58,7 @@ namespace EveScanner.SQLiteStorage
             string checkForUUIDText = "SELECT COUNT(ID) FROM tblScanHistory WHERE Id = @Id";
             string insertCommandText = "INSERT INTO tblScanHistory (Id, ScanDate, RawScan, BuyValue, SellValue, Stacks, Volume, AppraisalURL, ShipType, Location, CharacterName, FitInfo, Notes) VALUES(@Id, @ScanDate, @RawScan, @BuyValue, @SellValue, @Stacks, @Volume, @AppraisalURL, @ShipType, @Location, @CharacterName, @FitInfo, @Notes);";
 
-            int output = -1;
-
-            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.connectionString))
+            using (SQLiteConnection cn = new SQLiteConnection(this.connectionString))
             {
                 cn.Open();
 
@@ -57,48 +67,40 @@ namespace EveScanner.SQLiteStorage
 
                 do
                 {
-                    using (SQLiteCommand cmd = new SQLiteCommand(checkForUUIDText, cn))
+                    long rowCount = this.ExecuteScalar<long>(checkForUUIDText, "@Id", uuid.ToString());
+
+                    if (rowCount > 0)
                     {
-                        cmd.Parameters.AddWithValue("@Id", uuid.ToString());
-                        long rowCount = (long)cmd.ExecuteScalar();
-                        if (rowCount > 0)
-                        {
-                            isNewId = false;
-                            uuid = Guid.NewGuid();
-                        }
-                        else
-                        {
-                            isNewId = true;
-                        }
+                        isNewId = false;
+                        uuid = Guid.NewGuid();
                     }
-                } 
+                    else
+                    {
+                        isNewId = true;
+                    }
+                }
                 while (isNewId == false);
 
-                using (SQLiteCommand cmd = new SQLiteCommand(insertCommandText, cn))
-                {
-                    cmd.Parameters.AddWithValue("@Id", uuid.ToString());
-                    cmd.Parameters.AddWithValue("@ScanDate", result.ScanDate.ToString("yyyy-MM-dd HH:mm:ss"));
-                    cmd.Parameters.AddWithValue("@RawScan", result.RawScan);
-                    cmd.Parameters.AddWithValue("@BuyValue", result.BuyValue);
-                    cmd.Parameters.AddWithValue("@SellValue", result.SellValue);
-                    cmd.Parameters.AddWithValue("@Stacks", result.Stacks);
-                    cmd.Parameters.AddWithValue("@Volume", result.Volume);
-                    cmd.Parameters.AddWithValue("@AppraisalURL", result.AppraisalUrl);
-                    cmd.Parameters.AddWithValue("@ShipType", result.ShipType);
-                    cmd.Parameters.AddWithValue("@Location", result.Location);
-                    cmd.Parameters.AddWithValue("@CharacterName", result.CharacterName);
-                    cmd.Parameters.AddWithValue("@FitInfo", result.FitInfo);
-                    cmd.Parameters.AddWithValue("@Notes", result.Notes);
-
-                    cmd.ExecuteNonQuery();
-
-                    output = (int)cn.LastInsertRowId;
-                }
+                this.ExecuteNonQuery(insertCommandText,
+                    "@Id", uuid.ToString(),
+                    "@ScanDate", result.ScanDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                    "@RawScan", result.RawScan,
+                    "@BuyValue", result.BuyValue,
+                    "@SellValue", result.SellValue,
+                    "@Stacks", result.Stacks,
+                    "@Volume", result.Volume,
+                    "@AppraisalURL", result.AppraisalUrl,
+                    "@ShipType", result.ShipType,
+                    "@Location", result.Location,
+                    "@CharacterName", result.CharacterName,
+                    "@FitInfo", result.FitInfo,
+                    "@Notes", result.Notes
+                );
 
                 return uuid;
             }
         }
-        
+
         /// <summary>
         /// Gets a particular scan from storage.
         /// </summary>
@@ -107,27 +109,8 @@ namespace EveScanner.SQLiteStorage
         public IScanResult GetResultById(Guid id)
         {
             string selectCommandText = "SELECT * FROM tblScanHistory WHERE Id = @Id";
-            IScanResult output = null;
 
-            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.connectionString))
-            {
-                cn.Open();
-                using (SQLiteCommand cmd = new SQLiteCommand(selectCommandText, cn))
-                {
-                    cmd.Parameters.AddWithValue("@Id", id);
-
-                    using (SQLiteDataReader rdr = cmd.ExecuteReader())
-                    {
-                        if (rdr.Read())
-                        {
-                            // public ScanResult(Guid id, DateTime scanDate, string rawScan, decimal buyValue, decimal sellValue, int stacks, decimal volume, string appraisalUrl, IEnumerable<int> imageIndex)
-                            output = this.ResolveReaderToScanResult(rdr);
-                        }
-                    }
-                }
-            }
-
-            return output;
+            return this.RunSingleRecordQuery<ScanResult>(selectCommandText, "@Id", id.ToString());
         }
 
         /// <summary>
@@ -138,7 +121,7 @@ namespace EveScanner.SQLiteStorage
         {
             string selectCommandText = "SELECT * FROM tblScanHistory ORDER BY rowid DESC";
 
-            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.connectionString))
+            using (SQLiteConnection cn = new SQLiteConnection(this.connectionString))
             {
                 cn.Open();
                 using (SQLiteCommand cmd = new SQLiteCommand(selectCommandText, cn))
@@ -166,7 +149,7 @@ namespace EveScanner.SQLiteStorage
         {
             string selectCommandText = "SELECT * FROM tblScanHistory WHERE CharacterName = @CharacterName ORDER BY rowid DESC";
 
-            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.connectionString))
+            using (SQLiteConnection cn = new SQLiteConnection(this.connectionString))
             {
                 cn.Open();
                 using (SQLiteCommand cmd = new SQLiteCommand(selectCommandText, cn))
@@ -196,7 +179,7 @@ namespace EveScanner.SQLiteStorage
             string updateCommandText = "UPDATE tblScanHistory SET ShipType = @ShipType, Location = @Location, CharacterName = @CharacterName, FitInfo = @FitInfo, Notes = @Notes WHERE ID = @Id;";
             bool isAdd = false;
 
-            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.connectionString))
+            using (SQLiteConnection cn = new SQLiteConnection(this.connectionString))
             {
                 cn.Open();
 
@@ -235,7 +218,7 @@ namespace EveScanner.SQLiteStorage
         /// <summary>
         /// Internal use, creates the database if it doesn't exist.
         /// </summary>
-        private static void CreateDatabase()
+        private void CreateDatabase()
         {
             #region Create Table SQL
             string createTable = @"
@@ -257,7 +240,7 @@ CREATE TABLE ""tblScanHistory"" (
 );";
             #endregion Create Table SQL
 
-            using (SQLiteConnection cn = new SQLiteConnection(SQLiteScanHistory.connectionString))
+            using (SQLiteConnection cn = new SQLiteConnection(this.connectionString))
             {
                 cn.Open();
                 using (SQLiteCommand cmd = new SQLiteCommand(createTable, cn))
@@ -277,6 +260,8 @@ CREATE TABLE ""tblScanHistory"" (
             string rawScan = (string)this.GetResultData(reader, "RawScan");
             string[] items = rawScan.Split(new string[] { "\r", "\n", "\r\n" }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Substring(x.IndexOf(' ') + 1)).ToArray();
 
+#warning TODO - FIX THIS SCAN RESULT
+            // TODO FIX
             return new ScanResult(
                 Guid.Parse((string)this.GetResultData(reader, "Id")),
                 DateTime.Parse((string)this.GetResultData(reader, "ScanDate")),
@@ -286,7 +271,7 @@ CREATE TABLE ""tblScanHistory"" (
                 (int)(long)this.GetResultData(reader, "Stacks"),
                 (decimal)this.GetResultData(reader, "Volume"),
                 (string)this.GetResultData(reader, "AppraisalUrl"),
-                ConfigHelper.Instance.FindImagesToDisplay(items))
+                null)
             {
                 ShipType = (string)this.GetResultData(reader, "ShipType"),
                 Location = (string)this.GetResultData(reader, "Location"),

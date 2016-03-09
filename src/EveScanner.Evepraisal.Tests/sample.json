@@ -1,0 +1,178 @@
+﻿{
+  "created": 1439952792,
+  "id": 7111070,
+  "items": [
+    {
+      "groupID": 530,
+      "market": true,
+      "name": "Construction Alloy",
+      "prices": {
+        "all": {
+          "avg": 74.4,
+          "max": 145.0,
+          "median": 119.25,
+          "min": 1.0,
+          "percentile": 1.0,
+          "price": 1.0,
+          "stddev": 58.82,
+          "volume": 1518954.0
+        },
+        "buy": {
+          "avg": 74.4,
+          "max": 145.0,
+          "median": 60.74,
+          "min": 1.0,
+          "percentile": 145.0,
+          "price": 145.0,
+          "stddev": 58.82,
+          "volume": 1518954.0
+        },
+        "sell": {
+          "avg": 1100.38,
+          "max": 1500.0,
+          "median": 1099.89,
+          "min": 1098.99,
+          "percentile": 1098.99,
+          "price": 1098.99,
+          "stddev": 132.4,
+          "volume": 37068.0
+        }
+      },
+      "quantity": 48,
+      "typeID": 21595,
+      "typeName": "Construction Alloy",
+      "volume": 0.1
+    },
+    {
+      "groupID": 530,
+      "market": true,
+      "name": "Energy Cells",
+      "prices": {
+        "all": {
+          "avg": 37.02,
+          "max": 300.0,
+          "median": 41.27,
+          "min": 1.0,
+          "percentile": 1.0,
+          "price": 1.0,
+          "stddev": 125.39,
+          "volume": 2866204.0
+        },
+        "buy": {
+          "avg": 36.96,
+          "max": 50.01,
+          "median": 41.18,
+          "min": 1.0,
+          "percentile": 50.01,
+          "price": 50.01,
+          "stddev": 17.09,
+          "volume": 2865487.0
+        },
+        "sell": {
+          "avg": 343.42,
+          "max": 349.95,
+          "median": 348.98,
+          "min": 279.98,
+          "percentile": 279.99,
+          "price": 279.98,
+          "stddev": 30.68,
+          "volume": 7766.0
+        }
+      },
+      "quantity": 109,
+      "typeID": 21594,
+      "typeName": "Energy Cells",
+      "volume": 0.1
+    },
+    {
+      "groupID": 314,
+      "market": true,
+      "name": "High-Tech Manufacturing Tools",
+      "prices": {
+        "all": {
+          "avg": 3457.22,
+          "max": 8499.99,
+          "median": 4000.02,
+          "min": 1500.0,
+          "percentile": 1500.0,
+          "price": 1500.0,
+          "stddev": 964.03,
+          "volume": 550611.0
+        },
+        "buy": {
+          "avg": 3456.02,
+          "max": 4000.77,
+          "median": 4000.02,
+          "min": 1500.0,
+          "percentile": 4000.77,
+          "price": 4000.77,
+          "stddev": 979.12,
+          "volume": 550000.0
+        },
+        "sell": {
+          "avg": 7068.68,
+          "max": 15333.0,
+          "median": 4980.0,
+          "min": 4011.76,
+          "percentile": 4011.78,
+          "price": 4011.76,
+          "stddev": 3912.83,
+          "volume": 970.0
+        }
+      },
+      "quantity": 1,
+      "typeID": 17895,
+      "typeName": "High-Tech Manufacturing Tools",
+      "volume": 0.01
+    },
+    {
+      "groupID": 314,
+      "market": true,
+      "name": "High-Tech Small Arms",
+      "prices": {
+        "all": {
+          "avg": 895.14,
+          "max": 3000.0,
+          "median": 977.51,
+          "min": 200.0,
+          "percentile": 200.0,
+          "price": 200.0,
+          "stddev": 833.59,
+          "volume": 650487.0
+        },
+        "buy": {
+          "avg": 894.09,
+          "max": 1500.77,
+          "median": 452.47,
+          "min": 200.0,
+          "percentile": 1500.77,
+          "price": 1500.77,
+          "stddev": 533.52,
+          "volume": 650000.0
+        },
+        "sell": {
+          "avg": 11319.86,
+          "max": 14002.79,
+          "median": 11455.0,
+          "min": 1649.99,
+          "percentile": 11179.95,
+          "price": 1649.99,
+          "stddev": 4810.06,
+          "volume": 29041.0
+        }
+      },
+      "quantity": 1,
+      "typeID": 17897,
+      "typeName": "High-Tech Small Arms",
+      "volume": 0.01
+    }
+  ],
+  "kind": "cargo_scan",
+  "market_id": 30000142,
+  "market_name": "Jita",
+  "totals": {
+    "buy": 17912.63,
+    "sell": 88931.09000000001,
+    "volume": 15.72
+  }
+}

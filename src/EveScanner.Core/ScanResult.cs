@@ -12,16 +12,25 @@ namespace EveScanner.Core
     using System.Text;
     using EveOnlineApi.Entities;
     using EveScanner.Interfaces;
-
+    using IoC.Attributes;
+    
     /// <summary>
     /// Provides a Scan Result implementation.
     /// </summary>
     public class ScanResult : IScanResult
     {
+        private string id;
+        private string scanDate;
+        private long stacks;
+
         /// <summary>
         /// Holds the character object so we can do other things with it.
         /// </summary>
         private Character character = default(Character);
+
+        public ScanResult()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ScanResult"/> class.
@@ -35,7 +44,7 @@ namespace EveScanner.Core
         /// <param name="volume">Volume of items in the scan.</param>
         /// <param name="appraisalUrl">URL to the Appraisal</param>
         /// <param name="imageIndex">Image Index for the Appraisal</param>
-        public ScanResult(Guid id, DateTime scanDate, string rawScan, decimal buyValue, decimal sellValue, int stacks, decimal volume, string appraisalUrl, IEnumerable<int> imageIndex)
+        public ScanResult(Guid id, DateTime scanDate, string rawScan, decimal buyValue, decimal sellValue, int stacks, decimal volume, string appraisalUrl, IEnumerable<IItemAppraisal> itemAppraisals)
         {
             if (id == null || id == Guid.Empty)
             {
@@ -61,18 +70,39 @@ namespace EveScanner.Core
             this.Stacks = stacks;
             this.Volume = volume;
             this.AppraisalUrl = appraisalUrl;
-            this.ImageIndex = imageIndex;
+            this.ItemAppraisals = itemAppraisals;
         }
 
         /// <summary>
         /// Gets the unique value for the scan id.
         /// </summary>
-        public Guid Id { get; private set; }
+        [IgnoreMember]
+        public Guid Id
+        {
+            get
+            {
+                return Guid.Parse(this.id);
+            }
+            private set
+            {
+                this.id = value.ToString();
+            }
+        }
 
         /// <summary>
         /// Gets the Date that the scan was taken.
         /// </summary>
-        public DateTime ScanDate { get; private set; }
+        [IgnoreMember]
+        public DateTime ScanDate {
+            get
+            {
+                return DateTime.Parse(scanDate);
+            }
+            private set
+            {
+                this.scanDate = value.ToString("yyyy-MM-dd HH:mm:ss");
+            }
+        }
 
         /// <summary>
         /// Gets the Raw Scan submitted to the engine.
@@ -92,7 +122,17 @@ namespace EveScanner.Core
         /// <summary>
         /// Gets the number of stacks in the scan.
         /// </summary>
-        public int Stacks { get; private set; }
+        [IgnoreMember]
+        public int Stacks {
+            get
+            {
+                return (int)this.stacks;
+            }
+            private set
+            {
+                this.stacks = value;
+            }
+        }
 
         /// <summary>
         /// Gets the volume of items in the scan.
@@ -188,6 +228,19 @@ namespace EveScanner.Core
 
                 this.ImageIndex = integers;
             }
+        }
+
+        public decimal RepackagedVolume
+        {
+            get
+            {
+                return (decimal)this.ItemAppraisals.Sum(x => x.RepackagedVolume);
+            }
+        }
+
+        public IEnumerable<IItemAppraisal> ItemAppraisals
+        {
+            get; private set;
         }
 
         /// <summary>

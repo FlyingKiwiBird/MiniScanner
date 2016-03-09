@@ -51,6 +51,16 @@ namespace EveScanner.Interfaces
         decimal Volume { get; }
 
         /// <summary>
+        /// Gets the repackaged volume of items in the scan (which could be less than the full volume)
+        /// </summary>
+        decimal RepackagedVolume { get; }
+
+        /// <summary>
+        /// Gets a list of all the items in the appraisal and their values.
+        /// </summary>
+        IEnumerable<IItemAppraisal> ItemAppraisals { get; }
+
+        /// <summary>
         /// Gets the URL to the Appraisal
         /// </summary>
         string AppraisalUrl { get; }

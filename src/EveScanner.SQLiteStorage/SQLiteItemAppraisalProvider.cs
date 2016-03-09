@@ -12,41 +12,9 @@
 
     public class SQLiteItemAppraisalProvider : IItemAppraisalDataProvider
     {
-        static SQLiteItemAppraisalProvider()
-        {
-            cargoScanRegex = new Regex(@"^(?<qty>\d*) (?<item>.*?)( )?([(](?<bpind>Original|Copy)[)])?$", RegexOptions.Compiled | RegexOptions.ExplicitCapture);
-        }
-
-        public static Regex cargoScanRegex = null;
-
-        internal string[] ExtractLinesFromInput(string input)
-        {
-            if (string.IsNullOrWhiteSpace(input))
-            {
-                return new string[] { input };
-            }
-
-            string endofline = null;
-
-            if (input.IndexOf("\r\n") > -1)
-            {
-                endofline = "\r\n";
-            }
-            else if (input.IndexOf("\r") > -1)
-            {
-                endofline = "\r";
-            }
-            else if (input.IndexOf("\n") > -1)
-            {
-                endofline = "\n";
-            }
-
-            return input.Split(new string[] { endofline }, StringSplitOptions.RemoveEmptyEntries);
-        }
-
         public IEnumerable<IItemAppraisal> GetItemAppraisalsForItemList(string input)
         {
-            foreach (string line in this.ExtractLinesFromInput(input))
+            foreach (string line in Validators.ExtractLinesFromInput(input))
             {
                 MatchCollection mc = cargoScanRegex.Matches(line);
                 ScanItem scanItem = null;

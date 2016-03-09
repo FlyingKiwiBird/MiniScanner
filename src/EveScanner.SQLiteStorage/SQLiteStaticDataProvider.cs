@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data.SQLite;
-
-using EveScanner.Interfaces;
-using EveScanner.Core;
-using EveScanner.Interfaces.Providers;
-using EveScanner.Interfaces.SDE;
-
-namespace EveScanner.SQLiteStorage
+﻿namespace EveScanner.SQLiteStorage
 {
+    using EveScanner.Core;
+    using EveScanner.Interfaces.Providers;
+    using EveScanner.Interfaces.SDE;
+    using System.Collections.Generic;
+
     public class SQLiteStaticDataProvider : SQLiteQueryable, IStaticDataExportProvider
     {
         private const string SQLITE_GetInventoryGroupById = @"SELECT * FROM invGroups WHERE groupID = @groupID;";
@@ -26,7 +20,7 @@ namespace EveScanner.SQLiteStorage
 
         public SQLiteStaticDataProvider()
         {
-            this.connectionString = ConfigHelper.GetConnectionString("SDEProvider");
+            this.connectionString = ConfigHelper.GetConnectionString("SQLiteStaticDataProvider");
         }
 
         public SQLiteStaticDataProvider(string databaseName)

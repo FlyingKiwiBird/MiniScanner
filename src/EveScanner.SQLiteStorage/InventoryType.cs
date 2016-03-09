@@ -25,6 +25,35 @@ namespace EveScanner.Core
         {
         }
 
+        public InventoryType(int typeId, int? groupId, string typeName, string description, double? mass, double? volume, double? capacity,
+                             int? portionSize, int? raceId, decimal? basePrice, bool? published, int? marketGroupId, int? iconId, int? soundId, int? graphicId)
+        {
+            this.typeId = typeId;
+            this.groupId = groupId;
+            this.typeName = typeName;
+            this.description = description;
+            this.mass = mass;
+            this.volume = volume;
+            this.capacity = capacity;
+            this.portionSize = portionSize;
+            this.raceId = raceId;
+            this.basePrice = basePrice;
+
+            if (published.HasValue)
+            {
+                this.published = (published.Value ? 1 : 0);
+            }
+            else
+            {
+                this.published = null;
+            }
+
+            this.marketGroupId = marketGroupId;
+            this.iconId = iconId;
+            this.soundId = soundId;
+            this.graphicId = graphicId;
+        }
+
         [IgnoreMember]
         public decimal? BasePrice
         {

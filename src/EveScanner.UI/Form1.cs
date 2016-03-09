@@ -1292,7 +1292,8 @@ thread on the Goonfleet Forums or sent to me via Jabber.
         private void AddExampleResultsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.ClearToolStripMenuItem_Click(null, EventArgs.Empty);
-
+#warning FIX THIS FUNCTION
+            /* TODO -- FIX
             ScanResult r = new ScanResult(Guid.Empty, DateTime.Now, "1 Dummy Item", 3000000000000, 4123456789012, 1, 1, "http://goonfleet.com/?1", new int[] { 1 }) { CharacterName = "T2 BPO", ShipType = "Providence - Freighter - Amarr", Notes = "Triggers T2 BPO Image", Location = "Perimeter -> Urlen" };
             this.AddResultToList(r);
 
@@ -1319,6 +1320,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
 
             ScanResult z = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000, 41234, 3, 4, "http://goonfleet.com/?1234599", new int[] { 1, 2, 3, 4, 5, 99 }) { CharacterName = "Mixed 3", ShipType = string.Empty, Notes = "Triggers 6 Combined Image" };
             this.AddResultToList(z);
+            */
         }
 #endif
 
@@ -1581,11 +1583,13 @@ thread on the Goonfleet Forums or sent to me via Jabber.
 
             if (scanArgument.StartsWith("https://goonpraisal.apps.goonswarm.org/e/", StringComparison.OrdinalIgnoreCase))
             {
-                svc = new Evepraisal("goonpraisal.apps.goonswarm.org", true);
+                svc = Injector.CreateFromTypeName<IAppraisalService>("EveScanner.Evepraisal.Goonpraisal, EveScanner.Evepraisal");
+                //svc = new Evepraisal("goonpraisal.apps.goonswarm.org", true);
             }
             else if (scanArgument.StartsWith("http://evepraisal.com/e/", StringComparison.OrdinalIgnoreCase))
             {
-                svc = new Evepraisal();
+                svc = Injector.CreateFromTypeName<IAppraisalService>("EveScanner.Evepraisal.EvepraisalSvc, EveScanner.Evepraisal");
+                //svc = new Evepraisal();
             }
 
             if (svc == null)
@@ -1626,12 +1630,14 @@ thread on the Goonfleet Forums or sent to me via Jabber.
 
             if (this.evepraisalToolStripMenuItem.Checked)
             {
-                Evepraisal ep = new Evepraisal();
+                //Evepraisal ep = new Evepraisal();
+                var ep = Injector.CreateFromTypeName<IAppraisalService>("EveScanner.Evepraisal.EvepraisalSvc, EveScanner.Evepraisal");
                 iresult = ep.GetAppraisalFromScan(scanArgument);
             }
             else if (this.goonmetricsToolStripMenuItem.Checked)
             {
-                Evepraisal ep = new Evepraisal("goonpraisal.apps.goonswarm.org", true);
+                //Evepraisal ep = new Evepraisal("goonpraisal.apps.goonswarm.org", true);
+                var ep = Injector.CreateFromTypeName<IAppraisalService>("EveScanner.Evepraisal.Goonpraisal, EveScanner.Evepraisal");
                 iresult = ep.GetAppraisalFromScan(scanArgument);
             }
 

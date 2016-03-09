@@ -78,6 +78,19 @@ namespace EveScanner.IoC
             return (TInterfaceType)(d as Func<object>)();
         }
 
+        public static TInterfaceType CreateFromTypeName<TInterfaceType>(string typeName)
+        {
+            Type t = Type.GetType(typeName);
+
+            if (t == null)
+            {
+                return Create<TInterfaceType>();
+            }
+
+            return (TInterfaceType)Activator.CreateInstance(t);
+        }
+
+
         /// <summary>
         /// Finds an Implementation of Type InterfaceType from the Assembly the Interface is defined in, or, failing that, one from all currently loaded assemblies.
         /// </summary>

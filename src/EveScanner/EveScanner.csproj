@@ -169,9 +169,17 @@
       <Project>{1234a1da-8f4f-4560-b364-19342c1d219d}</Project>
       <Name>EveScanner.IoC</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EveScanner.Evepraisal\EveScanner.Evepraisal.csproj">
+      <Project>{fe35fe00-c2b5-4cf0-ac04-cb825c9adcf1}</Project>
+      <Name>EveScanner.Evepraisal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveScanner.Interfaces\EveScanner.Interfaces.csproj">
       <Project>{58d010c9-8f3f-438b-b60e-eed817781a88}</Project>
       <Name>EveScanner.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveScanner.SQLiteStorage\EveScanner.SQLiteStorage.csproj">
+      <Project>{d0023eb5-9ded-4ac1-8244-a0c8775755be}</Project>
+      <Name>EveScanner.SQLiteStorage</Name>
     </ProjectReference>
     <ProjectReference Include="..\EveScanner.UI\EveScanner.UI.csproj">
       <Project>{dfb55a23-fa38-4e31-8762-55e1d871c50f}</Project>

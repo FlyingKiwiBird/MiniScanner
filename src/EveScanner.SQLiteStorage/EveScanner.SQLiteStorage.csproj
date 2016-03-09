@@ -56,10 +56,9 @@
     <Compile Include="InventoryGroup.cs" />
     <Compile Include="InventoryRepackaged.cs" />
     <Compile Include="InventoryType.cs" />
-    <Compile Include="ScanItem.cs" />
     <Compile Include="SQLiteExtraDataProvider.cs" />
     <Compile Include="SQLiteItemAppraisalProvider.cs" />
-    <Compile Include="SQLiteQuery.cs" />
+    <Compile Include="SQLiteQueryable.cs" />
     <Compile Include="SQLiteScanHistory.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>

@@ -14,8 +14,9 @@ namespace EveScanner
 
     using EveScanner.Core;
     using EveScanner.Interfaces;
-    using EveScanner.IoC;    
+    using EveScanner.IoC;
     using EveScanner.UI;
+    using EveScanner.Evepraisal;
 
     /// <summary>
     /// Entry class for the application.
@@ -47,8 +48,9 @@ namespace EveScanner
             Injector.Register<IImageDataProvider>(typeof(FileBackedImageDataProvider));
 
             // Configure EveScanner Injections
-            Injector.Register<IAppraisalService>(typeof(Evepraisal));
+            Injector.Register<IAppraisalService>(typeof(EvepraisalSvc));
             Injector.Register<IScanHistory>(typeof(ListScanHistory));
+            Injector.Register<IWebClient>(typeof(WebClient));
 
             Application.Run(new Form1());
         }

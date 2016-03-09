@@ -16,6 +16,12 @@ namespace EveScanner.SQLiteStorage
         {
         }
 
+        public InventoryRepackaged(int groupId, double volume)
+        {
+            this.groupId = groupId;
+            this.volume = volume;
+        }
+
         [IgnoreMember]
         public int GroupId
         {

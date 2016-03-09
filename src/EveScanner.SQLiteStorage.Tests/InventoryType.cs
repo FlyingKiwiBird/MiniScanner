@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using EveScanner.Interfaces.Providers;
-using EveScanner.Interfaces.SDE;
-using EveScanner.IoC;
-
-namespace EveScanner.SQLiteStorage.Tests
+﻿namespace EveScanner.SQLiteStorage.Tests
 {
+    using System.Linq;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+    using EveScanner.Interfaces.Providers;
+    using EveScanner.Interfaces.SDE;
+    using EveScanner.IoC;
+
     [TestClass]
     public class InventoryType
     {

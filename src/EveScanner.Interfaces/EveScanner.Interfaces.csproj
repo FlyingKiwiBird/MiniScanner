@@ -50,9 +50,11 @@
   <ItemGroup>
     <Compile Include="EDE\IInventoryRepackaged.cs" />
     <Compile Include="IAppraisalService.cs" />
+    <Compile Include="IUIImageGroup.cs" />
     <Compile Include="IScanHistory.cs" />
     <Compile Include="IItemAppraisal.cs" />
     <Compile Include="IScanResult.cs" />
+    <Compile Include="IWebDownloader.cs" />
     <Compile Include="Providers\IExtraDataExportProvider.cs" />
     <Compile Include="Providers\IInventoryRepackagedProvider.cs" />
     <Compile Include="Providers\IInventoryTypeProvider.cs" />

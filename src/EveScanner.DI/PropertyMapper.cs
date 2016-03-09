@@ -60,15 +60,18 @@
                 if (dnmattr == null)
                 {
                     string name = fi.Name;
-                    MapFromAttribute mapattr = (MapFromAttribute)Attribute.GetCustomAttribute(fi, typeof(MapFromAttribute));
-                    if (mapattr != null)
+                    if (!getMethods.ContainsKey(name))
                     {
-                        name = ((MapFromAttribute)mapattr).Name;
-                    }
+                        MapFromAttribute mapattr = (MapFromAttribute)Attribute.GetCustomAttribute(fi, typeof(MapFromAttribute));
+                        if (mapattr != null)
+                        {
+                            name = ((MapFromAttribute)mapattr).Name;
+                        }
 
-                    getMethods.Add(name, fi.GetValueGetter<TOutputType>());
-                    setMethods.Add(name, fi.GetValueSetter<TOutputType>());
-                    Properties.Add(name);
+                        getMethods.Add(name, fi.GetValueGetter<TOutputType>());
+                        setMethods.Add(name, fi.GetValueSetter<TOutputType>());
+                        Properties.Add(name);
+                    }
                 }
             }
         }

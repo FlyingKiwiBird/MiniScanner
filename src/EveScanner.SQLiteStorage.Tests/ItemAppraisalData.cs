@@ -1,14 +1,13 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using EveScanner.SQLiteStorage;
-using System.Linq;
-using EveScanner.IoC;
-using EveScanner.Interfaces.Providers;
-
-namespace EveScanner.SQLiteStorage.Tests
+﻿namespace EveScanner.SQLiteStorage.Tests
 {
+    using EveScanner.Interfaces.Providers;
+    using EveScanner.IoC;
+    using EveScanner.SQLiteStorage;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System.Linq;
+
     [TestClass]
-    public class DataRetrieval
+    public class ItemAppraisalData
     {
         [ClassInitialize]
         public static void ClassInit(TestContext context)

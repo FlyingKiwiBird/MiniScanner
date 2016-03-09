@@ -1,17 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1EDA3726-407B-4E66-ADD3-84475E24AC0B}</ProjectGuid>
+    <ProjectGuid>{FE35FE00-C2B5-4CF0-AC04-CB825C9ADCF1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EveScanner.Core</RootNamespace>
-    <AssemblyName>EveScanner.Core</AssemblyName>
+    <RootNamespace>EveScanner.Evepraisal</RootNamespace>
+    <AssemblyName>EveScanner.Evepraisal</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +20,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>..\AllRulesWithoutCA1303.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,19 +29,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AssemblyOriginatorKeyFile>
-    </AssemblyOriginatorKeyFile>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,21 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigHelper.cs" />
-    <Compile Include="HistoryWrapper.cs" />
-    <Compile Include="ImageCombiner.cs" />
-    <Compile Include="ListScanHistory.cs" />
-    <Compile Include="Logger.cs" />
+    <Compile Include="EvepraisalSvc.cs" />
+    <Compile Include="EvepraisalItem.cs" />
+    <Compile Include="EvepraisalJson.cs" />
+    <Compile Include="EvepraisalPrice.cs" />
+    <Compile Include="EvepraisalPrices.cs" />
+    <Compile Include="EvepraisalTotals.cs" />
+    <Compile Include="GoonpraisalSvc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScanItem.cs" />
-    <Compile Include="ScanResult.cs" />
-    <Compile Include="Validators.cs" />
-    <Compile Include="WebClient.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EveOnlineApi\EveOnlineApi.csproj">
-      <Project>{35d84931-08a2-439b-b217-4d7e1643e23c}</Project>
-      <Name>EveOnlineApi</Name>
+    <ProjectReference Include="..\EveScanner.Core\EveScanner.Core.csproj">
+      <Project>{1eda3726-407b-4e66-add3-84475e24ac0b}</Project>
+      <Name>EveScanner.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\EveScanner.DI\EveScanner.IoC.csproj">
       <Project>{1234a1da-8f4f-4560-b364-19342c1d219d}</Project>
@@ -75,9 +62,6 @@
       <Project>{58d010c9-8f3f-438b-b60e-eed817781a88}</Project>
       <Name>EveScanner.Interfaces</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <CodeAnalysisDictionary Include="..\Dictionary.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,17 +8,19 @@ namespace EveOnlineApi.Entities
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+
     using EveOnlineApi.Entities.Xml;
+    using EveOnlineApi.Interfaces;
 
     /// <summary>
     /// Represents an Eve Online Alliance Member Corporation
     /// </summary>
-    public class AllianceMemberCorporation
+    public class AllianceMemberCorporation : IAllianceMemberCorporation
     {
         /// <summary>
         /// Holds the Corporation object.
         /// </summary>
-        private Corporation corporation = null;
+        private ICorporation corporation = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AllianceMemberCorporation"/> class.
@@ -54,7 +56,7 @@ namespace EveOnlineApi.Entities
         /// <summary>
         /// Gets the Corporation object..
         /// </summary>
-        public Corporation Corporation
+        public ICorporation Corporation
         {
             get
             {

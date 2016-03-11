@@ -44,6 +44,7 @@ namespace EveScanner.UI
             this.infoContainer = new System.Windows.Forms.GroupBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.employmentHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.standingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fitInfoPickerButton = new System.Windows.Forms.Button();
             this.shipTypePickerButton = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
@@ -105,8 +106,8 @@ namespace EveScanner.UI
             this.statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.scanValueLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.showScanItems = new System.Windows.Forms.Button();
             this.characterLookupButton = new EveScanner.UI.MenuButton();
-            this.standingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoContainer.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.locationContainer.SuspendLayout();
@@ -252,7 +253,7 @@ namespace EveScanner.UI
             this.employmentHistoryToolStripMenuItem,
             this.standingsToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(193, 70);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(193, 48);
             // 
             // employmentHistoryToolStripMenuItem
             // 
@@ -261,6 +262,14 @@ namespace EveScanner.UI
             this.employmentHistoryToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
             this.employmentHistoryToolStripMenuItem.Text = "Employment History...";
             this.employmentHistoryToolStripMenuItem.Click += new System.EventHandler(this.EmploymentHistoryToolStripMenuItem_Click);
+            // 
+            // standingsToolStripMenuItem
+            // 
+            this.standingsToolStripMenuItem.Enabled = false;
+            this.standingsToolStripMenuItem.Name = "standingsToolStripMenuItem";
+            this.standingsToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.standingsToolStripMenuItem.Text = "Standings";
+            this.standingsToolStripMenuItem.Click += new System.EventHandler(this.StandingsToolStripMenuItem_Click);
             // 
             // fitInfoPickerButton
             // 
@@ -771,28 +780,28 @@ namespace EveScanner.UI
             // aboutToolStripMenuItem1
             // 
             this.aboutToolStripMenuItem1.Name = "aboutToolStripMenuItem1";
-            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(245, 22);
+            this.aboutToolStripMenuItem1.Size = new System.Drawing.Size(244, 22);
             this.aboutToolStripMenuItem1.Text = "&About";
             this.aboutToolStripMenuItem1.Click += new System.EventHandler(this.AboutToolStripMenuItem_Click);
             // 
             // licenseToolStripMenuItem
             // 
             this.licenseToolStripMenuItem.Name = "licenseToolStripMenuItem";
-            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
+            this.licenseToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
             this.licenseToolStripMenuItem.Text = "&License";
             this.licenseToolStripMenuItem.Click += new System.EventHandler(this.LicenseToolStripMenuItem_Click);
             // 
             // sourceCodeToolStripMenuItem
             // 
             this.sourceCodeToolStripMenuItem.Name = "sourceCodeToolStripMenuItem";
-            this.sourceCodeToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
+            this.sourceCodeToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
             this.sourceCodeToolStripMenuItem.Text = "&Source Code (Opens in Browser)";
             this.sourceCodeToolStripMenuItem.Click += new System.EventHandler(this.SourceCodeToolStripMenuItem_Click);
             // 
             // issueTrackerToolStripMenuItem
             // 
             this.issueTrackerToolStripMenuItem.Name = "issueTrackerToolStripMenuItem";
-            this.issueTrackerToolStripMenuItem.Size = new System.Drawing.Size(245, 22);
+            this.issueTrackerToolStripMenuItem.Size = new System.Drawing.Size(244, 22);
             this.issueTrackerToolStripMenuItem.Text = "&Issue Tracker (Opens in Browser)";
             this.issueTrackerToolStripMenuItem.Click += new System.EventHandler(this.IssueTrackerToolStripMenuItem_Click);
             // 
@@ -845,6 +854,17 @@ namespace EveScanner.UI
             this.scanValueLabel.Size = new System.Drawing.Size(13, 17);
             this.scanValueLabel.Text = "0";
             // 
+            // showScanItems
+            // 
+            this.showScanItems.Enabled = false;
+            this.showScanItems.Location = new System.Drawing.Point(377, 27);
+            this.showScanItems.Name = "showScanItems";
+            this.showScanItems.Size = new System.Drawing.Size(25, 23);
+            this.showScanItems.TabIndex = 39;
+            this.showScanItems.Text = "S";
+            this.showScanItems.UseVisualStyleBackColor = true;
+            this.showScanItems.Click += new System.EventHandler(this.showScanItems_Click);
+            // 
             // characterLookupButton
             // 
             this.characterLookupButton.Location = new System.Drawing.Point(312, 17);
@@ -857,19 +877,12 @@ namespace EveScanner.UI
             this.characterLookupButton.UseVisualStyleBackColor = true;
             this.characterLookupButton.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CharacterLookupButton_MouseDown);
             // 
-            // standingsToolStripMenuItem
-            // 
-            this.standingsToolStripMenuItem.Enabled = false;
-            this.standingsToolStripMenuItem.Name = "standingsToolStripMenuItem";
-            this.standingsToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
-            this.standingsToolStripMenuItem.Text = "Standings";
-            this.standingsToolStripMenuItem.Click += new System.EventHandler(this.StandingsToolStripMenuItem_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(574, 567);
+            this.Controls.Add(this.showScanItems);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.pictureBox);
             this.Controls.Add(this.stacksValueText);
@@ -992,6 +1005,7 @@ namespace EveScanner.UI
         private System.Windows.Forms.ToolStripMenuItem employmentHistoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newTimerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem standingsToolStripMenuItem;
+        private System.Windows.Forms.Button showScanItems;
     }
 }
 

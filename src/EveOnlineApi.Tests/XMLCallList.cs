@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using EveOnlineApi.Common;
@@ -38,11 +39,14 @@ namespace EveOnlineApi.Tests
             Assert.AreEqual("groupID,name,description", api.Result.CallGroups.Columns);
             
             Assert.IsNotNull(api.Result.CallGroups.Rows);
-            Assert.AreEqual(7, api.Result.CallGroups.Rows.Count);
-            Assert.IsNotNull(api.Result.CallGroups.Rows[0]);
-            Assert.AreEqual(1, api.Result.CallGroups.Rows[0].GroupId);
-            Assert.AreEqual("Account and Market", api.Result.CallGroups.Rows[0].Name);
-            Assert.AreEqual("Market Orders, account balance and journal history.", api.Result.CallGroups.Rows[0].Description);
+            Assert.AreEqual(7, api.Result.CallGroups.Rows.Count());
+
+            CallGroupRow firstCallGroup = api.Result.CallGroups.Rows.FirstOrDefault();
+            Assert.IsNotNull(firstCallGroup);
+
+            Assert.AreEqual(1, firstCallGroup.GroupId);
+            Assert.AreEqual("Account and Market", firstCallGroup.Name);
+            Assert.AreEqual("Market Orders, account balance and journal history.", firstCallGroup.Description);
 
             Assert.IsNotNull(api.Result.Calls);
             Assert.AreEqual("calls", api.Result.Calls.Name);
@@ -50,13 +54,16 @@ namespace EveOnlineApi.Tests
             Assert.AreEqual("accessMask,type,name,groupID,description", api.Result.Calls.Columns);
 
             Assert.IsNotNull(api.Result.Calls.Rows);
-            Assert.AreEqual(57, api.Result.Calls.Rows.Count);
-            Assert.IsNotNull(api.Result.Calls.Rows[0]);
-            Assert.AreEqual(536870912, api.Result.Calls.Rows[0].AccessMask);
-            Assert.AreEqual("Character", api.Result.Calls.Rows[0].CallType);
-            Assert.AreEqual("ChatChannels", api.Result.Calls.Rows[0].Name);
-            Assert.AreEqual(7, api.Result.Calls.Rows[0].GroupId);
-            Assert.AreEqual("List of all chat channels the character owns or is an operator of.", api.Result.Calls.Rows[0].Description);
+            Assert.AreEqual(57, api.Result.Calls.Rows.Count());
+
+            CallRow firstCall = api.Result.Calls.Rows.FirstOrDefault();
+            Assert.IsNotNull(firstCall);
+
+            Assert.AreEqual(536870912, firstCall.AccessMask);
+            Assert.AreEqual("Character", firstCall.CallType);
+            Assert.AreEqual("ChatChannels", firstCall.Name);
+            Assert.AreEqual(7, firstCall.GroupId);
+            Assert.AreEqual("List of all chat channels the character owns or is an operator of.", firstCall.Description);
         }
 
         [TestMethod]
@@ -68,7 +75,7 @@ namespace EveOnlineApi.Tests
             CallListApi api = xdp.GetCallList();
             Assert.IsNotNull(api);
 
-            Assert.AreEqual(7, api.Result.CallGroups.Rows.Count);
+            Assert.AreEqual(7, api.Result.CallGroups.Rows.Count());
         }
     }
 }

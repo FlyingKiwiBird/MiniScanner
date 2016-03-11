@@ -6,12 +6,13 @@
 namespace EveOnlineApi.Entities
 {
     using EveOnlineApi.Interfaces;
+    using EveScanner.Interfaces;
     using EveScanner.IoC;
 
     /// <summary>
     /// Represents a Standing from person to person/corporation/alliance in Eve Online.
     /// </summary>
-    public class Standings
+    public class Standings : IStandings
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Standings"/> class.
@@ -117,7 +118,7 @@ namespace EveOnlineApi.Entities
         /// <param name="entityName">Entity Name</param>
         /// <param name="entityType">Entity Type</param>
         /// <returns>Standings Object with all Standings</returns>
-        public static Standings GetStandings(string entityName, EntityType entityType)
+        public static IStandings GetStandings(string entityName, IEntityType entityType)
         {
             IStandingsDataProvider adp = Injector.Create<IStandingsDataProvider>();
             return adp.GetStandingsInfo(entityName, entityType);

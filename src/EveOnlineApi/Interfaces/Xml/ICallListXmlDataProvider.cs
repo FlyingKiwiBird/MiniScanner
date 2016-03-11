@@ -17,6 +17,7 @@ namespace EveOnlineApi.Interfaces.Xml
         /// Gets the Call List with Permissions Listed as Well
         /// </summary>
         /// <returns>CallList XML Object</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "May take long to execute.")]
         CallListApi GetCallList();
     }
 }

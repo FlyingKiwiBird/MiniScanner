@@ -1,0 +1,1 @@
+﻿The Xml interfaces are here because they should almost never be exposed outside this Api solution, except when using them directly.

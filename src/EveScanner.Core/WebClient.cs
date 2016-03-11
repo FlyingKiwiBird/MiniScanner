@@ -40,11 +40,21 @@ namespace EveScanner.Core
             }
         }
 
+        /// <summary>
+        /// Returns a stream pointing to a given URI.
+        /// </summary>
+        /// <param name="uri">Uri to download from</param>
+        /// <returns>Stream to content</returns>
         public Stream GetUriToStream(Uri uri)
         {
             return this.WebRequester(uri, WebRequestMethods.Http.Get, null, null);
         }
 
+        /// <summary>
+        /// Returns the contents of a Uri to a string.
+        /// </summary>
+        /// <param name="uri">Uri to Download From</param>
+        /// <returns>Content as string</returns>
         public string GetUriToString(Uri uri)
         {
             Stream stream = this.GetUriToStream(uri);
@@ -55,11 +65,23 @@ namespace EveScanner.Core
             }
         }
 
+        /// <summary>
+        /// Posts content to a Uri, returning response to a Stream
+        /// </summary>
+        /// <param name="uri">Uri to Post to</param>
+        /// <param name="content">Content to Post</param>
+        /// <returns>Response to Stream</returns>
         public Stream PostUriToStream(Uri uri, byte[] content)
         {
             return this.WebRequester(uri, WebRequestMethods.Http.Post, content, "application/x-www-form-urlencoded");
         }
 
+        /// <summary>
+        /// Posts content to a Uri, returning response to a String
+        /// </summary>
+        /// <param name="uri">Uri to Post to</param>
+        /// <param name="content">Content to Post</param>
+        /// <returns>Response as String</returns>
         public string PostUriToString(Uri uri, byte[] content)
         {
             using (StreamReader sr = new StreamReader(this.PostUriToStream(uri, content)))
@@ -68,12 +90,19 @@ namespace EveScanner.Core
             }
         }
 
+        /// <summary>
+        /// Disposes this object.
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Disposes this object.
+        /// </summary>
+        /// <param name="disposing">Managed Disposal</param>
         protected virtual void Dispose(bool disposing)
         {
             if (this.disposed)
@@ -93,6 +122,14 @@ namespace EveScanner.Core
             this.disposed = true;
         }
 
+        /// <summary>
+        /// Private method which does all the work for the class.
+        /// </summary>
+        /// <param name="uri">Uri to communicate to</param>
+        /// <param name="method">Method to use to communicate</param>
+        /// <param name="content">Optional Content to Send</param>
+        /// <param name="contentType">Optional Content Type</param>
+        /// <returns>Stream to Response</returns>
         private Stream WebRequester(Uri uri, string method, byte[] content, string contentType)
         {
             HttpWebRequest webrequest = (HttpWebRequest)WebRequest.Create(uri);

@@ -5,6 +5,8 @@
 //-----------------------------------------------------------------------
 namespace EveScanner.Interfaces
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// Represents the methods exposed through an appraisal service.
     /// </summary>
@@ -15,7 +17,7 @@ namespace EveScanner.Interfaces
         /// </summary>
         /// <param name="data">Data to send for appraisal</param>
         /// <returns>Parsed appraisal</returns>
-        IScanResult GetAppraisalFromScan(string data);
+        IScanResult GetAppraisalFromScan(IEnumerable<ILineAppraisal> data);
 
         /// <summary>
         /// Gets a previously submitted appraisal from the service.
@@ -23,5 +25,12 @@ namespace EveScanner.Interfaces
         /// <param name="url">URL to previously submitted appraisal</param>
         /// <returns>Parsed appraisal</returns>
         IScanResult GetAppraisalFromUrl(string url);
+
+        /// <summary>
+        /// Indicates if this service can handle a URL presented to it.
+        /// </summary>
+        /// <param name="url">URL to previously submitted appraisal</param>
+        /// <returns>True if the service can handle the URL, false otherwise.</returns>
+        bool CanRetrieveFromUrl(string url);
     }
 }

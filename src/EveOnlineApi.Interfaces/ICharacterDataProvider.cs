@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------
 namespace EveOnlineApi.Interfaces
 {
-    using EveOnlineApi.Entities;
-
     /// <summary>
     /// Defines the interface for retrieving Character data.
     /// </summary>
@@ -24,6 +22,6 @@ namespace EveOnlineApi.Interfaces
         /// </summary>
         /// <param name="characterId">Character Id</param>
         /// <returns>Character Info Object</returns>
-        Character GetCharacterInfo(int characterId);
+        ICharacter GetCharacterInfo(int characterId);
     }
 }

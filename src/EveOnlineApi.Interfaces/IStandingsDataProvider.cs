@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------
 namespace EveOnlineApi.Interfaces
 {
-    using EveOnlineApi.Entities;
-
     /// <summary>
     /// Data Provider for Eve Online Standings Data
     /// </summary>
@@ -18,6 +16,6 @@ namespace EveOnlineApi.Interfaces
         /// <param name="entityName">Name of Entity</param>
         /// <param name="entityType">Type of Entity</param>
         /// <returns>Standings Information</returns>
-        Standings GetStandingsInfo(string entityName, EntityType entityType);
+        IStandings GetStandingsInfo(string entityName, IEntityType entityType);
     }
 }

@@ -6,14 +6,13 @@
 namespace EveOnlineApi
 {
     using System.Linq;
-    
-    using EveOnlineApi.Common;
+
     using EveOnlineApi.Entities;
     using EveOnlineApi.Entities.Xml;
     using EveOnlineApi.Interfaces;
     using EveOnlineApi.Interfaces.Xml;
     using EveScanner.IoC;
-
+    
     /// <summary>
     /// This is an un-cached interface to whatever XML API provider is registered
     /// to be used by the application. Hopefully that API provider is cached, since
@@ -39,7 +38,7 @@ namespace EveOnlineApi
         /// </summary>
         /// <param name="characterId">Character Id</param>
         /// <returns>Character Info Object</returns>
-        public Character GetCharacterInfo(int characterId)
+        public ICharacter GetCharacterInfo(int characterId)
         {
             ICharacterXmlDataProvider xdp = Injector.Create<ICharacterXmlDataProvider>();
             return new Character(xdp.GetCharacterInfo(characterId));
@@ -50,7 +49,7 @@ namespace EveOnlineApi
         /// </summary>
         /// <param name="corporationId">Corporation Id</param>
         /// <returns>Corporation Object</returns>
-        public Corporation GetCorporationInfo(int corporationId)
+        public ICorporation GetCorporationInfo(int corporationId)
         {
             ICorporationXmlDataProvider xdp = Injector.Create<ICorporationXmlDataProvider>();
             return new Corporation(xdp.GetCorporationInfo(corporationId));
@@ -63,7 +62,7 @@ namespace EveOnlineApi
         /// </summary>
         /// <param name="allianceId">Id of the Alliance to retrieve</param>
         /// <returns>Alliance Object</returns>
-        public Alliance GetAllianceInfo(int allianceId)
+        public IAlliance GetAllianceInfo(int allianceId)
         {
             return this.GetAllianceInfo(allianceId, true);
         }
@@ -74,7 +73,7 @@ namespace EveOnlineApi
         /// <param name="allianceId">Id of the Alliance to retrieve</param>
         /// <param name="suppressMemberCorps">Whether the member corp data should be suppressed</param>
         /// <returns>Alliance Object</returns>
-        public Alliance GetAllianceInfo(int allianceId, bool suppressMemberCorps)
+        public IAlliance GetAllianceInfo(int allianceId, bool suppressMemberCorps)
         {
             IAllianceXmlDataProvider xdp = Injector.Create<IAllianceXmlDataProvider>();
             return new Alliance(xdp.GetAllianceData(allianceId, suppressMemberCorps));
@@ -86,14 +85,14 @@ namespace EveOnlineApi
         /// <param name="entityName">Name of Entity</param>
         /// <param name="entityType">Type of Entity</param>
         /// <returns>Standings Information</returns>
-        public Standings GetStandingsInfo(string entityName, EntityType entityType)
+        public IStandings GetStandingsInfo(string entityName, IEntityType entityType)
         {
             int entityId = this.GetCharacterId(entityName);
 
             // This is a little complicated...
-            Character ch = null;
-            Corporation cp = null;
-            Alliance al = null;
+            ICharacter ch = null;
+            ICorporation cp = null;
+            IAlliance al = null;
 
             if (entityType == EntityType.Character)
             {

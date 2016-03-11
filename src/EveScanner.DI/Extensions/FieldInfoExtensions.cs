@@ -10,7 +10,7 @@ namespace EveScanner.IoC.Extensions
         {
             if (typeof(T) != fieldInfo.DeclaringType)
             {
-                throw new ArgumentException();
+                throw new ArgumentException("T must be of the declaring type of the field", "fieldInfo");
             }
 
             var target = Expression.Parameter(fieldInfo.DeclaringType, "target");
@@ -23,7 +23,7 @@ namespace EveScanner.IoC.Extensions
         {
             if (typeof(T) != fieldInfo.DeclaringType)
             {
-                throw new ArgumentException();
+                throw new ArgumentException("T must be of the declaring type of the field", "fieldInfo");
             }
 
             var target = Expression.Parameter(fieldInfo.DeclaringType, "target");

@@ -6,14 +6,28 @@
 
     using EveScanner.IoC.Attributes;
     using EveScanner.IoC.Extensions;
-
+    using System.Collections.ObjectModel;
     public class PropertyMapper<TOutputType> where TOutputType : class
     {
         private static PropertyMapper<TOutputType> instance = null;
 
-        private Dictionary<string, Func<TOutputType, object>> getMethods = new Dictionary<string, Func<TOutputType, object>>(StringComparer.InvariantCultureIgnoreCase);
-        private Dictionary<string, Action<TOutputType, object>> setMethods = new Dictionary<string, Action<TOutputType, object>>(StringComparer.InvariantCultureIgnoreCase);
-        public List<string> Properties = new List<string>();
+        private Dictionary<string, Func<TOutputType, object>> getMethods = new Dictionary<string, Func<TOutputType, object>>(StringComparer.OrdinalIgnoreCase);
+        private Dictionary<string, Action<TOutputType, object>> setMethods = new Dictionary<string, Action<TOutputType, object>>(StringComparer.OrdinalIgnoreCase);
+        private Collection<string> properties = null;
+
+        public Collection<string> Properties
+        {
+            get
+            {
+                if (this.properties == null)
+                {
+                    this.properties = new Collection<string>();
+                }
+
+                return this.properties;
+            }
+        }
+
 
         public static PropertyMapper<TOutputType> Instance
         {

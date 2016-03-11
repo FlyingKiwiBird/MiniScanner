@@ -51,18 +51,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Appraiser.cs" />
     <Compile Include="ConfigHelper.cs" />
+    <Compile Include="CoreRegistration.cs" />
     <Compile Include="HistoryWrapper.cs" />
     <Compile Include="ImageCombiner.cs" />
     <Compile Include="ListScanHistory.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScanItem.cs" />
+    <Compile Include="ScanLine.cs" />
     <Compile Include="ScanResult.cs" />
     <Compile Include="Validators.cs" />
     <Compile Include="WebClient.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EveOnlineApi.Interfaces\EveOnlineApi.Interfaces.csproj">
+      <Project>{26668585-4e8a-406d-a0b9-6483c2755442}</Project>
+      <Name>EveOnlineApi.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveOnlineApi\EveOnlineApi.csproj">
       <Project>{35d84931-08a2-439b-b217-4d7e1643e23c}</Project>
       <Name>EveOnlineApi</Name>

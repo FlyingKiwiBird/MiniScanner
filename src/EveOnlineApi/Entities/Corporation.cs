@@ -11,22 +11,23 @@ namespace EveOnlineApi.Entities
     using EveOnlineApi.Entities.Xml;
     using EveOnlineApi.Interfaces;
 
+    using EveScanner.Interfaces;
     using EveScanner.IoC;
 
     /// <summary>
     /// Represents an EVE Online Corporation
     /// </summary>
-    public class Corporation : EveOnlineCacheable
+    public class Corporation : EveOnlineCacheable, ICorporation
     {
         /// <summary>
         /// Holds the lazy loaded Alliance object.
         /// </summary>
-        private Alliance alliance = null;
+        private IAlliance alliance = null;
 
         /// <summary>
         /// Holds the lazy loaded CEO Character object.
         /// </summary>
-        private Character ceoCharacter = null;
+        private ICharacter ceoCharacter = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Corporation"/> class.
@@ -121,7 +122,7 @@ namespace EveOnlineApi.Entities
         /// <summary>
         /// Gets the Character Object for the CEO.
         /// </summary>
-        public Character CeoCharacter
+        public ICharacter CeoCharacter
         {
             get
             {
@@ -157,7 +158,7 @@ namespace EveOnlineApi.Entities
         /// <summary>
         /// Gets the Alliance object associated with the Corporation
         /// </summary>
-        public Alliance Alliance
+        public IAlliance Alliance
         {
             get
             {
@@ -198,14 +199,14 @@ namespace EveOnlineApi.Entities
         /// <summary>
         /// Gets information used to render the corporation logo.
         /// </summary>
-        public CorporationLogo Logo { get; private set; }
+        public ICorporationLogo Logo { get; private set; }
 
         /// <summary>
         /// Gets corporation information for a particular corporation id.
         /// </summary>
         /// <param name="corporationId">Corporation Id</param>
         /// <returns>Corporation Object</returns>
-        public static Corporation GetCorporationByCorporationId(int corporationId)
+        public static ICorporation GetCorporationByCorporationId(int corporationId)
         {
             ICorporationDataProvider cdp = Injector.Create<ICorporationDataProvider>();
             return cdp.GetCorporationInfo(corporationId);

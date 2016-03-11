@@ -8,7 +8,7 @@ namespace EveScanner.Interfaces
     using System;
     using System.Collections.Generic;
 
-    using EveOnlineApi.Entities;
+    using EveOnlineApi.Interfaces;
 
     /// <summary>
     /// Interface representing the properties required by the application from a scan result.
@@ -58,7 +58,7 @@ namespace EveScanner.Interfaces
         /// <summary>
         /// Gets a list of all the items in the appraisal and their values.
         /// </summary>
-        IEnumerable<IItemAppraisal> ItemAppraisals { get; }
+        IEnumerable<ILineAppraisal> AppraisedLines { get; }
 
         /// <summary>
         /// Gets the URL to the Appraisal
@@ -98,6 +98,11 @@ namespace EveScanner.Interfaces
         /// <summary>
         /// Gets or sets additional Character data.
         /// </summary>
-        Character Character { get; set; }
+        ICharacter Character { get; set; }
+
+        /// <summary>
+        /// Gets a value indicating whether some items in the scan obtained prices from a secondary source.
+        /// </summary>
+        bool ItemsReappraised { get; }
     }
 }

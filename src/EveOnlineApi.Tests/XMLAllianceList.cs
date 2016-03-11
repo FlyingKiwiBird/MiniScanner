@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using EveOnlineApi.Common;
@@ -39,24 +40,30 @@ namespace EveOnlineApi.Tests
 
             Assert.IsNotNull(api.Result.RowSet.Rows);
 
-            Assert.IsTrue(api.Result.RowSet.Rows.Count > 0);
+            Assert.IsTrue(api.Result.RowSet.Rows.Count() > 0);
 
-            Assert.AreEqual("Goonswarm Federation", api.Result.RowSet.Rows[0].Name);
-            Assert.AreEqual("CONDI", api.Result.RowSet.Rows[0].ShortName);
-            Assert.AreEqual(1354830081, api.Result.RowSet.Rows[0].AllianceId);
-            Assert.AreEqual(1344654522, api.Result.RowSet.Rows[0].ExecutorCorpId);
-            Assert.AreEqual(14514, api.Result.RowSet.Rows[0].MemberCount);
-            Assert.AreEqual("2010-06-01 05:36:00", api.Result.RowSet.Rows[0].StartDate);
+            AllianceRow firstAlliance = api.Result.RowSet.Rows.FirstOrDefault();
+            Assert.IsNotNull(firstAlliance);
 
-            Assert.IsNotNull(api.Result.RowSet.Rows[0].MemberCorporations);
-            Assert.AreEqual("memberCorporations", api.Result.RowSet.Rows[0].MemberCorporations.Name);
-            Assert.AreEqual("corporationID", api.Result.RowSet.Rows[0].MemberCorporations.Key);
-            Assert.AreEqual("corporationID,startDate", api.Result.RowSet.Rows[0].MemberCorporations.Columns);
+            Assert.AreEqual("Goonswarm Federation", firstAlliance.Name);
+            Assert.AreEqual("CONDI", firstAlliance.ShortName);
+            Assert.AreEqual(1354830081, firstAlliance.AllianceId);
+            Assert.AreEqual(1344654522, firstAlliance.ExecutorCorpId);
+            Assert.AreEqual(14514, firstAlliance.MemberCount);
+            Assert.AreEqual("2010-06-01 05:36:00", firstAlliance.StartDate);
 
-            Assert.IsTrue(api.Result.RowSet.Rows[0].MemberCorporations.Rows.Count > 0);
+            Assert.IsNotNull(firstAlliance.MemberCorporations);
+            Assert.AreEqual("memberCorporations", firstAlliance.MemberCorporations.Name);
+            Assert.AreEqual("corporationID", firstAlliance.MemberCorporations.Key);
+            Assert.AreEqual("corporationID,startDate", firstAlliance.MemberCorporations.Columns);
 
-            Assert.AreEqual(98002506, api.Result.RowSet.Rows[0].MemberCorporations.Rows[0].CorporationId);
-            Assert.AreEqual("2014-11-12 22:20:00", api.Result.RowSet.Rows[0].MemberCorporations.Rows[0].StartDate);
+            Assert.IsTrue(firstAlliance.MemberCorporations.Rows.Count() > 0);
+
+            MemberCorporationRow firstMember = firstAlliance.MemberCorporations.Rows.FirstOrDefault();
+            Assert.IsNotNull(firstMember);
+
+            Assert.AreEqual(98002506, firstMember.CorporationId);
+            Assert.AreEqual("2014-11-12 22:20:00", firstMember.StartDate);
         }
 
         [TestMethod]

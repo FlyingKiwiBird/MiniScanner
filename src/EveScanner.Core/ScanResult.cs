@@ -10,24 +10,49 @@ namespace EveScanner.Core
     using System.Globalization;
     using System.Linq;
     using System.Text;
-    using EveOnlineApi.Entities;
+
+    using EveOnlineApi.Interfaces;
     using EveScanner.Interfaces;
     using IoC.Attributes;
-    
+
     /// <summary>
     /// Provides a Scan Result implementation.
     /// </summary>
     public class ScanResult : IScanResult
     {
+        /// <summary>
+        /// Holds the Scan Id. This is to identify copied instances.
+        /// </summary>
         private string id;
+
+        /// <summary>
+        /// Holds the scan date and time.
+        /// </summary>
         private string scanDate;
+
+        /// <summary>
+        /// Holds the number of stacks, which may be different than the number of items in the appraisal.
+        /// </summary>
         private long stacks;
+
+        /// <summary>
+        /// Holds the returned buy value for the result.
+        /// </summary>
+        private decimal buyValue;
+
+        /// <summary>
+        /// Holds the returned sell value for the result.
+        /// </summary>
+        private decimal sellValue;
 
         /// <summary>
         /// Holds the character object so we can do other things with it.
         /// </summary>
-        private Character character = default(Character);
+        private ICharacter character = null;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ScanResult"/> class.
+        /// </summary>
         public ScanResult()
         {
         }
@@ -43,8 +68,8 @@ namespace EveScanner.Core
         /// <param name="stacks">Number of stacks in the scan.</param>
         /// <param name="volume">Volume of items in the scan.</param>
         /// <param name="appraisalUrl">URL to the Appraisal</param>
-        /// <param name="imageIndex">Image Index for the Appraisal</param>
-        public ScanResult(Guid id, DateTime scanDate, string rawScan, decimal buyValue, decimal sellValue, int stacks, decimal volume, string appraisalUrl, IEnumerable<IItemAppraisal> itemAppraisals)
+        /// <param name="appraisedLines">Appraised Items</param>
+        public ScanResult(Guid id, DateTime scanDate, string rawScan, decimal buyValue, decimal sellValue, int stacks, decimal volume, string appraisalUrl, IEnumerable<ILineAppraisal> appraisedLines)
         {
             if (id == null || id == Guid.Empty)
             {
@@ -70,7 +95,7 @@ namespace EveScanner.Core
             this.Stacks = stacks;
             this.Volume = volume;
             this.AppraisalUrl = appraisalUrl;
-            this.ItemAppraisals = itemAppraisals;
+            this.AppraisedLines = appraisedLines;
         }
 
         /// <summary>
@@ -83,6 +108,7 @@ namespace EveScanner.Core
             {
                 return Guid.Parse(this.id);
             }
+
             private set
             {
                 this.id = value.ToString();
@@ -93,14 +119,16 @@ namespace EveScanner.Core
         /// Gets the Date that the scan was taken.
         /// </summary>
         [IgnoreMember]
-        public DateTime ScanDate {
+        public DateTime ScanDate
+        {
             get
             {
-                return DateTime.Parse(scanDate);
+                return DateTime.Parse(this.scanDate, CultureInfo.InvariantCulture);
             }
+
             private set
             {
-                this.scanDate = value.ToString("yyyy-MM-dd HH:mm:ss");
+                this.scanDate = value.ToString("yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
             }
         }
 
@@ -112,22 +140,56 @@ namespace EveScanner.Core
         /// <summary>
         /// Gets the value of the scan from a "Buy" perspective.
         /// </summary>
-        public decimal BuyValue { get; private set; }
+        public decimal BuyValue
+        {
+            get
+            {
+                if (this.ItemsReappraised)
+                {
+                    return this.AppraisedLines.Sum(x => x.BuyValue * x.Quantity);
+                }
+
+                return this.buyValue;
+            }
+
+            private set
+            {
+                this.buyValue = value;
+            }
+        }
 
         /// <summary>
         /// Gets the value of the scan from a "Sell" perspective.
         /// </summary>
-        public decimal SellValue { get; private set; }
+        public decimal SellValue
+        {
+            get
+            {
+                if (this.ItemsReappraised)
+                {
+                    return this.AppraisedLines.Sum(x => x.SellValue * x.Quantity);
+                }
+
+                return this.sellValue;
+            }
+
+            private set
+            {
+                this.sellValue = value;
+            }
+        }
 
         /// <summary>
         /// Gets the number of stacks in the scan.
         /// </summary>
         [IgnoreMember]
-        public int Stacks {
+        public int Stacks
+        {
             get
             {
                 return (int)this.stacks;
             }
+
             private set
             {
                 this.stacks = value;
@@ -177,7 +239,7 @@ namespace EveScanner.Core
         /// <summary>
         /// Gets or sets additional Character data.
         /// </summary>
-        public Character Character
+        public ICharacter Character
         {
             get
             {
@@ -230,17 +292,44 @@ namespace EveScanner.Core
             }
         }
 
+        /// <summary>
+        /// Gets the repackaged volume of items in the appraisal.
+        /// </summary>
         public decimal RepackagedVolume
         {
             get
             {
-                return (decimal)this.ItemAppraisals.Sum(x => x.RepackagedVolume);
+                if (this.AppraisedLines == null || this.AppraisedLines.Count() == 0)
+                {
+                    return 0;
+                }
+
+                return (decimal)this.AppraisedLines.Sum(x => x.RepackagedVolume * x.Quantity);
             }
         }
 
-        public IEnumerable<IItemAppraisal> ItemAppraisals
+        /// <summary>
+        /// Gets the appraised lines from the scan.
+        /// </summary>
+        public IEnumerable<ILineAppraisal> AppraisedLines
         {
             get; private set;
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether some items in the scan obtained prices from a secondary source.
+        /// </summary>
+        public bool ItemsReappraised
+        {
+            get
+            {
+                if (this.AppraisedLines == null || this.AppraisedLines.Count() == 0)
+                {
+                    return false;
+                }
+
+                return this.AppraisedLines.Where(x => x.Reappraised).Count() > 0;
+            }
         }
 
         /// <summary>
@@ -375,6 +464,11 @@ namespace EveScanner.Core
                 {
                     sb.AppendFormat(" | {0}", this.CharacterName);
                 }
+            }
+
+            if (this.ItemsReappraised)
+            {
+                sb.Append(" | *Secondary Pricing*");
             }
 
             return sb.ToString();

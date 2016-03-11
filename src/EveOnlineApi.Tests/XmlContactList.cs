@@ -1,9 +1,11 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System.Linq;
 using EveOnlineApi.Entities.Xml;
 using EveOnlineApi.Common;
 using EveOnlineApi.Entities;
+using EveOnlineApi.Interfaces;
 
 namespace EveOnlineApi.Tests
 {
@@ -34,53 +36,70 @@ namespace EveOnlineApi.Tests
             Assert.AreEqual("contactList", api.Result.ContactList.Name);
             Assert.AreEqual("contactID", api.Result.ContactList.Key);
             Assert.AreEqual("contactID,contactName,standing,contactTypeID,labelMask,inWatchlist", api.Result.ContactList.Columns);
+
             Assert.IsNotNull(api.Result.ContactList.Rows);
-            Assert.AreEqual(2, api.Result.ContactList.Rows.Count);
-            Assert.AreEqual(1, api.Result.ContactList.Rows[0].ContactId);
-            Assert.AreEqual("Viktorie Lucilla", api.Result.ContactList.Rows[0].ContactName);
-            Assert.AreEqual(10, api.Result.ContactList.Rows[0].Standing);
-            Assert.AreEqual(1374, api.Result.ContactList.Rows[0].ContactTypeId);
-            Assert.AreEqual(0, api.Result.ContactList.Rows[0].LabelMask);
-            Assert.AreEqual("False", api.Result.ContactList.Rows[0].InWatchlist);
-            Assert.AreEqual("True", api.Result.ContactList.Rows[1].InWatchlist);
+            Assert.AreEqual(2, api.Result.ContactList.Rows.Count());
+
+            PersonalContactListRow firstRow = api.Result.ContactList.Rows.ElementAtOrDefault(0);
+            Assert.IsNotNull(firstRow);
+
+            Assert.AreEqual(1, firstRow.ContactId);
+            Assert.AreEqual("Viktorie Lucilla", firstRow.ContactName);
+            Assert.AreEqual(10, firstRow.Standing);
+            Assert.AreEqual(1374, firstRow.ContactTypeId);
+            Assert.AreEqual(0, firstRow.LabelMask);
+            Assert.AreEqual("False", firstRow.InWatchlist);
+
+            PersonalContactListRow secondRow = api.Result.ContactList.Rows.ElementAtOrDefault(1);
+            Assert.IsNotNull(secondRow);
+            Assert.AreEqual("True", secondRow.InWatchlist);
 
             Assert.IsNotNull(api.Result.ContactLabels);
             Assert.IsNotNull(api.Result.ContactLabels.Rows);
-            Assert.AreEqual(0, api.Result.ContactLabels.Rows.Count);
+
+            Assert.AreEqual(0, api.Result.ContactLabels.Rows.Count());
             
             Assert.IsNotNull(api.Result.CorporateContactList);
             Assert.AreEqual("corporateContactList", api.Result.CorporateContactList.Name);
             Assert.AreEqual("contactID", api.Result.CorporateContactList.Key);
             Assert.AreEqual("contactID,contactName,standing,contactTypeID,labelMask", api.Result.CorporateContactList.Columns);
             Assert.IsNotNull(api.Result.CorporateContactList.Rows);
-            Assert.IsTrue(api.Result.CorporateContactList.Rows.Count > 0);
-            Assert.AreEqual(90171277, api.Result.CorporateContactList.Rows[0].ContactId);
-            Assert.AreEqual("Phigmeta", api.Result.CorporateContactList.Rows[0].ContactName);
-            Assert.AreEqual(-10, api.Result.CorporateContactList.Rows[0].Standing);
-            Assert.AreEqual(1378, api.Result.CorporateContactList.Rows[0].ContactTypeId);
-            Assert.AreEqual(0, api.Result.CorporateContactList.Rows[0].LabelMask);
+            Assert.IsTrue(api.Result.CorporateContactList.Rows.Count() > 0);
+
+            GroupContactListRow firstContact = api.Result.CorporateContactList.Rows.ElementAtOrDefault(0);
+            Assert.IsNotNull(firstContact);
+
+            Assert.AreEqual(90171277, firstContact.ContactId);
+            Assert.AreEqual("Phigmeta", firstContact.ContactName);
+            Assert.AreEqual(-10, firstContact.Standing);
+            Assert.AreEqual(1378, firstContact.ContactTypeId);
+            Assert.AreEqual(0, firstContact.LabelMask);
 
             Assert.IsNotNull(api.Result.CorporateContactLabels);
-            Assert.AreEqual(0, api.Result.CorporateContactLabels.Rows.Count);
+            Assert.AreEqual(0, api.Result.CorporateContactLabels.Rows.Count());
             
             Assert.IsNotNull(api.Result.AllianceContactList);
             Assert.AreEqual("allianceContactList", api.Result.AllianceContactList.Name);
             Assert.AreEqual("contactID", api.Result.AllianceContactList.Key);
             Assert.AreEqual("contactID,contactName,standing,contactTypeID,labelMask", api.Result.AllianceContactList.Columns);
             Assert.IsNotNull(api.Result.AllianceContactList.Rows);
-            Assert.IsTrue(api.Result.AllianceContactList.Rows.Count > 0);
+            Assert.IsTrue(api.Result.AllianceContactList.Rows.Count() > 0);
 
             Assert.IsNotNull(api.Result.AllianceContactLabels);
             Assert.IsNotNull(api.Result.AllianceContactLabels.Rows);
-            Assert.AreEqual(4, api.Result.AllianceContactLabels.Rows.Count);
-            Assert.AreEqual(1, api.Result.AllianceContactLabels.Rows[0].Id);
-            Assert.AreEqual("Q Pirates", api.Result.AllianceContactLabels.Rows[0].Name);
+            Assert.AreEqual(4, api.Result.AllianceContactLabels.Rows.Count());
+
+            ContactLabelRow firstLabel = api.Result.AllianceContactLabels.Rows.FirstOrDefault();
+            Assert.IsNotNull(firstLabel);
+
+            Assert.AreEqual(1, firstLabel.Id);
+            Assert.AreEqual("Q Pirates", firstLabel.Name);
         }
 
         [TestMethod]
         public void TestStandingsRetrieval()
         {
-            Standings s = Standings.GetStandings("Viktorie Lucilla", EntityType.Character);
+            IStandings s = Standings.GetStandings("Viktorie Lucilla", EntityType.Character);
 
             Assert.IsNotNull(s);
             Assert.AreEqual(10, s.DerivedStanding);

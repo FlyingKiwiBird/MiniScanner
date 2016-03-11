@@ -13,10 +13,10 @@ namespace EveScanner
     using EveOnlineApi.Interfaces.Xml;
 
     using EveScanner.Core;
+    using EveScanner.Evepraisal;
     using EveScanner.Interfaces;
     using EveScanner.IoC;
     using EveScanner.UI;
-    using EveScanner.Evepraisal;
 
     /// <summary>
     /// Entry class for the application.
@@ -32,6 +32,10 @@ namespace EveScanner
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // Register all implementations in case we want them later, then configure the ones we want as the defaults.
+            RegistrationService rx = new RegistrationService();
+            rx.ScanFolder();
 
             // Configure XML API Injections
             Injector.Register<IAllianceXmlDataProvider>(typeof(FileBackedEveOnlineXmlApi));

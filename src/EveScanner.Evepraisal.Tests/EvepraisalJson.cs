@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
+using System.Linq;
 
 namespace EveScanner.Evepraisal.Tests
 {
@@ -25,9 +26,9 @@ namespace EveScanner.Evepraisal.Tests
             Assert.AreEqual(1439952792, v.Created);
             Assert.AreEqual(7111070, v.Id);
 
-            Assert.AreEqual(4, v.Items.Length);
+            Assert.AreEqual(4, v.Items.Count());
 
-            Assert.AreEqual(530, v.Items[0].GroupID);
+            Assert.AreEqual(530, v.Items[0].GroupId);
             Assert.AreEqual(true, v.Items[0].Market);
             Assert.AreEqual("Construction Alloy", v.Items[0].Name);
 
@@ -59,7 +60,7 @@ namespace EveScanner.Evepraisal.Tests
             Assert.AreEqual(37068, v.Items[0].Prices.Sell.Volume);
 
             Assert.AreEqual(48, v.Items[0].Quantity);
-            Assert.AreEqual(21595, v.Items[0].TypeID);
+            Assert.AreEqual(21595, v.Items[0].TypeId);
             Assert.AreEqual("Construction Alloy", v.Items[0].TypeName);
             Assert.AreEqual(0.1, v.Items[0].Volume);
 

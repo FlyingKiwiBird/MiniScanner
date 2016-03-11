@@ -13,7 +13,7 @@ namespace EveScanner.IoC.Extensions
         {
             if (typeof(T) != propertyInfo.DeclaringType)
             {
-                throw new ArgumentException();
+                throw new ArgumentException("T must be of the declaring type of the Property", "propertyInfo");
             }
 
             var instance = Expression.Parameter(propertyInfo.DeclaringType, "i");
@@ -26,7 +26,7 @@ namespace EveScanner.IoC.Extensions
         {
             if (typeof(T) != propertyInfo.DeclaringType)
             {
-                throw new ArgumentException();
+                throw new ArgumentException("T must be of the declaring type of the Property", "propertyInfo");
             }
 
             var instance = Expression.Parameter(propertyInfo.DeclaringType, "i");

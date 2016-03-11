@@ -16,9 +16,14 @@ namespace EveScanner.IoC
     public static class Injector
     {
         /// <summary>
-        /// Holds the implementation cache.
+        /// Holds the implementation cache for ALL implementations
         /// </summary>
-        private static Dictionary<Type, Delegate> implementations = new Dictionary<Type, Delegate>();
+        private static Dictionary<Type, InjectionType[]> allImplementations = new Dictionary<Type, InjectionType[]>();
+
+        /// <summary>
+        /// Holds the implementation cache for default implementations.
+        /// </summary>
+        private static Dictionary<Type, InjectionType> defaultImplementations = new Dictionary<Type, InjectionType>();
 
         /// <summary>
         /// Registers an Interface and Implementation Type at Compile Time
@@ -37,28 +42,81 @@ namespace EveScanner.IoC
         /// <param name="implementationType">Implementation of the Interface</param>
         public static void Register<TInterfaceType>(Type implementationType)
         {
-            if (!typeof(TInterfaceType).IsInterface)
+            if (implementationType == null)
+            {
+                throw new ArgumentNullException("implementationType", "Implementation Type cannot be null.");
+            }
+
+            InjectionType t = Injector.GetImplementationsFor<TInterfaceType>().Where(
+                    x => x.ImplementationType == implementationType
+            ).SingleOrDefault();
+
+            if (t == null)
+            {
+                Injector.Register<TInterfaceType>(implementationType, implementationType.Name);
+            }
+
+            Injector.SetDefaultImplementation(
+                typeof(TInterfaceType),
+                t
+            );
+        }
+
+        /// <summary>
+        /// Registers an Interface and Implementation Type at Run Time
+        /// </summary>
+        /// <typeparam name="TInterfaceType">Interface Type</typeparam>
+        /// <param name="implementationType">Implementation of the Interface</param>
+        /// <param name="friendlyName">Friendly Name</param>
+        public static void Register<TInterfaceType>(Type implementationType, string friendlyName)
+        {
+            Injector.Register<TInterfaceType>(implementationType, friendlyName, false);
+        }
+
+        /// <summary>
+        /// Registers an Interface and Implementation Type at Run Time
+        /// </summary>
+        /// <typeparam name="TInterfaceType">Interface Type</typeparam>
+        /// <param name="implementationType">Implementation of the Interface</param>
+        /// <param name="friendlyName">Friendly Name</param>
+        /// <param name="setDefaultImplementation">Set this to Default Implementation</param>
+        public static void Register<TInterfaceType>(Type implementationType, string friendlyName, bool setDefaultImplementation)
+        {
+            if (implementationType == null)
+            {
+                throw new ArgumentNullException("implementationType", "ImplementationType cannot be null.");
+            }
+
+            Type interfaceType = typeof(TInterfaceType);
+
+            if (!interfaceType.IsInterface)
             {
                 throw new ArgumentException("InterfaceType must be an Interface");
             }
 
-            if (!typeof(TInterfaceType).IsAssignableFrom(implementationType))
+            if (!interfaceType.IsAssignableFrom(implementationType))
             {
                 throw new ArgumentException("ImplementationType must be an implementation of the InterfaceType");
             }
 
-            Delegate d = Expression.Lambda(Expression.New(implementationType)).Compile();
-            AddImplementationToMap(typeof(TInterfaceType), d);
-        }
+            InjectionType t = Injector.GetImplementationsFor<TInterfaceType>().Where(
+                    x => x.ImplementationType == implementationType
+            ).FirstOrDefault();
 
-        /// <summary>
-        /// Registers an Interface with a Constructor at Compile Time
-        /// </summary>
-        /// <typeparam name="TInterfaceType">Interface Type</typeparam>
-        /// <param name="constructor">Constructor Lambda</param>
-        public static void Register<TInterfaceType>(Func<TInterfaceType> constructor)
-        {
-            AddImplementationToMap(typeof(TInterfaceType), constructor);
+            if (t == null)
+            {
+                t = new InjectionType<TInterfaceType>(implementationType, friendlyName);
+                Injector.allImplementations[interfaceType] = Injector.allImplementations[interfaceType].Union(new[] { t }).ToArray();
+            }
+            else
+            {
+                t.FriendlyName = friendlyName;
+            }
+
+            if (!Injector.defaultImplementations.ContainsKey(interfaceType) || setDefaultImplementation)
+            {
+                Injector.SetDefaultImplementation(interfaceType, t);
+            }
         }
 
         /// <summary>
@@ -68,16 +126,37 @@ namespace EveScanner.IoC
         /// <returns>Constructed Implementation</returns>
         public static TInterfaceType Create<TInterfaceType>()
         {
-            if (!implementations.ContainsKey(typeof(TInterfaceType)))
+            if (!defaultImplementations.ContainsKey(typeof(TInterfaceType)))
             {
+                Type t = Injector.FindImplementation<TInterfaceType>();
+                if (t == null)
+                {
+                    return default(TInterfaceType);
+                }
+
                 Injector.Register<TInterfaceType>(Injector.FindImplementation<TInterfaceType>());
             }
 
-            Delegate d = Injector.implementations[typeof(TInterfaceType)];
- 
-            return (TInterfaceType)(d as Func<object>)();
+            return (TInterfaceType)Injector.defaultImplementations[typeof(TInterfaceType)].Construct();
         }
 
+        /// <summary>
+        /// Creates an object for a particular given interface type and friendly name.
+        /// </summary>
+        /// <typeparam name="TInterfaceType">Interface Type</typeparam>
+        /// <param name="friendlyName">Friendly Name</param>
+        /// <returns>Constructed Implementation</returns>
+        public static TInterfaceType Create<TInterfaceType>(string friendlyName)
+        {
+            return (TInterfaceType)Injector.GetImplementationsFor<TInterfaceType>().Where(x => x.FriendlyName == friendlyName).Single().Construct();
+        }
+
+        /// <summary>
+        /// Creates an object for a particular given interface type and type name.
+        /// </summary>
+        /// <typeparam name="TInterfaceType">Interface Type</typeparam>
+        /// <param name="typeName">Type Name</param>
+        /// <returns>Constructed Implementation</returns>
         public static TInterfaceType CreateFromTypeName<TInterfaceType>(string typeName)
         {
             Type t = Type.GetType(typeName);
@@ -90,7 +169,6 @@ namespace EveScanner.IoC
             return (TInterfaceType)Activator.CreateInstance(t);
         }
 
-
         /// <summary>
         /// Finds an Implementation of Type InterfaceType from the Assembly the Interface is defined in, or, failing that, one from all currently loaded assemblies.
         /// </summary>
@@ -98,31 +176,69 @@ namespace EveScanner.IoC
         /// <returns>Implementation Type</returns>
         public static Type FindImplementation<TInterfaceType>()
         {
-            Type output = null;
-            
-            output = typeof(TInterfaceType).Assembly.GetTypes().Where(x => typeof(TInterfaceType).IsAssignableFrom(x) && x != typeof(TInterfaceType)).FirstOrDefault();
-
-            if (output == null)
+            InjectionType<TInterfaceType>[] implementations = Injector.GetImplementationsFor<TInterfaceType>();
+            if (implementations == null || implementations.Length == 0)
             {
-                output = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).Where(y => typeof(TInterfaceType).IsAssignableFrom(y) && typeof(TInterfaceType) != y).FirstOrDefault();
+                return null;
             }
-            
-            return output;
+
+            return implementations[0].ImplementationType;
+        }
+
+        /// <summary>
+        /// Returns all the objects you could ever want registered for a given interface.
+        /// </summary>
+        /// <typeparam name="TInterfaceType">Interface Type</typeparam>
+        /// <returns>Implemented Type</returns>
+        public static InjectionType<TInterfaceType>[] GetImplementationsFor<TInterfaceType>()
+        {
+            Type interfaceType = typeof(TInterfaceType);
+
+            if (!Injector.allImplementations.ContainsKey(interfaceType))
+            {
+                Injector.FillAllImplementationsDictionary<TInterfaceType>();
+            }
+
+            return Injector.allImplementations[interfaceType].Cast<InjectionType<TInterfaceType>>().ToArray();
+        }
+
+        /// <summary>
+        /// Fills a dictionary with all implementations of a particular interface.
+        /// </summary>
+        /// <typeparam name="TInterfaceType">Interface Type</typeparam>
+        private static void FillAllImplementationsDictionary<TInterfaceType>()
+        {
+            Type interfaceType = typeof(TInterfaceType);
+
+            if (Injector.allImplementations.ContainsKey(interfaceType))
+            {
+                Injector.allImplementations.Remove(interfaceType);
+            }
+
+            Injector.allImplementations.Add(interfaceType,
+                AppDomain.CurrentDomain.GetAssemblies().SelectMany(
+                    x => x.GetTypes()
+                ).Where(
+                    y => interfaceType.IsAssignableFrom(y) && interfaceType != y && !y.IsInterface
+                ).ToArray().Select(
+                    x => new InjectionType<TInterfaceType>(x)
+                ).ToArray()
+            );
         }
 
         /// <summary>
         /// Adds an implementation to the mapping, removing the old one if necessary.
         /// </summary>
         /// <param name="t">Type to Add</param>
-        /// <param name="d">Delegate to Map</param>
-        private static void AddImplementationToMap(Type t, Delegate d)
+        /// <param name="x">InjectionType to Map</param>
+        private static void SetDefaultImplementation(Type t, InjectionType x)
         {
-            if (implementations.ContainsKey(t))
+            if (Injector.defaultImplementations.ContainsKey(t))
             {
-                implementations.Remove(t);
+                Injector.defaultImplementations.Remove(t);
             }
 
-            implementations.Add(t, d);
+            Injector.defaultImplementations.Add(t, x);
         }
     }
 }

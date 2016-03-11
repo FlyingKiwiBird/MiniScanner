@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace EveOnlineApi.Entities.Xml.Base
 {
+    using System.Diagnostics.CodeAnalysis;
     using System.Xml.Serialization;
 
     /// <summary>
@@ -18,15 +19,16 @@ namespace EveOnlineApi.Entities.Xml.Base
     /// <summary>
     /// Represents an EVI API Result Set. Usually just contains a "Row set" element, but, can contain other items.
     /// </summary>
-    /// <typeparam name="U">API Row Set Type</typeparam>
+    /// <typeparam name="TEveApiRowset">API Row Set Type</typeparam>
     [XmlRoot("result")]
-    public abstract class EveApiSingleResult<U> : EveApiResult
-        where U : EveApiRowset
+    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Small generic class in same file")]
+    public abstract class EveApiSingleResult<TEveApiRowset> : EveApiResult
+        where TEveApiRowset : EveApiRowset
     {
         /// <summary>
         /// Gets or sets the Row Set
         /// </summary>
         [XmlElement("rowset")]
-        public U RowSet { get; set; }
+        public TEveApiRowset RowSet { get; set; }
     }
 }

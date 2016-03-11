@@ -1,17 +1,20 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright company="Viktorie Lucilla" file="Evepraisal.cs">
+// <copyright company="Viktorie Lucilla" file="EvepraisalSvc.cs">
 // Copyright © Viktorie Lucilla 2015. All Rights Reserved
 // </copyright>
 //-----------------------------------------------------------------------
 namespace EveScanner.Evepraisal
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
     using System.IO;
+    using System.Linq;
     using System.Text;
+
+    using EveScanner.Core;
     using EveScanner.Interfaces;
     using EveScanner.IoC;
-    using EveScanner.Core;
 
     /// <summary>
     /// Provides a method to submit item lists to Evepraisal and receive a scan response.
@@ -39,7 +42,7 @@ namespace EveScanner.Evepraisal
         private string appraisalResponse = string.Empty;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Evepraisal"/> class.
+        /// Initializes a new instance of the <see cref="EvepraisalSvc"/> class.
         /// </summary>
         public EvepraisalSvc()
             : this("evepraisal.com", false)
@@ -47,7 +50,7 @@ namespace EveScanner.Evepraisal
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Evepraisal"/> class. Allows for pointing at another domain.
+        /// Initializes a new instance of the <see cref="EvepraisalSvc"/> class. Allows for pointing at another domain.
         /// </summary>
         /// <param name="domain">Domain of the Scanning Service</param>
         /// <param name="https">Whether the service is HTTPS</param>
@@ -61,10 +64,10 @@ namespace EveScanner.Evepraisal
         /// </summary>
         /// <param name="data">Items to appraise</param>
         /// <returns>Parsed ScanResult</returns>
-        public IScanResult GetAppraisalFromScan(string data)
+        public IScanResult GetAppraisalFromScan(IEnumerable<ILineAppraisal> data)
         {
             this.scanUrl = string.Empty;
-            this.scanData = data;
+            this.scanData = string.Join(Environment.NewLine, data.Select(x => string.Format(CultureInfo.InvariantCulture, "{0} {1}", x.Quantity, x.TypeName)).ToArray());
             this.appraisalResponse = this.GetAppraisalFromScanData();
             ScanResult rs = this.ParseResponse();
             return rs;
@@ -85,6 +88,21 @@ namespace EveScanner.Evepraisal
         }
 
         /// <summary>
+        /// Indicates if this service can handle a URL presented to it.
+        /// </summary>
+        /// <param name="url">URL to previously submitted appraisal</param>
+        /// <returns>True if the service can handle the URL, false otherwise.</returns>
+        public bool CanRetrieveFromUrl(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                return false;
+            }
+
+            return url.Replace("https", "http").StartsWith(this.uri.Replace("https", "http"), StringComparison.Ordinal);
+        }
+
+        /// <summary>
         /// Parses an Evepraisal HTML document and returns a scan result.
         /// </summary>
         /// <returns>Parsed ScanResult</returns>
@@ -100,14 +118,33 @@ namespace EveScanner.Evepraisal
                 string url = this.uri + responseString.Substring(scanIx + 10, scanIe - scanIx - 10);
                 string appraisalUrl = url;
 
+                if (string.IsNullOrEmpty(this.scanData))
+                {
+                    int rawIa = responseString.IndexOf("<textarea class=\"input-block-level\" rows", StringComparison.OrdinalIgnoreCase);
+                    int rawIx = responseString.IndexOf(">", rawIa + 1, StringComparison.OrdinalIgnoreCase);
+                    int rawIe = responseString.IndexOf("</textarea>", rawIx + 1, StringComparison.OrdinalIgnoreCase);
+
+                    string rawScan = responseString.Substring(rawIx + 1, rawIe - rawIx - 1);
+                    this.scanData = rawScan;
+                }
+
                 // And grab the .json instead
-                Uri uri = new Uri(url + ".json");
+                Uri localUri = new Uri(url + ".json");
 
                 using (IWebClient dl = Injector.Create<IWebClient>())
                 {
-                    string result = dl.GetUriToString(uri);
+                    string result = dl.GetUriToString(localUri);
                     EvepraisalJson json = EvepraisalJson.Resolve(result);
-                    return new ScanResult(Guid.Empty, DateTime.Now, this.scanData, (decimal)json.Totals.Buy, (decimal)json.Totals.Sell, this.scanData.Split(new string[] { Environment.NewLine, "\r\n", "\r" }, StringSplitOptions.RemoveEmptyEntries).Length, (decimal)json.Totals.Volume, appraisalUrl, json.Items);
+                    return new ScanResult(
+                        Guid.Empty,
+                        DateTime.Now,
+                        this.scanData,
+                        (decimal)json.Totals.Buy,
+                        (decimal)json.Totals.Sell,
+                        !string.IsNullOrEmpty(this.scanData) ? this.scanData.Split(new string[] { Environment.NewLine, "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries).Length : json.Items.Count(),
+                        (decimal)json.Totals.Volume,
+                        appraisalUrl,
+                        json.Items);
                 }
             }
             catch
@@ -126,7 +163,7 @@ namespace EveScanner.Evepraisal
 
                 File.WriteAllText(s + ".rsp.txt", this.appraisalResponse);
 
-                Logger.Error("Scan Parsing Failed! Logged scan data to " + s + ".req/rsp.txt", true);
+                Logger.Error("Scan Parsing Failed! Logged scan data to " + s + ".*.txt", true);
 
                 throw;
             }
@@ -138,11 +175,11 @@ namespace EveScanner.Evepraisal
         /// <returns>Contents of the URL specified</returns>
         private string GetPreviousAppraisal()
         {
-            Uri uri = new Uri(this.scanUrl);
+            Uri localUri = new Uri(this.scanUrl);
 
             using (IWebClient dl = Injector.Create<IWebClient>())
             {
-                return dl.GetUriToString(uri);
+                return dl.GetUriToString(localUri);
             }
         }
 
@@ -156,14 +193,14 @@ namespace EveScanner.Evepraisal
 
             try
             {
-                Uri uri = new Uri(this.uri + "estimate");
+                Uri localUri = new Uri(this.uri + "estimate");
                 string requestString = "raw_paste=" + data + "&market=30000142";
                 Logger.Debug("Request String: {0}", requestString);
                 byte[] encodedBytes = Encoding.UTF8.GetBytes(requestString);
 
                 using (IWebClient cli = Injector.Create<IWebClient>())
                 {
-                    string responseFromServer = cli.PostUriToString(uri, encodedBytes);
+                    string responseFromServer = cli.PostUriToString(localUri, encodedBytes);
                     Logger.Debug("Response Html: {0}", responseFromServer);
 
                     return responseFromServer;
@@ -171,7 +208,7 @@ namespace EveScanner.Evepraisal
             }
             catch (Exception ex)
             {
-                Logger.Debug("GetAppraisalFromScanData error", ex.ToString());
+                Logger.Debug("Error", ex.ToString());
                 throw;
             }
         }

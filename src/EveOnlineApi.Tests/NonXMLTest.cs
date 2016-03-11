@@ -21,7 +21,7 @@ namespace EveOnlineApi.Tests
             int characterId = idp.GetCharacterId("Viktorie Lucilla");
             Assert.IsTrue(characterId > 0);
 
-            Character vl = idp.GetCharacterInfo(characterId);
+            ICharacter vl = idp.GetCharacterInfo(characterId);
             Assert.IsNotNull(vl);
 
             Assert.AreEqual("Viktorie Lucilla", vl.Name);

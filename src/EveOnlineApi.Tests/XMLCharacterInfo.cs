@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using EveOnlineApi.Common;
@@ -52,37 +53,55 @@ namespace EveOnlineApi.Tests
             Assert.AreEqual("recordID,corporationID,corporationName,startDate", info.Result.RowSet.Columns);
 
             Assert.IsNotNull(info.Result.RowSet.Rows);
-            Assert.AreEqual(6, info.Result.RowSet.Rows.Count);
-            
-            Assert.AreEqual(19437644, info.Result.RowSet.Rows[0].RecordId);
-            Assert.AreEqual(667531913, info.Result.RowSet.Rows[0].CorporationId);
-            Assert.AreEqual("GoonWaffe", info.Result.RowSet.Rows[0].CorporationName);
-            Assert.AreEqual("2012-04-10 13:05:00", info.Result.RowSet.Rows[0].StartDate);
+            Assert.AreEqual(6, info.Result.RowSet.Rows.Count());
 
-            Assert.AreEqual(17668090, info.Result.RowSet.Rows[1].RecordId);
-            Assert.AreEqual(1000080, info.Result.RowSet.Rows[1].CorporationId);
-            Assert.AreEqual("Ministry of War", info.Result.RowSet.Rows[1].CorporationName);
-            Assert.AreEqual("2011-08-18 15:20:00", info.Result.RowSet.Rows[1].StartDate);
+            CharacterEmploymentRow firstJob = info.Result.RowSet.Rows.ElementAtOrDefault(0);
+            Assert.IsNotNull(firstJob);
 
-            Assert.AreEqual(13108243, info.Result.RowSet.Rows[2].RecordId);
-            Assert.AreEqual(667531913, info.Result.RowSet.Rows[2].CorporationId);
-            Assert.AreEqual("GoonWaffe", info.Result.RowSet.Rows[2].CorporationName);
-            Assert.AreEqual("2010-03-01 02:50:00", info.Result.RowSet.Rows[2].StartDate);
+            Assert.AreEqual(19437644, firstJob.RecordId);
+            Assert.AreEqual(667531913, firstJob.CorporationId);
+            Assert.AreEqual("GoonWaffe", firstJob.CorporationName);
+            Assert.AreEqual("2012-04-10 13:05:00", firstJob.StartDate);
 
-            Assert.AreEqual(11340919, info.Result.RowSet.Rows[3].RecordId);
-            Assert.AreEqual(1000080, info.Result.RowSet.Rows[3].CorporationId);
-            Assert.AreEqual("Ministry of War", info.Result.RowSet.Rows[3].CorporationName);
-            Assert.AreEqual("2009-08-23 02:20:00", info.Result.RowSet.Rows[3].StartDate);
+            CharacterEmploymentRow secondJob = info.Result.RowSet.Rows.ElementAtOrDefault(1);
+            Assert.IsNotNull(secondJob);
 
-            Assert.AreEqual(7089510, info.Result.RowSet.Rows[4].RecordId);
-            Assert.AreEqual(749147334, info.Result.RowSet.Rows[4].CorporationId);
-            Assert.AreEqual("GoonFleet", info.Result.RowSet.Rows[4].CorporationName);
-            Assert.AreEqual("2009-02-06 02:58:00", info.Result.RowSet.Rows[4].StartDate);
+            Assert.AreEqual(17668090, secondJob.RecordId);
+            Assert.AreEqual(1000080, secondJob.CorporationId);
+            Assert.AreEqual("Ministry of War", secondJob.CorporationName);
+            Assert.AreEqual("2011-08-18 15:20:00", secondJob.StartDate);
 
-            Assert.AreEqual(7089509, info.Result.RowSet.Rows[5].RecordId);
-            Assert.AreEqual(1000166, info.Result.RowSet.Rows[5].CorporationId);
-            Assert.AreEqual("Imperial Academy", info.Result.RowSet.Rows[5].CorporationName);
-            Assert.AreEqual("2009-02-05 16:57:00", info.Result.RowSet.Rows[5].StartDate);
+            CharacterEmploymentRow thirdJob = info.Result.RowSet.Rows.ElementAtOrDefault(2);
+            Assert.IsNotNull(thirdJob);
+
+            Assert.AreEqual(13108243, thirdJob.RecordId);
+            Assert.AreEqual(667531913, thirdJob.CorporationId);
+            Assert.AreEqual("GoonWaffe", thirdJob.CorporationName);
+            Assert.AreEqual("2010-03-01 02:50:00", thirdJob.StartDate);
+
+            CharacterEmploymentRow fourthJob = info.Result.RowSet.Rows.ElementAtOrDefault(3);
+            Assert.IsNotNull(fourthJob);
+
+            Assert.AreEqual(11340919, fourthJob.RecordId);
+            Assert.AreEqual(1000080, fourthJob.CorporationId);
+            Assert.AreEqual("Ministry of War", fourthJob.CorporationName);
+            Assert.AreEqual("2009-08-23 02:20:00", fourthJob.StartDate);
+
+            CharacterEmploymentRow fifthJob = info.Result.RowSet.Rows.ElementAtOrDefault(4);
+            Assert.IsNotNull(fifthJob);
+
+            Assert.AreEqual(7089510, fifthJob.RecordId);
+            Assert.AreEqual(749147334, fifthJob.CorporationId);
+            Assert.AreEqual("GoonFleet", fifthJob.CorporationName);
+            Assert.AreEqual("2009-02-06 02:58:00", fifthJob.StartDate);
+
+            CharacterEmploymentRow sixthJob = info.Result.RowSet.Rows.ElementAtOrDefault(5);
+            Assert.IsNotNull(sixthJob);
+
+            Assert.AreEqual(7089509, sixthJob.RecordId);
+            Assert.AreEqual(1000166, sixthJob.CorporationId);
+            Assert.AreEqual("Imperial Academy", sixthJob.CorporationName);
+            Assert.AreEqual("2009-02-05 16:57:00", sixthJob.StartDate);
         }
 
         [TestMethod]

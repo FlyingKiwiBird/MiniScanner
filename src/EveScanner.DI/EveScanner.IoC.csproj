@@ -45,6 +45,7 @@
     <Compile Include="Attributes\MapAsNameAttribute.cs" />
     <Compile Include="FakeDataRecord.cs" />
     <Compile Include="Extensions\FieldInfoExtensions.cs" />
+    <Compile Include="InjectedType.cs" />
     <Compile Include="Injector.cs" />
     <Compile Include="DataRecordMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

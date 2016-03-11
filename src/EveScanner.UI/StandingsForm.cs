@@ -10,7 +10,8 @@ namespace EveScanner.UI
     using System.Windows.Forms;
 
     using EveOnlineApi.Entities;
-
+    using EveScanner.Interfaces;
+    using EveOnlineApi.Interfaces;
     /// <summary>
     /// Used to display standings for a character.
     /// </summary>
@@ -19,13 +20,13 @@ namespace EveScanner.UI
         /// <summary>
         /// Holds the standings object.
         /// </summary>
-        private Standings standings;
+        private IStandings standings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StandingsForm"/> class.
         /// </summary>
         /// <param name="standings">Standings to Display</param>
-        public StandingsForm(Standings standings)
+        public StandingsForm(IStandings standings)
         {
             this.InitializeComponent();
 

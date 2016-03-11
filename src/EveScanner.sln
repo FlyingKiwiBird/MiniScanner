@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveScanner.Evepraisal", "Ev
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveScanner.Evepraisal.Tests", "EveScanner.Evepraisal.Tests\EveScanner.Evepraisal.Tests.csproj", "{E0398E4B-4DD6-4B8E-9B8E-477BFF170C3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EveOnlineApi.Interfaces", "EveOnlineApi.Interfaces\EveOnlineApi.Interfaces.csproj", "{26668585-4E8A-406D-A0B9-6483C2755442}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{E0398E4B-4DD6-4B8E-9B8E-477BFF170C3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E0398E4B-4DD6-4B8E-9B8E-477BFF170C3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E0398E4B-4DD6-4B8E-9B8E-477BFF170C3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26668585-4E8A-406D-A0B9-6483C2755442}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26668585-4E8A-406D-A0B9-6483C2755442}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26668585-4E8A-406D-A0B9-6483C2755442}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26668585-4E8A-406D-A0B9-6483C2755442}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

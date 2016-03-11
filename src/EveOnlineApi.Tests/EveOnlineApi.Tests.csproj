@@ -49,12 +49,15 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
     <Compile Include="AssemblyLevel.cs" />
+    <Compile Include="CrestTest.cs" />
     <Compile Include="NonXMLTest.cs" />
     <Compile Include="XmlContactList.cs" />
     <Compile Include="XMLAllianceList.cs" />
@@ -85,13 +88,25 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EveOnlineApi.Interfaces\EveOnlineApi.Interfaces.csproj">
+      <Project>{26668585-4e8a-406d-a0b9-6483c2755442}</Project>
+      <Name>EveOnlineApi.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveOnlineApi\EveOnlineApi.csproj">
       <Project>{35d84931-08a2-439b-b217-4d7e1643e23c}</Project>
       <Name>EveOnlineApi</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EveScanner.Core\EveScanner.Core.csproj">
+      <Project>{1eda3726-407b-4e66-add3-84475e24ac0b}</Project>
+      <Name>EveScanner.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveScanner.DI\EveScanner.IoC.csproj">
       <Project>{1234a1da-8f4f-4560-b364-19342c1d219d}</Project>
       <Name>EveScanner.IoC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EveScanner.Interfaces\EveScanner.Interfaces.csproj">
+      <Project>{58d010c9-8f3f-438b-b60e-eed817781a88}</Project>
+      <Name>EveScanner.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

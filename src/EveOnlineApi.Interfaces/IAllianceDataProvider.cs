@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------
 namespace EveOnlineApi.Interfaces
 {
-    using EveOnlineApi.Entities;
-
     /// <summary>
     /// Defines the interface for retrieving Alliance data.
     /// </summary>
@@ -19,7 +17,7 @@ namespace EveOnlineApi.Interfaces
         /// </summary>
         /// <param name="allianceId">Id of the Alliance to retrieve</param>
         /// <returns>Alliance Object</returns>
-        Alliance GetAllianceInfo(int allianceId);
+        IAlliance GetAllianceInfo(int allianceId);
 
         /// <summary>
         /// Gets the Alliance Information for a particular Alliance.
@@ -27,6 +25,6 @@ namespace EveOnlineApi.Interfaces
         /// <param name="allianceId">Id of the Alliance to retrieve</param>
         /// <param name="suppressMemberCorps">Whether the member corp data should be suppressed</param>
         /// <returns>Alliance Object</returns>
-        Alliance GetAllianceInfo(int allianceId, bool suppressMemberCorps);
+        IAlliance GetAllianceInfo(int allianceId, bool suppressMemberCorps);
     }
 }

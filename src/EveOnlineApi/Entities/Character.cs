@@ -17,17 +17,17 @@ namespace EveOnlineApi.Entities
     /// <summary>
     /// Represents the data exposed about an Eve Online character.
     /// </summary>
-    public class Character : EveOnlineCacheable
+    public class Character : EveOnlineCacheable, ICharacter
     {
         /// <summary>
         /// Holds the lazy loaded Corporation object.
         /// </summary>
-        private Corporation corporation;
+        private ICorporation corporation;
 
         /// <summary>
         /// Holds the lazy loaded Standings object.
         /// </summary>
-        private Standings standings;
+        private IStandings standings;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Character"/> class.
@@ -95,7 +95,7 @@ namespace EveOnlineApi.Entities
         /// <summary>
         /// Gets the Corporation associated with the Character.
         /// </summary>
-        public Corporation Corporation 
+        public ICorporation Corporation 
         {
             get
             {
@@ -116,12 +116,12 @@ namespace EveOnlineApi.Entities
         /// <summary>
         /// Gets the character's employment history.
         /// </summary>
-        public IEnumerable<EmploymentHistoryEntry> EmploymentHistory { get; private set; }
+        public IEnumerable<IEmploymentHistoryEntry> EmploymentHistory { get; private set; }
 
         /// <summary>
         /// Gets the Character's Standings.
         /// </summary>
-        public Standings Standings
+        public IStandings Standings
         {
             get
             {
@@ -139,7 +139,7 @@ namespace EveOnlineApi.Entities
         /// </summary>
         /// <param name="characterId">Character Id to lookup.</param>
         /// <returns>Character object.</returns>
-        public static Character GetCharacterByCharacterId(int characterId)
+        public static ICharacter GetCharacterByCharacterId(int characterId)
         {
             ICharacterDataProvider cdp = Injector.Create<ICharacterDataProvider>();
             return cdp.GetCharacterInfo(characterId);
@@ -150,7 +150,7 @@ namespace EveOnlineApi.Entities
         /// </summary>
         /// <param name="characterName">Character Name to lookup.</param>
         /// <returns>Character object.</returns>
-        public static Character GetCharacterByCharacterName(string characterName)
+        public static ICharacter GetCharacterByCharacterName(string characterName)
         {
             ICharacterDataProvider cdp = Injector.Create<ICharacterDataProvider>();
             int characterId = cdp.GetCharacterId(characterName);
@@ -191,8 +191,8 @@ namespace EveOnlineApi.Entities
             {
                 return;
             }
-
-            this.standings = Standings.GetStandings(this.Name, EntityType.Character);
+            
+            this.standings = EveOnlineApi.Entities.Standings.GetStandings(this.Name, EntityType.Character);
         }
 
         /// <summary>

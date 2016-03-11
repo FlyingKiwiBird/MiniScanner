@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------
 namespace EveOnlineApi.Entities.Xml.Base
 {
+    using System.Diagnostics.CodeAnalysis;
     using System.Xml.Serialization;
 
     /// <summary>
@@ -38,6 +39,7 @@ namespace EveOnlineApi.Entities.Xml.Base
     /// </summary>
     /// <typeparam name="T">API Result Type</typeparam>
     [XmlRoot("eveapi")]
+    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Small generic class in same file")]
     public abstract class EveApi<T> : EveApi
         where T : EveApiResult
     {

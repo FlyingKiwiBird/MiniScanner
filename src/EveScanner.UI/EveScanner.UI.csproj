@@ -88,6 +88,12 @@
     <Compile Include="ScanHistory.Designer.cs">
       <DependentUpon>ScanHistory.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScanItems.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScanItems.Designer.cs">
+      <DependentUpon>ScanItems.cs</DependentUpon>
+    </Compile>
     <Compile Include="ShipPicker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +128,9 @@
     <EmbeddedResource Include="ScanHistory.resx">
       <DependentUpon>ScanHistory.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ScanItems.resx">
+      <DependentUpon>ScanItems.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ShipPicker.resx">
       <DependentUpon>ShipPicker.cs</DependentUpon>
     </EmbeddedResource>
@@ -133,6 +142,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EveOnlineApi.Interfaces\EveOnlineApi.Interfaces.csproj">
+      <Project>{26668585-4e8a-406d-a0b9-6483c2755442}</Project>
+      <Name>EveOnlineApi.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveOnlineApi\EveOnlineApi.csproj">
       <Project>{35d84931-08a2-439b-b217-4d7e1643e23c}</Project>
       <Name>EveOnlineApi</Name>

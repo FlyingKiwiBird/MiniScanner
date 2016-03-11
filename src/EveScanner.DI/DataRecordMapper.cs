@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Reflection;
-using EveScanner.IoC.Attributes;
-using EveScanner.IoC.Extensions;
-
-namespace EveScanner.IoC
+﻿namespace EveScanner.IoC
 {
-    public class DataRecordMapper
+    using System;
+    using System.Data;
+
+    public static class DataRecordMapper
     {
         public static TOutputType MapDataRecordToOutputType<TOutputType>(IDataRecord record) where TOutputType : class, new()
         {
+            if (record == null)
+            {
+                return default(TOutputType);
+            }
+
             TOutputType output = new TOutputType();
 
             for (int i = 0; i < record.FieldCount; i++)

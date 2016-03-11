@@ -5,8 +5,6 @@
 //-----------------------------------------------------------------------
 namespace EveOnlineApi.Interfaces
 {
-    using EveOnlineApi.Entities;
-
     /// <summary>
     /// Defines the interface for retrieving Corporation data.
     /// </summary>
@@ -17,6 +15,6 @@ namespace EveOnlineApi.Interfaces
         /// </summary>
         /// <param name="corporationId">Corporation Id</param>
         /// <returns>Corporation Object</returns>
-        Corporation GetCorporationInfo(int corporationId);
+        ICorporation GetCorporationInfo(int corporationId);
     }
 }

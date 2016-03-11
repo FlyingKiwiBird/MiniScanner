@@ -13,17 +13,18 @@ namespace EveOnlineApi.Entities
     using EveOnlineApi.Entities.Xml;
     using EveOnlineApi.Interfaces;
 
+    using EveScanner.Interfaces;
     using EveScanner.IoC;
 
     /// <summary>
     /// Represents an Eve Online Alliance
     /// </summary>
-    public class Alliance
+    public class Alliance : IAlliance
     {
         /// <summary>
         /// Holds the Executor Corporation information.
         /// </summary>
-        private Corporation executorCorporation = null;
+        private ICorporation executorCorporation = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Alliance"/> class.
@@ -89,7 +90,7 @@ namespace EveOnlineApi.Entities
         /// <summary>
         /// Gets the Executor Corporation as an object.
         /// </summary>
-        public Corporation ExecutorCorporation
+        public ICorporation ExecutorCorporation
         {
             get
             {
@@ -115,14 +116,14 @@ namespace EveOnlineApi.Entities
         /// <summary>
         /// Gets or sets the Member Corporations in the Alliance.
         /// </summary>
-        public IEnumerable<AllianceMemberCorporation> MemberCorporations { get; set; }
+        public IEnumerable<IAllianceMemberCorporation> MemberCorporations { get; set; }
 
         /// <summary>
         /// Gets an Alliance by its Alliance Id
         /// </summary>
         /// <param name="allianceId">Alliance Id</param>
         /// <returns>Alliance Object</returns>
-        public static Alliance GetAllianceByAllianceId(int allianceId)
+        public static IAlliance GetAllianceByAllianceId(int allianceId)
         {
             IAllianceDataProvider adp = Injector.Create<IAllianceDataProvider>();
             return adp.GetAllianceInfo(allianceId);

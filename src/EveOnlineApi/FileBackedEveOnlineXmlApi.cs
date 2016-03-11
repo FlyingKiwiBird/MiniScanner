@@ -19,7 +19,7 @@ namespace EveOnlineApi
 
     /// <summary>
     /// This is an interface to the Eve Online XML API Version 2. All responses are cached
-    /// as objects in the filesystem to deter CCP from blocking your IP address from API
+    /// as objects in the file system to deter CCP from blocking your IP address from API
     /// calls since if you make too many, they will block you. Cache timers are set in the
     /// response, and tell you when the cache for the particular item you've asked for expire.
     /// The objects returned by this class are serialized XML structures, and are likely
@@ -130,7 +130,7 @@ namespace EveOnlineApi
 
             CharacterIdApi api = XmlSerialization.DeserializeFile<CharacterIdApi>(characterIdFile);
 
-            return api.Result.RowSet.Rows[0].CharacterId;
+            return api.Result.RowSet.Rows.First().CharacterId;
         }
 
         /// <summary>

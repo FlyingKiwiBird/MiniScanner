@@ -5,13 +5,16 @@
 //-----------------------------------------------------------------------
 namespace EveOnlineApi.Entities
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+
+    using EveOnlineApi.Interfaces;
 
     /// <summary>
     /// Represents an Eve Online Entity Type (which is just an integer) with some custom equality logic.
     /// </summary>
-    public class EntityType
+    public class EntityType : IEntityType
     {
         /// <summary>
         /// Represents the Alliance Type Id
@@ -68,7 +71,7 @@ namespace EveOnlineApi.Entities
                 return EntityType.GetEntityTypeById(EntityType.CorporationType);
             }
         }
-        
+
         /// <summary>
         /// Gets an Alliance Entity Type
         /// </summary>
@@ -77,6 +80,17 @@ namespace EveOnlineApi.Entities
             get
             {
                 return EntityType.GetEntityTypeById(EntityType.AllianceType);
+            }
+        }
+
+        /// <summary>
+        /// Gets the Type Id
+        /// </summary>
+        public int TypeId
+        {
+            get
+            {
+                return this.typeId;
             }
         }
 
@@ -98,11 +112,16 @@ namespace EveOnlineApi.Entities
         /// <summary>
         /// Implicitly converts an <see cref="EntityType"/> to an integer
         /// </summary>
-        /// <param name="t">input <see cref="EntityType"/></param>
+        /// <param name="entityType">input <see cref="EntityType"/></param>
         /// <returns>output integer</returns>
-        public static implicit operator int(EntityType t)
+        public static implicit operator int(EntityType entityType)
         {
-            return t.typeId;
+            if (entityType == null)
+            {
+                return default(int);
+            }
+
+            return entityType.typeId;
         }
 
         /// <summary>
@@ -111,6 +130,16 @@ namespace EveOnlineApi.Entities
         /// <param name="i">input integer</param>
         /// <returns>output <see cref="EntityType"/></returns>
         public static implicit operator EntityType(int i)
+        {
+            return EntityType.ToEntityType(i);
+        }
+
+        /// <summary>
+        /// Converts an integer to an <see cref="EntityType"/>.
+        /// </summary>
+        /// <param name="i">input integer</param>
+        /// <returns>output <see cref="EntityType"/></returns>
+        public static EntityType ToEntityType(int i)
         {
             return new EntityType(i);
         }

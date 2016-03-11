@@ -6,6 +6,8 @@
 namespace EveOnlineApi.Entities.Xml.Base
 {
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Diagnostics.CodeAnalysis;
     using System.Xml.Serialization;
 
     /// <summary>
@@ -36,15 +38,27 @@ namespace EveOnlineApi.Entities.Xml.Base
     /// <summary>
     /// Represents an EVE API row set complete with a set of subsequent rows.
     /// </summary>
-    /// <typeparam name="V">API Row Type</typeparam>
+    /// <typeparam name="TEveRow">API Row Type</typeparam>
     [XmlRoot("rowset")]
-    public abstract class EveApiRowset<V> : EveApiRowset
-        where V : EveRow
+    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Small generic class in same file")]
+    public abstract class EveApiRowset<TEveRow> : EveApiRowset
+        where TEveRow : EveRow
     {
+        /// <summary>
+        /// This holds our List so we get around CA2227. Yep.
+        /// </summary>
+        private readonly Collection<TEveRow> rows = new Collection<TEveRow>();
+
         /// <summary>
         /// Gets or sets a list of rows which are subsequent to the Row Set.
         /// </summary>
         [XmlElement("row")]
-        public List<V> Rows { get; set; }
+        public Collection<TEveRow> Rows
+        {
+            get
+            {
+                return this.rows;
+            }
+        }
     }
 }

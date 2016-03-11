@@ -10,16 +10,17 @@ namespace EveOnlineApi.Entities
     using System.Globalization;
 
     using EveOnlineApi.Entities.Xml;
+    using EveOnlineApi.Interfaces;
 
     /// <summary>
     /// Defines a record of Employment for an Eve Online character.
     /// </summary>
-    public class EmploymentHistoryEntry
+    public class EmploymentHistoryEntry : IEmploymentHistoryEntry
     {
         /// <summary>
         /// Holds our corporation object.
         /// </summary>
-        private Corporation corporation = null;
+        private ICorporation corporation = null;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EmploymentHistoryEntry"/> class.
@@ -63,7 +64,7 @@ namespace EveOnlineApi.Entities
         /// <summary>
         /// Gets the Corporation Object
         /// </summary>
-        public Corporation Corporation
+        public ICorporation Corporation
         {
             get
             {

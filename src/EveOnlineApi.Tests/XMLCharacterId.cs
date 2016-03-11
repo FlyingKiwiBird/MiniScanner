@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using EveOnlineApi.Common;
@@ -40,10 +41,13 @@ namespace EveOnlineApi.Tests
 
             Assert.IsNotNull(api.Result.RowSet.Rows);
 
-            Assert.AreEqual(1, api.Result.RowSet.Rows.Count);
+            Assert.AreEqual(1, api.Result.RowSet.Rows.Count());
 
-            Assert.AreEqual(1170031179, api.Result.RowSet.Rows[0].CharacterId);
-            Assert.AreEqual("Viktorie Lucilla", api.Result.RowSet.Rows[0].Name);
+            CharacterIdRow character = api.Result.RowSet.Rows.SingleOrDefault();
+            Assert.IsNotNull(character);
+
+            Assert.AreEqual(1170031179, character.CharacterId);
+            Assert.AreEqual("Viktorie Lucilla", character.Name);
         }
 
         [TestMethod]

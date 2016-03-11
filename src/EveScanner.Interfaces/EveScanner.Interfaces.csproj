@@ -50,33 +50,29 @@
   <ItemGroup>
     <Compile Include="EDE\IInventoryRepackaged.cs" />
     <Compile Include="IAppraisalService.cs" />
-    <Compile Include="IUIImageGroup.cs" />
+    <Compile Include="IRegistrationService.cs" />
+    <Compile Include="ISelfRegister.cs" />
     <Compile Include="IScanHistory.cs" />
-    <Compile Include="IItemAppraisal.cs" />
+    <Compile Include="ILineAppraisal.cs" />
     <Compile Include="IScanResult.cs" />
-    <Compile Include="IWebDownloader.cs" />
+    <Compile Include="IWebClient.cs" />
     <Compile Include="Providers\IExtraDataExportProvider.cs" />
     <Compile Include="Providers\IInventoryRepackagedProvider.cs" />
     <Compile Include="Providers\IInventoryTypeProvider.cs" />
-    <Compile Include="Providers\IItemAppraisalDataProvider.cs" />
-    <Compile Include="Providers\IStaticExportDataProvider.cs" />
+    <Compile Include="Providers\IItemPriceProvider.cs" />
+    <Compile Include="Providers\IStaticDataExportProvider.cs" />
     <Compile Include="SDE\IInventoryGroup.cs" />
     <Compile Include="SDE\IInventoryType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SDE\IMapSolarSystemJumps.cs" />
-    <Compile Include="SDE\IMapSolarSystems.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <CodeAnalysisDictionary Include="..\Dictionary.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\EveOnlineApi\EveOnlineApi.csproj">
-      <Project>{35d84931-08a2-439b-b217-4d7e1643e23c}</Project>
-      <Name>EveOnlineApi</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Providers\IInventoryGroupProvider.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EveOnlineApi.Interfaces\EveOnlineApi.Interfaces.csproj">
+      <Project>{26668585-4e8a-406d-a0b9-6483c2755442}</Project>
+      <Name>EveOnlineApi.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

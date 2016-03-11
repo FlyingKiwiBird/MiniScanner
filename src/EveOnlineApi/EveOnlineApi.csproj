@@ -41,6 +41,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -56,6 +57,10 @@
     <Compile Include="Entities\EmploymentHistoryEntry.cs" />
     <Compile Include="Entities\EntityType.cs" />
     <Compile Include="Entities\EveOnlineCacheable.cs" />
+    <Compile Include="Entities\Json\BuySellOrder.cs" />
+    <Compile Include="Entities\Json\Location.cs" />
+    <Compile Include="Entities\Json\MarketOrders.cs" />
+    <Compile Include="Entities\Json\Type.cs" />
     <Compile Include="Entities\Standings.cs" />
     <Compile Include="Entities\Xml\AllianceListApi.cs" />
     <Compile Include="Entities\Xml\AllianceListResult.cs" />
@@ -94,28 +99,35 @@
     <Compile Include="Entities\Xml\MemberCorporationRow.cs" />
     <Compile Include="Entities\Xml\MemberCorporationsRowset.cs" />
     <Compile Include="Entities\Xml\PersonalContactListRow.cs" />
+    <Compile Include="EveOnlineCrestApi.cs" />
     <Compile Include="EveOnlineXmlApi.cs" />
     <Compile Include="FileBackedImageDataProvider.cs" />
-    <Compile Include="Interfaces\IImageDataProvider.cs" />
-    <Compile Include="Interfaces\IStandingsDataProvider.cs" />
+    <Compile Include="Interfaces\Xml\IAllianceXmlDataProvider.cs" />
     <Compile Include="Interfaces\Xml\ICallListXmlDataProvider.cs" />
+    <Compile Include="Interfaces\Xml\ICharacterXmlDataProvider.cs" />
     <Compile Include="Interfaces\Xml\IContactListXmlDataProvider.cs" />
+    <Compile Include="Interfaces\Xml\ICorporationXmlDataProvider.cs" />
     <Compile Include="XmlBackedEveOnlineApi.cs" />
     <Compile Include="FileBackedEveOnlineXmlApi.cs" />
-    <Compile Include="Interfaces\IAllianceDataProvider.cs" />
-    <Compile Include="Interfaces\ICharacterDataProvider.cs" />
-    <Compile Include="Interfaces\Xml\IAllianceXmlDataProvider.cs" />
-    <Compile Include="Interfaces\Xml\ICharacterXmlDataProvider.cs" />
-    <Compile Include="Interfaces\ICorporationDataProvider.cs" />
-    <Compile Include="Interfaces\Xml\ICorporationXmlDataProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Common\XmlSerialization.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\EveOnlineApi.Interfaces\EveOnlineApi.Interfaces.csproj">
+      <Project>{26668585-4e8a-406d-a0b9-6483c2755442}</Project>
+      <Name>EveOnlineApi.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EveScanner.DI\EveScanner.IoC.csproj">
       <Project>{1234a1da-8f4f-4560-b364-19342c1d219d}</Project>
       <Name>EveScanner.IoC</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EveScanner.Interfaces\EveScanner.Interfaces.csproj">
+      <Project>{58d010c9-8f3f-438b-b60e-eed817781a88}</Project>
+      <Name>EveScanner.Interfaces</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Interfaces\Xml\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

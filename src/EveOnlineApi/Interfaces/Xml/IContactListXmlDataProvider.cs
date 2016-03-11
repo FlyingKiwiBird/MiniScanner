@@ -16,6 +16,7 @@ namespace EveOnlineApi.Interfaces.Xml
         /// Gets the Contact List. This item is not retrieved from Eve API Servers. It is static.
         /// </summary>
         /// <returns>ContactList XML Object</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1024:UsePropertiesWhereAppropriate", Justification = "May take long to execute.")]
         ContactListApi GetContactList();
     }
 }

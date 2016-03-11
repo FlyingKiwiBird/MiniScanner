@@ -5,10 +5,12 @@
 //-----------------------------------------------------------------------
 namespace EveOnlineApi.Entities
 {
+    using EveOnlineApi.Interfaces;
+
     /// <summary>
     /// Defines the elements required to construct a Corporation Logo
     /// </summary>
-    public class CorporationLogo
+    public class CorporationLogo : ICorporationLogo
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CorporationLogo"/> class.

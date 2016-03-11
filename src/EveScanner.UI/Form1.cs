@@ -443,6 +443,10 @@ namespace EveScanner.UI
             this.sellValueLabel.Text = ScanResult.GetISKString(this.result.SellValue) + " ISK";
             this.stacksValueText.Text = this.result.Stacks.ToString(CultureInfo.CurrentCulture);
             this.volumeValueLabel.Text = string.Format(CultureInfo.CurrentCulture, "{0:n}", this.result.Volume) + " m3";
+            if (this.result.RepackagedVolume != this.result.Volume)
+            {
+                this.volumeValueLabel.Text = string.Format(CultureInfo.CurrentCulture, "{0:n}", this.result.RepackagedVolume) + "m3 (" + this.volumeValueLabel.Text + ")";
+            }
 
             // Get URL
             this.resultUrlTextBox.Text = this.result.AppraisalUrl;
@@ -549,6 +553,7 @@ namespace EveScanner.UI
             {
                 this.standingsToolStripMenuItem.Enabled = this.result.Character.Standings != null;
             }
+            this.showScanItems.Enabled = true;
         }
 
         /// <summary>
@@ -785,7 +790,10 @@ namespace EveScanner.UI
 
             try
             {
-                if (this.scanText.Text.StartsWith("http://evepraisal.com/e/", StringComparison.OrdinalIgnoreCase) || this.scanText.Text.StartsWith("https://goonpraisal.apps.goonswarm.org/e/", StringComparison.OrdinalIgnoreCase))
+                worker.DoWork += this.Scanworker_Dowork_NewAppraiser;
+                worker.RunWorkerAsync(this.scanText.Text);
+
+                /*if (this.scanText.Text.StartsWith("http://evepraisal.com/e/", StringComparison.OrdinalIgnoreCase) || this.scanText.Text.StartsWith("https://goonpraisal.apps.goonswarm.org/e/", StringComparison.OrdinalIgnoreCase))
                 {
                     worker.DoWork += this.Scanworker_DoWork_EvePraisalUrl;
 
@@ -805,7 +813,7 @@ namespace EveScanner.UI
                 else
                 {
                     return;
-                }
+                }*/
             }
             catch (Exception ex)
             {
@@ -1005,6 +1013,19 @@ namespace EveScanner.UI
                 sp.CallingForm = this;
 
                 sp.ShowDialog(this);
+            }
+        }
+
+        /// <summary>
+        /// Opens the Scan Items form as a dialog box.
+        /// </summary>
+        /// <param name="sender">... button next to images.</param>
+        /// <param name="e">Not provided.</param>
+        private void showScanItems_Click(object sender, EventArgs e)
+        {
+            using (ScanItems si = new ScanItems(this.result.AppraisedLines))
+            {
+                si.ShowDialog(this);
             }
         }
 
@@ -1492,7 +1513,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
                 return;
             }
 
-            Character cx = dp.GetCharacterInfo(characterId);
+            ICharacter cx = dp.GetCharacterInfo(characterId);
             if (cx == null)
             {
                 return;
@@ -1556,6 +1577,33 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             }
 
             this.SetStatusMessage("Found {0}", rx.Character.ToString());
+        }
+
+        private void Scanworker_Dowork_NewAppraiser(object sender, DoWorkEventArgs e)
+        {
+            BackgroundWorker bw = sender as BackgroundWorker;
+            if (bw == null)
+            {
+                return;
+            }
+
+            string scanArgument = e.Argument as string;
+
+            if (string.IsNullOrWhiteSpace(scanArgument))
+            {
+                return;
+            }
+
+            IScanResult iresult = null;
+            string requestedAppraiser = evepraisalToolStripMenuItem.Checked ? "EvepraisalSvc" : (goonmetricsToolStripMenuItem.Checked ? "GoonpraisalSvc" : null);
+            Appraiser apr = new Appraiser();
+            iresult = apr.GetAppraisal(scanArgument, requestedAppraiser);
+            e.Result = iresult;
+
+            if (bw.CancellationPending)
+            {
+                e.Cancel = true;
+            }
         }
 
         /// <summary>
@@ -1622,6 +1670,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
 
             IScanResult iresult = null;
             string scanArgument = e.Argument as string;
+            Appraiser apr = new Appraiser();
 
             if (string.IsNullOrWhiteSpace(scanArgument))
             {
@@ -1630,15 +1679,11 @@ thread on the Goonfleet Forums or sent to me via Jabber.
 
             if (this.evepraisalToolStripMenuItem.Checked)
             {
-                //Evepraisal ep = new Evepraisal();
-                var ep = Injector.CreateFromTypeName<IAppraisalService>("EveScanner.Evepraisal.EvepraisalSvc, EveScanner.Evepraisal");
-                iresult = ep.GetAppraisalFromScan(scanArgument);
+                iresult = apr.GetAppraisal(scanArgument, "EvepraisalSvc");
             }
             else if (this.goonmetricsToolStripMenuItem.Checked)
             {
-                //Evepraisal ep = new Evepraisal("goonpraisal.apps.goonswarm.org", true);
-                var ep = Injector.CreateFromTypeName<IAppraisalService>("EveScanner.Evepraisal.Goonpraisal, EveScanner.Evepraisal");
-                iresult = ep.GetAppraisalFromScan(scanArgument);
+                iresult = apr.GetAppraisal(scanArgument, "GoonpraisalSvc");
             }
 
             e.Result = iresult;
@@ -1724,7 +1769,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
                 return;
             }
 
-            Character ch = wresult.Character;
+            ICharacter ch = wresult.Character;
 
             if (ch == null)
             {
@@ -1784,5 +1829,6 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             this.SetStatusMessage("Done.");
         }
         #endregion Background Worker Methods
+
     }
 }

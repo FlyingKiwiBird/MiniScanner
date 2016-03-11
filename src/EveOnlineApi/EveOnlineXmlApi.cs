@@ -68,7 +68,7 @@ namespace EveOnlineApi
             string url = string.Format(CultureInfo.InvariantCulture, "https://api.eveonline.com/eve/CharacterID.xml.aspx?names={0}", characterName);
             Uri uri = new Uri(url);
             CharacterIdApi api = this.DownloadAndDeserialize<CharacterIdApi>(uri);
-            return api.Result.RowSet.Rows[0].CharacterId;
+            return api.Result.RowSet.Rows.First().CharacterId;
         }
 
         /// <summary>

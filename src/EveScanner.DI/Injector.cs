@@ -8,7 +8,6 @@ namespace EveScanner.IoC
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Linq.Expressions;
 
     /// <summary>
     /// Basic IoC injector
@@ -200,6 +199,56 @@ namespace EveScanner.IoC
             }
 
             return Injector.allImplementations[interfaceType].Cast<InjectionType<TInterfaceType>>().ToArray();
+        }
+
+        public static void SetDefaultImplementation(string interfaceName, string implementationName)
+        {
+            if (string.IsNullOrWhiteSpace(interfaceName))
+            {
+                throw new ArgumentNullException("interfaceName");
+            }
+
+            if (string.IsNullOrWhiteSpace(implementationName))
+            {
+                throw new ArgumentNullException("implementationName");
+            }
+
+            Type tInterface = Type.GetType(interfaceName);
+            if (tInterface == null)
+            {
+                foreach (Type tKey in Injector.allImplementations.Keys)
+                {
+                    if (tKey.Name == interfaceName || tKey.FullName == interfaceName || tKey.AssemblyQualifiedName == interfaceName)
+                    {
+                        tInterface = tKey;
+                        break;
+                    }
+                }
+
+                if (tInterface == null)
+                {
+                    throw new ArgumentException("Type does not exist.", "interfaceName");
+                }
+            }
+
+            InjectionType iType = null;
+
+            Type tImplementation = Type.GetType(implementationName);
+            if (tImplementation == null)
+            {
+                iType = Injector.allImplementations[tInterface].Where(x => x.ImplementationType.Name == implementationName || x.ImplementationType.FullName == implementationName || x.ImplementationType.AssemblyQualifiedName == implementationName).FirstOrDefault();
+            }
+            else
+            {
+                iType = Injector.allImplementations[tInterface].Where(x => x.ImplementationType == tImplementation).FirstOrDefault();
+            }
+
+            if (iType == null)
+            {
+                throw new ArgumentException("Type does not exist.", "implementationName");
+            }
+
+            Injector.SetDefaultImplementation(tInterface, iType);
         }
 
         /// <summary>

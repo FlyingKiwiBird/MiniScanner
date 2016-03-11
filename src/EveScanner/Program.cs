@@ -8,14 +8,7 @@ namespace EveScanner
     using System;
     using System.Windows.Forms;
 
-    using EveOnlineApi;
-    using EveOnlineApi.Interfaces;
-    using EveOnlineApi.Interfaces.Xml;
-
     using EveScanner.Core;
-    using EveScanner.Evepraisal;
-    using EveScanner.Interfaces;
-    using EveScanner.IoC;
     using EveScanner.UI;
 
     /// <summary>
@@ -36,26 +29,9 @@ namespace EveScanner
             // Register all implementations in case we want them later, then configure the ones we want as the defaults.
             RegistrationService rx = new RegistrationService();
             rx.ScanFolder();
+            rx.SetDefaultImplementations();
 
-            // Configure XML API Injections
-            Injector.Register<IAllianceXmlDataProvider>(typeof(FileBackedEveOnlineXmlApi));
-            Injector.Register<ICharacterXmlDataProvider>(typeof(FileBackedEveOnlineXmlApi));
-            Injector.Register<ICorporationXmlDataProvider>(typeof(FileBackedEveOnlineXmlApi));
-            Injector.Register<IContactListXmlDataProvider>(typeof(FileBackedEveOnlineXmlApi));
-
-            // Configure other API Entity Injections
-            Injector.Register<IAllianceDataProvider>(typeof(XmlBackedEveOnlineApi));
-            Injector.Register<ICharacterDataProvider>(typeof(XmlBackedEveOnlineApi));
-            Injector.Register<ICorporationDataProvider>(typeof(XmlBackedEveOnlineApi));
-            Injector.Register<IStandingsDataProvider>(typeof(XmlBackedEveOnlineApi));
-            
-            Injector.Register<IImageDataProvider>(typeof(FileBackedImageDataProvider));
-
-            // Configure EveScanner Injections
-            Injector.Register<IAppraisalService>(typeof(EvepraisalSvc));
-            Injector.Register<IScanHistory>(typeof(ListScanHistory));
-            Injector.Register<IWebClient>(typeof(WebClient));
-
+            // Run Application
             Application.Run(new Form1());
         }
 

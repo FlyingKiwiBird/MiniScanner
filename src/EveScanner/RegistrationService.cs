@@ -12,7 +12,7 @@ namespace EveScanner
 
     using EveScanner.Interfaces;
     using EveScanner.IoC;
-
+    using Core;
     /// <summary>
     /// Provides a Registration Service allowing Libraries to self-register.
     /// </summary>
@@ -64,9 +64,15 @@ namespace EveScanner
             {
                 try
                 {
+                    AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += CurrentDomain_ReflectionOnlyAssemblyResolve;
                     Assembly assembly_readonly = Assembly.ReflectionOnlyLoadFrom(fileName);
-                        
-                    foreach (Type t in assembly_readonly.GetTypes().Where(x => !x.IsInterface && x.IsAssignableFrom(typeof(ISelfRegister))))
+
+                    // You can't compare types from a ReflectionOnlyAssembly to a live assembly, so, we do it by name instead.
+                    foreach (Type t in assembly_readonly.GetTypes().Where(
+                        x =>    !x.IsInterface && 
+                                x.GetInterfaces().Count(y => y.AssemblyQualifiedName == typeof(ISelfRegister).AssemblyQualifiedName) > 0
+                        )
+                    )
                     {
                         ISelfRegister rx = Injector.CreateFromTypeName<ISelfRegister>(t.AssemblyQualifiedName);
                         rx.SetMeUp(this);
@@ -76,11 +82,30 @@ namespace EveScanner
                 {
                     // Don't care, it's not a managed DLL.
                 }
-                catch (Exception)
+                catch (ReflectionTypeLoadException rex)
                 {
+                    Logger.Fatal("Reflection Load Error occurred while loading assemblies.", string.Join(Environment.NewLine, rex.LoaderExceptions.Select(x => x.ToString()).ToArray()));
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    Logger.Fatal("Unknown error occurred while loading assemblies.", ex.ToString());
                     throw;
                 }
             }
+        }
+
+        public void SetDefaultImplementations()
+        {
+            foreach (string key in ConfigHelper.Instance.Implementations.Keys)
+            {
+                Injector.SetDefaultImplementation(key, ConfigHelper.Instance.Implementations[key]);
+            }
+        }
+
+        private Assembly CurrentDomain_ReflectionOnlyAssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            return Assembly.ReflectionOnlyLoad(args.Name);
         }
     }
 }

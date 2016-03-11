@@ -48,7 +48,7 @@ namespace EveScanner.UI
 
                 if (this.DesignMode)
                 {
-                    TextRenderer.DrawText(e.Graphics, "Employment History Listbox - Design Mode", e.Font, e.Bounds, e.ForeColor, Flags);
+                    TextRenderer.DrawText(e.Graphics, "Employment History List Box - Design Mode", e.Font, e.Bounds, e.ForeColor, Flags);
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace EveScanner.UI
 
                         if (ehe.Corporation != null)
                         {
-                            using (Image i = this.GetImage("Corporation", ehe.CorporationId, 64))
+                            using (Image i = EmploymentHistoryListbox.GetImage("Corporation", ehe.CorporationId, 64))
                             {
                                 e.Graphics.DrawImage(i, bounds.X, bounds.Y, i.Width, i.Height);
                                 bounds.X += i.Width;
@@ -73,7 +73,7 @@ namespace EveScanner.UI
 
                             if (ehe.Corporation.Alliance != null)
                             {
-                                using (Image i = this.GetImage("Alliance", ehe.Corporation.AllianceId, 64))
+                                using (Image i = EmploymentHistoryListbox.GetImage("Alliance", ehe.Corporation.AllianceId, 64))
                                 {
                                     e.Graphics.DrawImage(i, bounds.X, bounds.Y, i.Width, i.Height);
                                     bounds.X += i.Width;
@@ -115,7 +115,7 @@ namespace EveScanner.UI
         /// <param name="id">The ID of the image to retrieve</param>
         /// <param name="width">Width of the image</param>
         /// <returns>Image object</returns>
-        private Image GetImage(string subDirectory, int id, int width)
+        private static Image GetImage(string subDirectory, int id, int width)
         {
             IImageDataProvider images = Injector.Create<IImageDataProvider>();
 

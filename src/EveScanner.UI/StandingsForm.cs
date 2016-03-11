@@ -10,8 +10,9 @@ namespace EveScanner.UI
     using System.Windows.Forms;
 
     using EveOnlineApi.Entities;
-    using EveScanner.Interfaces;
     using EveOnlineApi.Interfaces;
+    using EveScanner.Interfaces;
+
     /// <summary>
     /// Used to display standings for a character.
     /// </summary>
@@ -40,19 +41,19 @@ namespace EveScanner.UI
         /// <param name="e">The parameter is not used.</param>
         private void Standings_Load(object sender, EventArgs e)
         {
-            this.derivedValue.Text = this.DecimalFormat(this.standings.DerivedStanding);
+            this.derivedValue.Text = StandingsForm.DecimalFormat(this.standings.DerivedStanding);
 
-            this.personalCharacterValue.Text = this.DecimalFormat(this.standings.PersonalStandingCharacter);
-            this.personalCorporationValue.Text = this.DecimalFormat(this.standings.PersonalStandingCorporation);
-            this.personalAllianceValue.Text = this.DecimalFormat(this.standings.PersonalStandingAlliance);
+            this.personalCharacterValue.Text = StandingsForm.DecimalFormat(this.standings.PersonalStandingCharacter);
+            this.personalCorporationValue.Text = StandingsForm.DecimalFormat(this.standings.PersonalStandingCorporation);
+            this.personalAllianceValue.Text = StandingsForm.DecimalFormat(this.standings.PersonalStandingAlliance);
 
-            this.corporationCharacterValue.Text = this.DecimalFormat(this.standings.CorporationStandingCharacter);
-            this.corporationCorporationValue.Text = this.DecimalFormat(this.standings.CorporationStandingCorporation);
-            this.corporationAllianceValue.Text = this.DecimalFormat(this.standings.CorporationStandingAlliance);
+            this.corporationCharacterValue.Text = StandingsForm.DecimalFormat(this.standings.CorporationStandingCharacter);
+            this.corporationCorporationValue.Text = StandingsForm.DecimalFormat(this.standings.CorporationStandingCorporation);
+            this.corporationAllianceValue.Text = StandingsForm.DecimalFormat(this.standings.CorporationStandingAlliance);
 
-            this.allianceCharacterValue.Text = this.DecimalFormat(this.standings.AllianceStandingCharacter);
-            this.allianceCorporationValue.Text = this.DecimalFormat(this.standings.AllianceStandingCorporation);
-            this.allianceAllianceValue.Text = this.DecimalFormat(this.standings.AllianceStandingAlliance);
+            this.allianceCharacterValue.Text = StandingsForm.DecimalFormat(this.standings.AllianceStandingCharacter);
+            this.allianceCorporationValue.Text = StandingsForm.DecimalFormat(this.standings.AllianceStandingCorporation);
+            this.allianceAllianceValue.Text = StandingsForm.DecimalFormat(this.standings.AllianceStandingAlliance);
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace EveScanner.UI
         /// </summary>
         /// <param name="d">Decimal to format</param>
         /// <returns>Formatted string</returns>
-        private string DecimalFormat(decimal d)
+        private static string DecimalFormat(decimal d)
         {
             return string.Format(CultureInfo.CurrentCulture, "{0:0.00}", d);
         }

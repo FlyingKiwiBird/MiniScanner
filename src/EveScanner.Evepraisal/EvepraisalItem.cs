@@ -123,51 +123,13 @@ namespace EveScanner.Evepraisal
         {
             get
             {
-                switch (this.GroupId)
+                double output = this.GetRepackagedVolume();
+                if (output == 0)
                 {
-                    case 31:
-                        return 500;
-                    case 25:
-                    case 237:
-                    case 324:
-                    case 830:
-                    case 831:
-                    case 834:
-                    case 893:
-                    case 1283:
-                    case 1527:
-                        return 2500;
-                    case 463:
-                    case 543:
-                        return 3750;
-                    case 420:
-                    case 541:
-                    case 963:
-                    case 1305:
-                    case 1534:
-                        return 5000;
-                    case 26:
-                    case 358:
-                    case 832:
-                    case 833:
-                    case 894:
-                    case 906:
-                        return 10000;
-                    case 419:
-                    case 540:
-                    case 1201:
-                        return 15000;
-                    case 28:
-                    case 380:
-                    case 1202:
-                        return 20000;
-                    case 27:
-                    case 898:
-                    case 900:
-                        return 50000;
-                    default:
-                        return this.Volume;
+                    return this.Volume;
                 }
+
+                return output;
             }
         }
 
@@ -231,6 +193,20 @@ namespace EveScanner.Evepraisal
                     this.Reappraised = true;
                 }
             }
+        }
+
+        private double GetRepackagedVolume()
+        {
+            IInventoryRepackagedProvider rpe = Injector.Create<IInventoryRepackagedProvider>();
+            if (rpe != null)
+            {
+                var rpkg = rpe.GetRepackagedVolumesForGroup(this.GroupId);
+                if (rpkg != null)
+                {
+                    return rpkg.Volume;
+                }
+            }
+            return 0;
         }
     }
 }

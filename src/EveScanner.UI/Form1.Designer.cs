@@ -863,7 +863,7 @@ namespace EveScanner.UI
             this.showScanItems.TabIndex = 39;
             this.showScanItems.Text = "S";
             this.showScanItems.UseVisualStyleBackColor = true;
-            this.showScanItems.Click += new System.EventHandler(this.showScanItems_Click);
+            this.showScanItems.Click += new System.EventHandler(this.ShowScanItems_Click);
             // 
             // characterLookupButton
             // 

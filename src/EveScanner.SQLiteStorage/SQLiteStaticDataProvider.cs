@@ -1,9 +1,11 @@
 ﻿namespace EveScanner.SQLiteStorage
 {
+    using System.Collections.Generic;
+
     using EveScanner.Core;
     using EveScanner.Interfaces.Providers;
     using EveScanner.Interfaces.SDE;
-    using System.Collections.Generic;
+    using EveScanner.SQLiteStorage.Entities;
 
     public class SQLiteStaticDataProvider : SQLiteQueryable, IStaticDataExportProvider
     {

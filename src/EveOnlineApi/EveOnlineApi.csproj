@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiRegistration.cs" />
     <Compile Include="Entities\AllianceMemberCorporation.cs" />
     <Compile Include="Entities\Alliance.cs" />
     <Compile Include="Entities\Character.cs" />

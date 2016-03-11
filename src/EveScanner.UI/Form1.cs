@@ -31,7 +31,7 @@ namespace EveScanner.UI
         /// <summary>
         /// Constant for the WM_DRAWCLIPBOARD message.
         /// </summary>
-        private const int WM_DRAWCLIPBOARD = 0x0308;        // WM_DRAWCLIPBOARD message
+        private const int WMDRAWCLIPBOARD = 0x0308;        // WM_DRAWCLIPBOARD message
 
         /// <summary>
         /// Holds the Handle to the next clipboard viewer in the chain.
@@ -269,7 +269,7 @@ namespace EveScanner.UI
                 }
             }
 
-            if (m.Msg == WM_DRAWCLIPBOARD)
+            if (m.Msg == WMDRAWCLIPBOARD)
             {
                 if (this.firstFire)
                 {
@@ -310,7 +310,7 @@ namespace EveScanner.UI
 
                     this.SetStatusMessage("Detected Clipboard Copy");
                     Logger.Debug("Captured scan {0}", data);
-                    if (this.submitANYClipboardDataToolStripMenuItem.Checked || this.CheckTextFormat(data) || data.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                    if (this.submitANYClipboardDataToolStripMenuItem.Checked || Validators.CheckForCargoScan(data) || data.StartsWith("http", StringComparison.OrdinalIgnoreCase))
                     {
                         Logger.Scan("Captured scan {0}", data);
                         this.scanText.Text = data;
@@ -329,7 +329,7 @@ namespace EveScanner.UI
         /// </summary>
         /// <param name="container">Container to find radio button in.</param>
         /// <returns>Selected radio button, or null if none found.</returns>
-        private RadioButton GetCheckedRadioButton(Control container)
+        private static RadioButton GetCheckedRadioButton(Control container)
         {
             foreach (var control in container.Controls)
             {
@@ -355,7 +355,7 @@ namespace EveScanner.UI
         {
             string output = string.Empty;
 
-            RadioButton radio = this.GetCheckedRadioButton(this.infoContainer);
+            RadioButton radio = Form1.GetCheckedRadioButton(this.infoContainer);
             if (radio != null)
             {
                 output = radio.Text;
@@ -553,6 +553,7 @@ namespace EveScanner.UI
             {
                 this.standingsToolStripMenuItem.Enabled = this.result.Character.Standings != null;
             }
+
             this.showScanItems.Enabled = true;
         }
 
@@ -577,31 +578,6 @@ namespace EveScanner.UI
             {
                 Logger.Error(ex.ToString());
             }
-        }
-
-        /// <summary>
-        /// This method checks that the input text is in the form of a scan we recognize.
-        /// </summary>
-        /// <param name="inputText">Supposed cargo scan.</param>
-        /// <returns>True if the text is determined to be a cargo scan, false otherwise.</returns>
-        private bool CheckTextFormat(string inputText)
-        {
-            if (this.CheckForCargoScan(inputText))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>
-        /// Check every line. If one doesn't match the Cargo Scan criteria, return false.
-        /// </summary>
-        /// <param name="inputText">Scan data</param>
-        /// <returns>True if we think this is a cargo scan, false otherwise.</returns>
-        private bool CheckForCargoScan(string inputText)
-        {
-            return Validators.CheckForCargoScan(inputText);
         }
 
         /// <summary>
@@ -747,14 +723,14 @@ namespace EveScanner.UI
             }
 
             Logger.Debug("Saving Config");
-            
+
             ConfigHelper.Instance.Location1 = this.location1Text.Text;
             ConfigHelper.Instance.Location2 = this.location2Text.Text;
             ConfigHelper.Instance.Location3 = this.location3Text.Text;
 
             ConfigHelper.Instance.WindowPositionX = this.Location.X;
             ConfigHelper.Instance.WindowPositionY = this.Location.Y;
-            
+
             ConfigHelper.Instance.Save();
             Logger.Debug("Config Saved");
         }
@@ -780,9 +756,6 @@ namespace EveScanner.UI
         /// <param name="e">Not provided.</param>
         private void SubmitRequestButton_Click(object sender, EventArgs e)
         {
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.RunWorkerCompleted += this.Scanworker_RunWorkerCompleted;
-
             if (string.IsNullOrEmpty(this.scanText.Text))
             {
                 return;
@@ -790,30 +763,9 @@ namespace EveScanner.UI
 
             try
             {
-                worker.DoWork += this.Scanworker_Dowork_NewAppraiser;
-                worker.RunWorkerAsync(this.scanText.Text);
+                this.StartBackgroundWorker(this.Scanworker_Dowork_NewAppraiser, this.Scanworker_RunWorkerCompleted, this.scanText.Text);
 
-                /*if (this.scanText.Text.StartsWith("http://evepraisal.com/e/", StringComparison.OrdinalIgnoreCase) || this.scanText.Text.StartsWith("https://goonpraisal.apps.goonswarm.org/e/", StringComparison.OrdinalIgnoreCase))
-                {
-                    worker.DoWork += this.Scanworker_DoWork_EvePraisalUrl;
-
-                    string url = this.scanText.Text;
-                    url = url.IndexOf(' ') < 0 ? url : url.Substring(0, url.IndexOf(' '));
-                    url = url.IndexOf('\r') < 0 ? url : url.Substring(0, url.IndexOf('\r'));
-                    url = url.IndexOf('\n') < 0 ? url : url.Substring(0, url.IndexOf('\n'));
-
-                    this.SetStatusMessage("Trying to retrieve previous scan from {0}", url);
-                    worker.RunWorkerAsync(url);
-                }
-                else if (this.submitANYClipboardDataToolStripMenuItem.Checked || this.CheckTextFormat(this.scanText.Text))
-                {
-                    worker.DoWork += this.Scanworker_DoWork_ScanText;
-                    worker.RunWorkerAsync(this.scanText.Text);
-                }
-                else
-                {
-                    return;
-                }*/
+                this.SetStatusMessage("Looking up Scan Text...");
             }
             catch (Exception ex)
             {
@@ -1021,7 +973,7 @@ namespace EveScanner.UI
         /// </summary>
         /// <param name="sender">... button next to images.</param>
         /// <param name="e">Not provided.</param>
-        private void showScanItems_Click(object sender, EventArgs e)
+        private void ShowScanItems_Click(object sender, EventArgs e)
         {
             using (ScanItems si = new ScanItems(this.result.AppraisedLines))
             {
@@ -1077,12 +1029,48 @@ namespace EveScanner.UI
                 this.standingsToolStripMenuItem.Enabled = false;
             }
 
-            BackgroundWorker characterLookup = new BackgroundWorker();
-            characterLookup.DoWork += this.CharacterLookup_DoWork;
-            characterLookup.RunWorkerCompleted += this.CharacterLookup_RunWorkerCompleted;
-            characterLookup.RunWorkerAsync(this.result);
+            this.StartBackgroundWorker(this.CharacterLookup_DoWork, this.CharacterLookup_RunWorkerCompleted, this.result);
 
             this.SetStatusMessage("Looking up Character Data...");
+        }
+
+        /// <summary>
+        /// Starts a background worker and ensures that objects are disposed if any issues occur.
+        /// </summary>
+        /// <param name="dowork">Method to Call to do Work</param>
+        /// <param name="completed">Method to Call when Completed</param>
+        /// <param name="argument">Optional Parameter to pass to Background Worker</param>
+        /// <returns>Started Background Worker</returns>
+        private BackgroundWorker StartBackgroundWorker(DoWorkEventHandler dowork, RunWorkerCompletedEventHandler completed, object argument)
+        {
+            BackgroundWorker bw, tmp = null;
+            try
+            {
+                tmp = new BackgroundWorker();
+                tmp.DoWork += dowork;
+                tmp.RunWorkerCompleted += completed;
+                this.components.Add(tmp);
+                if (argument == null)
+                {
+                    tmp.RunWorkerAsync();
+                }
+                else
+                {
+                    tmp.RunWorkerAsync(argument);
+                }
+
+                bw = tmp;
+                tmp = null;
+            }
+            finally
+            {
+                if (tmp != null)
+                {
+                    tmp.Dispose();
+                }
+            }
+
+            return bw;
         }
         #endregion Form Controls
 
@@ -1314,34 +1302,34 @@ thread on the Goonfleet Forums or sent to me via Jabber.
         {
             this.ClearToolStripMenuItem_Click(null, EventArgs.Empty);
 #warning FIX THIS FUNCTION
-            /* TODO -- FIX
-            ScanResult r = new ScanResult(Guid.Empty, DateTime.Now, "1 Dummy Item", 3000000000000, 4123456789012, 1, 1, "http://goonfleet.com/?1", new int[] { 1 }) { CharacterName = "T2 BPO", ShipType = "Providence - Freighter - Amarr", Notes = "Triggers T2 BPO Image", Location = "Perimeter -> Urlen" };
+
+            
+            ScanResult r = new ScanResult(Guid.Empty, DateTime.Now, "1 Dummy Item", 3000000000000, 4123456789012, 1, 1, "http://goonfleet.com/?1", new [] { new ScanLine(1, "Dummy Item", false) }) { CharacterName = "T2 BPO", ShipType = "Providence - Freighter - Amarr", Notes = "Triggers T2 BPO Image", Location = "Perimeter -> Urlen" };
             this.AddResultToList(r);
 
-            ScanResult s = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 300000000000, 412345678901, 3, 4, "http://goonfleet.com/?2", new int[] { 2 }) { CharacterName = "Plastic Wrap", ShipType = "Charon - Freighter - Caldari", Notes = "Triggers Wrap Image" };
+            ScanResult s = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 300000000000, 412345678901, 3, 4, "http://goonfleet.com/?2", new ScanLine[] { }) { CharacterName = "Plastic Wrap", ShipType = "Charon - Freighter - Caldari", Notes = "Triggers Wrap Image" };
             this.AddResultToList(s);
 
-            ScanResult t = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000000000, 41234567890, 3, 4, "http://goonfleet.com/?3", new int[] { 3 }) { CharacterName = "Container", ShipType = "Obelisk - Freighter - Gallente", Notes = "Triggers Container Image" };
+            ScanResult t = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000000000, 41234567890, 3, 4, "http://goonfleet.com/?3", new ScanLine[] { }) { CharacterName = "Container", ShipType = "Obelisk - Freighter - Gallente", Notes = "Triggers Container Image" };
             this.AddResultToList(t);
 
-            ScanResult u = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 3000000000, 4123456789, 3, 4, "http://goonfleet.com/?4", new int[] { 4 }) { CharacterName = "Isotopes", ShipType = "Fenrir - Freighter - Minmatar", Notes = "Triggers Isotope Image", Location = "Ashab -> Madirmilire" };
+            ScanResult u = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 3000000000, 4123456789, 3, 4, "http://goonfleet.com/?4", new ScanLine[] { }) { CharacterName = "Isotopes", ShipType = "Fenrir - Freighter - Minmatar", Notes = "Triggers Isotope Image", Location = "Ashab -> Madirmilire" };
             this.AddResultToList(u);
 
-            ScanResult v = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 300000000, 412345678, 3, 4, "http://goonfleet.com/?5", new int[] { 5 }) { CharacterName = "Valuable BPO", ShipType = "Ark - Jump Freighter - Amarr - Helium", Notes = "Triggers $$$ BPO Image" };
+            ScanResult v = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 300000000, 412345678, 3, 4, "http://goonfleet.com/?5", new ScanLine[] { }) { CharacterName = "Valuable BPO", ShipType = "Ark - Jump Freighter - Amarr - Helium", Notes = "Triggers $$$ BPO Image" };
             this.AddResultToList(v);
 
-            ScanResult w = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000000, 41234567, 3, 4, "http://goonfleet.com/?99", new int[] { 99 }) { CharacterName = "Fedo", ShipType = "Rhea - Jump Freighter - Caldari - Nitrogen", Notes = "Triggers Fedo Image" };
+            ScanResult w = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000000, 41234567, 3, 4, "http://goonfleet.com/?99", new ScanLine[] { }) { CharacterName = "Fedo", ShipType = "Rhea - Jump Freighter - Caldari - Nitrogen", Notes = "Triggers Fedo Image" };
             this.AddResultToList(w);
 
-            ScanResult x = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 3000000, 4123456, 3, 4, "http://goonfleet.com/?23", new int[] { 2, 3 }) { CharacterName = "Mixed 1", ShipType = "Anshar - Jump Freighter - Gallente - Oxygen", Notes = "Triggers Wrap+Container Image", Location = "Hatakani -> Sivala" };
+            ScanResult x = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 3000000, 4123456, 3, 4, "http://goonfleet.com/?23", new ScanLine[] { }) { CharacterName = "Mixed 1", ShipType = "Anshar - Jump Freighter - Gallente - Oxygen", Notes = "Triggers Wrap+Container Image", Location = "Hatakani -> Sivala" };
             this.AddResultToList(x);
 
-            ScanResult y = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 300000, 412345, 3, 4, "http://goonfleet.com/?1234", new int[] { 1, 2, 3, 4 }) { CharacterName = "Mixed 2", ShipType = "Nomad - Jump Freighter - Minmatar - Hydrogen", Notes = "Triggers 4 Combined Image" };
+            ScanResult y = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 300000, 412345, 3, 4, "http://goonfleet.com/?1234", new ScanLine[] { }) { CharacterName = "Mixed 2", ShipType = "Nomad - Jump Freighter - Minmatar - Hydrogen", Notes = "Triggers 4 Combined Image" };
             this.AddResultToList(y);
 
-            ScanResult z = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000, 41234, 3, 4, "http://goonfleet.com/?1234599", new int[] { 1, 2, 3, 4, 5, 99 }) { CharacterName = "Mixed 3", ShipType = string.Empty, Notes = "Triggers 6 Combined Image" };
+            ScanResult z = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000, 41234, 3, 4, "http://goonfleet.com/?1234599", new ScanLine[] { }) { CharacterName = "Mixed 3", ShipType = string.Empty, Notes = "Triggers 6 Combined Image" };
             this.AddResultToList(z);
-            */
         }
 #endif
 
@@ -1450,10 +1438,9 @@ thread on the Goonfleet Forums or sent to me via Jabber.
                 return;
             }
 
-            BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += this.EmploymentWorker_DoWork;
-            worker.RunWorkerCompleted += this.EmploymentWorker_RunWorkerCompleted;
-            worker.RunWorkerAsync(this.result);
+            this.StartBackgroundWorker(this.EmploymentWorker_DoWork, this.EmploymentWorker_RunWorkerCompleted, this.result);
+
+            this.SetStatusMessage("Looking up Employment History in Background...");
         }
 
         /// <summary>
@@ -1486,10 +1473,22 @@ thread on the Goonfleet Forums or sent to me via Jabber.
         /// <param name="e">The parameter is not used.</param>
         private void NewTimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TimerForm frm = new TimerForm();
-            frm.Show();
-
-            this.components.Add(frm);
+            TimerForm frm = null, tmp = null;
+            try
+            {
+                tmp = new TimerForm();
+                this.components.Add(tmp);
+                tmp.Show();
+                frm = tmp;
+                tmp = null;
+            }
+            finally
+            {
+                if (tmp != null)
+                {
+                    tmp.Dispose();
+                }
+            }
         }
         #endregion Menu Items
 
@@ -1579,6 +1578,11 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             this.SetStatusMessage("Found {0}", rx.Character.ToString());
         }
 
+        /// <summary>
+        /// New Appraisal Method for Application
+        /// </summary>
+        /// <param name="sender">Background Worker</param>
+        /// <param name="e">Provides interaction through different methods.</param>
         private void Scanworker_Dowork_NewAppraiser(object sender, DoWorkEventArgs e)
         {
             BackgroundWorker bw = sender as BackgroundWorker;
@@ -1595,7 +1599,7 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             }
 
             IScanResult iresult = null;
-            string requestedAppraiser = evepraisalToolStripMenuItem.Checked ? "EvepraisalSvc" : (goonmetricsToolStripMenuItem.Checked ? "GoonpraisalSvc" : null);
+            string requestedAppraiser = this.evepraisalToolStripMenuItem.Checked ? "EvepraisalSvc" : (this.goonmetricsToolStripMenuItem.Checked ? "GoonpraisalSvc" : null);
             Appraiser apr = new Appraiser();
             iresult = apr.GetAppraisal(scanArgument, requestedAppraiser);
             e.Result = iresult;
@@ -1632,12 +1636,10 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             if (scanArgument.StartsWith("https://goonpraisal.apps.goonswarm.org/e/", StringComparison.OrdinalIgnoreCase))
             {
                 svc = Injector.CreateFromTypeName<IAppraisalService>("EveScanner.Evepraisal.Goonpraisal, EveScanner.Evepraisal");
-                //svc = new Evepraisal("goonpraisal.apps.goonswarm.org", true);
             }
             else if (scanArgument.StartsWith("http://evepraisal.com/e/", StringComparison.OrdinalIgnoreCase))
             {
                 svc = Injector.CreateFromTypeName<IAppraisalService>("EveScanner.Evepraisal.EvepraisalSvc, EveScanner.Evepraisal");
-                //svc = new Evepraisal();
             }
 
             if (svc == null)
@@ -1829,6 +1831,5 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             this.SetStatusMessage("Done.");
         }
         #endregion Background Worker Methods
-
     }
 }

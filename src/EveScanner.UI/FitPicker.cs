@@ -30,6 +30,28 @@ namespace EveScanner.UI
         public Form1 CallingForm { get; set; }
 
         /// <summary>
+        /// Fills in the textbox with the text from the button
+        /// </summary>
+        /// <param name="button">Button to Source Text From</param>
+        /// <param name="textbox">Textbox to fill</param>
+        private static void Slot_Click(object button, TextBox textbox)
+        {
+            if (button == null || textbox == null)
+            {
+                return;
+            }
+
+            Button x = button as Button;
+
+            if (x == null)
+            {
+                return;
+            }
+
+            textbox.Text = x.Text;
+        }
+
+        /// <summary>
         /// Called when the form is loaded.
         /// </summary>
         /// <param name="sender">The parameter is not used.</param>
@@ -50,35 +72,13 @@ namespace EveScanner.UI
         }
 
         /// <summary>
-        /// Fills in the textbox with the text from the button
-        /// </summary>
-        /// <param name="b">Button to Source Text From</param>
-        /// <param name="t">Textbox to fill</param>
-        private void Slot_Click(object b, TextBox t)
-        {
-            if (b == null || t == null)
-            {
-                return;
-            }
-
-            Button x = b as Button;
-
-            if (x == null)
-            {
-                return;
-            }
-
-            t.Text = x.Text;
-        }
-
-        /// <summary>
         /// Called when a button for the first text slot is clicked.
         /// </summary>
         /// <param name="sender">Buttons in slot 1</param>
         /// <param name="e">Not provided.</param>
         private void Slot1_Click(object sender, EventArgs e)
         {
-            this.Slot_Click(sender, this.slot1Text);
+            FitPicker.Slot_Click(sender, this.slot1Text);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace EveScanner.UI
         /// <param name="e">Not provided.</param>
         private void Slot2_Click(object sender, EventArgs e)
         {
-            this.Slot_Click(sender, this.slot2Text);
+            FitPicker.Slot_Click(sender, this.slot2Text);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace EveScanner.UI
         /// <param name="e">Not provided.</param>
         private void Slot3_Click(object sender, EventArgs e)
         {
-            this.Slot_Click(sender, this.slot3Text);
+            FitPicker.Slot_Click(sender, this.slot3Text);
         }
 
         /// <summary>

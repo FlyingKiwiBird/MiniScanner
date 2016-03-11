@@ -53,10 +53,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InventoryGroup.cs" />
-    <Compile Include="InventoryPricing.cs" />
-    <Compile Include="InventoryRepackaged.cs" />
-    <Compile Include="InventoryType.cs" />
+    <Compile Include="Entities\InventoryGroup.cs" />
+    <Compile Include="Entities\InventoryPricing.cs" />
+    <Compile Include="Entities\InventoryRepackaged.cs" />
+    <Compile Include="Entities\InventoryType.cs" />
     <Compile Include="SQLiteExtraDataProvider.cs" />
     <Compile Include="SQLiteQueryable.cs" />
     <Compile Include="SQLiteRegistration.cs" />

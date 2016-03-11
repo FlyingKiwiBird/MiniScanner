@@ -52,6 +52,7 @@ namespace EveScanner.UI
         /// </summary>
         /// <param name="sender">The parameter is not used.</param>
         /// <param name="e">The parameter is not used.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Mobility", "CA1601:DoNotUseTimersThatPreventPowerStateChanges", Justification = "You're playing Eve, power states don't matter")]
         private void TimerForm_Load(object sender, EventArgs e)
         {
             this.ResetButton_Click(null, EventArgs.Empty);

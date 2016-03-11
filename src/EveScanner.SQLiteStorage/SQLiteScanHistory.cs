@@ -25,6 +25,9 @@ namespace EveScanner.SQLiteStorage
         /// </summary>
         private string connectionString;
 
+        /// <summary>
+        /// Gets the connection string for the scan history provider.
+        /// </summary>
         public override string ConnectionString
         {
             get
@@ -36,16 +39,35 @@ namespace EveScanner.SQLiteStorage
         /// <summary>
         /// Initializes a new instance of the <see cref="SQLiteScanHistory"/> class.
         /// </summary>
-        public SQLiteScanHistory()
+        public SQLiteScanHistory() : this(string.Empty)
         {
-            this.connectionString = ConfigHelper.GetConnectionString("SQLiteScanHistory");
-            SQLiteConnectionStringBuilder sb = new SQLiteConnectionStringBuilder(this.connectionString);
-            string filename = sb.DataSource;
+        }
 
-            if (!File.Exists(filename))
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SQLiteScanHistory"/> class.
+        /// </summary>
+        /// <param name="databasePath">Path to Database. If not provided, will find connection string from config.</param>
+        public SQLiteScanHistory(string databasePath)
+        {
+            string cs;
+
+            if (!string.IsNullOrWhiteSpace(databasePath))
+            {
+                cs = string.Format("Data Source={0};Version=3;", databasePath);
+            }
+            else
+            {
+                cs = ConfigHelper.GetConnectionString("SQLiteScanHistory");
+                SQLiteConnectionStringBuilder sb = new SQLiteConnectionStringBuilder(cs);
+                databasePath = sb.DataSource;
+            }
+
+            if (!File.Exists(databasePath))
             {
                 this.CreateDatabase();
             }
+
+            this.connectionString = cs;
         }
 
         /// <summary>

@@ -14,6 +14,7 @@
         [ClassInitialize]
         public static void ClassInit(TestContext context)
         {
+            
             string connectionString = ConfigHelper.GetConnectionString("SQLiteScanHistory");
             SQLiteConnectionStringBuilder sb = new SQLiteConnectionStringBuilder(connectionString);
             string filename = sb.DataSource;
@@ -29,6 +30,8 @@
         [TestMethod]
         public void AddScanToStorage()
         {
+            Assert.Inconclusive("Needs Rewrite of Component");
+
             var ish = Injector.Create<IScanHistory>();
             Assert.IsNotNull(ish);
 
@@ -53,6 +56,8 @@
         [TestMethod]
         public void GetScanFromStorage()
         {
+            Assert.Inconclusive("Needs Rewrite of Component");
+
             var ish = Injector.Create<IScanHistory>();
             Assert.IsNotNull(ish);
             

@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <eveapi version="2">
-  <currentTime>2015-10-06 07:01:03</currentTime>
+  <currentTime>2016-03-12 07:01:02</currentTime>
   <result>
     <rowset name="corporateContactList" key="contactID" columns="contactID,contactName,standing,contactTypeID,labelMask">
       <row contactID="90171277" contactName="Phigmeta" standing="-10" contactTypeID="1378" labelMask="0" />
@@ -20,6 +20,7 @@
       <row contactID="150097440" contactName="Get Off My Lawn" standing="10" contactTypeID="16159" labelMask="0" />
       <row contactID="151380924" contactName="Executive Outcomes" standing="10" contactTypeID="16159" labelMask="0" />
       <row contactID="164960156" contactName="Legions Ltd" standing="10" contactTypeID="2" labelMask="0" />
+      <row contactID="178073705" contactName="Sven Holstien" standing="-10" contactTypeID="1377" labelMask="0" />
       <row contactID="189875088" contactName="irafcyno1" standing="10" contactTypeID="1383" labelMask="0" />
       <row contactID="195872744" contactName="Longdrinks" standing="-10" contactTypeID="1377" labelMask="0" />
       <row contactID="198814012" contactName="Risky Advanced Production Enterprises" standing="10" contactTypeID="2" labelMask="0" />
@@ -75,7 +76,7 @@
       <row contactID="2033892222" contactName="Nova Scotia Industries" standing="5" contactTypeID="2" labelMask="0" />
       <row contactID="2035531557" contactName="Grendel85" standing="5" contactTypeID="1383" labelMask="0" />
     </rowset>
-    <rowset name="corporateContactLabels" key="labelID" columns="name" />
+    <rowset name="corporateContactLabels" key="labelID" columns="labelID,name" />
     <rowset name="allianceContactList" key="contactID" columns="contactID,contactName,standing,contactTypeID,labelMask">
       <row contactID="90171277" contactName="Phigmeta" standing="-10" contactTypeID="1378" labelMask="0" />
       <row contactID="91313220" contactName="Brother Argus" standing="10" contactTypeID="1379" labelMask="0" />
@@ -105,6 +106,7 @@
       <row contactID="98052387" contactName="House Of Eldwardan" standing="5" contactTypeID="2" labelMask="0" />
       <row contactID="98053359" contactName="Old School Legion Deluxe" standing="0.2" contactTypeID="2" labelMask="1" />
       <row contactID="98059521" contactName="Failed Subforum Graveyard" standing="10" contactTypeID="2" labelMask="0" />
+      <row contactID="98064765" contactName="Repercussus" standing="0" contactTypeID="2" labelMask="2" />
       <row contactID="98072829" contactName="WipEout." standing="5" contactTypeID="2" labelMask="0" />
       <row contactID="98101457" contactName="My Little Glue Factory" standing="10" contactTypeID="2" labelMask="0" />
       <row contactID="98115814" contactName="Aces 'N' Eights" standing="2.5" contactTypeID="2" labelMask="0" />
@@ -124,11 +126,10 @@
       <row contactID="98252989" contactName="Schuilplaats Tegen Boze Mensen" standing="10" contactTypeID="2" labelMask="0" />
       <row contactID="98286981" contactName="Bluehogs" standing="5" contactTypeID="2" labelMask="0" />
       <row contactID="98293142" contactName="Racism. Inc" standing="5" contactTypeID="2" labelMask="0" />
-      <row contactID="98312859" contactName="House Singularity" standing="0.9" contactTypeID="2" labelMask="2" />
       <row contactID="98331677" contactName="Hopeless Therapy" standing="5" contactTypeID="2" labelMask="0" />
-      <row contactID="98342574" contactName="Hole Violence" standing="10" contactTypeID="2" labelMask="0" />
       <row contactID="98349609" contactName="Trident Logistics" standing="5" contactTypeID="2" labelMask="0" />
-      <row contactID="98400668" contactName="All Your Base Are Belong To Me" standing="5" contactTypeID="2" labelMask="0" />
+      <row contactID="98374015" contactName="Superlemon Krakatoa" standing="5" contactTypeID="2" labelMask="4" />
+      <row contactID="98438519" contactName="Interstellar Landscaping Consortium" standing="5" contactTypeID="2" labelMask="2" />
       <row contactID="99000289" contactName="Raiden." standing="-5" contactTypeID="16159" labelMask="0" />
       <row contactID="99000593" contactName="The Methodical Alliance" standing="-5" contactTypeID="16159" labelMask="0" />
       <row contactID="99000645" contactName="RvB - RED Federation" standing="0" contactTypeID="16159" labelMask="0" />
@@ -137,6 +138,7 @@
       <row contactID="99001830" contactName="Hard Alliance" standing="0" contactTypeID="16159" labelMask="2" />
       <row contactID="99001904" contactName="Spaceship Samurai" standing="-5" contactTypeID="16159" labelMask="0" />
       <row contactID="99002170" contactName="The Retirement Club" standing="-10" contactTypeID="16159" labelMask="0" />
+      <row contactID="99002172" contactName="I Whip My Slaves Back and Forth" standing="0" contactTypeID="16159" labelMask="2" />
       <row contactID="99002313" contactName="The Mandalorians" standing="-10" contactTypeID="16159" labelMask="0" />
       <row contactID="99002392" contactName="NEXT FORCE" standing="0" contactTypeID="16159" labelMask="2" />
       <row contactID="99002417" contactName="The Exiled Gaming" standing="0.2" contactTypeID="16159" labelMask="1" />
@@ -158,6 +160,7 @@
       <row contactID="99004852" contactName="Void.." standing="0" contactTypeID="16159" labelMask="2" />
       <row contactID="99005069" contactName="Wild Wild West." standing="0" contactTypeID="16159" labelMask="2" />
       <row contactID="99005338" contactName="Pandemic Horde" standing="0" contactTypeID="16159" labelMask="0" />
+      <row contactID="99005697" contactName="Sixth Empire" standing="5" contactTypeID="16159" labelMask="0" />
       <row contactID="116777001" contactName="SniggWaffe" standing="-5" contactTypeID="2" labelMask="0" />
       <row contactID="127311194" contactName="Air Amarria" standing="5" contactTypeID="2" labelMask="0" />
       <row contactID="131511956" contactName="Tactical Narcotics Team" standing="10" contactTypeID="16159" labelMask="8" />
@@ -167,6 +170,7 @@
       <row contactID="151380924" contactName="Executive Outcomes" standing="10" contactTypeID="16159" labelMask="8" />
       <row contactID="161860075" contactName="Kukla Kolduna" standing="-10" contactTypeID="1386" labelMask="0" />
       <row contactID="164960156" contactName="Legions Ltd" standing="5" contactTypeID="2" labelMask="0" />
+      <row contactID="178073705" contactName="Sven Holstien" standing="-10" contactTypeID="1377" labelMask="0" />
       <row contactID="215950835" contactName="Logo Logistics" standing="5" contactTypeID="2" labelMask="0" />
       <row contactID="259280956" contactName="Vinata" standing="5" contactTypeID="1384" labelMask="0" />
       <row contactID="270786329" contactName="Jita Knitting Club" standing="5" contactTypeID="2" labelMask="0" />
@@ -188,6 +192,7 @@
       <row contactID="606975822" contactName="Niflheim Ascendant" standing="5" contactTypeID="2" labelMask="0" />
       <row contactID="628991027" contactName="Morsus Mihi" standing="-10" contactTypeID="16159" labelMask="0" />
       <row contactID="631729889" contactName="Omega Fleet Enterprises" standing="5" contactTypeID="2" labelMask="0" />
+      <row contactID="655846070" contactName="The OSS" standing="-10" contactTypeID="16159" labelMask="0" />
       <row contactID="667531913" contactName="GoonWaffe" standing="10" contactTypeID="2" labelMask="0" />
       <row contactID="673381830" contactName="Intrepid Crossing" standing="-5" contactTypeID="16159" labelMask="0" />
       <row contactID="679584932" contactName="SpaceMonkey's Alliance" standing="10" contactTypeID="16159" labelMask="8" />
@@ -200,16 +205,16 @@
       <row contactID="896886745" contactName="Elder Chance" standing="10" contactTypeID="1385" labelMask="0" />
       <row contactID="905861359" contactName="BricK sQuAD." standing="-10" contactTypeID="16159" labelMask="0" />
       <row contactID="906457582" contactName="The G0dfathers" standing="-5" contactTypeID="16159" labelMask="0" />
-      <row contactID="912199245" contactName="Asero" standing="10" contactTypeID="1379" labelMask="0" />
+      <row contactID="912199245" contactName="Asero" standing="0" contactTypeID="1379" labelMask="0" />
       <row contactID="927292903" contactName="Rote Kapelle" standing="-5" contactTypeID="16159" labelMask="0" />
       <row contactID="933731581" contactName="Triumvirate." standing="-10" contactTypeID="16159" labelMask="0" />
-      <row contactID="935511220" contactName="Special Projects Corporation" standing="10" contactTypeID="2" labelMask="0" />
+      <row contactID="935511220" contactName="Special Projects Corporation" standing="0" contactTypeID="2" labelMask="0" />
       <row contactID="941771938" contactName="Kia Wynn" standing="5" contactTypeID="1379" labelMask="0" />
       <row contactID="942377007" contactName="Oleena Natiras" standing="10" contactTypeID="1383" labelMask="0" />
       <row contactID="961903462" contactName="Stellar Wind" standing="5" contactTypeID="1385" labelMask="0" />
       <row contactID="969048533" contactName="Aether Astaios" standing="5" contactTypeID="1383" labelMask="0" />
       <row contactID="1006830534" contactName="Fidelas Constans" standing="10" contactTypeID="16159" labelMask="8" />
-      <row contactID="1081578607" contactName="Clockwork Pineapple" standing="2" contactTypeID="16159" labelMask="0" />
+      <row contactID="1081578607" contactName="Clockwork Pineapple" standing="0" contactTypeID="16159" labelMask="0" />
       <row contactID="1093181628" contactName="Flying Tartiflette" standing="5" contactTypeID="2" labelMask="0" />
       <row contactID="1119479143" contactName="Agony Empire" standing="-5" contactTypeID="16159" labelMask="0" />
       <row contactID="1147488332" contactName="The Kadeshi" standing="-10" contactTypeID="16159" labelMask="0" />
@@ -251,12 +256,12 @@
       <row contactID="2033892222" contactName="Nova Scotia Industries" standing="5" contactTypeID="2" labelMask="0" />
       <row contactID="2065165840" contactName="Lurres" standing="-10" contactTypeID="1375" labelMask="0" />
     </rowset>
-    <rowset name="allianceContactLabels" key="labelID" columns="name">
+    <rowset name="allianceContactLabels" key="labelID" columns="labelID,name">
       <row labelID="1" name="Q Pirates" />
       <row labelID="2" name="Special Projects" />
       <row labelID="4" name="Moving stasis" />
       <row labelID="8" name="The Imperium" />
     </rowset>
   </result>
-  <cachedUntil>2016-10-06 07:01:18</cachedUntil>
+  <cachedUntil>2016-03-12 07:15:01</cachedUntil>
 </eveapi>

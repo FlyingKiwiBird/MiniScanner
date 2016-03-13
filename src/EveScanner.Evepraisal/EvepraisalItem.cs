@@ -168,8 +168,11 @@ namespace EveScanner.Evepraisal
                     if (itp != null)
                     {
                         var type = itp.GetInventoryTypeByTypeName(this.TypeName);
-                        this.TypeId = type.TypeId;
-                        this.GroupId = type.GroupId.Value;
+                        if (type != null)
+                        {
+                            this.TypeId = type.TypeId;
+                            this.GroupId = type.GroupId.Value;
+                        }
                     }
                 }
 

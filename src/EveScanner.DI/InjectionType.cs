@@ -25,6 +25,7 @@ namespace EveScanner.IoC
             }
 
             this.ImplementationType = implementationType;
+            this.FriendlyName = implementationType.Name;
             this.ConstructorDelegate = Expression.Lambda(Expression.New(implementationType)).Compile();
         }
 
@@ -94,6 +95,8 @@ namespace EveScanner.IoC
             {
                 throw new ArgumentException("ImplementationType must be an implementation of the InterfaceType");
             }
+
+            this.FriendlyName = implementationType.Name;
         }
 
         /// <summary>

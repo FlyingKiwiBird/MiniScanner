@@ -88,13 +88,15 @@ namespace EveScanner.UI
             this.noneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scansAndResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+#if debug
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.debugToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.addExampleResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+#endif
             this.uIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hideBordersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.darkerThemeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lighterThemeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.debugToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.addExampleResultsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.licenseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -610,8 +612,11 @@ namespace EveScanner.UI
             this.keepLocationBetweenScansToolStripMenuItem,
             this.scanSourceToolStripMenuItem,
             this.loggingToolStripMenuItem,
-            this.uIToolStripMenuItem,
-            this.debugToolStripMenuItem1});
+            this.uIToolStripMenuItem
+#if debug
+            ,this.debugToolStripMenuItem1
+#endif
+            });
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "&Options";
@@ -676,8 +681,11 @@ namespace EveScanner.UI
             this.loggingToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.noneToolStripMenuItem,
             this.resultsToolStripMenuItem,
-            this.scansAndResultsToolStripMenuItem,
-            this.debugToolStripMenuItem});
+            this.scansAndResultsToolStripMenuItem
+#if debug
+            ,this.debugToolStripMenuItem
+#endif
+            });
             this.loggingToolStripMenuItem.Name = "loggingToolStripMenuItem";
             this.loggingToolStripMenuItem.Size = new System.Drawing.Size(230, 22);
             this.loggingToolStripMenuItem.Text = "&Logging";
@@ -710,11 +718,13 @@ namespace EveScanner.UI
             // 
             // debugToolStripMenuItem
             // 
+#if debug
             this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
             this.debugToolStripMenuItem.Size = new System.Drawing.Size(167, 22);
             this.debugToolStripMenuItem.Tag = "debug";
             this.debugToolStripMenuItem.Text = "&Debug";
             this.debugToolStripMenuItem.Click += new System.EventHandler(this.DebugLevelStripMenu_Click);
+#endif
             // 
             // uIToolStripMenuItem
             // 
@@ -752,6 +762,7 @@ namespace EveScanner.UI
             // 
             // debugToolStripMenuItem1
             // 
+#if debug
             this.debugToolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.addExampleResultsToolStripMenuItem});
             this.debugToolStripMenuItem1.Name = "debugToolStripMenuItem1";
@@ -764,6 +775,7 @@ namespace EveScanner.UI
             this.addExampleResultsToolStripMenuItem.Size = new System.Drawing.Size(297, 22);
             this.addExampleResultsToolStripMenuItem.Text = "Show Example Results (Clears Current List)";
             this.addExampleResultsToolStripMenuItem.Click += new System.EventHandler(this.AddExampleResultsToolStripMenuItem_Click);
+#endif
             // 
             // helpToolStripMenuItem
             // 
@@ -924,7 +936,7 @@ namespace EveScanner.UI
 
         }
 
-        #endregion
+#endregion
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;

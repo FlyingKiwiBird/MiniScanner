@@ -55,7 +55,7 @@ namespace EveScanner.Core
 
                 IAppraisalService svc = null;
 
-                if (!string.IsNullOrEmpty(appraiserName))
+                if (string.IsNullOrEmpty(appraiserName))
                 {
                     svc = Injector.Create<IAppraisalService>();
                 }

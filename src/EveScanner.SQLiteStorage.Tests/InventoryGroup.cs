@@ -6,13 +6,18 @@
     using EveScanner.Interfaces.Providers;
     using EveScanner.Interfaces.SDE;
     using EveScanner.IoC;
-
+    using System.IO;
     [TestClass]
     public class InventoryGroup
     {
         [ClassInitialize]
         public static void ClassInit(TestContext context)
         {
+            if (File.Exists("extradata.sqlite"))
+            {
+                File.Delete("extradata.sqlite");
+            }
+
             Injector.Register<IInventoryGroupProvider>(typeof(SQLiteStaticDataProvider));
         }
 

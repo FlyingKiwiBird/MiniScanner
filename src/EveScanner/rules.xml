@@ -1,0 +1,579 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rules>
+  <rule matchType="any">
+    <criteria matchProperty="item" matchValue="Arkonor Mining Crystal II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Aurora L Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Aurora M Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Aurora S Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Barrage L Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Barrage M Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Barrage S Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Bistot Mining Crystal II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Conflagration L Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Conflagration M Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Conflagration S Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Crokite Mining Crystal II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Dark Ochre Mining Crystal II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Gleam L Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Gleam M Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Gleam S Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Gneiss Mining Crystal II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Hail L Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Hail M Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Hail S Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Hedbergite Mining Crystal II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Hemorphite Mining Crystal II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Inferno Fury Cruise Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Inferno Fury Heavy Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Inferno Fury Light Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Inferno Javelin Heavy Assault Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Inferno Javelin Rocket Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Inferno Javelin Torpedo Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Inferno Precision Cruise Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Inferno Precision Heavy Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Inferno Precision Light Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Inferno Rage Heavy Assault Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Inferno Rage Rocket Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Inferno Rage Torpedo Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Jaspet Mining Crystal II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Javelin L Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Javelin M Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Javelin S Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Kernite Mining Crystal II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mercoxit Mining Crystal II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mjolnir Fury Cruise Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mjolnir Fury Heavy Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mjolnir Fury Light Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mjolnir Javelin Heavy Assault Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mjolnir Javelin Rocket Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mjolnir Javelin Torpedo Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mjolnir Precision Cruise Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mjolnir Precision Heavy Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mjolnir Precision Light Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mjolnir Rage Heavy Assault Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mjolnir Rage Rocket Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mjolnir Rage Torpedo Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mobile Medium Warp Disrupter II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mobile Small Warp Disrupter II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Nova Fury Cruise Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Nova Fury Heavy Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Nova Fury Light Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Nova Javelin Heavy Assault Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Nova Javelin Rocket Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Nova Javelin Torpedo Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Nova Precision Cruise Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Nova Precision Heavy Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Nova Precision Light Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Nova Rage Heavy Assault Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Nova Rage Rocket Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Nova Rage Torpedo Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Null L Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Null M Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Null S Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Omber Mining Crystal II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Plagioclase Mining Crystal II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Pyroxeres Mining Crystal II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Quake L Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Quake M Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Quake S Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scorch L Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scorch M Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scorch S Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scordite Mining Crystal II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scourge Fury Cruise Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scourge Fury Heavy Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scourge Fury Light Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scourge Javelin Heavy Assault Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scourge Javelin Rocket Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scourge Javelin Torpedo Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scourge Precision Cruise Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scourge Precision Heavy Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scourge Precision Light Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scourge Rage Heavy Assault Missile Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scourge Rage Rocket Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scourge Rage Torpedo Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Spike L Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Spike M Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Spike S Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Spodumain Mining Crystal II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Tremor L Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Tremor M Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Tremor S Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Veldspar Mining Crystal II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Void L Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Void M Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Void S Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="100mm Reinforced Steel Plates II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="100MN Afterburner II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="100MN Microwarpdrive II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="10MN Afterburner II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="10MN Microwarpdrive II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="1200mm Artillery Cannon II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="125mm Gatling AutoCannon II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="125mm Railgun II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="1400mm Howitzer Artillery II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="150mm Light AutoCannon II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="150mm Railgun II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="1600mm Reinforced Steel Plates II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="1MN Afterburner II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="1MN Microwarpdrive II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="200mm AutoCannon II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="200mm Railgun II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="200mm Reinforced Steel Plates II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="220mm Vulcan AutoCannon II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="250mm Light Artillery Cannon II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="250mm Railgun II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="280mm Howitzer Artillery II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="350mm Railgun II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="400mm Reinforced Steel Plates II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="425mm AutoCannon II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="425mm Railgun II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="50mm Reinforced Steel Plates II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="650mm Artillery Cannon II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="720mm Howitzer Artillery II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="75mm Gatling Rail II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="800mm Reinforced Steel Plates II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="800mm Repeating Artillery II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Acolyte II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Adaptive Invulnerability Field II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Adaptive Nano Plating II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Armor EM Hardener II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Armor Explosive Hardener II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Armor Kinetic Hardener II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Armor Thermic Hardener II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Ballistic Control System II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Berserker II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Cap Recharger II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capacitor Power Relay II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Co-Processor II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Covert Ops Cloaking Device II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Cruise Missile Launcher II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Dual 150mm Railgun II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Dual 180mm AutoCannon II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Dual 250mm Railgun II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Dual 425mm AutoCannon II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Dual 650mm Repeating Artillery II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Dual Heavy Beam Laser II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Dual Heavy Pulse Laser II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Dual Light Beam Laser II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Dual Light Pulse Laser II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="ECM - Ion Field Projector II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="ECM - Multispectral Jammer II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="ECM - Phase Inverter II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="ECM - Spatial Destabilizer II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="ECM - White Noise Generator II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="ECM Burst II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Electron Blaster Cannon II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="EM Plating II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="EM Ward Amplifier II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="EM Ward Field II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Energized Adaptive Nano Membrane II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Energized Armor Layering Membrane II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Energized EM Membrane II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Energized Explosive Membrane II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Energized Kinetic Membrane II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Energized Thermic Membrane II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Expanded Cargohold II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Explosive Deflection Amplifier II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Explosive Deflection Field II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Explosive Plating II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Focused Medium Beam Laser II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Focused Medium Pulse Laser II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Gatling Pulse Laser II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Gravimetric Backup Array II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Gyrostabilizer II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Hammerhead II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Heat Sink II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Heavy Assault Missile Launcher II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Heavy Beam Laser II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Heavy Capacitor Booster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Heavy Electron Blaster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Heavy Energy Neutralizer II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Heavy Ion Blaster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Heavy Missile Launcher II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Heavy Neutron Blaster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Heavy Nosferatu II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Heavy Pulse Laser II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Hobgoblin II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Hornet II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Improved Cloaking Device II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Infiltrator II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Ion Blaster Cannon II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Kinetic Deflection Amplifier II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Kinetic Deflection Field II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Kinetic Plating II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="LADAR Backup Array II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Large Armor Repairer II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Large Capacitor Battery II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Large Remote Capacitor Transmitter II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Large Shield Booster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Large Shield Extender II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Layered Plating II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Light Electron Blaster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Light Ion Blaster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Light Missile Launcher II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Light Neutron Blaster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Magnetic Field Stabilizer II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Magnetometric Backup Array II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium Armor Repairer II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium Capacitor Battery II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium Capacitor Booster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium EM Smartbomb II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium Energy Neutralizer II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium Graviton Smartbomb II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium Nosferatu II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium Plasma Smartbomb II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium Proton Smartbomb II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium Remote Capacitor Transmitter II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium Remote Shield Booster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium Shield Booster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium Shield Extender II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mega Beam Laser II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mega Pulse Laser II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Miner II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mining Drone II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Modulated Deep Core Miner II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Modulated Deep Core Strip Miner II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Modulated Strip Miner II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Neutron Blaster Cannon II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Ogre II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Power Diagnostic System II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Praetor II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Quad Light Beam Laser II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="RADAR Backup Array II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Rapid Heavy Missile Launcher II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Rapid Light Missile Launcher II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Reactor Control Unit II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Remote Sensor Booster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Remote Sensor Dampener II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Remote Tracking Computer II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Rocket Launcher II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Sensor Booster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Shield Boost Amplifier II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Shield Recharger II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Signal Amplifier II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Signal Distortion Amplifier II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Armor Repairer II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Capacitor Battery II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Capacitor Booster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small EM Smartbomb II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Energy Neutralizer II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Focused Beam Laser II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Focused Pulse Laser II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Graviton Smartbomb II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Nosferatu II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Plasma Smartbomb II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Proton Smartbomb II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Remote Capacitor Transmitter II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Remote Shield Booster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Shield Booster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Shield Extender II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Tachyon Beam Laser II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Target Painter II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Thermic Dissipation Amplifier II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Thermic Dissipation Field II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Thermic Plating II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Torpedo Launcher II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Tracking Computer II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Tracking Disruptor II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Tracking Enhancer II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Valkyrie II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Vespa II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Warrior II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Wasp II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="X-Large Shield Booster II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Standard Missile Launcher II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Damage Control II Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Absolution Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Anathema Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Arazu Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Ares Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Astarte Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Basilisk Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Bustard Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Buzzard Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Cerberus Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Cheetah Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Claw Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Claymore Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Crane Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Crow Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Crusader Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Curse Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Damnation Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Deimos Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Eagle Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Enyo Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Eos Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Eris Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Falcon Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Flycatcher Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Guardian Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Harpy Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Hawk Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Helios Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Heretic Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Hound Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Huginn Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Hulk Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Impel Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Ishkur Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Ishtar Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Jaguar Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Lachesis Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mackinaw Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Malediction Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Manticore Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Mastodon Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Muninn Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Nemesis Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Nighthawk Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Occator Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Oneiros Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Pilgrim Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Prorator Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Prowler Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Purifier Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Rapier Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Raptor Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Retribution Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Rook Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Sabre Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Sacrilege Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scimitar Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Skiff Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Sleipnir Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Stiletto Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Taranis Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Vagabond Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Vengeance Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Viator Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Vulture Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Wolf Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Zealot Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <result resultType="tag" resultValue="T2 BPO" />
+    <result resultType="image" resultValue="images\t2.png" />
+  </rule>
+  <rule matchType="any">
+    <criteria matchProperty="item" matchValue="Plastic Wrap" matchCriteria="gt" matchQuantity="0" />
+    <result resultType="tag" resultValue="WRAP" />
+    <result resultType="image" resultValue="images\wrap.png" />
+  </rule>
+  <rule matchType="any">
+    <criteria matchProperty="item" matchValue="Enormous Freight Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Giant Freight Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Huge Freight Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Large Freight Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium Freight Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Freight Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Colossal Secure Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Giant Secure Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Huge Secure Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Large Audit Log Secure Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Large Secure Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium Audit Log Secure Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium Secure Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Audit Log Secure Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Secure Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Large Standard Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Medium Standard Container" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Small Standard Container" matchCriteria="gt" matchQuantity="0" />
+    <result resultType="tag" resultValue="CONTAINER" />
+    <result resultType="image" resultValue="images\containers.png" />
+  </rule>
+  
+  <!-- Fuel Rules-->
+  <!-- ARK -->
+  <rule matchType="all">
+    <criteria matchProperty="item" matchValue="Helium Isotopes" matchCriteria="lt" matchQuantity="2200" />
+    <criteria matchProperty="shiptype" matchValue="Ark - Jump Freighter - Amarr - Helium" matchCriteria="eq" />
+    <result resultType="tag" resultValue="NO FUEL" />
+  </rule>
+  <rule matchType="all">
+    <criteria matchProperty="item" matchValue="Helium Isotopes" matchCriteria="ge" matchQuantity="2200" />
+    <criteria matchProperty="shiptype" matchValue="Ark - Jump Freighter - Amarr - Helium" matchCriteria="eq" />
+    <result resultType="tag" resultValue="FUEL" />
+  </rule>
+
+  <!-- Rhea -->
+  <rule matchType="all">
+    <criteria matchProperty="item" matchValue="Nitrogen Isotopes" matchCriteria="lt" matchQuantity="2200" />
+    <criteria matchProperty="shiptype" matchValue="Rhea - Jump Freighter - Caldari - Nitrogen" matchCriteria="eq" />
+    <result resultType="tag" resultValue="NO FUEL" />
+  </rule>
+  <rule matchType="all">
+    <criteria matchProperty="item" matchValue="Nitrogen Isotopes" matchCriteria="ge" matchQuantity="2200" />
+    <criteria matchProperty="shiptype" matchValue="Rhea - Jump Freighter - Caldari - Nitrogen" matchCriteria="eq" />
+    <result resultType="tag" resultValue="FUEL" />
+    <result resultType="image" resultValue="images\isotope.png" />
+  </rule>
+
+  <!-- Anshar -->
+  <rule matchType="all">
+    <criteria matchProperty="item" matchValue="Oxygen Isotopes" matchCriteria="lt" matchQuantity="2200" />
+    <criteria matchProperty="shiptype" matchValue="Anshar - Jump Freighter - Gallente - Oxygen" matchCriteria="eq" />
+    <result resultType="tag" resultValue="NO FUEL" />
+  </rule>
+  <rule matchType="all">
+    <criteria matchProperty="item" matchValue="Oxygen Isotopes" matchCriteria="ge" matchQuantity="2200" />
+    <criteria matchProperty="shiptype" matchValue="Anshar - Jump Freighter - Gallente - Oxygen" matchCriteria="eq" />
+    <result resultType="tag" resultValue="FUEL" />
+    <result resultType="image" resultValue="images\isotope.png" />
+  </rule>
+
+  <!-- Nomad -->
+  <rule matchType="all">
+    <criteria matchProperty="item" matchValue="Hydrogen Isotopes" matchCriteria="lt" matchQuantity="2200" />
+    <criteria matchProperty="shiptype" matchValue="Nomad - Jump Freighter - Minmatar - Hydrogen" matchCriteria="eq" />
+    <result resultType="tag" resultValue="NO FUEL" />
+  </rule>
+  <rule matchType="all">
+    <criteria matchProperty="item" matchValue="Hydrogen Isotopes" matchCriteria="ge" matchQuantity="2200" />
+    <criteria matchProperty="shiptype" matchValue="Nomad - Jump Freighter - Minmatar - Hydrogen" matchCriteria="eq" />
+    <result resultType="tag" resultValue="FUEL" />
+    <result resultType="image" resultValue="images\isotope.png" />
+  </rule>
+
+  <!-- Generic -->
+  <rule matchType="all">
+    <criteria matchProperty="shiptype" matchValue="" matchCriteria="eq" />
+    <criteria matchProperty="item" matchValue="Hydrogen Isotopes" matchCriteria="gt" matchQuantity="0" />
+    <result resultType="tag" resultValue="FUEL?" />
+    <result resultType="image" resultValue="images\isotope.png" />
+  </rule>
+
+  <rule matchType="all">
+    <criteria matchProperty="shiptype" matchValue="" matchCriteria="eq" />
+    <criteria matchProperty="item" matchValue="Oxygen Isotopes" matchCriteria="gt" matchQuantity="0" />
+    <result resultType="tag" resultValue="FUEL?" />
+    <result resultType="image" resultValue="images\isotope.png" />
+  </rule>
+
+  <rule matchType="all">
+    <criteria matchProperty="shiptype" matchValue="" matchCriteria="eq" />
+    <criteria matchProperty="item" matchValue="Nitrogen Isotopes" matchCriteria="gt" matchQuantity="0" />
+    <result resultType="tag" resultValue="FUEL?" />
+    <result resultType="image" resultValue="images\isotope.png" />
+  </rule>
+
+  <rule matchType="all">
+    <criteria matchProperty="shiptype" matchValue="" matchCriteria="eq" />
+    <criteria matchProperty="item" matchValue="Helium Isotopes" matchCriteria="gt" matchQuantity="0" />
+    <result resultType="tag" resultValue="FUEL?" />
+    <result resultType="image" resultValue="images\isotope.png" />
+  </rule>
+
+  <rule matchType="any">
+    <criteria matchProperty="item" matchValue="Aeon Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Archon Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Chimera Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Wyvern Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Nyx Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Thanatos Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Hel Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Nidhoggur Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Revelation Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Phoenix Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Moros Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Naglfar Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Avatar Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Leviathan Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Erebus Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Ragnarok Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Providence Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Charon Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Obelisk Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Fenrir Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Bowhead Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Covetor Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Procurer Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Retriever Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Orca Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Rorqual Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Abaddon Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Apocalypse Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Armageddon Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Raven Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Rokh Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Scorpion Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Dominix Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Hyperion Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Megathron Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Maelstrom Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Tempest Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Typhoon Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Armor Plates Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Capacitor Battery Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Cargo Bay Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Clone Vat Bay Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Computer System Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Construction Parts Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Corporate Hangar Bay Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Doomsday Weapon Mount Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Drone Bay Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Jump Bridge Array Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Jump Drive Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Launcher Hardpoint Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Power Generator Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Propulsion Engine Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Sensor Cluster Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Shield Emitter Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Ship Maintenance Bay Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Siege Array Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Capital Turret Hardpoint Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Amarr Factory Outpost Platform Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Caldari Research Outpost Platform Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Gallente Administrative Outpost Platform Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Minmatar Service Outpost Platform Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Survey Networks 4 Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Survey Networks 5 Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Ore Prospecting Array 5 Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Entrapment Array 2 Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Entrapment Array 3 Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Entrapment Array 4 Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Entrapment Array 5 Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Entrapment Array 2 Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Entrapment Array 3 Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Entrapment Array 4 Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Entrapment Array 5 Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Quantum Flux Generator 4 Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Quantum Flux Generator 5 Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Advanced Logistics Network Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="item" matchValue="Cynosural Suppression Blueprint" matchCriteria="gt" matchQuantity="0" />
+    <result resultType="tag" resultValue="$$$ BPO" />
+    <result resultType="image" resultValue="images\dickbee.png" />
+  </rule>
+  <rule matchType="any">
+    <criteria matchProperty="item" matchValue="Fedo" matchCriteria="gt" matchQuantity="0" />
+    <result resultType="tag" resultValue="FEDO" />
+    <result resultType="image" resultValue="images\fedo.png" />
+  </rule>
+  <rule matchType="all">
+    <criteria matchProperty="standings" matchCriteria="ge" matchQuantity="5" />
+    <result resultType="prefix" resultValue="BLUE" />
+    <result resultType="image" resultValue="images\pos10.png" />
+  </rule>
+  <rule matchType="all">
+    <criteria matchProperty="standings" matchCriteria="gt" matchQuantity="0" />
+    <criteria matchProperty="standings" matchCriteria="lt" matchQuantity="5" />
+    <result resultType="prefix" resultValue="BLUE" />
+    <result resultType="image" resultValue="images\pos05.png" />
+  </rule>
+  <rule matchType="all">
+    <criteria matchProperty="standings" matchCriteria="gt" matchQuantity="-5" />
+    <criteria matchProperty="standings" matchCriteria="lt" matchQuantity="0" />
+    <result resultType="prefix" resultValue="ORANGE" />
+    <result resultType="image" resultValue="images\neg05.png" />
+  </rule>
+  <rule matchType="all">
+    <criteria matchProperty="standings" matchCriteria="le" matchQuantity="-5" />
+    <result resultType="prefix" resultValue="RED" />
+    <result resultType="image" resultValue="images\neg10.png" />
+  </rule>
+<!--
+  <rule matchType="any">
+    <criteria matchProperty="item" matchValue="Dummy Item" matchCriteria="gt" matchQuantity="0" />
+    <result resultType="tag" resultValue="Dummy Items All" />
+  </rule>
+-->
+</rules>

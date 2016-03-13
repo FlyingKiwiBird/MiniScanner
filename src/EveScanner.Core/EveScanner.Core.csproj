@@ -61,6 +61,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScanLine.cs" />
     <Compile Include="ScanResult.cs" />
+    <Compile Include="ScanRules.cs" />
     <Compile Include="Validators.cs" />
     <Compile Include="WebClient.cs" />
   </ItemGroup>

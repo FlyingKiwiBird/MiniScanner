@@ -150,27 +150,7 @@ namespace EveScanner.Core
         {
             get
             {
-                StringBuilder sb = new StringBuilder();
-                if (this.Scan.ImageIndex != null && this.Scan.ImageIndex.Count() > 0)
-                {
-                    bool first = true;
-
-                    foreach (int i in this.Scan.ImageIndex)
-                    {
-                        if (first)
-                        {
-                            first = false;
-                        }
-                        else
-                        {
-                            sb.Append(",");
-                        }
-
-                        sb.AppendFormat(" {0}", ConfigHelper.Instance.ImageNames[i.ToString(CultureInfo.InvariantCulture)]);
-                    }
-                }
-
-                return sb.ToString();
+                return string.Join(", ", this.Scan.Tags.ToArray());
             }
         }
     }

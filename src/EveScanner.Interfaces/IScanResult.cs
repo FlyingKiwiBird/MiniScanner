@@ -66,9 +66,14 @@ namespace EveScanner.Interfaces
         string AppraisalUrl { get; }
 
         /// <summary>
+        /// Gets the special case Tags for the Appraisal
+        /// </summary>
+        IEnumerable<string> Tags { get; }
+
+        /// <summary>
         /// Gets the Image Index for the Appraisal
         /// </summary>
-        IEnumerable<int> ImageIndex { get; }
+        IEnumerable<string> ImagePaths { get; }
 
         /// <summary>
         /// Gets or sets the ship type scanned
@@ -104,5 +109,10 @@ namespace EveScanner.Interfaces
         /// Gets a value indicating whether some items in the scan obtained prices from a secondary source.
         /// </summary>
         bool ItemsReappraised { get; }
+
+        /// <summary>
+        /// Evaluates the images/tags for the scan with a scan evaluator.
+        /// </summary>
+        void EvaluateScanResult();
     }
 }

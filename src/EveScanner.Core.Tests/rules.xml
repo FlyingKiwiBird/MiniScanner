@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<rules>
+  <rule id="1" name="Sample Rule Any" matchType="any">
+    <criteria id="1" ruleId="1" matchProperty="item" matchValue="Dummy Item" matchCriteria="gt" matchQuantity="0" />
+    <criteria id="2" ruleId="1" matchProperty="item" matchValue="Dummy Item 2" matchCriteria="lt" matchQuantity="5" />
+    <result id="1" ruleId="1" resultType="tag" resultValue="Dummy Item any" />
+  </rule>
+  <rule id="2" name="Sample Rule All" matchType="all">
+    <criteria id="3" ruleId="2" matchProperty="item" matchValue="Dummy Item" matchCriteria="gt" matchQuantity="0" />
+    <criteria id="4" ruleId="2" matchProperty="item" matchValue="Dummy Item 2" matchCriteria="lt" matchQuantity="5" />
+    <result id="2" ruleId="2" resultType="tag" resultValue="Dummy Items All" />
+  </rule>
+  <rule id="3" name="Complicated All" matchType="all">
+    <criteria id="5" ruleId="3" matchProperty="item" matchValue="Exotic Dancers" matchCriteria="eq" matchQuantity="69" />
+    <criteria id="6" ruleId="3" matchProperty="character" matchValue="Viktorie Lucilla" matchCriteria="eq" />
+    <criteria id="7" ruleId="3" matchProperty="buyvalue" matchCriteria="gt" matchQuantity="1000" />
+    <result id="3" ruleId="3" resultType="tag" resultValue="Complicated Match" />
+    <result id="4" ruleId="3" resultType="image" resultValue="Image.png" />
+  </rule>
+</rules>

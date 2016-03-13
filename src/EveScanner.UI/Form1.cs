@@ -438,6 +438,9 @@ namespace EveScanner.UI
         /// </summary>
         private void ParseCurrentResult()
         {
+            // Update Tagging
+            this.result.EvaluateScanResult();
+
             // Top Labels
             this.buyValueLabel.Text = ScanResult.GetISKString(this.result.BuyValue) + " ISK";
             this.sellValueLabel.Text = ScanResult.GetISKString(this.result.SellValue) + " ISK";
@@ -461,9 +464,10 @@ namespace EveScanner.UI
                 this.pictureBox.Image = null;
             }
 
-            if (this.result.ImageIndex != null)
+            // Build Images
+            if (this.result.ImagePaths != null && this.result.ImagePaths.Count() > 0)
             {
-                this.ConstructAndDisplayImages(this.result.ImageIndex);
+                this.ConstructAndDisplayImages(this.result.ImagePaths);
             }
 
             // Restore Character Name
@@ -561,7 +565,7 @@ namespace EveScanner.UI
         /// Constructs a composite image and loads it into the image box.
         /// </summary>
         /// <param name="imageList">List of image index</param>
-        private void ConstructAndDisplayImages(IEnumerable<int> imageList)
+        private void ConstructAndDisplayImages(IEnumerable<string> imageList)
         {
             if (imageList.Count() == 0)
             {
@@ -570,9 +574,7 @@ namespace EveScanner.UI
 
             try
             {
-                string[] imageNames = imageList.OrderBy(x => x).Select(x => ConfigHelper.Instance.ImageGroups[x.ToString(CultureInfo.InvariantCulture)]).ToArray();
-
-                this.pictureBox.Image = ImageCombiner.CombineImages(this.pictureBox.Width, this.pictureBox.Height, imageNames);
+                this.pictureBox.Image = ImageCombiner.CombineImages(this.pictureBox.Width, this.pictureBox.Height, imageList.ToArray());
             }
             catch (Exception ex)
             {
@@ -589,6 +591,8 @@ namespace EveScanner.UI
             {
                 return;
             }
+
+            this.result.EvaluateScanResult();
 
             int selectedIndex = this.historyDropdown.SelectedIndex;
             this.historyDropdown.Items.RemoveAt(selectedIndex);
@@ -890,6 +894,7 @@ namespace EveScanner.UI
             }
 
             this.result.CharacterName = this.characterNameText.Text;
+            this.result.Character = null;
             this.UpdateDropdown();
         }
 
@@ -1303,32 +1308,48 @@ thread on the Goonfleet Forums or sent to me via Jabber.
             this.ClearToolStripMenuItem_Click(null, EventArgs.Empty);
 #warning FIX THIS FUNCTION
 
-            
-            ScanResult r = new ScanResult(Guid.Empty, DateTime.Now, "1 Dummy Item", 3000000000000, 4123456789012, 1, 1, "http://goonfleet.com/?1", new [] { new ScanLine(1, "Dummy Item", false) }) { CharacterName = "T2 BPO", ShipType = "Providence - Freighter - Amarr", Notes = "Triggers T2 BPO Image", Location = "Perimeter -> Urlen" };
+            // T2 BPO (TAG + IMAGE)
+            ScanResult r = new ScanResult(Guid.Empty, DateTime.Now, "1 Zealot Blueprint", 3000000000000, 4123456789012, 1, 1, "http://goonfleet.com/?1", new[] { new ScanLine(1, "Zealot Blueprint", false) }) { CharacterName = "CN/T2 BPO", ShipType = "Providence - Freighter - Amarr", Notes = "Triggers T2 BPO Image", Location = "Perimeter -> Urlen" };
             this.AddResultToList(r);
 
-            ScanResult s = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 300000000000, 412345678901, 3, 4, "http://goonfleet.com/?2", new ScanLine[] { }) { CharacterName = "Plastic Wrap", ShipType = "Charon - Freighter - Caldari", Notes = "Triggers Wrap Image" };
+            // WRAP (TAG + IMAGE)
+            ScanResult s = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 300000000000, 412345678901, 3, 4, "http://goonfleet.com/?2", new[] { new ScanLine(1, "Plastic Wrap", false) }) { CharacterName = "CN/Plastic Wrap", ShipType = "Charon - Freighter - Caldari", Notes = "Triggers Wrap Image" };
             this.AddResultToList(s);
 
-            ScanResult t = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000000000, 41234567890, 3, 4, "http://goonfleet.com/?3", new ScanLine[] { }) { CharacterName = "Container", ShipType = "Obelisk - Freighter - Gallente", Notes = "Triggers Container Image" };
+            // CONTAINER (TAG + IMAGE)
+            ScanResult t = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000000000, 41234567890, 3, 4, "http://goonfleet.com/?3", new[] { new ScanLine(1, "Enormous Freight Container", false) }) { CharacterName = "CN/Container", ShipType = "Obelisk - Freighter - Gallente", Notes = "Triggers Container Image" };
             this.AddResultToList(t);
 
-            ScanResult u = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 3000000000, 4123456789, 3, 4, "http://goonfleet.com/?4", new ScanLine[] { }) { CharacterName = "Isotopes", ShipType = "Fenrir - Freighter - Minmatar", Notes = "Triggers Isotope Image", Location = "Ashab -> Madirmilire" };
+            // FUEL (TAG + IMAGE) -> SHIP MATCH
+            ScanResult u = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 3000000000, 4123456789, 3, 4, "http://goonfleet.com/?4a", new[] { new ScanLine(10000, "Oxygen Isotopes", false) }) { CharacterName = "CN/Isotopes Specific", ShipType = "Anshar - Jump Freighter - Gallente - Oxygen", Notes = "Triggers Isotope Image", Location = "Ashab -> Madirmilire" };
             this.AddResultToList(u);
 
-            ScanResult v = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 300000000, 412345678, 3, 4, "http://goonfleet.com/?5", new ScanLine[] { }) { CharacterName = "Valuable BPO", ShipType = "Ark - Jump Freighter - Amarr - Helium", Notes = "Triggers $$$ BPO Image" };
+            // FUEL (TAG + IMAGE) -> GENERIC
+            ScanResult u2 = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 3000000000, 4123456789, 3, 4, "http://goonfleet.com/?4b", new[] { new ScanLine(10000, "Oxygen Isotopes", false) }) { CharacterName = "CN/Isotopes Generic", Notes = "Triggers Isotope Image for No Ship", Location = "Ashab -> Madirmilire" };
+            this.AddResultToList(u2);
+
+            // "NO FUEL" TAG
+            ScanResult u3 = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 3000000000, 4123456789, 3, 4, "http://goonfleet.com/?4c", new[] { new ScanLine(10000, "Oxygen Isotopes", false) }) { CharacterName = "CN/Isotopes Missing", ShipType = "Nomad - Jump Freighter - Minmatar - Hydrogen", Notes = "No Fuel Tag, no Fuel Image", Location = "Ashab -> Madirmilire" };
+            this.AddResultToList(u3);
+
+            // $$$ BPO (TAG + IMAGE)
+            ScanResult v = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 300000000, 412345678, 3, 4, "http://goonfleet.com/?5", new[] { new ScanLine(1, "Archon Blueprint", false) }) { CharacterName = "CN/Valuable BPO", ShipType = "Ark - Jump Freighter - Amarr - Helium", Notes = "Triggers $$$ BPO Image" };
             this.AddResultToList(v);
 
-            ScanResult w = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000000, 41234567, 3, 4, "http://goonfleet.com/?99", new ScanLine[] { }) { CharacterName = "Fedo", ShipType = "Rhea - Jump Freighter - Caldari - Nitrogen", Notes = "Triggers Fedo Image" };
+            // FEDO (TAG + IMAGE)
+            ScanResult w = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000000, 41234567, 3, 4, "http://goonfleet.com/?99", new[] { new ScanLine(1, "Fedo", false) }) { CharacterName = "CN/Fedo", ShipType = "Rhea - Jump Freighter - Caldari - Nitrogen", Notes = "Triggers Fedo Image" };
             this.AddResultToList(w);
 
-            ScanResult x = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 3000000, 4123456, 3, 4, "http://goonfleet.com/?23", new ScanLine[] { }) { CharacterName = "Mixed 1", ShipType = "Anshar - Jump Freighter - Gallente - Oxygen", Notes = "Triggers Wrap+Container Image", Location = "Hatakani -> Sivala" };
+            // WRAP + CONTAINER (TAG + IMAGE)
+            ScanResult x = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 3000000, 4123456, 3, 4, "http://goonfleet.com/?23", new[] { new ScanLine(1, "Plastic Wrap", false), new ScanLine(1, "Enormous Freight Container", false) }) { CharacterName = "CN/Mixed 1", ShipType = "Anshar - Jump Freighter - Gallente - Oxygen", Notes = "Triggers Wrap+Container Image", Location = "Hatakani -> Sivala" };
             this.AddResultToList(x);
 
-            ScanResult y = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 300000, 412345, 3, 4, "http://goonfleet.com/?1234", new ScanLine[] { }) { CharacterName = "Mixed 2", ShipType = "Nomad - Jump Freighter - Minmatar - Hydrogen", Notes = "Triggers 4 Combined Image" };
+            // 4 COMBINED (TAG + IMAGE)
+            ScanResult y = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 300000, 412345, 3, 4, "http://goonfleet.com/?1234", new[] { new ScanLine(1, "Plastic Wrap", false), new ScanLine(1, "Enormous Freight Container", false), new ScanLine(10000, "Hydrogen Isotopes", false), new ScanLine(1, "Zealot Blueprint", false) }) { CharacterName = "Mixed 2", ShipType = "Nomad - Jump Freighter - Minmatar - Hydrogen", Notes = "Triggers 4 Combined Image" };
             this.AddResultToList(y);
 
-            ScanResult z = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000, 41234, 3, 4, "http://goonfleet.com/?1234599", new ScanLine[] { }) { CharacterName = "Mixed 3", ShipType = string.Empty, Notes = "Triggers 6 Combined Image" };
+            // 6 COMBINED (TAG + IMAGE)
+            ScanResult z = new ScanResult(Guid.Empty, DateTime.Now, string.Empty, 30000, 41234, 3, 4, "http://goonfleet.com/?1234599", new[] { new ScanLine(1, "Plastic Wrap", false), new ScanLine(1, "Enormous Freight Container", false), new ScanLine(10000, "Hydrogen Isotopes", false), new ScanLine(1, "Zealot Blueprint", false), new ScanLine(1, "Fedo", false), new ScanLine(1, "Aeon Blueprint", false) }) { CharacterName = "Mixed 3", ShipType = string.Empty, Notes = "Triggers 6 Combined Image" };
             this.AddResultToList(z);
         }
 #endif

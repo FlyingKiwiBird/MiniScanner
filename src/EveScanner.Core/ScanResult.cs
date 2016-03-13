@@ -51,6 +51,11 @@ namespace EveScanner.Core
         private ICharacter character = null;
 
         /// <summary>
+        /// Holds our scan evaluations.
+        /// </summary>
+        private IEnumerable<EvaluationResult> evaluations = new List<EvaluationResult>();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ScanResult"/> class.
         /// </summary>
         public ScanResult()
@@ -206,10 +211,26 @@ namespace EveScanner.Core
         /// </summary>
         public string AppraisalUrl { get; private set; }
 
+
+        public IEnumerable<string> Tags
+        {
+            get
+            {
+                return this.evaluations.Where(x => x.ResultType == "tag").Select(y => y.ResultValue);
+            }
+        }
+
+
         /// <summary>
-        /// Gets the Image Index for the Appraisal
+        /// Gets the Image Names for the Appraisal
         /// </summary>
-        public IEnumerable<int> ImageIndex { get; private set; }
+        public IEnumerable<string> ImagePaths
+        {
+            get
+            {
+                return this.evaluations.Where(x => x.ResultType == "image").Select(y => y.ResultValue);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the ship type scanned
@@ -249,46 +270,6 @@ namespace EveScanner.Core
             set
             {
                 this.character = value;
-
-                List<int> integers = null;
-                if (this.ImageIndex == null)
-                {
-                    integers = new List<int>();
-                }
-                else
-                {
-                    integers = new List<int>(this.ImageIndex);
-                }
-
-                foreach (int i in new int[] { 190, 195, 205, 210 })
-                {
-                    if (integers.Contains(i))
-                    {
-                        integers.Remove(i);
-                    }
-                }
-
-                if (this.character.Standings != null)
-                {
-                    if (this.Character.Standings.DerivedStanding < -5)
-                    {
-                        integers.Add(190);
-                    }
-                    else if (this.Character.Standings.DerivedStanding < 0)
-                    {
-                        integers.Add(195);
-                    }
-                    else if (this.Character.Standings.DerivedStanding > 5)
-                    {
-                        integers.Add(210);
-                    }
-                    else if (this.Character.Standings.DerivedStanding > 0)
-                    {
-                        integers.Add(205);
-                    }
-                }
-
-                this.ImageIndex = integers;
             }
         }
 
@@ -377,22 +358,11 @@ namespace EveScanner.Core
         {
             StringBuilder sb = new StringBuilder();
 
-            if (this.character != null && this.character.Standings != null)
+            string prefix = string.Join(", ", this.evaluations.Where(x => x.ResultType == "prefix").Select(y => y.ResultValue).ToArray());
+            if (!string.IsNullOrWhiteSpace(prefix))
             {
-                decimal st = this.character.Standings.DerivedStanding;
-
-                if (st < -5)
-                {
-                    sb.Append("RED ");
-                }
-                else if (st < 0)
-                {
-                    sb.Append("ORANGE ");
-                }
-                else if (st > 0)
-                {
-                    sb.Append("BLUE ");
-                }
+                sb.Append(prefix);
+                sb.Append(" ");
             }
 
             if (!string.IsNullOrEmpty(this.ShipType))
@@ -420,27 +390,12 @@ namespace EveScanner.Core
                 sb.AppendFormat(CultureInfo.CurrentCulture, "{0}/{1} | {2} | {3} stacks |", ScanResult.GetISKString(this.SellValue), ScanResult.GetISKString(this.BuyValue), string.Format(CultureInfo.InvariantCulture, "{0:n}", this.Volume) + " m3", this.Stacks);
             }
 
-            if (this.ImageIndex != null && this.ImageIndex.Count() > 0)
+            string tags = string.Join(", ", this.evaluations.Where(x => x.ResultType == "tag").Select(y => y.ResultValue).ToArray());
+            if (!string.IsNullOrWhiteSpace(tags))
             {
-                bool first = true;
-                foreach (int i in this.ImageIndex.Where(x => !(new int[] { 190, 195, 205, 210 }).Contains(x)))
-                {
-                    if (first)
-                    {
-                        first = false;
-                    }
-                    else
-                    {
-                        sb.Append(",");
-                    }
-
-                    sb.AppendFormat(" {0}", ConfigHelper.Instance.ImageNames[i.ToString(CultureInfo.InvariantCulture)]);
-                }
-
-                if (!first)
-                {
-                    sb.Append(" |");
-                }
+                sb.Append(" ");
+                sb.Append(tags);
+                sb.Append(" |");
             }
 
             sb.AppendFormat(" {0}", this.AppraisalUrl);
@@ -466,12 +421,33 @@ namespace EveScanner.Core
                 }
             }
 
+            string suffix = string.Join(", ", this.evaluations.Where(x => x.ResultType == "suffix").Select(y => y.ResultValue).ToArray());
+            if (!string.IsNullOrWhiteSpace(suffix))
+            {
+                sb.AppendFormat(" | {0}", suffix);
+            }
+
             if (this.ItemsReappraised)
             {
                 sb.Append(" | *Secondary Pricing*");
             }
 
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// Evaluates the images/tags for the scan with a scan evaluator.
+        /// </summary>
+        public void EvaluateScanResult()
+        {
+            string scanrulesXml = ConfigHelper.GetConnectionString("ScanRules");
+            if (string.IsNullOrWhiteSpace(scanrulesXml))
+            {
+                scanrulesXml = "rules.xml";
+            }
+
+            ScanRuleEvaluator sre = new ScanRuleEvaluator(scanrulesXml);
+            this.evaluations = sre.Evaluate(this);
         }
     }
 }

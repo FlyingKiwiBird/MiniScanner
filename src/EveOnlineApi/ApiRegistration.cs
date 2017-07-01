@@ -27,7 +27,7 @@ namespace EveOnlineApi
             }
 
             // Configure Item Prices from CREST
-            service.Register<IItemPriceProvider>(typeof(EveOnlineCrestApi));
+            //service.Register<IItemPriceProvider>(typeof(EveOnlineCrestApi));
 
             // Configure XML API Injections
             service.Register<IAllianceXmlDataProvider>(typeof(FileBackedEveOnlineXmlApi));

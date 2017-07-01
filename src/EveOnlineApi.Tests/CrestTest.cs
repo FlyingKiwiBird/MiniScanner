@@ -18,8 +18,8 @@ namespace EveOnlineApi.Tests
         [TestMethod]
         public void GetBuySellOrders()
         {
-            EveOnlineCrestApi api = new EveOnlineCrestApi();
-            var items = api.GetBuySellOrders(10000002, 40519);
+            //EveOnlineCrestApi api = new EveOnlineCrestApi();
+            //var items = api.GetBuySellOrders(10000002, 40519);
         }
     }
 }

@@ -113,14 +113,14 @@ namespace EveScanner.Evepraisal
             try
             {
                 // Find the /e/ link
-                int scanIx = responseString.IndexOf("<a href=\"/e/", StringComparison.OrdinalIgnoreCase);
+                int scanIx = responseString.IndexOf("<a href=\"/a/", StringComparison.OrdinalIgnoreCase);
                 int scanIe = responseString.IndexOf("\"", scanIx + 10, StringComparison.OrdinalIgnoreCase);
                 string url = this.uri + responseString.Substring(scanIx + 10, scanIe - scanIx - 10);
                 string appraisalUrl = url;
 
                 if (string.IsNullOrEmpty(this.scanData))
                 {
-                    int rawIa = responseString.IndexOf("<textarea class=\"input-block-level\" rows", StringComparison.OrdinalIgnoreCase);
+                    int rawIa = responseString.IndexOf("<textarea class=\"form-control\" rows", StringComparison.OrdinalIgnoreCase);
                     int rawIx = responseString.IndexOf(">", rawIa + 1, StringComparison.OrdinalIgnoreCase);
                     int rawIe = responseString.IndexOf("</textarea>", rawIx + 1, StringComparison.OrdinalIgnoreCase);
 
@@ -193,8 +193,8 @@ namespace EveScanner.Evepraisal
 
             try
             {
-                Uri localUri = new Uri(this.uri + "estimate");
-                string requestString = "raw_paste=" + data + "&market=30000142";
+                Uri localUri = new Uri(this.uri + "appraisal");
+                string requestString = "raw_textarea=" + data + "&market=30000142";
                 Logger.Debug("Request String: {0}", requestString);
                 byte[] encodedBytes = Encoding.UTF8.GetBytes(requestString);
 

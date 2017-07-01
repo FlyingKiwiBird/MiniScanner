@@ -1,4 +1,6 @@
-﻿//-----------------------------------------------------------------------
+﻿/*
+
+//-----------------------------------------------------------------------
 // <copyright company="Viktorie Lucilla" file="EveOnlineCrestApi.cs">
 // Copyright © Viktorie Lucilla 2015. All Rights Reserved
 // </copyright>
@@ -123,3 +125,4 @@ namespace EveOnlineApi
         }
     }
 }
+*/

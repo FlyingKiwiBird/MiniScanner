@@ -32,7 +32,7 @@ namespace EveScanner.Evepraisal
         /// Gets or sets the Evepraisal Scan Id
         /// </summary>
         [DataMember(Name = "id")]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// Gets the collection of Items in the scan.
